@@ -441,6 +441,10 @@ if ($user->isLoggedIn()) {
                                             <a href=" info.php?id=1&category=<?= $_GET['category'] ?>" class="text-reset fs-16 px-1">
                                                 << /i>Back
                                             </a>
+                                            <?php
+                                            // header("location:javascript://history.go(-1)");
+
+                                            ?>
                                         </h4>
 
                                     </div>
