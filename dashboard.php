@@ -637,6 +637,18 @@
 
 
                         for (i = 0; i < data.length; i++) {
+                            // if (data[i].amount == 1) {
+                            //     data[i].amount = 'Medication';
+                            // }
+                            // elseif(data[i].amount == 2) {
+                            //     data[i].amount = 'Medical Equipment';
+                            // }
+                            // elseif(data[i].amount == 2) {
+                            //     data[i].amount = 'Accessories';
+                            // }
+                            // elseif(data[i].amount == 2) {
+                            //     data[i].amount = 'Supplies';
+                            // }
                             data[i].amount = parseInt(data[i].amount)
                         }
 
@@ -665,9 +677,10 @@
                             labels: category,
                             datasets: [{
                                 label: category,
-                                backgroundColor: '#49e2ff',
+                                // backgroundColor: '#49e2ff',
+                                backgroundColor: ["dark", "blue", "orange", "brown"],
                                 borderColor: '#46d5f1',
-                                hoverBackgroundColor: '#CCCCCC',
+                                // hoverBackgroundColor: '#CCCCCC',
                                 hoverBorderColor: '#666666',
                                 data: amount
                             }]
@@ -696,6 +709,24 @@
                             data: chartdata
                         });
                     });
+
+                // var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+                // var yValues = [55, 49, 44, 24, 15];
+                // var barColors = ["red", "green", "blue", "orange", "brown"];
+
+                // new Chart("myChart", {
+                //     type: "bar",
+                //     data: {
+                //         labels: xValues,
+                //         datasets: [{
+                //             backgroundColor: barColors,
+                //             data: yValues
+                //         }]
+                //     },
+                //     options: {
+                //         ...
+                //     }
+                // });
             }
         }
     </script>

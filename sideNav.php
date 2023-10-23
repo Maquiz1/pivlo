@@ -128,7 +128,7 @@
                                                                             foreach ($override->get('study', 'status', 1) as $value) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="add.php?id=2&category=2&site=<?= $site['id']; ?>&study=<?= $value['id']; ?>&btn=Add"><?= $value['name']; ?></a>
+                                                                                    <a href="add.php?id=2&category=<?= $categoryB['id']; ?>&site=<?= $site['id']; ?>&study=<?= $value['id']; ?>&btn=Add"><?= $value['name']; ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>
@@ -139,8 +139,8 @@
                                                     </div>
                                                 </li>
                                             <?php
-                                         }
-                                          ?>
+                                            }
+                                            ?>
                                         </ul>
                                     </div>
                                 </li>
@@ -354,9 +354,9 @@
                                                         </ul>
                                                     </div>
                                                 </li>
-                                            <?php 
-                                        }
-                                         ?>
+                                            <?php
+                                            }
+                                            ?>
                                         </ul>
                                     </div>
                                 </li>
