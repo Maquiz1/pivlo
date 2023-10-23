@@ -53,10 +53,10 @@
                                             <ul class="side-nav-forth-level">
                                                 <?php
                                                 $x = 1;
-                                                foreach ($override->get('use_group', 'status', 1) as $category) {
+                                                foreach ($override->get('use_group', 'status', 1) as $categoryG) {
                                                 ?>
                                                     <li>
-                                                        <a href="add.php?id=1&category=<?= $category['id']; ?>&btn=Add"><?= $category['name']; ?></a>
+                                                        <a href="add.php?id=1&category=<?= $categoryG['id']; ?>&btn=Add"><?= $categoryG['name']; ?></a>
                                                     </li>
                                                 <?php } ?>
                                             </ul>
@@ -74,10 +74,10 @@
                                             <ul class="side-nav-forth-level">
                                                 <?php
                                                 $x = 1;
-                                                foreach ($override->get('use_group', 'status', 1) as $category) {
+                                                foreach ($override->get('use_group', 'status', 1) as $categoryM) {
                                                 ?>
                                                     <li>
-                                                        <a href="info.php?id=1&category=<?= $category['id']; ?>"><?= $category['name']; ?></a>
+                                                        <a href="info.php?id=1&category=<?= $categoryM['id']; ?>"><?= $categoryM['name']; ?></a>
                                                     </li>
                                                 <?php } ?>
                                             </ul>
@@ -104,7 +104,7 @@
                                     <div class="collapse" id="BatchAdd">
                                         <ul class="side-nav-second-level">
                                             <?php
-                                            // foreach ($override->get('use_group', 'status', 1) as $categoryB) {
+                                            foreach ($override->get('use_group', 'status', 1) as $categoryB) {
                                             ?>
                                                 <li class="side-nav-item">
                                                     <a data-bs-toggle="collapse" href="#BatchAdd<?= $categoryB['id']; ?>" aria-expanded="false" aria-controls="BatchAdd<?= $categoryB['id']; ?>">
@@ -139,7 +139,7 @@
                                                     </div>
                                                 </li>
                                             <?php
-                                        //  }
+                                         }
                                           ?>
                                         </ul>
                                     </div>
@@ -320,32 +320,31 @@
                                         <ul class="side-nav-second-level">
                                             <?php
                                             $x = 1;
-                                            foreach ($override->get('use_group', 'status', 1) as $categoryV) {
+                                            foreach ($override->get('use_group', 'status', 1) as $categoryE) {
                                             ?>
                                                 <li class="side-nav-item">
-                                                    <a data-bs-toggle="collapse" href="#Expired<?= $categoryV['id']; ?>" aria-expanded="false" aria-controls="Expired<?= $categoryV['id']; ?>">
-                                                        <span> <?= $categoryV['name']; ?> </span>
+                                                    <a data-bs-toggle="collapse" href="#Expired<?= $categoryE['id']; ?>" aria-expanded="false" aria-controls="Expired<?= $categoryE['id']; ?>">
+                                                        <span> <?= $categoryE['name']; ?> </span>
                                                         <span class="menu-arrow"></span>
                                                     </a>
-                                                    <div class="collapse" id="Expired<?= $categoryV['id']; ?>">
+                                                    <div class="collapse" id="Expired<?= $categoryE['id']; ?>">
                                                         <ul class="side-nav-third-level">
                                                             <?php
                                                             $x = 1;
-                                                            foreach ($override->get('sites', 'status', 1) as $sites) {
+                                                            foreach ($override->get('sites', 'status', 1) as $sitesE) {
                                                             ?>
                                                                 <li class="side-nav-item">
-                                                                    <a data-bs-toggle="collapse" href="#ExpiredSites<?= $sites['id']; ?>" aria-expanded="false" aria-controls="ExpiredSites<?= $sites['id']; ?>">
-                                                                        <span> <?= $sites['name']; ?> </span>
+                                                                    <a data-bs-toggle="collapse" href="#ExpiredSites<?= $sitesE['id']; ?>" aria-expanded="false" aria-controls="ExpiredSites<?= $sitesE['id']; ?>">
+                                                                        <span> <?= $sitesE['name']; ?> </span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
-                                                                    <div class="collapse" id="ExpiredSites<?= $sites['id']; ?>">
+                                                                    <div class="collapse" id="ExpiredSites<?= $sitesE['id']; ?>">
                                                                         <ul class="side-nav-forth-level">
                                                                             <?php
-                                                                            $x = 1;
-                                                                            foreach ($override->get('study', 'status', 1) as $value) {
+                                                                            foreach ($override->get('study', 'status', 1) as $valueE) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="info.php?id=5&category=<?= $categoryV['id']; ?>&site=<?= $sites['id']; ?>&study=<?= $value['id']; ?>&expiration=expired"><?= $value['name']; ?></a>
+                                                                                    <a href="info.php?id=5&category=<?= $categoryE['id']; ?>&site=<?= $sitesE['id']; ?>&study=<?= $valueE['id']; ?>&expiration=expired"><?= $valueE['name']; ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>
@@ -355,7 +354,9 @@
                                                         </ul>
                                                     </div>
                                                 </li>
-                                            <?php } ?>
+                                            <?php 
+                                        }
+                                         ?>
                                         </ul>
                                     </div>
                                 </li>

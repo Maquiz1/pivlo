@@ -50,7 +50,7 @@
 
                     <div class="row">
                         <div class="col-xxl-3 col-sm-6">
-                            <div class="card widget-flat text-bg-pink">
+                            <div class="card widget-flat text-bg-dark">
                                 <div class="card-body">
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
@@ -86,7 +86,7 @@
                         </div> <!-- end col-->
 
                         <div class="col-xxl-3 col-sm-6">
-                            <div class="card widget-flat text-bg-info">
+                            <div class="card widget-flat text-bg-grey">
                                 <div class="card-body">
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
