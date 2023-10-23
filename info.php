@@ -141,6 +141,7 @@ if ($user->isLoggedIn()) {
                     'batch_id' => Input::get('id'),
                     'amount' => $amount,
                     'added' => Input::get('added'),
+                    'removed' => 0,
                     'brand_name' => Input::get('brand_name'),
                     'status' => 1,
                     'increase_date' => Input::get('increase_date'),
@@ -180,7 +181,7 @@ if ($user->isLoggedIn()) {
                 if (Input::get('added') <= Input::get('amount')) {
 
                     $amount = Input::get('amount') -  Input::get('added');
-                    $added = -Input::get('added');
+                    $added =  Input::get('added');
 
                     $user->updateRecord('batch', array(
                         'amount' => $amount,
@@ -190,7 +191,8 @@ if ($user->isLoggedIn()) {
                         'generic_id' => Input::get('generic_id'),
                         'batch_id' => Input::get('id'),
                         'amount' => $amount,
-                        'added' => $added,
+                        'added' => 0,
+                        'removed' => $added,
                         'brand_name' => Input::get('brand_name'),
                         'status' => 1,
                         'increase_date' => Input::get('dispense_date'),

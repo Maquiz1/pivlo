@@ -119,6 +119,7 @@ if ($user->isLoggedIn()) {
                             'batch_id' => $batch_id['id'],
                             'amount' => Input::get('amount'),
                             'added' => 0,
+                            'removed' => 0,
                             'brand_name' => Input::get('brand_name'),
                             'status' => 1,
                             'increase_date' => date('Y-m-d'),
