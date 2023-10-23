@@ -227,7 +227,7 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
-        } 
+        }
     }
 } else {
     Redirect::to('index.php');
@@ -460,7 +460,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="amount" class="form-label">Amount</label>
                                                         <input type="number" value="<?php if ($batch) {
                                                                                         print_r($batch['amount']);
-                                                                                    } ?>" id="amount" name="amount" min="0" max="100000" class="form-control" placeholder="Enter notification amount" required />
+                                                                                    } ?>" id="amount" name="amount" min="0" max="100000" class="form-control" placeholder="Enter Amount Received / Available" required />
                                                     </div>
                                                 </div>
 

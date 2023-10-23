@@ -348,7 +348,7 @@ if ($user->isLoggedIn()) {
                                                             if ($batch_total > $value['notification']) {
                                                                 $balance = $batch_total;
                                                                 $total = 'Sufficient';
-                                                            } elseif ($batch_total > 0 && $batch_total <= $value['notification']) {
+                                                            } elseif ($batch_total > 0 && $batch_total < $value['notification']) {
                                                                 $balance = $batch_total;
                                                                 $total = 'Running Low';
                                                             }
