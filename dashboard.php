@@ -55,12 +55,14 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <h6 class="text-uppercase mt-0" title="Customers">Medicines</h6>
-                                    <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 1) ?></h2>
-                                    <p class="mb-0">
-                                        <span class="badge bg-white bg-opacity-10 me-1">2.97%</span>
-                                        <span class="text-nowrap">Since last month</span>
-                                    </p>
+                                    <a href="info.php?id=1&category=1">
+                                        <h6 class="text-uppercase mt-0" title="Customers">Medicines</h6>
+                                        <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 1) ?></h2>
+                                        <p class="mb-0">
+                                            <span class="badge bg-white bg-opacity-10 me-1">2.97%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </a>
                                 </div>
                             </div>
                         </div> <!-- end col-->
@@ -89,12 +91,14 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <h6 class="text-uppercase mt-0" title="Customers">Accessories</h6>
-                                    <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 3) ?></h2>
-                                    <p class="mb-0">
-                                        <span class="badge bg-white bg-opacity-25 me-1">-5.75%</span>
-                                        <span class="text-nowrap">Since last month</span>
-                                    </p>
+                                    <a href="info.php?id=1&category=3">
+                                        <h6 class="text-uppercase mt-0" title="Customers">Accessories</h6>
+                                        <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 3) ?></h2>
+                                        <p class="mb-0">
+                                            <span class="badge bg-white bg-opacity-25 me-1">-5.75%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </a>
                                 </div>
                             </div>
                         </div> <!-- end col-->
@@ -105,12 +109,14 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <h6 class="text-uppercase mt-0" title="Customers">Supplies</h6>
-                                    <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 4) ?></h2>
-                                    <p class="mb-0">
-                                        <span class="badge bg-white bg-opacity-10 me-1">8.21%</span>
-                                        <span class="text-nowrap">Since last month</span>
-                                    </p>
+                                    <a href="info.php?id=1&category=4">
+                                        <h6 class="text-uppercase mt-0" title="Customers">Supplies</h6>
+                                        <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 4) ?></h2>
+                                        <p class="mb-0">
+                                            <span class="badge bg-white bg-opacity-10 me-1">8.21%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </a>
                                 </div>
                             </div>
                         </div> <!-- end col-->
