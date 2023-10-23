@@ -345,7 +345,7 @@ if ($user->isLoggedIn()) {
                                                             $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['id'], 'status', 1)[0]['SUM(amount)'];
                                                             $balance = 0;
                                                             $total = 'Out of Stock';
-                                                            if ($batch_total > 0 && $batch_total < $value['notification']) {
+                                                            if ($batch_total > 0 && $batch_total <= $value['notification']) {
                                                                 $balance = $batch_total;
                                                                 $total = 'Running Low';
                                                             } elseif ($batch_total > $value['notification']) {
