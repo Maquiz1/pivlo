@@ -104,7 +104,7 @@
                         </div> <!-- end col-->
 
                         <div class="col-xxl-3 col-sm-6">
-                            <div class="card widget-flat text-bg-primary">
+                            <div class="card widget-flat text-bg-secondary">
                                 <div class="card-body">
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
