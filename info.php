@@ -324,6 +324,9 @@ if ($user->isLoggedIn()) {
                                         Add <code>.table-bordered</code> & <code>.border-primary</code> can be added to
                                         change colors.
                                     </p> -->
+                                        <a href="dashboard.php" class="text-reset fs-16 px-1">
+                                            < Back
+                                        </a>
                                     </div>
 
                                     <div class="card-body">
@@ -352,7 +355,7 @@ if ($user->isLoggedIn()) {
                                                                 $balance = $batch_total;
                                                                 $total = 'Sufficient';
                                                             }
-                                                            
+
 
                                                             if (!$total == 'Out of Stock') {
                                                                 if ($value['maintainance'] == 1) {
@@ -426,7 +429,6 @@ if ($user->isLoggedIn()) {
                         <?php
                         $generic1 = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
                         ?>
-
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card">
@@ -720,7 +722,7 @@ if ($user->isLoggedIn()) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    if ($override->getNews2('checking', 'visit_status', 0, 'next_check', date('Y-m-d'), 'maintainance',1, 'category',$_GET['category'])) {
+                                                    if ($override->getNews2('checking', 'visit_status', 0, 'next_check', date('Y-m-d'), 'maintainance', 1, 'category', $_GET['category'])) {
                                                         $amnt = 0;
                                                         foreach ($override->getNews2('checking', 'visit_status', 0, 'next_check', date('Y-m-d'), 'maintainance', 1, 'category', $_GET['category']) as $value) {
                                                             $generic = $override->getNews('generic', 'status', 1, 'id', $value['generic_id'])[0];
