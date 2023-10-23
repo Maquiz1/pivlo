@@ -71,12 +71,14 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <h6 class="text-uppercase mt-0" title="Customers">Equipments</h6>
-                                    <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 2) ?></h2>
-                                    <p class="mb-0">
+                                    <a href="info.php?id=1&category=2">
+                                        <h6 class="text-uppercase mt-0" title="Customers">Equipments</h6>
+                                        <h2 class="my-2"><?= $override->getCount1('generic', 'status', 1, 'category', 2) ?></h2>
+                                        <!-- <p class="mb-0">
                                         <span class="badge bg-white bg-opacity-10 me-1">18.25%</span>
                                         <span class="text-nowrap">Since last month</span>
-                                    </p>
+                                    </p> -->
+                                    </a>
                                 </div>
                             </div>
                         </div> <!-- end col-->
