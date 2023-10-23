@@ -350,10 +350,10 @@ if ($user->isLoggedIn()) {
                                                             $total = 'Out of Stock';
                                                             if ($batch_total > 0 & $batch_total <= $value['notification']) {
                                                                 $balance = $batch_total;
-                                                                $total = 'Running Low';
+                                                                $total = 'Sufficient';
                                                             } elseif ($batch_total > $value['notification']) {
                                                                 $balance = $batch_total;
-                                                                $total = 'Sufficient';
+                                                                $total = 'Running Low';
                                                             }
 
 
