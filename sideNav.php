@@ -98,7 +98,7 @@
                             <ul class="side-nav-second-level">
                                 <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#BatchAdd" aria-expanded="false" aria-controls="BatchAdd">
-                                        <span> Add </span>
+                                        <span> Add New</span>
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <div class="collapse" id="BatchAdd">
@@ -114,21 +114,20 @@
                                                     <div class="collapse" id="BatchAdd<?= $categoryB['id']; ?>">
                                                         <ul class="side-nav-third-level">
                                                             <?php
-                                                            $x = 1;
-                                                            foreach ($override->get('sites', 'status', 1) as $site) {
+                                                            foreach ($override->get('sites', 'status', 1) as $siteB) {
                                                             ?>
                                                                 <li class="side-nav-item">
-                                                                    <a data-bs-toggle="collapse" href="#BatchAddSites<?= $site['id']; ?>" aria-expanded="false" aria-controls="BatchAddSites<?= $site['id'] ?>">
-                                                                        <span> <?= $site['name'] ?> </span>
+                                                                    <a data-bs-toggle="collapse" href="#BatchAddSites<?= $siteB['id']; ?>" aria-expanded="false" aria-controls="BatchAddSites<?= $siteB['id'] ?>">
+                                                                        <span> <?= $siteB['name'] ?> </span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
-                                                                    <div class="collapse" id="BatchAddSites<?= $site['id'] ?>">
+                                                                    <div class="collapse" id="BatchAddSites<?= $siteB['id'] ?>">
                                                                         <ul class="side-nav-forth-level">
                                                                             <?php
-                                                                            foreach ($override->get('study', 'status', 1) as $value) {
+                                                                            foreach ($override->get('study', 'status', 1) as $valueB) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="add.php?id=2&category=<?= $categoryB['id']; ?>&site=<?= $site['id']; ?>&study=<?= $value['id']; ?>&btn=Add"><?= $value['name']; ?></a>
+                                                                                    <a href="add.php?id=2&category=<?= $categoryB['id']; ?>&site=<?= $siteB['id']; ?>&study=<?= $valueB['id']; ?>&btn=Add"><?= $valueB['name']; ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>
@@ -175,21 +174,21 @@
                                                         <ul class="side-nav-third-level">
                                                             <?php
                                                             $x = 1;
-                                                            foreach ($override->get('sites', 'status', 1) as $sites) {
+                                                            foreach ($override->get('sites', 'status', 1) as $sitesT) {
                                                             ?>
                                                                 <li class="side-nav-item">
-                                                                    <a data-bs-toggle="collapse" href="#TodaySite<?= $sites['id']; ?>" aria-expanded="false" aria-controls="TodaySite<?= $sites['id']; ?>">
+                                                                    <a data-bs-toggle="collapse" href="#TodaySite<?= $sitesT['id']; ?>" aria-expanded="false" aria-controls="TodaySite<?= $sitesT['id']; ?>">
                                                                         <span> <?= $sites['name']; ?> </span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
-                                                                    <div class="collapse" id="TodaySite<?= $sites['id']; ?>">
+                                                                    <div class="collapse" id="TodaySite<?= $sitesT['id']; ?>">
                                                                         <ul class="side-nav-forth-level">
                                                                             <?php
                                                                             $x = 1;
-                                                                            foreach ($override->get('study', 'status', 1) as $value) {
+                                                                            foreach ($override->get('study', 'status', 1) as $valueT) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="add.php?id=3&category=<?= $categoryT['id']; ?>&site=<?= $sites['id']; ?>&study=<?= $value['id']; ?>" ?></a>
+                                                                                    <a href="add.php?id=3&category=<?= $categoryT['id']; ?>&site=<?= $sitesT['id']; ?>&study=<?= $valueT['id']; ?>" ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>
@@ -216,28 +215,28 @@
                                             ?>
                                                 <li class="side-nav-item">
                                                     <a data-bs-toggle="collapse" href="#Checked<?= $categoryC['id']; ?>" aria-expanded="false" aria-controls="Checked<?= $categoryC['id']; ?>">
-                                                        <span> <?= $category['name']; ?> </span>
+                                                        <span> <?= $categoryC['name']; ?> </span>
                                                         <span class="menu-arrow"></span>
                                                     </a>
                                                     <div class="collapse" id="Checked<?= $categoryC['id']; ?>">
                                                         <ul class="side-nav-third-level">
                                                             <?php
                                                             $x = 1;
-                                                            foreach ($override->get('sites', 'status', 1) as $sites) {
+                                                            foreach ($override->get('sites', 'status', 1) as $sitesC) {
                                                             ?>
                                                                 <li class="side-nav-item">
-                                                                    <a data-bs-toggle="collapse" href="#CheckedSite<?= $sites['id']; ?>" aria-expanded="false" aria-controls="CheckedSite<?= $sites['id']; ?>">
-                                                                        <span> <?= $sites['name']; ?> </span>
+                                                                    <a data-bs-toggle="collapse" href="#CheckedSite<?= $sitesC['id']; ?>" aria-expanded="false" aria-controls="CheckedSite<?= $sitesC['id']; ?>">
+                                                                        <span> <?= $sitesC['name']; ?> </span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
-                                                                    <div class="collapse" id="CheckedSite<?= $sites['id']; ?>">
+                                                                    <div class="collapse" id="CheckedSite<?= $sitesC['id']; ?>">
                                                                         <ul class="side-nav-forth-level">
                                                                             <?php
                                                                             $x = 1;
-                                                                            foreach ($override->get('study', 'status', 1) as $value) {
+                                                                            foreach ($override->get('study', 'status', 1) as $valueC) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="info.php?id=4&category=<?= $categoryC['id']; ?>&site=<?= $sites['id']; ?>&study=<?= $value['id']; ?>&visit_status=1"><?= $value['name']; ?></a>
+                                                                                    <a href="info.php?id=4&category=<?= $categoryC['id']; ?>&site=<?= $sitesC['id']; ?>&study=<?= $valueC['id']; ?>&visit_status=1"><?= $valueC['name']; ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>
@@ -271,21 +270,21 @@
                                                         <ul class="side-nav-third-level">
                                                             <?php
                                                             $x = 1;
-                                                            foreach ($override->get('sites', 'status', 1) as $sites) {
+                                                            foreach ($override->get('sites', 'status', 1) as $sitesN) {
                                                             ?>
                                                                 <li class="side-nav-item">
-                                                                    <a data-bs-toggle="collapse" href="#NotCheckedSite<?= $sites['id']; ?>" aria-expanded="false" aria-controls="NotCheckedSite<?= $sites['id']; ?>">
-                                                                        <span> <?= $sites['name']; ?> </span>
+                                                                    <a data-bs-toggle="collapse" href="#NotCheckedSite<?= $sitesN['id']; ?>" aria-expanded="false" aria-controls="NotCheckedSite<?= $sitesN['id']; ?>">
+                                                                        <span> <?= $sitesN['name']; ?> </span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
-                                                                    <div class="collapse" id="NotCheckedSite<?= $sites['id']; ?>">
+                                                                    <div class="collapse" id="NotCheckedSite<?= $sitesN['id']; ?>">
                                                                         <ul class="side-nav-forth-level">
                                                                             <?php
                                                                             $x = 1;
-                                                                            foreach ($override->get('study', 'status', 1) as $value) {
+                                                                            foreach ($override->get('study', 'status', 1) as $valueN) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="info.php?id=4&category=<?= $categoryN['id']; ?>&site=<?= $sites['id']; ?>&study=<?= $value['id']; ?>&visit_status=0"><?= $value['name']; ?></a>
+                                                                                    <a href="info.php?id=4&category=<?= $categoryN['id']; ?>&site=<?= $sitesN['id']; ?>&study=<?= $valueN['id']; ?>&visit_status=0"><?= $valueN['name']; ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>
@@ -382,21 +381,21 @@
                                                         <ul class="side-nav-third-level">
                                                             <?php
                                                             $x = 1;
-                                                            foreach ($override->get('sites', 'status', 1) as $sites) {
+                                                            foreach ($override->get('sites', 'status', 1) as $sitesV) {
                                                             ?>
                                                                 <li class="side-nav-item">
-                                                                    <a data-bs-toggle="collapse" href="#ValidSites<?= $sites['id']; ?>" aria-expanded="false" aria-controls="ValidSites<?= $sites['id']; ?>">
-                                                                        <span> <?= $sites['name']; ?> </span>
+                                                                    <a data-bs-toggle="collapse" href="#ValidSites<?= $sitesV['id']; ?>" aria-expanded="false" aria-controls="ValidSites<?= $sitesV['id']; ?>">
+                                                                        <span> <?= $sitesV['name']; ?> </span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
-                                                                    <div class="collapse" id="ValidSites<?= $sites['id']; ?>">
+                                                                    <div class="collapse" id="ValidSites<?= $sitesV['id']; ?>">
                                                                         <ul class="side-nav-forth-level">
                                                                             <?php
                                                                             $x = 1;
-                                                                            foreach ($override->get('study', 'status', 1) as $value) {
+                                                                            foreach ($override->get('study', 'status', 1) as $valueV) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="info.php?id=5&category=<?= $categoryV['id']; ?>&site=<?= $sites['id']; ?>&study=<?= $value['id']; ?>&expiration=valid"><?= $value['name']; ?></a>
+                                                                                    <a href="info.php?id=5&category=<?= $categoryV['id']; ?>&site=<?= $sitesV['id']; ?>&study=<?= $valueV['id']; ?>&expiration=valid"><?= $valueV['name']; ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>

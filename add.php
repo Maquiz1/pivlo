@@ -76,6 +76,9 @@ if ($user->isLoggedIn()) {
                 'units' => array(
                     'required' => true,
                 ),
+                // 'remarks' => array(
+                //     'required' => true,
+                // ),
             ));
             if ($validate->passed()) {
                 // One month from today
