@@ -173,12 +173,11 @@
                                                     <div class="collapse" id="TodaysChecks<?= $categoryT['id']; ?>">
                                                         <ul class="side-nav-third-level">
                                                             <?php
-                                                            $x = 1;
                                                             foreach ($override->get('sites', 'status', 1) as $sitesT) {
                                                             ?>
                                                                 <li class="side-nav-item">
                                                                     <a data-bs-toggle="collapse" href="#TodaySite<?= $sitesT['id']; ?>" aria-expanded="false" aria-controls="TodaySite<?= $sitesT['id']; ?>">
-                                                                        <span> <?= $sites['name']; ?> </span>
+                                                                        <span> <?= $sitesT['name']; ?> </span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
                                                                     <div class="collapse" id="TodaySite<?= $sitesT['id']; ?>">
