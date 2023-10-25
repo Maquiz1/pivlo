@@ -187,7 +187,7 @@
                                                                             foreach ($override->get('study', 'status', 1) as $valueT) {
                                                                             ?>
                                                                                 <li>
-                                                                                    <a href="add.php?id=3&category=<?= $categoryT['id']; ?>&site=<?= $sitesT['id']; ?>&study=<?= $valueT['id']; ?>" ?></a>
+                                                                                    <a href="add.php?id=3&category=<?= $categoryT['id']; ?>&site=<?= $sitesT['id']; ?>&study=<?= $valueT['id']; ?>" ?><?= $valueT['name']; ?></a>
                                                                                 </li>
                                                                             <?php } ?>
                                                                         </ul>
@@ -209,7 +209,6 @@
                                     <div class="collapse" id="Checked">
                                         <ul class="side-nav-second-level">
                                             <?php
-                                            $x = 1;
                                             foreach ($override->get('use_group', 'status', 1) as $categoryC) {
                                             ?>
                                                 <li class="side-nav-item">
