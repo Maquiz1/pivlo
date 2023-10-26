@@ -1,2 +1,1 @@
-# clinical_inventory
 # lungcancer
