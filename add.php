@@ -237,6 +237,9 @@
                         </div>
                         <!-- end row -->
                     <?php } elseif ($_GET['id'] == 2) { ?>
+                        <?php
+                        $clients = $override->get('clients', 'status', 1)[0];
+                        ?>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
@@ -275,69 +278,123 @@
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="firstname">First Name</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['firstname']);
+                                                                                                    } ?>" id="firstname" name="firstname" class="form-control" placeholder="Enter First name" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="middlename">Middle Name</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="middlename" name="middlename" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['middlename']);
+                                                                                                    } ?>" id="middlename" name="middlename" class="form-control" placeholder="Enter Middle name" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="laststname">Last Name</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="laststname" name="laststname" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['lastname']);
+                                                                                                    } ?>" id="lastname" name="lastname" class="form-control" placeholder="Enter Last tname" required>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="sex">Sex:</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="sex" name="sex" required>
+                                                                        <select id="units" name="units" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $units['id'] ?>"><?php if ($batch) {
+                                                                                                                    print_r($units['name']);
+                                                                                                                } else {
+                                                                                                                    echo 'Select units';
+                                                                                                                } ?>
+                                                                            </option>
+                                                                            <?php foreach ($override->get('units', 'status', 1) as $value) { ?>
+                                                                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="dob">Date of birth;</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="dob" name="dob" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['dob']);
+                                                                                                    } ?>" id="dob" name="dob" class="form-control" placeholder="Enter Date of birth" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-3">
+                                                                    <label class="col-md-3 col-form-label" for="hospital_id">Hospital ID;</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['hospital_id']);
+                                                                                                    } ?>" id="hospital_id" name="hospital_id" class="form-control" placeholder="Enter Hospital ID" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="patient_phone">Patients’ mobile number:</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="patient_phone" name="patient_phone" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['patient_phone']);
+                                                                                                    } ?>" id="patient_phone" name="patient_phone" class="form-control" placeholder="Enter patient phone" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="kin_phone">Mobile number of a treatment supporter or next of kin:</label>
+                                                                    <label class="col-md-3 col-form-label" for="supporter_name">Name of a treatment supporter or next of kin:</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="kin_phone" name="kin_phone" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['supporter_name']);
+                                                                                                    } ?>" id="supporter_name" name="supporter_name" class="form-control" placeholder="Enter supporter name" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-3">
+                                                                    <label class="col-md-3 col-form-label" for="relation_patient">Relation to patient:</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['relation_patient']);
+                                                                                                    } ?>" id="relation_patient" name="relation_patient" class="form-control" placeholder="Enter Relation" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-3">
+                                                                    <label class="col-md-3 col-form-label" for="supporter_phone">Mobile number of a treatment supporter or next of kin:</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['supporter_phone']);
+                                                                                                    } ?>" id="supporter_phone" name="supporter_phone" class="form-control" placeholder="Enter supporter phone" required>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="hospital_id">Hospital ID;</label>
-                                                                    <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="hospital_id" name="hospital_id" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="district">District</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="district" name="district" required>
+                                                                        <select id="units" name="units" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $units['id'] ?>"><?php if ($batch) {
+                                                                                                                    print_r($units['name']);
+                                                                                                                } else {
+                                                                                                                    echo 'Select units';
+                                                                                                                } ?>
+                                                                            </option>
+                                                                            <?php foreach ($override->get('units', 'status', 1) as $value) { ?>
+                                                                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="residence">Residence street</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="residence" name="residence" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['residence']);
+                                                                                                    } ?>" id="residence" name="residence" class="form-control" placeholder="Enter Residence name" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="house_number">House number, if any</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="house_number" name="house_number" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['house_number']);
+                                                                                                    } ?>" id="house_number" name="house_number" class="form-control" placeholder="Enter house number" required>
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end col -->
@@ -363,25 +420,75 @@
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="education">Level of education</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="education" name="education" required>
+                                                                        <select id="units" name="units" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $units['id'] ?>"><?php if ($batch) {
+                                                                                                                    print_r($units['name']);
+                                                                                                                } else {
+                                                                                                                    echo 'Select units';
+                                                                                                                } ?>
+                                                                            </option>
+                                                                            <?php foreach ($override->get('units', 'status', 1) as $value) { ?>
+                                                                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="occupation">Occupation</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="occupation" name="occupation" required>
+                                                                        <select id="units" name="units" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $units['id'] ?>"><?php if ($batch) {
+                                                                                                                    print_r($units['name']);
+                                                                                                                } else {
+                                                                                                                    echo 'Select units';
+                                                                                                                } ?>
+                                                                            </option>
+                                                                            <?php foreach ($override->get('units', 'status', 1) as $value) { ?>
+                                                                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="health_insurance">Do you own health insurance?</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="health_insurance" name="health_insurance" required>
+                                                                        <select id="units" name="units" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $units['id'] ?>"><?php if ($batch) {
+                                                                                                                    print_r($units['name']);
+                                                                                                                } else {
+                                                                                                                    echo 'Select units';
+                                                                                                                } ?>
+                                                                            </option>
+                                                                            <?php foreach ($override->get('units', 'status', 1) as $value) { ?>
+                                                                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-3">
+                                                                    <label class="col-md-3 col-form-label" for="insurance_name">Name of insurance</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['insurance_name']);
+                                                                                                    } ?>" id="insurance_name" name="insurance_name" class="form-control" placeholder="Enter insurance name" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="pay_services">If no, how do you pay for your health care services</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="pay_services" name="pay_services" required>
+                                                                        <input type="text" value="<?php if ($clients) {
+                                                                                                        print_r($clients['pay_services']);
+                                                                                                    } ?>" id="pay_services" name="pay_services" class="form-control" placeholder="Enter pay name" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="mb-3">
+                                                                        <label for="comments" class="form-label">Remarks / Comments</label>
+                                                                        <textarea class="form-control" name="comments" id="comments" rows="5">
+                                                                        <?php if ($clients) {
+                                                                            print_r($clients['comments']);
+                                                                        } ?>
+                                                                        </textarea>
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end col -->
