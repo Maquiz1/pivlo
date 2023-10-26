@@ -62,23 +62,23 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
-        } elseif (Input::get('add_clients')) {
+        } elseif (Input::get('add_demographic')) {
             $validate = $validate->check($_POST, array(
                 'date_registered' => array(
                     'required' => true,
                 ),
-                'batch_name' => array(
+                'firstname' => array(
                     'required' => true,
                 ),
-                'amount' => array(
+                'middlename' => array(
                     'required' => true,
                 ),
-                'units' => array(
+                'lastname' => array(
                     'required' => true,
                 ),
-                // 'remarks' => array(
-                //     'required' => true,
-                // ),
+                'gender' => array(
+                    'required' => true,
+                ),
             ));
             if ($validate->passed()) {
                 // One month from today
@@ -91,154 +91,154 @@ if ($user->isLoggedIn()) {
                 $age = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
 
                 try {
-                    if (Input::get('btn') == 'Add') {
-                        $user->createRecord('batch', array(
-                            'date_registered' => Input::get('date_registered'),
-                            'study_id' => '',
-                            'firstname' => Input::get('firstname'),
-                            'middlename' => Input::get('middlename'),
-                            'lastname' => Input::get('lastname'),
-                            'gender' => Input::get('gender'),
-                            'dob' => Input::get('dob'),
-                            'age' => $age,
-                            'hospital_id' => Input::get('hospital_id'),
-                            'phone_number' => Input::get('phone_number'),
-                            'supporter_name' => Input::get('supporter_name'),
-                            'supporter_phone' => Input::get('supporter_phone'),
-                            'relation_patient' => Input::get('relation_patient'),
-                            'district' => Input::get('district'),
-                            'street' => Input::get('street'),
-                            'house_number' => Input::get('house_number'),
-                            'head_household' => Input::get('head_household'),
-                            'education' => Input::get('education'),
-                            'occupation' => Input::get('occupation'),
-                            'health_insurance' => Input::get('health_insurance'),
-                            'insurance_name' => Input::get('insurance_name'),
-                            'pay_services' => Input::get('pay_services'),
-                            'status' => 1,
-                            'screened' => 0,
-                            'eligible' => 0,
-                            'enrolled' => 0,
-                            'end_study' => 0,
-                            'comments' => Input::get('comments'),
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                            'site_id' => $user->data()->site_id,
-                        ));
+                    // if (Input::get('btn') == 'Add') {
+                    $user->createRecord('batch', array(
+                        'date_registered' => Input::get('date_registered'),
+                        'study_id' => '',
+                        'firstname' => Input::get('firstname'),
+                        'middlename' => Input::get('middlename'),
+                        'lastname' => Input::get('lastname'),
+                        'gender' => Input::get('gender'),
+                        'dob' => Input::get('dob'),
+                        'age' => $age,
+                        'hospital_id' => Input::get('hospital_id'),
+                        'phone_number' => Input::get('phone_number'),
+                        'supporter_name' => Input::get('supporter_name'),
+                        'supporter_phone' => Input::get('supporter_phone'),
+                        'relation_patient' => Input::get('relation_patient'),
+                        'district' => Input::get('district'),
+                        'street' => Input::get('street'),
+                        'house_number' => Input::get('house_number'),
+                        'head_household' => Input::get('head_household'),
+                        'education' => Input::get('education'),
+                        'occupation' => Input::get('occupation'),
+                        'health_insurance' => Input::get('health_insurance'),
+                        'insurance_name' => Input::get('insurance_name'),
+                        'pay_services' => Input::get('pay_services'),
+                        'status' => 1,
+                        'screened' => 0,
+                        'eligible' => 0,
+                        'enrolled' => 0,
+                        'end_study' => 0,
+                        'comments' => Input::get('comments'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
 
-                        // $batch_id = $override->lastRow('batch', 'id')[0];
+                    // $batch_id = $override->lastRow('batch', 'id')[0];
 
-                        // $user->createRecord('batch_records', array(
-                        //     'generic_id' => Input::get('generic_name'),
-                        //     'batch_id' => $batch_id['id'],
-                        //     'amount' => Input::get('amount'),
-                        //     'added' => 0,
-                        //     'removed' => 0,
-                        //     'brand_name' => Input::get('brand_name'),
-                        //     'status' => 1,
-                        //     'increase_date' => date('Y-m-d'),
-                        //     'increase_time' => date('H:i'),
-                        //     'remarks' => Input::get('remarks'),
-                        //     'units' => Input::get('units'),
-                        //     'create_on' => date('Y-m-d H:i:s'),
-                        //     'staff_id' => $user->data()->id,
-                        //     'site_id' => $_GET['site'],
-                        //     'site' => $_GET['site'],
-                        //     'study_id' => $_GET['study'],
-                        //     'study' => $_GET['study'],
-                        //     'category' => $_GET['category'],
-                        // ));
+                    // $user->createRecord('batch_records', array(
+                    //     'generic_id' => Input::get('generic_name'),
+                    //     'batch_id' => $batch_id['id'],
+                    //     'amount' => Input::get('amount'),
+                    //     'added' => 0,
+                    //     'removed' => 0,
+                    //     'brand_name' => Input::get('brand_name'),
+                    //     'status' => 1,
+                    //     'increase_date' => date('Y-m-d'),
+                    //     'increase_time' => date('H:i'),
+                    //     'remarks' => Input::get('remarks'),
+                    //     'units' => Input::get('units'),
+                    //     'create_on' => date('Y-m-d H:i:s'),
+                    //     'staff_id' => $user->data()->id,
+                    //     'site_id' => $_GET['site'],
+                    //     'site' => $_GET['site'],
+                    //     'study_id' => $_GET['study'],
+                    //     'study' => $_GET['study'],
+                    //     'category' => $_GET['category'],
+                    // ));
 
-                        // $user->createRecord('checking', array(
-                        //     'generic_id' => $batch_id['generic_id'],
-                        //     'batch_id' => $batch_id['id'],
-                        //     'amount' => $batch_id['amount'],
-                        //     'visit_date' => date('Y-m-d H:i:s'),
-                        //     'check_date' => date('Y-m-d'),
-                        //     'next_check' => date('Y-m-d'),
-                        //     'expected_date' => date('Y-m-d H:i:s'),
-                        //     'checking_date' => date('Y-m-d'),
-                        //     'checking_time' => date('H:i:s'),
-                        //     'units' => $batch_id['units'],
-                        //     'create_on' => date('Y-m-d H:i:s'),
-                        //     'update_on' => date('Y-m-d H:i:s'),
-                        //     'staff_id' => $user->data()->id,
-                        //     'update_id' => $user->data()->id,
-                        //     'site_id' => $batch_id['site_id'],
-                        //     'site' => $batch_id['site'],
-                        //     'study_id' => $batch_id['study_id'],
-                        //     'study' => $batch_id['study'],
-                        //     'category' => $batch_id['category'],
-                        //     'maintainance' => $batch_id['maintainance'],
-                        //     'remarks' => $batch_id['remarks'],
-                        //     'next_notes' => Input::get('next_notes'),
-                        //     'visit_window1' => 2,
-                        //     'visit_window2' => 2,
-                        //     'status' => 1,
-                        //     'seq_no' => 1,
-                        //     'visit_status' => 1,
-                        //     'check_number' => 'Month 1',
-                        // ));
+                    // $user->createRecord('checking', array(
+                    //     'generic_id' => $batch_id['generic_id'],
+                    //     'batch_id' => $batch_id['id'],
+                    //     'amount' => $batch_id['amount'],
+                    //     'visit_date' => date('Y-m-d H:i:s'),
+                    //     'check_date' => date('Y-m-d'),
+                    //     'next_check' => date('Y-m-d'),
+                    //     'expected_date' => date('Y-m-d H:i:s'),
+                    //     'checking_date' => date('Y-m-d'),
+                    //     'checking_time' => date('H:i:s'),
+                    //     'units' => $batch_id['units'],
+                    //     'create_on' => date('Y-m-d H:i:s'),
+                    //     'update_on' => date('Y-m-d H:i:s'),
+                    //     'staff_id' => $user->data()->id,
+                    //     'update_id' => $user->data()->id,
+                    //     'site_id' => $batch_id['site_id'],
+                    //     'site' => $batch_id['site'],
+                    //     'study_id' => $batch_id['study_id'],
+                    //     'study' => $batch_id['study'],
+                    //     'category' => $batch_id['category'],
+                    //     'maintainance' => $batch_id['maintainance'],
+                    //     'remarks' => $batch_id['remarks'],
+                    //     'next_notes' => Input::get('next_notes'),
+                    //     'visit_window1' => 2,
+                    //     'visit_window2' => 2,
+                    //     'status' => 1,
+                    //     'seq_no' => 1,
+                    //     'visit_status' => 1,
+                    //     'check_number' => 'Month 1',
+                    // ));
 
-                        // $last_check = $override->lastRow2('checking', 'batch_id', $batch_id['id'], 'id')[0];
-                        // $sq = $last_check['seq_no'] + 1;
-                        // $check_month = 'Month ' . $sq;
+                    // $last_check = $override->lastRow2('checking', 'batch_id', $batch_id['id'], 'id')[0];
+                    // $sq = $last_check['seq_no'] + 1;
+                    // $check_month = 'Month ' . $sq;
 
-                        // $user->createRecord('checking', array(
-                        //     'generic_id' => $batch_id['generic_id'],
-                        //     'batch_id' => $batch_id['id'],
-                        //     'amount' => $batch_id['amount'],
-                        //     'check_date' => '',
-                        //     'visit_date' => '',
-                        //     'next_check' => $from_today,
-                        //     'expected_date' => $from_today1,
-                        //     'units' => $batch_id['units'],
-                        //     'create_on' => date('Y-m-d H:i:s'),
-                        //     'update_on' => date('Y-m-d H:i:s'),
-                        //     'staff_id' => $user->data()->id,
-                        //     'update_id' => $user->data()->id,
-                        //     'site_id' => $batch_id['site_id'],
-                        //     'site' => $batch_id['site'],
-                        //     'study_id' => $batch_id['study_id'],
-                        //     'study' => $batch_id['study'],
-                        //     'category' => $batch_id['category'],
-                        //     'maintainance' => $batch_id['maintainance'],
-                        //     'remarks' => $batch_id['remarks'],
-                        //     'next_notes' => Input::get('next_notes'),
-                        //     'visit_window1' => 2,
-                        //     'visit_window2' => 2,
-                        //     'status' => 0,
-                        //     'seq_no' => $sq,
-                        //     'visit_status' => 0,
-                        //     'check_number' => $check_month,
-                        // ));
+                    // $user->createRecord('checking', array(
+                    //     'generic_id' => $batch_id['generic_id'],
+                    //     'batch_id' => $batch_id['id'],
+                    //     'amount' => $batch_id['amount'],
+                    //     'check_date' => '',
+                    //     'visit_date' => '',
+                    //     'next_check' => $from_today,
+                    //     'expected_date' => $from_today1,
+                    //     'units' => $batch_id['units'],
+                    //     'create_on' => date('Y-m-d H:i:s'),
+                    //     'update_on' => date('Y-m-d H:i:s'),
+                    //     'staff_id' => $user->data()->id,
+                    //     'update_id' => $user->data()->id,
+                    //     'site_id' => $batch_id['site_id'],
+                    //     'site' => $batch_id['site'],
+                    //     'study_id' => $batch_id['study_id'],
+                    //     'study' => $batch_id['study'],
+                    //     'category' => $batch_id['category'],
+                    //     'maintainance' => $batch_id['maintainance'],
+                    //     'remarks' => $batch_id['remarks'],
+                    //     'next_notes' => Input::get('next_notes'),
+                    //     'visit_window1' => 2,
+                    //     'visit_window2' => 2,
+                    //     'status' => 0,
+                    //     'seq_no' => $sq,
+                    //     'visit_status' => 0,
+                    //     'check_number' => $check_month,
+                    // ));
 
-                        $successMessage = 'Batch Added Successful';
-                    } elseif (Input::get('btn') == 'Edit') {
-                        $user->updateRecord('batch', array(
-                            'generic_id' => Input::get('generic_name'),
-                            'name' => Input::get('batch_name'),
-                            'amount' => Input::get('amount'),
-                            'brand_name' => Input::get('brand_name'),
-                            'expire_date' => Input::get('expire_date'),
-                            'remarks' => Input::get('remarks'),
-                            'units' => Input::get('units'),
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                        ), Input::get('id'));
+                    $successMessage = 'Demographic Added Successful';
+                    // } elseif (Input::get('btn') == 'Edit') {
+                    //     $user->updateRecord('batch', array(
+                    //         'generic_id' => Input::get('generic_name'),
+                    //         'name' => Input::get('batch_name'),
+                    //         'amount' => Input::get('amount'),
+                    //         'brand_name' => Input::get('brand_name'),
+                    //         'expire_date' => Input::get('expire_date'),
+                    //         'remarks' => Input::get('remarks'),
+                    //         'units' => Input::get('units'),
+                    //         'update_on' => date('Y-m-d H:i:s'),
+                    //         'update_id' => $user->data()->id,
+                    //     ), Input::get('id'));
 
-                        $generic = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
+                    //     $generic = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
 
-                        if ($generic['maintainance'] == 2) {
-                            $user->updateRecord('batch', array(
-                                'expire_date' => Input::get('expire_date'),
-                            ), Input::get('id'));
-                        }
+                    //     if ($generic['maintainance'] == 2) {
+                    //         $user->updateRecord('batch', array(
+                    //             'expire_date' => Input::get('expire_date'),
+                    //         ), Input::get('id'));
+                    //     }
 
-                        $successMessage = 'Batch Updated Successful';
-                    }
+                    //     $successMessage = 'Batch Updated Successful';
+                    // }
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -532,12 +532,9 @@ if ($user->isLoggedIn()) {
                                             </ul>
 
 
-                                            <form id="validation" method="post">
-                                                <div class="tab-content mb-0 b-0">
-
-
-                                                    <div class="tab-pane" id="first">
-                                                        <!-- <form id="accountForm" method="post" action="#" class="form-horizontal"> -->
+                                            <div class="tab-content mb-0 b-0">
+                                                <div class="tab-pane" id="first">
+                                                    <form id="accountForm" method="post" action="#" class="form-horizontal">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="row mb-3">
@@ -592,7 +589,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="dob">Date of birth;</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" value="<?php if ($clients) {
+                                                                        <input type="date" value="<?php if ($clients) {
                                                                                                         print_r($clients['dob']);
                                                                                                     } ?>" id="dob" name="dob" class="form-control" placeholder="Enter Date of birth" required>
                                                                     </div>
@@ -672,17 +669,19 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
-                                                        <!-- <input type="submit" name="add_demo1" value="Save" class="btn btn-info" /> -->
-                                                        <!-- </form> -->
+                                                        <input type="submit" name="add_demo1" value="Save" class="btn btn-info" />
+                                                    </form>
+                                                    <?php if ($clients['status']) { ?>
                                                         <ul class="list-inline wizard mb-0">
                                                             <li class="next list-inline-item float-end">
                                                                 <a href="javascript:void(0);" class="btn btn-info">Add Demographics 2 <i class="ri-arrow-right-line ms-1"></i></a>
                                                             </li>
                                                         </ul>
-                                                    </div>
+                                                    <?php } ?>
+                                                </div>
 
-                                                    <div class="tab-pane fade" id="second">
-                                                        <!-- <form id="profileForm" method="post" action="#" class="form-horizontal"> -->
+                                                <div class="tab-pane fade" id="second">
+                                                    <form id="profileForm" method="post" action="#" class="form-horizontal">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="row mb-3">
@@ -777,8 +776,9 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
-                                                        <!-- <input type="submit" name="add_demo2" value="Save" class="btn btn-info" /> -->
-                                                        <!-- </form> -->
+                                                        <input type="submit" name="add_demo2" value="Save" class="btn btn-info" />
+                                                    </form>
+                                                    <?php if ($clients['status']) { ?>
                                                         <ul class="pager wizard mb-0 list-inline">
                                                             <li class="previous list-inline-item">
                                                                 <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Demographics 1</button>
@@ -787,10 +787,11 @@ if ($user->isLoggedIn()) {
                                                                 <button type="button" class="btn btn-info">Add Final <i class="ri-arrow-right-line ms-1"></i></button>
                                                             </li>
                                                         </ul>
-                                                    </div>
+                                                    <?php } ?>
+                                                </div>
 
-                                                    <div class="tab-pane fade" id="third">
-                                                        <!-- <form id="otherForm" method="post" action="#" class="form-horizontal"></form> -->
+                                                <div class="tab-pane fade" id="third">
+                                                    <form id="otherForm" method="post" action="#" class="form-horizontal">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="text-center">
@@ -814,23 +815,21 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                         <!-- end row -->
                                                         <!-- <input type="submit" name="add_demo3" value="Save" class="btn btn-info" /> -->
-                                                        <!-- </form> -->
-                                                        <ul class="pager wizard mb-0 list-inline mt-1">
-                                                            <li class="previous list-inline-item">
-                                                                <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Demographics 2</button>
-                                                            </li>
-                                                            <li class="next list-inline-item float-end">
-                                                                <input type="submit" name="add_demographic" value="Save" class="btn btn-info" />
+                                                    </form>
+                                                    <ul class="pager wizard mb-0 list-inline mt-1">
+                                                        <li class="previous list-inline-item">
+                                                            <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Demographics 2</button>
+                                                        </li>
+                                                        <li class="next list-inline-item float-end">
+                                                            <input type="submit" name="add_demographic" value="Save" class="btn btn-info" />
 
-                                                                <!-- <button type="button" class="btn btn-info">Submit</button> -->
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                            <!-- <button type="button" class="btn btn-info">Submit</button> -->
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                                <!-- tab-content -->
-                                            </form>
+                                            </div>
+                                            <!-- tab-content -->
                                         </div> <!-- end #rootwizard-->
-
                                     </div> <!-- end card-body -->
                                 </div> <!-- end card-->
                             </div>
