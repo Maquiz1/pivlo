@@ -229,8 +229,7 @@ if ($user->isLoggedIn()) {
 
 <!-- Mirrored from techzaa.getappui.com/velonic/layouts/tables-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Oct 2023 15:58:35 GMT -->
 
-<head>
-    <?php include 'header.php'; ?>
+<?php include 'header.php'; ?>
 
 
 <body>

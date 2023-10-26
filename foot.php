@@ -4,7 +4,7 @@
             <div class="col-12 text-center">
                 <script>
                     document.write(new Date().getFullYear())
-                </script> © e-CTMIS - Theme by <b>IHI</b>
+                </script> © e-CTMIS - <b>NIMR - MUHIMBILI </b>
             </div>
         </div>
     </div>
