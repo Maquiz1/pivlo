@@ -36,28 +36,27 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#Registration" aria-expanded="false" aria-controls="Registration" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
                             <i class="ri-share-line"></i>
-                            <span> Registration </span>
+                            <span> Multi Level </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="Registration">
+                        <div class="collapse" id="sidebarMultiLevel">
                             <ul class="side-nav-second-level">
                                 <li>
-                                    <a href="add.php?id=2">Add New Participant </a>
+                                    <a href="add.php?id=2&btn=Add">Add new Client</a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#RegistrationManage" aria-expanded="false" aria-controls="RegistrationManage">
+                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
                                         <span> Manage </span>
                                         <span class="menu-arrow"></span>
                                     </a>
-                                    <div class="collapse" id="RegistrationManage">
-                                        <ul class="side-nav-second-level">
-                                            <?php
-                                            foreach ($override->get('sites', 'status', 1) as $categoryM) {
-                                            ?>
+                                    <div class="collapse" id="sidebarSecondLevel">
+                                        <ul class="side-nav-third-level">
+                                            <?php foreach ($override->get('sites', 'status', 1) as $value) { ?>
+
                                                 <li>
-                                                    <a href="info.php?id=1&category=<?= $categoryM['id']; ?>"><?= $categoryM['name']; ?></a>
+                                                    <a href="info.php?id=2&site_id=<?= $value['id']; ?>"><?= $value['name']; ?></a>
                                                 </li>
                                             <?php } ?>
                                         </ul>

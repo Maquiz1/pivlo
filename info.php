@@ -425,7 +425,7 @@ if ($user->isLoggedIn()) {
                         <!-- end row-->
                     <?php } elseif ($_GET['id'] == 2) { ?>
                         <?php
-                        $generic1 = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
+                        $clients = $override->get('clients', 'status', 1);
                         ?>
                         <div class="row">
                             <div class="col-xl-12">
@@ -453,89 +453,53 @@ if ($user->isLoggedIn()) {
                                             <table class="table table-bordered border-primary table-centered mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th>Generic Name</th>
-                                                        <th>Batch Number</th>
-                                                        <th>Balance</th>
-                                                        <th>Units</th>
-                                                        <?php if ($generic1['maintainance'] == 2) { ?>
-                                                            <th>Expire Date</th>
-                                                        <?php   } ?>
-                                                        <?php if ($generic1['maintainance'] == 1) { ?>
-                                                            <th>Last Check</th>
-                                                            <th>Next Check</th>
-                                                        <?php   } ?>
+                                                        <th>Name</th>
+                                                        <th>Study Id</th>
+                                                        <th>Age</th>
+                                                        <th>Sex</th>
+                                                        <th>Site</th>
                                                         <th>Status</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    if ($override->getNews('batch', 'status', 1, 'generic_id', $_GET['gid'])) {
-
-                                                        $amnt = 0;
-                                                        foreach ($override->getNews('batch', 'status', 1, 'generic_id', $_GET['gid']) as $value) {
-                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['gid'], 'status', 1)[0]['SUM(amount)'];
-                                                            $generic = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
-                                                            $units = $override->getNews('units', 'status', 1, 'id', $value['units'])[0]['name'];
-                                                            $checking = $override->lastRow2('checking', 'batch_id', $value['id'], 'id')[0];
-
-                                                            $balance = 0;
-                                                            $total = 'Out of Stock';
-
-                                                            if ($value['amount'] > 0) {
-                                                                $balance = $value['amount'];
-                                                                $total = ' ';
-                                                                if ($generic['maintainance'] == 1) {
-                                                                    $status = 'Not Checked';
-                                                                    if ($checking['visit_status']) {
-                                                                        $status = 'Checked';
-                                                                    }
-                                                                } else {
-                                                                    $status = 'Valid';
-                                                                    if ($value['expire_date'] <= date('Y-m-d')) {
-                                                                        $status = 'Expired';
-                                                                    }
-                                                                }
-                                                            }
-
-
+                                                    if ($override->get('clients', 'status', 1)) {
+                                                        foreach ($override->get('clients', 'status', 1) as $value) {
+                                                            // $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['gid'], 'status', 1)[0]['SUM(amount)'];
+                                                            $site = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
                                                     ?>
                                                             <tr>
                                                                 <td class="table-user">
-                                                                    <?= $generic['name']; ?>
+                                                                    <?= $value['firstname'] . '  ' . $value['middlename'] . ' ' . $value['lastname']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $value['name']; ?>
+                                                                    <?= $value['study_id']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $balance; ?>
+                                                                    <?= $value['age']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $units; ?>
+                                                                    <?= $value['sex']; ?>
                                                                 </td>
-                                                                <?php if ($generic['maintainance'] == 2) { ?>
-
+                                                                <td class="table-user">
+                                                                    <?= $site['name']; ?>
+                                                                </td>
+                                                                <?php if ($value['status'] == 1) { ?>
                                                                     <td class="table-user">
-                                                                        <?= $value['expire_date']; ?>
+                                                                        Active
                                                                     </td>
                                                                 <?php   } ?>
-                                                                <?php if ($generic['maintainance'] == 1) { ?>
-
+                                                                <?php if ($value['status'] == 2) { ?>
                                                                     <td class="table-user">
-                                                                        <?= $value['check_date']; ?>
-                                                                    </td>
-                                                                    <td class="table-user">
-                                                                        <?= $value['next_check']; ?>
+                                                                        Not Active
                                                                     </td>
                                                                 <?php   } ?>
-
-                                                                <td><?= $total . ' - ' . $status; ?></td>
-
                                                                 <td class="text-center">
-                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $value['id'] ?>&category=<?= $_GET['category'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
-                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $value['id'] ?>&category=<?= $_GET['category'] ?>&btn=Edit" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
-                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#increase<?= $value['id'] ?>">Increase</button>
-                                                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dispense<?= $value['id'] ?>">Dispense</button>
+                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
+                                                                    <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=Update" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
+                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#increase<?= $value['id'] ?>">Add Smoking history</button>
+                                                                    <!-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dispense<?= $value['id'] ?>">Screeing test results using LDCT</button> -->
                                                                     <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a>
                                                                 </td>
                                                             </tr>

@@ -62,25 +62,26 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
-        } elseif (Input::get('add_demographic')) {
+        } elseif (Input::get('add_demo1')) {
             $validate = $validate->check($_POST, array(
-                'date_registered' => array(
-                    'required' => true,
-                ),
-                'firstname' => array(
-                    'required' => true,
-                ),
-                'middlename' => array(
-                    'required' => true,
-                ),
-                'lastname' => array(
-                    'required' => true,
-                ),
-                'gender' => array(
-                    'required' => true,
-                ),
+                // 'date_registered' => array(
+                //     'required' => true,
+                // ),
+                // 'firstname' => array(
+                //     'required' => true,
+                // ),
+                // 'middlename' => array(
+                //     'required' => true,
+                // ),
+                // 'lastname' => array(
+                //     'required' => true,
+                // ),
+                // 'gender' => array(
+                //     'required' => true,
+                // ),
             ));
             if ($validate->passed()) {
+                // print_r($_POST);
                 // One month from today
                 $from_today = date('Y-m-d', strtotime('+1 month'));
                 $from_today1 = date('Y-m-d H:i:s', strtotime('+1 month'));
@@ -88,157 +89,130 @@ if ($user->isLoggedIn()) {
 
                 // One month from a specific date
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
-                $age = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
+                $age = 20;
 
                 try {
-                    // if (Input::get('btn') == 'Add') {
-                    $user->createRecord('batch', array(
-                        'date_registered' => Input::get('date_registered'),
-                        'study_id' => '',
-                        'firstname' => Input::get('firstname'),
-                        'middlename' => Input::get('middlename'),
-                        'lastname' => Input::get('lastname'),
-                        'gender' => Input::get('gender'),
-                        'dob' => Input::get('dob'),
-                        'age' => $age,
-                        'hospital_id' => Input::get('hospital_id'),
-                        'phone_number' => Input::get('phone_number'),
-                        'supporter_name' => Input::get('supporter_name'),
-                        'supporter_phone' => Input::get('supporter_phone'),
-                        'relation_patient' => Input::get('relation_patient'),
-                        'district' => Input::get('district'),
-                        'street' => Input::get('street'),
-                        'house_number' => Input::get('house_number'),
+                    if (Input::get('btn') == 'Add') {
+                        $user->createRecord('clients', array(
+                            'date_registered' => Input::get('date_registered'),
+                            'study_id' => '',
+                            'firstname' => Input::get('firstname'),
+                            'middlename' => Input::get('middlename'),
+                            'lastname' => Input::get('lastname'),
+                            'sex' => Input::get('sex'),
+                            'dob' => Input::get('dob'),
+                            'age' => $age,
+                            'hospital_id' => Input::get('hospital_id'),
+                            'patient_phone' => Input::get('patient_phone'),
+                            'supporter_name' => Input::get('supporter_name'),
+                            'supporter_phone' => Input::get('supporter_phone'),
+                            'relation_patient' => Input::get('relation_patient'),
+                            'district' => Input::get('district'),
+                            'street' => Input::get('street'),
+                            'house_number' => Input::get('house_number'),
+                            'status' => 1,
+                            'screened' => 0,
+                            'eligible' => 0,
+                            'enrolled' => 0,
+                            'end_study' => 0,
+                            'create_on' => date('Y-m-d H:i:s'),
+                            'staff_id' => $user->data()->id,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                            'site_id' => $user->data()->site_id,
+                        ));
+                        $successMessage = 'Demographic 1 Added Successful';
+
+                    } elseif (Input::get('btn') == 'Update') {
+                        $user->updateRecord('clients', array(
+                            'date_registered' => Input::get('date_registered'),
+                            'firstname' => Input::get('firstname'),
+                            'middlename' => Input::get('middlename'),
+                            'lastname' => Input::get('lastname'),
+                            'sex' => Input::get('sex'),
+                            'dob' => Input::get('dob'),
+                            'age' => $age,
+                            'hospital_id' => Input::get('hospital_id'),
+                            'patient_phone' => Input::get('patient_phone'),
+                            'supporter_name' => Input::get('supporter_name'),
+                            'supporter_phone' => Input::get('supporter_phone'),
+                            'relation_patient' => Input::get('relation_patient'),
+                            'district' => Input::get('district'),
+                            'street' => Input::get('street'),
+                            'house_number' => Input::get('house_number'),
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), $_GET['cid']);
+                        $successMessage = 'Demographic 1 Updated Successful';
+
+                    }                  
+
+
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+        } elseif (Input::get('add_demo2')) {
+            $validate = $validate->check($_POST, array(
+                // 'date_registered' => array(
+                //     'required' => true,
+                // ),
+                // 'firstname' => array(
+                //     'required' => true,
+                // ),
+                // 'middlename' => array(
+                //     'required' => true,
+                // ),
+                // 'lastname' => array(
+                //     'required' => true,
+                // ),
+                // 'gender' => array(
+                //     'required' => true,
+                // ),
+            ));
+            if ($validate->passed()) {
+                // print_r($_POST);
+                // One month from today
+                $from_today = date('Y-m-d', strtotime('+1 month'));
+                $from_today1 = date('Y-m-d H:i:s', strtotime('+1 month'));
+
+
+                // One month from a specific date
+                $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
+                $age = 20;
+
+                try {
+
+                    // if (Input::get('add_demo2')) {
+                    $user->updateRecord('clients', array(
                         'head_household' => Input::get('head_household'),
                         'education' => Input::get('education'),
                         'occupation' => Input::get('occupation'),
                         'health_insurance' => Input::get('health_insurance'),
                         'insurance_name' => Input::get('insurance_name'),
                         'pay_services' => Input::get('pay_services'),
-                        'status' => 1,
-                        'screened' => 0,
-                        'eligible' => 0,
-                        'enrolled' => 0,
-                        'end_study' => 0,
                         'comments' => Input::get('comments'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
-
-                    // $batch_id = $override->lastRow('batch', 'id')[0];
-
-                    // $user->createRecord('batch_records', array(
-                    //     'generic_id' => Input::get('generic_name'),
-                    //     'batch_id' => $batch_id['id'],
-                    //     'amount' => Input::get('amount'),
-                    //     'added' => 0,
-                    //     'removed' => 0,
-                    //     'brand_name' => Input::get('brand_name'),
-                    //     'status' => 1,
-                    //     'increase_date' => date('Y-m-d'),
-                    //     'increase_time' => date('H:i'),
-                    //     'remarks' => Input::get('remarks'),
-                    //     'units' => Input::get('units'),
-                    //     'create_on' => date('Y-m-d H:i:s'),
-                    //     'staff_id' => $user->data()->id,
-                    //     'site_id' => $_GET['site'],
-                    //     'site' => $_GET['site'],
-                    //     'study_id' => $_GET['study'],
-                    //     'study' => $_GET['study'],
-                    //     'category' => $_GET['category'],
-                    // ));
-
-                    // $user->createRecord('checking', array(
-                    //     'generic_id' => $batch_id['generic_id'],
-                    //     'batch_id' => $batch_id['id'],
-                    //     'amount' => $batch_id['amount'],
-                    //     'visit_date' => date('Y-m-d H:i:s'),
-                    //     'check_date' => date('Y-m-d'),
-                    //     'next_check' => date('Y-m-d'),
-                    //     'expected_date' => date('Y-m-d H:i:s'),
-                    //     'checking_date' => date('Y-m-d'),
-                    //     'checking_time' => date('H:i:s'),
-                    //     'units' => $batch_id['units'],
-                    //     'create_on' => date('Y-m-d H:i:s'),
-                    //     'update_on' => date('Y-m-d H:i:s'),
-                    //     'staff_id' => $user->data()->id,
-                    //     'update_id' => $user->data()->id,
-                    //     'site_id' => $batch_id['site_id'],
-                    //     'site' => $batch_id['site'],
-                    //     'study_id' => $batch_id['study_id'],
-                    //     'study' => $batch_id['study'],
-                    //     'category' => $batch_id['category'],
-                    //     'maintainance' => $batch_id['maintainance'],
-                    //     'remarks' => $batch_id['remarks'],
-                    //     'next_notes' => Input::get('next_notes'),
-                    //     'visit_window1' => 2,
-                    //     'visit_window2' => 2,
-                    //     'status' => 1,
-                    //     'seq_no' => 1,
-                    //     'visit_status' => 1,
-                    //     'check_number' => 'Month 1',
-                    // ));
-
-                    // $last_check = $override->lastRow2('checking', 'batch_id', $batch_id['id'], 'id')[0];
-                    // $sq = $last_check['seq_no'] + 1;
-                    // $check_month = 'Month ' . $sq;
-
-                    // $user->createRecord('checking', array(
-                    //     'generic_id' => $batch_id['generic_id'],
-                    //     'batch_id' => $batch_id['id'],
-                    //     'amount' => $batch_id['amount'],
-                    //     'check_date' => '',
-                    //     'visit_date' => '',
-                    //     'next_check' => $from_today,
-                    //     'expected_date' => $from_today1,
-                    //     'units' => $batch_id['units'],
-                    //     'create_on' => date('Y-m-d H:i:s'),
-                    //     'update_on' => date('Y-m-d H:i:s'),
-                    //     'staff_id' => $user->data()->id,
-                    //     'update_id' => $user->data()->id,
-                    //     'site_id' => $batch_id['site_id'],
-                    //     'site' => $batch_id['site'],
-                    //     'study_id' => $batch_id['study_id'],
-                    //     'study' => $batch_id['study'],
-                    //     'category' => $batch_id['category'],
-                    //     'maintainance' => $batch_id['maintainance'],
-                    //     'remarks' => $batch_id['remarks'],
-                    //     'next_notes' => Input::get('next_notes'),
-                    //     'visit_window1' => 2,
-                    //     'visit_window2' => 2,
-                    //     'status' => 0,
-                    //     'seq_no' => $sq,
-                    //     'visit_status' => 0,
-                    //     'check_number' => $check_month,
-                    // ));
-
-                    $successMessage = 'Demographic Added Successful';
-                    // } elseif (Input::get('btn') == 'Edit') {
-                    //     $user->updateRecord('batch', array(
-                    //         'generic_id' => Input::get('generic_name'),
-                    //         'name' => Input::get('batch_name'),
-                    //         'amount' => Input::get('amount'),
-                    //         'brand_name' => Input::get('brand_name'),
-                    //         'expire_date' => Input::get('expire_date'),
-                    //         'remarks' => Input::get('remarks'),
-                    //         'units' => Input::get('units'),
-                    //         'update_on' => date('Y-m-d H:i:s'),
-                    //         'update_id' => $user->data()->id,
-                    //     ), Input::get('id'));
-
-                    //     $generic = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
-
-                    //     if ($generic['maintainance'] == 2) {
-                    //         $user->updateRecord('batch', array(
-                    //             'expire_date' => Input::get('expire_date'),
-                    //         ), Input::get('id'));
-                    //     }
-
-                    //     $successMessage = 'Batch Updated Successful';
+                    ), 1);
                     // }
+                    $successMessage = 'Demographic 2 Added Successful';
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+        } elseif (Input::get('add_demo3')) {
+            $validate = $validate->check($_POST, array());
+            if ($validate->passed()) {
+                try {
+                    // if (Input::get('add_demo2')) {
+                    $user->updateRecord('clients', array(
+                        'complete_status' => Input::get('complete_status'),
+                        'complete_on' => date('Y-m-d H:i:s'),
+                        'complete_id' => $user->data()->id,
+                    ), 1);
+                    // }
+                    $successMessage = 'Demographic 3 Added Successful';
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -492,12 +466,13 @@ if ($user->isLoggedIn()) {
                         <!-- end row -->
                     <?php } elseif ($_GET['id'] == 2) { ?>
                         <?php
-                        $clients = $override->get('clients', 'status', 1)[0];
+                        $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                         $sex = $override->get('sex', 'id', $clients['sex'])[0];
                         $district = $override->get('district', 'id', $clients['district'])[0];
                         $education = $override->get('education', 'id', $clients['education'])[0];
                         $occupation = $override->get('occupation', 'id', $clients['occupation'])[0];
                         $yes_no = $override->get('yes_no', 'id', $clients['health_insurance'])[0];
+                        $payments = $override->get('payments', 'id', $clients['pay_services'])[0];
                         $household = $override->get('household', 'id', $clients['head_household'])[0];
 
 
@@ -534,7 +509,7 @@ if ($user->isLoggedIn()) {
 
                                             <div class="tab-content mb-0 b-0">
                                                 <div class="tab-pane" id="first">
-                                                    <form id="accountForm" method="post" action="#" class="form-horizontal">
+                                                    <form id="accountForm" method="post" class="form-horizontal">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="row mb-3">
@@ -652,11 +627,11 @@ if ($user->isLoggedIn()) {
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="residence">Residence street</label>
+                                                                    <label class="col-md-3 col-form-label" for="street">Residence street</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
-                                                                                                        print_r($clients['residence']);
-                                                                                                    } ?>" id="residence" name="residence" class="form-control" placeholder="Enter Residence name" required>
+                                                                                                        print_r($clients['street']);
+                                                                                                    } ?>" id="street" name="street" class="form-control" placeholder="Enter Residence name" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
@@ -669,7 +644,7 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
-                                                        <input type="submit" name="add_demo1" value="Save" class="btn btn-info" />
+                                                        <input type="submit" name="add_demo1" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
                                                     </form>
                                                     <?php if ($clients['status']) { ?>
                                                         <ul class="list-inline wizard mb-0">
@@ -681,7 +656,7 @@ if ($user->isLoggedIn()) {
                                                 </div>
 
                                                 <div class="tab-pane fade" id="second">
-                                                    <form id="profileForm" method="post" action="#" class="form-horizontal">
+                                                    <form id="profileForm" method="post" class="form-horizontal">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="row mb-3">
@@ -689,12 +664,12 @@ if ($user->isLoggedIn()) {
                                                                     <div class="col-md-9">
                                                                         <select id="head_household" name="head_household" class="form-select form-select-lg mb-3" required>
                                                                             <option value="<?= $household['id'] ?>"><?php if ($clients) {
-                                                                                                                        print_r($household['head_household']);
+                                                                                                                        print_r($household['name']);
                                                                                                                     } else {
                                                                                                                         echo 'Select household head';
                                                                                                                     } ?>
                                                                             </option>
-                                                                            <?php foreach ($override->get('education', 'status', 1) as $value) { ?>
+                                                                            <?php foreach ($override->get('household', 'status', 1) as $value) { ?>
                                                                                 <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
                                                                             <?php } ?>
                                                                         </select>
@@ -759,9 +734,17 @@ if ($user->isLoggedIn()) {
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="pay_services">If no, how do you pay for your health care services</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" value="<?php if ($clients) {
-                                                                                                        print_r($clients['pay_services']);
-                                                                                                    } ?>" id="pay_services" name="pay_services" class="form-control" placeholder="Enter pay name" required>
+                                                                        <select id="pay_services" name="pay_services" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $payments['id'] ?>"><?php if ($clients) {
+                                                                                                                        print_r($payments['name']);
+                                                                                                                    } else {
+                                                                                                                        echo 'Select pay';
+                                                                                                                    } ?>
+                                                                            </option>
+                                                                            <?php foreach ($override->get('payments', 'status', 1) as $value) { ?>
+                                                                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-12">
@@ -776,29 +759,49 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
-                                                        <input type="submit" name="add_demo2" value="Save" class="btn btn-info" />
+                                                        <input type="submit" name="add_demo2" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
                                                     </form>
                                                     <?php if ($clients['status']) { ?>
                                                         <ul class="pager wizard mb-0 list-inline">
                                                             <li class="previous list-inline-item">
                                                                 <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Demographics 1</button>
                                                             </li>
-                                                            <li class="next list-inline-item float-end">
-                                                                <button type="button" class="btn btn-info">Add Final <i class="ri-arrow-right-line ms-1"></i></button>
-                                                            </li>
+                                                            <?php if ($clients['head_household']) { ?>
+                                                                <li class="next list-inline-item float-end">
+                                                                    <button type="button" class="btn btn-info">Add Final <i class="ri-arrow-right-line ms-1"></i></button>
+                                                                </li>
+                                                            <?php } ?>
                                                         </ul>
                                                     <?php } ?>
                                                 </div>
 
                                                 <div class="tab-pane fade" id="third">
-                                                    <form id="otherForm" method="post" action="#" class="form-horizontal">
+                                                    <form id="otherForm" method="post" class="form-horizontal">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="text-center">
                                                                     <h2 class="mt-0">
                                                                         <i class="ri-check-double-line"></i>
                                                                     </h2>
-                                                                    <h3 class="mt-0">Thank you ! Please Submit to complete</h3>
+                                                                    <div class="row mb-3">
+                                                                        <label class="col-md-3 col-form-label" for="complete_status">Completed ?</label>
+                                                                        <div class="col-md-9">
+                                                                            <select id="complete_status" name="complete_status" class="form-select form-select-lg mb-3" required>
+                                                                                <option value="<?= $yes_no['id'] ?>"><?php if ($clients) {
+                                                                                                                            print_r($yes_no['name']);
+                                                                                                                        } else {
+                                                                                                                            echo 'Select status';
+                                                                                                                        } ?>
+                                                                                </option>
+                                                                                <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                                                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php if ($clients['complete_status']) { ?>
+                                                                        <h3 class="mt-0">Thank you ! Please Submit to complete</h3>
+                                                                    <?php } ?>
 
                                                                     <!-- <p class="w-75 mb-2 mx-auto">Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis
                                                                     dui. Aliquam mattis dictum aliquet.</p>
@@ -814,14 +817,14 @@ if ($user->isLoggedIn()) {
                                                             <!-- end col -->
                                                         </div>
                                                         <!-- end row -->
-                                                        <!-- <input type="submit" name="add_demo3" value="Save" class="btn btn-info" /> -->
+                                                        <input type="submit" name="add_demo3" value="Save" class="btn btn-info" />
                                                     </form>
                                                     <ul class="pager wizard mb-0 list-inline mt-1">
                                                         <li class="previous list-inline-item">
                                                             <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Demographics 2</button>
                                                         </li>
                                                         <li class="next list-inline-item float-end">
-                                                            <input type="submit" name="add_demographic" value="Save" class="btn btn-info" />
+                                                            <!-- <input type="submit" name="add_demographic" value="Save" class="btn btn-info" /> -->
 
                                                             <!-- <button type="button" class="btn btn-info">Submit</button> -->
                                                         </li>
