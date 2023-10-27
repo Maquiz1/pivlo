@@ -81,13 +81,6 @@ if ($user->isLoggedIn()) {
                 // ),
             ));
             if ($validate->passed()) {
-                // print_r($_POST);
-                // One month from today
-                $from_today = date('Y-m-d', strtotime('+1 month'));
-                $from_today1 = date('Y-m-d H:i:s', strtotime('+1 month'));
-
-
-                // One month from a specific date
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 $age = 20;
 
@@ -122,7 +115,6 @@ if ($user->isLoggedIn()) {
                             'site_id' => $user->data()->site_id,
                         ));
                         $successMessage = 'Demographic 1 Added Successful';
-
                     } elseif (Input::get('btn') == 'Update') {
                         $user->updateRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
@@ -142,12 +134,9 @@ if ($user->isLoggedIn()) {
                             'house_number' => Input::get('house_number'),
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                        ), $_GET['cid']);
+                        ), Input::get('id'));
                         $successMessage = 'Demographic 1 Updated Successful';
-
-                    }                  
-
-
+                    }
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -171,32 +160,34 @@ if ($user->isLoggedIn()) {
                 // ),
             ));
             if ($validate->passed()) {
-                // print_r($_POST);
-                // One month from today
-                $from_today = date('Y-m-d', strtotime('+1 month'));
-                $from_today1 = date('Y-m-d H:i:s', strtotime('+1 month'));
-
-
-                // One month from a specific date
-                $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
-                $age = 20;
-
                 try {
-
-                    // if (Input::get('add_demo2')) {
-                    $user->updateRecord('clients', array(
-                        'head_household' => Input::get('head_household'),
-                        'education' => Input::get('education'),
-                        'occupation' => Input::get('occupation'),
-                        'health_insurance' => Input::get('health_insurance'),
-                        'insurance_name' => Input::get('insurance_name'),
-                        'pay_services' => Input::get('pay_services'),
-                        'comments' => Input::get('comments'),
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), 1);
-                    // }
-                    $successMessage = 'Demographic 2 Added Successful';
+                    if (Input::get('btn') == 'Add') {
+                        $user->updateRecord('clients', array(
+                            'head_household' => Input::get('head_household'),
+                            'education' => Input::get('education'),
+                            'occupation' => Input::get('occupation'),
+                            'health_insurance' => Input::get('health_insurance'),
+                            'insurance_name' => Input::get('insurance_name'),
+                            'pay_services' => Input::get('pay_services'),
+                            'comments' => Input::get('comments'),
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), Input::get('id'));
+                        $successMessage = 'Demographic 2 Added Successful';
+                    } elseif (Input::get('btn') == 'Update') {
+                        $user->updateRecord('clients', array(
+                            'head_household' => Input::get('head_household'),
+                            'education' => Input::get('education'),
+                            'occupation' => Input::get('occupation'),
+                            'health_insurance' => Input::get('health_insurance'),
+                            'insurance_name' => Input::get('insurance_name'),
+                            'pay_services' => Input::get('pay_services'),
+                            'comments' => Input::get('comments'),
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), Input::get('id'));
+                        $successMessage = 'Demographic 2 Updated Successful';
+                    }
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -210,7 +201,7 @@ if ($user->isLoggedIn()) {
                         'complete_status' => Input::get('complete_status'),
                         'complete_on' => date('Y-m-d H:i:s'),
                         'complete_id' => $user->data()->id,
-                    ), 1);
+                    ), Input::get('id'));
                     // }
                     $successMessage = 'Demographic 3 Added Successful';
                 } catch (Exception $e) {
@@ -466,7 +457,13 @@ if ($user->isLoggedIn()) {
                         <!-- end row -->
                     <?php } elseif ($_GET['id'] == 2) { ?>
                         <?php
-                        $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+                        if ($_GET['btn'] == 'Add') {
+                            $last = $override->lastRow2('clients', 'status', 1, 'id')[0];
+                            $cid = $last['id'];
+                        } elseif ($_GET['id'] == 'Update') {
+                            $cid = $_GET['cid'];
+                        }
+                        $clients = $override->getNews('clients', 'status', 1, 'id', $cid)[0];
                         $sex = $override->get('sex', 'id', $clients['sex'])[0];
                         $district = $override->get('district', 'id', $clients['district'])[0];
                         $education = $override->get('education', 'id', $clients['education'])[0];
@@ -644,6 +641,7 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
+                                                        <input type="hidden" name="id" value="<?= $value['id']; ?>" />
                                                         <input type="submit" name="add_demo1" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
                                                     </form>
                                                     <?php if ($clients['status']) { ?>
@@ -759,6 +757,7 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
+                                                        <input type="hidden" name="id" value="<?= $value['id']; ?>" />
                                                         <input type="submit" name="add_demo2" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
                                                     </form>
                                                     <?php if ($clients['status']) { ?>
@@ -817,6 +816,7 @@ if ($user->isLoggedIn()) {
                                                             <!-- end col -->
                                                         </div>
                                                         <!-- end row -->
+                                                        <input type="hidden" name="id" value="<?= $value['id']; ?>" />
                                                         <input type="submit" name="add_demo3" value="Save" class="btn btn-info" />
                                                     </form>
                                                     <ul class="pager wizard mb-0 list-inline mt-1">
