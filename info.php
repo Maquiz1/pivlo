@@ -35,42 +35,212 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
-        } elseif (Input::get('Update_check')) {
+        } elseif (Input::get('add_history')) {
             $validate = $validate->check($_POST, array(
-                'checking_date' => array(
+                'screening_date' => array(
                     'required' => true,
                 ),
-                'checking_time' => array(
+                'ever_smoked' => array(
                     'required' => true,
                 ),
-                'remarks' => array(
+                'eligible' => array(
                     'required' => true,
                 ),
             ));
             if ($validate->passed()) {
-                $user->updateRecord('checking', array(
-                    'visit_date' => date('Y-m-d H:i:s'),
-                    'check_date' => date('Y-m-d'),
-                    'checking_date' => Input::get('checking_date'),
-                    'checking_time' => Input::get('checking_time'),
-                    'update_on' => date('Y-m-d H:i:s'),
-                    'update_id' => $user->data()->id,
-                    'remarks' => Input::get('remarks'),
-                    'next_notes' => Input::get('remarks'),
-                    'visit_status' => 1,
-                ), Input::get('id'));
+                if (Input::get('btn') == 'Add') {
+                    $user->createRecord('history', array(
+                        'screening_date' => Input::get('screening_date'),
+                        'ever_smoked' => Input::get('ever_smoked'),
+                        'start_smoking' => Input::get('start_smoking'),
+                        'smoking_long' => Input::get('smoking_long'),
+                        'currently_smoking' => Input::get('currently_smoking'),
+                        'quit_smoking' => Input::get('quit_smoking'),
+                        'packs_per_day' => Input::get('packs_per_day'),
+                        'packs_per_year' => Input::get('packs_per_year'),
+                        'eligible' => Input::get('eligible'),
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+                    $successMessage = 'History  Successful Added';
+                } elseif (Input::get('btn') == 'Update') {
+                    $user->updateRecord('history', array(
+                        'screening_date' => Input::get('screening_date'),
+                        'ever_smoked' => Input::get('ever_smoked'),
+                        'start_smoking' => Input::get('start_smoking'),
+                        'smoking_long' => Input::get('smoking_long'),
+                        'currently_smoking' => Input::get('currently_smoking'),
+                        'quit_smoking' => Input::get('quit_smoking'),
+                        'packs_per_day' => Input::get('packs_per_day'),
+                        'packs_per_year' => Input::get('packs_per_year'),
+                        'eligible' => Input::get('eligible'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), Input::get('id'));
+                    $successMessage = 'History  Successful Updated';
+                }
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_results')) {
+            $validate = $validate->check($_POST, array(
+                'results_date' => array(
+                    'required' => true,
+                ),
+                'ldct_results' => array(
+                    'required' => true,
+                ),
+                'rad_score' => array(
+                    'required' => true,
+                ),
+                'findings' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                if (Input::get('btn') == 'Add') {
+                    $user->createRecord('results', array(
+                        'results_date' => Input::get('results_date'),
+                        'ldct_results' => Input::get('ldct_results'),
+                        'rad_score' => Input::get('rad_score'),
+                        'findings' => Input::get('findings'),
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+                    $successMessage = 'Results  Successful Added';
+                } elseif (Input::get('btn') == 'Update') {
+                    $user->updateRecord('results', array(
+                        'results_date' => Input::get('results_date'),
+                        'ldct_results' => Input::get('ldct_results'),
+                        'rad_score' => Input::get('rad_score'),
+                        'findings' => Input::get('findings'),
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), Input::get('id'));
+                    $successMessage = 'Results  Successful Updated';
+                }
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_classification')) {
+            $validate = $validate->check($_POST, array(
+                'classification_date' => array(
+                    'required' => true,
+                ),
+                // 'category' => array(
+                //     'required' => true,
+                // ),
+            ));
 
-                // $from_today = date('Y-m-d', strtotime('+1 month'));
-                $from_today = date('Y-m-d', strtotime('+1 month', strtotime(Input::get('checking_date'))));
-
-
-                $user->updateRecord('batch', array(
-                    'check_date' => Input::get('checking_date'),
-                    'next_check' => $from_today,
-                    'remarks' => Input::get('remarks'),
-                ), Input::get('bid'));
-
-                $successMessage = 'Checked Successful';
+            if ($validate->passed()) {
+                if (count(Input::get('category')) == 1) {
+                    foreach (Input::get('category') as $value) {
+                        if (Input::get('btn') == 'Add') {
+                            $user->createRecord('classification', array(
+                                'classification_date' => Input::get('classification_date'),
+                                'category' => $value,
+                                'status' => 1,
+                                'patient_id' => Input::get('cid'),
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $user->data()->site_id,
+                            ));
+                            $successMessage = 'Classification  Successful Added';
+                        } elseif (Input::get('btn') == 'Update') {
+                            $user->updateRecord('classification', array(
+                                'classification_date' => Input::get('classification_date'),
+                                'category' => $value,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                            ), Input::get('id'));
+                            $successMessage = 'Classification  Successful Updated';
+                        }
+                    }
+                } else {
+                    $errorMessage = 'Please chose only one Classification!';
+                }
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_economic')) {
+            $validate = $validate->check($_POST, array(
+                'economic_date' => array(
+                    'required' => true,
+                ),
+                'income_household' => array(
+                    'required' => true,
+                ),
+                'income_patient' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                if (Input::get('btn') == 'Add') {
+                    $user->createRecord('economic', array(
+                        'economic_date' => Input::get('economic_date'),
+                        'income_household' => Input::get('income_household'),
+                        'income_patient' => Input::get('income_patient'),
+                        'smoking_long' => Input::get('smoking_long'),
+                        'monthly_earn' => Input::get('monthly_earn'),
+                        'member_earn' => Input::get('member_earn'),
+                        'transport' => Input::get('transport'),
+                        'support_earn' => Input::get('support_earn'),
+                        'food_drinks' => Input::get('food_drinks'),
+                        'other_cost' => Input::get('other_cost'),
+                        'days' => Input::get('days'),
+                        'hours' => Input::get('hours'),
+                        'registration' => Input::get('registration'),
+                        'consultation' => Input::get('consultation'),
+                        'diagnostic' => Input::get('diagnostic'),
+                        'medications' => Input::get('medications'),
+                        'other_medical_cost' => Input::get('other_medical_cost'),
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+                    $successMessage = 'Economic  Successful Added';
+                } elseif (Input::get('btn') == 'Update') {
+                    $user->updateRecord('economic', array(
+                        'economic_date' => Input::get('economic_date'),
+                        'income_household' => Input::get('income_household'),
+                        'income_patient' => Input::get('income_patient'),
+                        'smoking_long' => Input::get('smoking_long'),
+                        'monthly_earn' => Input::get('monthly_earn'),
+                        'member_earn' => Input::get('member_earn'),
+                        'transport' => Input::get('transport'),
+                        'support_earn' => Input::get('support_earn'),
+                        'food_drinks' => Input::get('food_drinks'),
+                        'other_cost' => Input::get('other_cost'),
+                        'days' => Input::get('days'),
+                        'hours' => Input::get('hours'),
+                        'registration' => Input::get('registration'),
+                        'consultation' => Input::get('consultation'),
+                        'diagnostic' => Input::get('diagnostic'),
+                        'medications' => Input::get('medications'),
+                        'other_medical_cost' => Input::get('other_medical_cost'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), Input::get('id'));
+                    $successMessage = 'Economic  Successful Updated';
+                }
             } else {
                 $pageError = $validate->errors();
             }
@@ -230,7 +400,6 @@ if ($user->isLoggedIn()) {
 <!-- Mirrored from techzaa.getappui.com/velonic/layouts/tables-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Oct 2023 15:58:35 GMT -->
 
 <?php include 'header.php'; ?>
-
 
 <body>
     <!-- Begin page -->
@@ -424,9 +593,6 @@ if ($user->isLoggedIn()) {
                         </div>
                         <!-- end row-->
                     <?php } elseif ($_GET['id'] == 2) { ?>
-                        <?php
-                        $clients = $override->get('clients', 'status', 1);
-                        ?>
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card">
@@ -467,7 +633,11 @@ if ($user->isLoggedIn()) {
                                                     if ($override->get('clients', 'status', 1)) {
                                                         foreach ($override->get('clients', 'status', 1) as $value) {
                                                             // $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['gid'], 'status', 1)[0]['SUM(amount)'];
-                                                            $site = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                            $yes_no = $override->get('yes_no', 'status', 1)[0];
+                                                            $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
+                                                            $results = $override->getNews('results', 'status', 1, 'patient_id', $value['id'])[0];
+                                                            $classification = $override->getNews('classification', 'status', 1, 'patient_id', $value['id'])[0];
+                                                            $economic = $override->getNews('economic', 'status', 1, 'patient_id', $value['id'])[0];
                                                     ?>
                                                             <tr>
                                                                 <td class="table-user">
@@ -496,124 +666,513 @@ if ($user->isLoggedIn()) {
                                                                     </td>
                                                                 <?php   } ?>
                                                                 <td class="text-center">
-                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
+                                                                    <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
                                                                     <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=Update" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
-                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#increase<?= $value['id'] ?>">Add Smoking history</button>
-                                                                    <!-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dispense<?= $value['id'] ?>">Screeing test results using LDCT</button> -->
-                                                                    <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a>
+                                                                    <?php if ($history['status'] == 0) {
+                                                                        $btn = 'Add';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Add history</button>
+                                                                    <?php   } elseif ($history['status'] == 1) {
+                                                                        $btn = 'Update';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Update history</button>
+                                                                    <?php   } ?>
+                                                                    <?php if ($results['status'] == 0) {
+                                                                        $btn = 'Add';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Add Results</button>
+                                                                    <?php   } elseif ($results['status'] == 1) {
+                                                                        $btn = 'Update';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Update Results</button>
+                                                                    <?php   } ?>
+                                                                    <?php if ($classification['status'] == 0) {
+                                                                        $btn = 'Add';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btn>Add Classification</button>
+                                                                    <?php   } elseif ($classification['status'] == 1) {
+                                                                        $btn = 'Update';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btn>Update Classification</button>
+                                                                    <?php   } ?>
+                                                                    <?php if ($economic['status'] == 0) {
+                                                                        $btn = 'Add';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Add Economic</button>
+                                                                    <?php   } elseif ($economic['status'] == 1) {
+                                                                        $btn = 'Update';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Update Economic</button>
+                                                                    <?php   } ?>
+                                                                    <a href="#schedule<?= $value['id'] ?>" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#schedule<?= $value['id'] ?>">Schedule</a>
+
+                                                                    <!-- <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a> -->
                                                                 </td>
                                                             </tr>
-                                                            <div id="increase<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                            <div id="history<?= $value['id'] ?>&btn=" .$btn class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <form id="validation" method="post">
                                                                             <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">Increase</h4>
+                                                                                <h4 class="modal-title" id="standard-modalLabel">Part B: Smoking history</h4>
                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <div class="row">
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="increase_date" class="form-label">Enter Date</label>
-                                                                                            <input type="date" value="" id="increase_date" name="increase_date" class="form-control" placeholder="Enter increase date" required />
+                                                                                            <label for="screening_date" class="form-label">Screening date</label>
+                                                                                            <input type="date" value="<?php if ($history) {
+                                                                                                                            print_r($history['screening_date']);
+                                                                                                                        } ?>" id="screening_date" name="screening_date" class="form-control" placeholder="Enter screening date" required />
                                                                                         </div>
                                                                                     </div>
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="increase_time" class="form-label">Enter Time</label>
-                                                                                            <input type="time" value="" id="increase_time" name="increase_time" class="form-control" placeholder="Enter increase time" required />
+                                                                                            <label for="ever_smoked" class="form-label">Have you ever smoked cigarette ?</label>
+                                                                                            <select name="ever_smoked" id="ever_smoked" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $history['ever_smoked'] ?>"><?php if ($history) {
+                                                                                                                                                    if ($history['ever_smoked'] == 1) {
+                                                                                                                                                        echo 'Yes';
+                                                                                                                                                    } elseif ($history['ever_smoked'] == 2) {
+                                                                                                                                                        echo 'No';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Yes</option>
+                                                                                                <option value="2">No</option>
+                                                                                            </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
-                                                                                    <div class="col-4">
+                                                                                    <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="added" class="form-label">Enter amount</label>
-                                                                                            <input type="number" value="" min="0" id="added" name="added" class="form-control" placeholder="Enter amount" required />
+                                                                                            <label for="start_smoking" class="form-label">When did you start smoking?</label>
+                                                                                            <input type="number" value="<?php if ($history) {
+                                                                                                                            print_r($history['start_smoking']);
+                                                                                                                        } ?>" min="1970" min="2023" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" required />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-8">
+                                                                                    <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
-                                                                                             </textarea>
+                                                                                            <label for="smoking_long" class="form-label">How long have you been smoking?</label>
+                                                                                            <input type="number" value="<?php if ($history) {
+                                                                                                                            print_r($history['smoking_long']);
+                                                                                                                        } ?>" min="1970" min="2023" id="smoking_long" name="smoking_long" class="form-control" placeholder="Enter Years" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
+                                                                                            <select name="currently_smoking" id="currently_smoking" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $history['currently_smoking'] ?>"><?php if ($history) {
+                                                                                                                                                            if ($history['currently_smoking'] == 1) {
+                                                                                                                                                                echo 'Yes';
+                                                                                                                                                            } elseif ($history['currently_smoking'] == 2) {
+                                                                                                                                                                echo 'No';
+                                                                                                                                                            }
+                                                                                                                                                        } else {
+                                                                                                                                                            echo 'Select';
+                                                                                                                                                        } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Yes</option>
+                                                                                                <option value="2">No</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
+                                                                                            <input type="number" value="<?php if ($history) {
+                                                                                                                            print_r($history['quit_smoking']);
+                                                                                                                        } ?>" min="1970" min="2023" id="quit_smoking" name="quit_smoking" class="form-control" placeholder="Enter Year" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="packs_per_day" class="form-label">Number of packs per day</label>
+                                                                                            <input type="number" value="<?php if ($history) {
+                                                                                                                            print_r($history['packs_per_day']);
+                                                                                                                        } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="packs_per_year" class="form-label">Number of Packs per years</label>
+                                                                                            <input type="number" value="<?php if ($history) {
+                                                                                                                            print_r($history['packs_per_year']);
+                                                                                                                        } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="eligible" class="form-label">Patient Eligible for Lung Cancer Screening?</label>
+                                                                                            <select name="eligible" id="eligible" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $history['eligible'] ?>"><?php if ($history) {
+                                                                                                                                                if ($history['eligible'] == 1) {
+                                                                                                                                                    echo 'Yes';
+                                                                                                                                                } elseif ($history['eligible'] == 2) {
+                                                                                                                                                    echo 'No';
+                                                                                                                                                }
+                                                                                                                                            } else {
+                                                                                                                                                echo 'Select';
+                                                                                                                                            } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Yes</option>
+                                                                                                <option value="2">No</option>
+                                                                                            </select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="generic_id" value="<?= $generic['id'] ?>">
-                                                                                <input type="hidden" name="amount" value="<?= $value['amount'] ?>">
-                                                                                <input type="hidden" name="units" value="<?= $value['units'] ?>">
-                                                                                <input type="hidden" name="category" value="<?= $generic['category'] ?>">
-                                                                                <input type="hidden" name="brand_name" value="<?= $value['brand_name'] ?>">
-                                                                                <input type="hidden" name="study_id" value="<?= $value['study_id'] ?>">
-                                                                                <input type="hidden" name="site_id" value="<?= $value['site_id'] ?>">
+                                                                                <input type="hidden" name="id" value="<?= $history['id'] ?>">
+                                                                                <input type="hidden" name="cid" value="<?= $value['id'] ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="Increase_batch" class="btn btn-primary" value="Save">
+                                                                                <input type="submit" name="add_history" class="btn btn-primary" value="<?= $btn ?>">
                                                                             </div>
                                                                     </div><!-- /.modal-content -->
                                                                     </form>
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
-                                                            <div id="dispense<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                            <div id="results<?= $value['id'] ?>&btn=" .$btn class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <form id="validation" method="post">
                                                                             <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">Dispense</h4>
+                                                                                <h4 class="modal-title" id="standard-modalLabel">CRF2: Screeing test results using LDCT</h4>
                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <div class="row">
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="increase_date" class="form-label">Enter Date</label>
-                                                                                            <input type="date" value="" id="dispense_date" name="dispense_date" class="form-control" placeholder="Enter increase date" required />
+                                                                                            <label for="results_date" class="form-label">Date</label>
+                                                                                            <input type="date" value="<?php if ($results) {
+                                                                                                                            print_r($results['results_date']);
+                                                                                                                        } ?>" id="results_date" name="results_date" class="form-control" placeholder="Enter results date" required />
                                                                                         </div>
                                                                                     </div>
-
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="increase_time" class="form-label">Enter Time</label>
-                                                                                            <input type="time" value="" id="dispense_time" name="dispense_time" class="form-control" placeholder="Enter increase time" required />
+                                                                                            <label for="ldct_results" class="form-label">LDCT RESULTS</label>
+                                                                                            <input type="text" value="<?php if ($results) {
+                                                                                                                            print_r($results['ldct_results']);
+                                                                                                                        } ?>" id="ldct_results" name="ldct_results" class="form-control" placeholder="Enter LDCT results" required />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <hr>
-                                                                                    <div class="col-4">
+                                                                                    <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="added" class="form-label">Enter amount</label>
-                                                                                            <input type="number" value="" min="0" id="added" name="added" class="form-control" placeholder="Enter amount" required />
+                                                                                            <label for="rad_score" class="form-label">RAD SCORE</label>
+                                                                                            <input type="text" value="<?php if ($results) {
+                                                                                                                            print_r($results['rad_score']);
+                                                                                                                        } ?>" id="rad_score" name="rad_score" class="form-control" placeholder="Enter RAD score" required />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-8">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
-                                                                                             </textarea>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="findings" class="form-label">FINDINGS:</label>
+                                                                                            <textarea class="form-control" name="findings" id="findings" rows="5">
+                                                                                            <?php if ($results) {
+                                                                                                print_r($results['findings']);
+                                                                                            } ?>
+                                                                                            </textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="generic_id" value="<?= $generic['id'] ?>">
-                                                                                <input type="hidden" name="amount" value="<?= $value['amount'] ?>">
-                                                                                <input type="hidden" name="units" value="<?= $value['units'] ?>">
-                                                                                <input type="hidden" name="category" value="<?= $generic['category'] ?>">
-                                                                                <input type="hidden" name="brand_name" value="<?= $value['brand_name'] ?>">
-                                                                                <input type="hidden" name="study_id" value="<?= $value['study_id'] ?>">
-                                                                                <input type="hidden" name="site_id" value="<?= $value['site_id'] ?>">
+                                                                                <input type="hidden" name="id" value="<?= $results['id'] ?>">
+                                                                                <input type="hidden" name="cid" value="<?= $value['id'] ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="Dispense_batch" class="btn btn-primary" value="Save">
+                                                                                <input type="submit" name="add_results" class="btn btn-primary" value="<?= $btn ?>Results">
                                                                             </div>
                                                                     </div><!-- /.modal-content -->
                                                                     </form>
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
-                                                            <!-- Danger Alert Modal -->
+                                                            <div id="classification<?= $value['id'] ?>&btn=" .$btn class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <form id="validation" method="post">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title" id="standard-modalLabel">LUNG- RADS CLASSIFICATION</h4>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="classification_date" class="form-label">Date</label>
+                                                                                            <input type="date" value="<?php if ($classification) {
+                                                                                                                            print_r($classification['classification_date']);
+                                                                                                                        } ?>" id="classification_date" name="classification_date" class="form-control" placeholder="Enter classification date" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <input type="checkbox" name="category[]" value="1" <?php if ($classification['category'] == 1) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                                            <label for="ldct_results" class="form-label">Category 1</label><br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 1) as $value) { ?>
+                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php } ?>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <input type="checkbox" name="category[]" value="2" <?php if ($classification['category'] == 2) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                                            <label for="ldct_results" class="form-label">Category 2</label><br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 2) as $value) { ?>
+                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php } ?>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <input type="checkbox" name="category[]" value="3" <?php if ($classification['category'] == 3) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                                            <label for="ldct_results" class="form-label">Category 3</label><br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 3) as $value) { ?>
+                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php } ?>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <input type="checkbox" name="category[]" value="4" <?php if ($classification['category'] == 4) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                                            <label for="ldct_results" class="form-label">Category 4A</label><br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 4) as $value) { ?>
+                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php } ?>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <input type="checkbox" name="category[]" value="5" <?php if ($classification['category'] == 5) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                                            <label for="ldct_results" class="form-label">Category 4B</label><br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 5) as $value) { ?>
+                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php } ?>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <input type="hidden" name="id" value="<?= $classification['id'] ?>">
+                                                                                <input type="hidden" name="cid" value="<?= $value['id'] ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
+                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                                <input type="submit" name="add_classification" class="btn btn-primary" value="<?= $btn ?>Classification">
+                                                                            </div>
+                                                                    </div><!-- /.modal-content -->
+                                                                    </form>
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div><!-- /.modal -->
+                                                            <div id="economic<?= $value['id'] ?>&btn=" .$btn class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <form id="validation" method="post">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title" id="standard-modalLabel">CRF3: Socio-economic / Patient cost</h4>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="economic_date" class="form-label">Date</label>
+                                                                                            <input type="date" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['economic_date']);
+                                                                                                                        } ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="income_household" class="form-label">Main source of income of the household head?</label>
+                                                                                            <input type="text" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['income_household']);
+                                                                                                                        } ?>" id="income_household" name="income_household" class="form-control" placeholder="Enter household source" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="income_patient" class="form-label">Main source of income of patient?</label>
+                                                                                            <input type="text" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['income_patient']);
+                                                                                                                        } ?>" min="1970" min="2023" id="income_patient" name="income_patient" class="form-control" placeholder="Enter patient source" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="smoking_long" class="form-label">How long have you been smoking?</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['smoking_long']);
+                                                                                                                        } ?>" min="0" min="1000" id="smoking_long" name="smoking_long" class="form-control" placeholder="Enter Years" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="monthly_earn" class="form-label">How much do you earn in monthly basis from all sources of your income? ( TSHS )</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['monthly_earn']);
+                                                                                                                        } ?>" min="0" min="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="member_earn" class="form-label">In monthly basis, how much does other member of household earn from all source of income?</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['member_earn']);
+                                                                                                                        } ?>" min="0" min="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="transport" class="form-label">How much did you pay for transport when you visited the health facility for lung cancer screening?</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['transport']);
+                                                                                                                        } ?>" min="0" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="support_earn" class="form-label">If you were you accompanied by treatment supporter, how much did he/she pay for transport?</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['support_earn']);
+                                                                                                                        } ?>" min="0" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="food_drinks" class="form-label">How much did you pay for food and drinks?</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['food_drinks']);
+                                                                                                                        } ?>" min="0" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="other_cost" class="form-label">Any other cost incurred? If yes, mention and its amount?</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['other_cost']);
+                                                                                                                        } ?>" min="0" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-12">
+                                                                                        How many hours/days did you lost when attending your clinic?
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="days" class="form-label">Days</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['days']);
+                                                                                                                        } ?>" min="0" id="days" name="days" class="form-control" placeholder="Enter days" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="hours" class="form-label">Hours</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['hours']);
+                                                                                                                        } ?>" min="0" id="hours" name="hours" class="form-control" placeholder="Enter hours" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-12">
+                                                                                        How much did you pay for the following services?
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="registration" class="form-label">Registration ( TSHS )</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['registration']);
+                                                                                                                        } ?>" min="0" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="consultation" class="form-label">Consultation ( TSHS )</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['consultation']);
+                                                                                                                        } ?>" min="0" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="diagnostic" class="form-label">Diagnostic tests ( TSHS )</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['diagnostic']);
+                                                                                                                        } ?>" min="0" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="medications" class="form-label">Medications ( TSHS )</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['medications']);
+                                                                                                                        } ?>" min="0" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="other_medical_cost" class="form-label">Any other direct medical costs ( TSHS )</label>
+                                                                                            <input type="number" value="<?php if ($economic) {
+                                                                                                                            print_r($economic['other_medical_cost']);
+                                                                                                                        } ?>" min="0" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <input type="hidden" name="id" value="<?= $economic['id'] ?>">
+                                                                                <input type="hidden" name="cid" value="<?= $value['id'] ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
+                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                                <input type="submit" name="add_economic" class="btn btn-primary" value="<?= $btn ?>Social Economic">
+                                                                            </div>
+                                                                    </div><!-- /.modal-content -->
+                                                                    </form>
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div><!-- /.modal -->
                                                             <div id="delete_batch<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                                 <div class="modal-dialog modal-sm">
                                                                     <form method="post">
@@ -653,7 +1212,6 @@ if ($user->isLoggedIn()) {
                         </div>
                         <!-- end row-->
                     <?php } elseif ($_GET['id'] == 3) { ?>
-
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card">
@@ -668,7 +1226,6 @@ if ($user->isLoggedIn()) {
                                                 << /i>Back
                                             </a>
                                         </h4>
-
                                     </div>
 
                                     <div class="card-body">
@@ -688,7 +1245,7 @@ if ($user->isLoggedIn()) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    if ($override->getNews2('checking', 'visit_status', 0, 'next_check', date('Y-m-d'), 'maintainance', 1, 'category', $_GET['category'])) {
+                                                    if ($override->get('visit', 'patient_id', $_GET['cid'])) {
                                                         $amnt = 0;
                                                         foreach ($override->getNews2('checking', 'visit_status', 0, 'next_check', date('Y-m-d'), 'maintainance', 1, 'category', $_GET['category']) as $value) {
                                                             $generic = $override->getNews('generic', 'status', 1, 'id', $value['generic_id'])[0];

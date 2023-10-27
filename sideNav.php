@@ -38,7 +38,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
                             <i class="ri-share-line"></i>
-                            <span> Multi Level </span>
+                            <span> Clients </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarMultiLevel">
@@ -71,3 +71,17 @@
                 <div class="clearfix"></div>
             </div>
         </div>
+
+
+
+        <!-- Vendor js -->
+        <script src="assets/js/vendor.min.js"></script>
+
+        <!-- Bootstrap Wizard Form js -->
+        <script src="assets/vendor/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+        <!-- Wizard Form Demo js -->
+        <script src="assets/js/pages/form-wizard.init.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.min.js"></script>

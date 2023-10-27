@@ -454,13 +454,14 @@ if ($user->isLoggedIn()) {
                             </div>
                             <!-- end col -->
                         </div>
+                        
                         <!-- end row -->
                     <?php } elseif ($_GET['id'] == 2) { ?>
                         <?php
-                        if ($_GET['btn'] == 'Add') {
+                        if ($_GET['btn'] == 'Add' & $_GET['status'] == 1) {
                             $last = $override->lastRow2('clients', 'status', 1, 'id')[0];
                             $cid = $last['id'];
-                        } elseif ($_GET['id'] == 'Update') {
+                        } elseif ($_GET['btn'] == 'Update') {
                             $cid = $_GET['cid'];
                         }
                         $clients = $override->getNews('clients', 'status', 1, 'id', $cid)[0];
@@ -757,7 +758,7 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
-                                                        <input type="hidden" name="id" value="<?= $value['id']; ?>" />
+                                                        <input type="hidden" name="id" value="<?= $cid; ?>" />
                                                         <input type="submit" name="add_demo2" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
                                                     </form>
                                                     <?php if ($clients['status']) { ?>
