@@ -159,6 +159,42 @@ if ($user->isLoggedIn()) {
                                 'update_id' => $user->data()->id,
                                 'site_id' => $user->data()->site_id,
                             ));
+
+                            if ($value == 1) {
+                                $visit = 'Month 12';
+                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 2) {
+                                $visit = 'Month 12';
+                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 3) {
+                                $visit = 'Month 6';
+                                $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 4) {
+                                $visit = 'Month 3';
+                                $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 5) {
+                                $visit = 'Referred';
+                                $expected_date = 'N / A';
+                            }
+
+                            $user->createRecord('visit', array(
+                                'visit_name' => $visit,
+                                'classification_date' => Input::get('classification_date'),
+                                'expected_date' => $expected_date,
+                                'visit_date' => '',
+                                'outcome' => 0,
+                                'visit_status' => 0,
+                                'diagnosis' => Input::get('diagnosis'),
+                                'category' => $value,
+                                'status' => 1,
+                                'patient_id' => Input::get('cid'),
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $user->data()->site_id,
+                            ));
+
                             $successMessage = 'Classification  Successful Added';
                         } elseif (Input::get('btn') == 'Update') {
                             $user->updateRecord('classification', array(
@@ -173,6 +209,32 @@ if ($user->isLoggedIn()) {
                 } else {
                     $errorMessage = 'Please chose only one Classification!';
                 }
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_visit')) {
+            $validate = $validate->check($_POST, array(
+                'visit_date' => array(
+                    'required' => true,
+                ),
+                // 'category' => array(
+                //     'required' => true,
+                // ),
+            ));
+
+            if ($validate->passed()) {
+                $user->updateRecord('visit', array(
+                    'visit_date' => Input::get('visit_date'),
+                    'visit_status' => Input::get('visit_status'),
+                    'diagnosis' => Input::get('diagnosis'),
+                    'outcome' => Input::get('outcome'),
+                    'status' => 1,
+                    'patient_id' => Input::get('cid'),
+                    'update_on' => date('Y-m-d H:i:s'),
+                    'update_id' => $user->data()->id,
+                ), Input::get('id'));
+
+                $successMessage = 'Visit Updates  Successful';
             } else {
                 $pageError = $validate->errors();
             }
@@ -630,14 +692,16 @@ if ($user->isLoggedIn()) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    if ($override->get('clients', 'status', 1)) {
-                                                        foreach ($override->get('clients', 'status', 1) as $value) {
+                                                    if ($override->get('clients', 'status', 1, 'site_id', $user->data()->site_id)) {
+                                                        foreach ($override->get('clients', 'status', 1,'site_id', $user->data()->site_id) as $value) {
                                                             // $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['gid'], 'status', 1)[0]['SUM(amount)'];
                                                             $yes_no = $override->get('yes_no', 'status', 1)[0];
                                                             $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $results = $override->getNews('results', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $classification = $override->getNews('classification', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $economic = $override->getNews('economic', 'status', 1, 'patient_id', $value['id'])[0];
+                                                            $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+
                                                     ?>
                                                             <tr>
                                                                 <td class="table-user">
@@ -653,7 +717,7 @@ if ($user->isLoggedIn()) {
                                                                     <?= $value['sex']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $site['name']; ?>
+                                                                    <?= $sites['name']; ?>
                                                                 </td>
                                                                 <?php if ($value['status'] == 1) { ?>
                                                                     <td class="table-user">
@@ -666,7 +730,7 @@ if ($user->isLoggedIn()) {
                                                                     </td>
                                                                 <?php   } ?>
                                                                 <td class="text-center">
-                                                                    <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
+                                                                    <!-- <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a> -->
                                                                     <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=Update" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
                                                                     <?php if ($history['status'] == 0) {
                                                                         $btn = 'Add';
@@ -687,13 +751,13 @@ if ($user->isLoggedIn()) {
                                                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Update Results</button>
                                                                     <?php   } ?>
                                                                     <?php if ($classification['status'] == 0) {
-                                                                        $btn = 'Add';
+                                                                        $btnC = 'Add';
                                                                     ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btn>Add Classification</button>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Add Classification</button>
                                                                     <?php   } elseif ($classification['status'] == 1) {
-                                                                        $btn = 'Update';
+                                                                        $btnC = 'Update';
                                                                     ?>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btn>Update Classification</button>
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Update Classification</button>
                                                                     <?php   } ?>
                                                                     <?php if ($economic['status'] == 0) {
                                                                         $btn = 'Add';
@@ -704,7 +768,7 @@ if ($user->isLoggedIn()) {
                                                                     ?>
                                                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Update Economic</button>
                                                                     <?php   } ?>
-                                                                    <a href="#schedule<?= $value['id'] ?>" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#schedule<?= $value['id'] ?>">Schedule</a>
+                                                                    <a href="info.php?id=3&cid=<?= $value['id'] ?>" class="btn btn-success">Schedule</a>
 
                                                                     <!-- <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a> -->
                                                                 </td>
@@ -926,8 +990,8 @@ if ($user->isLoggedIn()) {
                                                                                                                                                     echo 'checked';
                                                                                                                                                 } ?>>
                                                                                             <label for="ldct_results" class="form-label">Category 1</label><br>
-                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 1) as $value) { ?>
-                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 1) as $cat) { ?>
+                                                                                                - <label><?= $cat['name'] ?></label> <br>
                                                                                             <?php } ?>
                                                                                         </div>
                                                                                     </div>
@@ -937,8 +1001,8 @@ if ($user->isLoggedIn()) {
                                                                                                                                                     echo 'checked';
                                                                                                                                                 } ?>>
                                                                                             <label for="ldct_results" class="form-label">Category 2</label><br>
-                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 2) as $value) { ?>
-                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 2) as $cat) { ?>
+                                                                                                - <label><?= $cat['name'] ?></label> <br>
                                                                                             <?php } ?>
                                                                                         </div>
                                                                                     </div>
@@ -948,8 +1012,8 @@ if ($user->isLoggedIn()) {
                                                                                                                                                     echo 'checked';
                                                                                                                                                 } ?>>
                                                                                             <label for="ldct_results" class="form-label">Category 3</label><br>
-                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 3) as $value) { ?>
-                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 3) as $cat) { ?>
+                                                                                                - <label><?= $cat['name'] ?></label> <br>
                                                                                             <?php } ?>
                                                                                         </div>
                                                                                     </div>
@@ -959,8 +1023,8 @@ if ($user->isLoggedIn()) {
                                                                                                                                                     echo 'checked';
                                                                                                                                                 } ?>>
                                                                                             <label for="ldct_results" class="form-label">Category 4A</label><br>
-                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 4) as $value) { ?>
-                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 4) as $cat) { ?>
+                                                                                                - <label><?= $cat['name'] ?></label> <br>
                                                                                             <?php } ?>
                                                                                         </div>
                                                                                     </div>
@@ -970,8 +1034,8 @@ if ($user->isLoggedIn()) {
                                                                                                                                                     echo 'checked';
                                                                                                                                                 } ?>>
                                                                                             <label for="ldct_results" class="form-label">Category 4B</label><br>
-                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 5) as $value) { ?>
-                                                                                                - <label><?= $value['name'] ?></label> <br>
+                                                                                            <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 5) as $cat) { ?>
+                                                                                                - <label><?= $cat['name'] ?></label> <br>
                                                                                             <?php } ?>
                                                                                         </div>
                                                                                     </div>
@@ -980,9 +1044,9 @@ if ($user->isLoggedIn()) {
                                                                             <div class="modal-footer">
                                                                                 <input type="hidden" name="id" value="<?= $classification['id'] ?>">
                                                                                 <input type="hidden" name="cid" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btnC ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="add_classification" class="btn btn-primary" value="<?= $btn ?>Classification">
+                                                                                <input type="submit" name="add_classification" class="btn btn-primary" value="<?= $btnC ?>Classification">
                                                                             </div>
                                                                     </div><!-- /.modal-content -->
                                                                     </form>
@@ -1233,12 +1297,10 @@ if ($user->isLoggedIn()) {
                                             <table class="table table-bordered border-primary table-centered mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th>Generic Name</th>
-                                                        <th>Batch Number</th>
-                                                        <th>Balance</th>
-                                                        <th>Units</th>
-                                                        <th>Last Check</th>
-                                                        <th>Next Check</th>
+                                                        <th>Visit Name</th>
+                                                        <th>Expected Date</th>
+                                                        <th>Visit Date</th>
+                                                        <th>Site</th>
                                                         <th>Status</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
@@ -1246,108 +1308,123 @@ if ($user->isLoggedIn()) {
                                                 <tbody>
                                                     <?php
                                                     if ($override->get('visit', 'patient_id', $_GET['cid'])) {
-                                                        $amnt = 0;
-                                                        foreach ($override->getNews2('checking', 'visit_status', 0, 'next_check', date('Y-m-d'), 'maintainance', 1, 'category', $_GET['category']) as $value) {
-                                                            $generic = $override->getNews('generic', 'status', 1, 'id', $value['generic_id'])[0];
-                                                            $batch = $override->getNews('batch', 'status', 1, 'id', $value['batch_id'])[0];
-                                                            $units = $override->getNews('units', 'status', 1, 'id', $value['units'])[0]['name'];
-                                                            $balance = 0;
-                                                            $total = 'Out of Stock';
-
-                                                            if ($value['amount'] > 0) {
-                                                                $balance = $value['amount'];
-                                                                $total = ' ';
-                                                                if ($generic['maintainance'] == 1) {
-                                                                    $status = 'Checked';
-                                                                    if ($value['expire_date'] <= date('Y-m-d')) {
-                                                                        $status = 'Not Checked';
-                                                                    }
-                                                                } else {
-                                                                    $status = 'Valid';
-                                                                    if ($value['expire_date'] <= date('Y-m-d')) {
-                                                                        $status = 'Expired';
-                                                                    }
-                                                                }
-                                                            }
+                                                        foreach ($override->get('visit', 'patient_id', $_GET['cid']) as $visit) {
+                                                            $sites = $override->getNews('sites', 'status', 1, 'id', $visit['site_id'])[0];
+                                                            $outcome = $override->getNews('outcome', 'status', 1, 'id', $visit['outcome'])[0];
 
 
                                                     ?>
                                                             <tr>
                                                                 <td class="table-user">
-                                                                    <?= $generic['name']; ?>
+                                                                    <?= $visit['visit_name']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $batch['name']; ?>
+                                                                    <?= $visit['expected_date']; ?>
+                                                                </td>outcome
+                                                                <td class="table-user">
+                                                                    <?= $visit['visit_date']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $balance; ?>
+                                                                    <?= $sites['name']; ?>
                                                                 </td>
+                                                                <?php if ($visit['visit_status'] == 1) { ?>
+                                                                    <td class="table-user">
+                                                                        Done
+                                                                    </td>
+                                                                <?php } else { ?>
+                                                                    <td class="table-user">
+                                                                        Not Done
+                                                                    </td>
+                                                                <?php  } ?>
                                                                 <td class="table-user">
-                                                                    <?= $units; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $value['check_date']; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $value['next_check']; ?>
-                                                                </td>
-                                                                <td><?= $total . ' - ' . $status; ?></td>
 
-                                                                <td class="text-center">
-                                                                    <div class="form-check form-checkbox-success mb-2">
-                                                                        <input type="checkbox" class="form-check-input" id="customCheckcolor2" <?php if ($value['visit_status']) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#standard-modal<?= $value['id'] ?>">Check</button>
-                                                                    </div>
+                                                                    <?php if ($visit['visit_status'] == 0) {
+                                                                        $btn = 'Add';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Add Visit</button>
+                                                                    <?php   } elseif ($visit['visit_status'] == 1) {
+                                                                        $btn = 'Update';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Update Visit</button>
+                                                                    <?php   } else { ?>
+                                                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Missed Visit</button>
+
+                                                                    <?php   } ?>
                                                                 </td>
+
                                                             </tr>
-                                                            <!-- Standard modal content -->
-                                                            <div id="standard-modal<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                            <div id="visit<?= $visit['id'] ?>&btn=" .$btn class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <form id="validation" method="post">
                                                                             <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">checks</h4>
+                                                                                <h4 class="modal-title" id="standard-modalLabel">Update PATIENT OUTCOME AFTER SCREENING</h4>
                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <div class="row">
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="checking_date" class="form-label">Enter check Date</label>
-                                                                                            <input type="date" value="<?php if ($value['checking_date']) {
-                                                                                                                            print_r($value['checking_date']);
-                                                                                                                        } ?>" id="checking_date" name="checking_date" class="form-control" placeholder="Enter checking date" required />
+                                                                                            <label for="visit_date" class="form-label">Date</label>
+                                                                                            <input type="date" value="<?php if ($visit) {
+                                                                                                                            print_r($visit['visit_date']);
+                                                                                                                        } ?>" id="visit_date" name="visit_date" class="form-control" placeholder="Enter visit date" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="diagnosis" class="form-label">1.Patient Diagnosis if was scored Lung- RAD 4B:</label>
+                                                                                            <textarea class="form-control" name="diagnosis" id="diagnosis" rows="5">
+                                                                                            <?php if ($visit) {
+                                                                                                print_r($visit['diagnosis']);
+                                                                                            } ?>
+                                                                                            </textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="visit_status" class="form-label">Status</label>
+                                                                                            <select name="visit_status" id="visit_status" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $visit['visit_status'] ?>"><?php if ($visit) {
+                                                                                                                                                    if ($visit['visit_status'] == 1) {
+                                                                                                                                                        echo 'Atended';
+                                                                                                                                                    } elseif ($visit['visit_status'] == 2) {
+                                                                                                                                                        echo 'Not Atended';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Atended</option>
+                                                                                                <option value="2">Not Atended</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="outcome" class="form-label">2.Outcome</label>
+                                                                                            <select id="outcome" name="outcome" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $outcome['id'] ?>"><?php if ($visit) {
+                                                                                                                                            print_r($outcome['name']);
+                                                                                                                                        } else {
+                                                                                                                                            echo 'Select outcome';
+                                                                                                                                        } ?>
+                                                                                                </option>
+                                                                                                <?php foreach ($override->get('outcome', 'status', 1) as $out) { ?>
+                                                                                                    <option value="<?= $out['id'] ?>"><?= $out['name'] ?></option>
+                                                                                                <?php } ?>
+                                                                                            </select>
                                                                                         </div>
                                                                                     </div>
 
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="checking_time" class="form-label">Enter check Time</label>
-                                                                                            <input type="time" value="<?php if ($value['checking_time']) {
-                                                                                                                            print_r($value['checking_time']);
-                                                                                                                        } ?>" id="checking_date" name="checking_time" class="form-control" placeholder="Enter checking date" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
-                                                                                    <div class="col-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5">
-                                                                                    <?php if ($value['remarks']) {
-                                                                                        print_r($value['remarks']);
-                                                                                    } ?>
-                                                                                </textarea>
-                                                                                        </div>
-                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="bid" value="<?= $value['batch_id'] ?>">
+                                                                                <input type="hidden" name="id" value="<?= $visit['id'] ?>">
+                                                                                <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="Update_check" class="btn btn-primary" value="Save">
+                                                                                <input type="submit" name="add_visit" class="btn btn-primary" value="<?= $btn ?>Visit">
                                                                             </div>
                                                                     </div><!-- /.modal-content -->
                                                                     </form>

@@ -62,11 +62,11 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
-        } elseif (Input::get('add_demographic')) {
+        } elseif (Input::get('add_demo1')) {
             $validate = $validate->check($_POST, array(
-                'date_registered' => array(
-                    'required' => true,
-                ),
+                // 'date_registered' => array(
+                //     'required' => true,
+                // ),
                 // 'firstname' => array(
                 //     'required' => true,
                 // ),
@@ -103,15 +103,6 @@ if ($user->isLoggedIn()) {
                             'district' => Input::get('district'),
                             'street' => Input::get('street'),
                             'house_number' => Input::get('house_number'),
-                            'head_household' => Input::get('head_household'),
-                            'education' => Input::get('education'),
-                            'occupation' => Input::get('occupation'),
-                            'health_insurance' => Input::get('health_insurance'),
-                            'insurance_name' => Input::get('insurance_name'),
-                            'pay_services' => Input::get('pay_services'),
-                            'complete_status' => Input::get('complete_status'),
-                            'complete_on' => date('Y-m-d H:i:s'),
-                            'complete_id' => $user->data()->id,
                             'status' => 1,
                             'screened' => 0,
                             'eligible' => 0,
@@ -123,7 +114,7 @@ if ($user->isLoggedIn()) {
                             'update_id' => $user->data()->id,
                             'site_id' => $user->data()->site_id,
                         ));
-                        $successMessage = 'Demographic  Added Successful';
+                        $successMessage = 'Demographic 1 Added Successful';
                     } elseif (Input::get('btn') == 'Update') {
                         $user->updateRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
@@ -141,6 +132,37 @@ if ($user->isLoggedIn()) {
                             'district' => Input::get('district'),
                             'street' => Input::get('street'),
                             'house_number' => Input::get('house_number'),
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), Input::get('id'));
+                        $successMessage = 'Demographic 1 Updated Successful';
+                    }
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+        } elseif (Input::get('add_demo2')) {
+            $validate = $validate->check($_POST, array(
+                // 'date_registered' => array(
+                //     'required' => true,
+                // ),
+                // 'firstname' => array(
+                //     'required' => true,
+                // ),
+                // 'middlename' => array(
+                //     'required' => true,
+                // ),
+                // 'lastname' => array(
+                //     'required' => true,
+                // ),
+                // 'gender' => array(
+                //     'required' => true,
+                // ),
+            ));
+            if ($validate->passed()) {
+                try {
+                    if (Input::get('btn') == 'Add') {
+                        $user->updateRecord('clients', array(
                             'head_household' => Input::get('head_household'),
                             'education' => Input::get('education'),
                             'occupation' => Input::get('occupation'),
@@ -148,16 +170,40 @@ if ($user->isLoggedIn()) {
                             'insurance_name' => Input::get('insurance_name'),
                             'pay_services' => Input::get('pay_services'),
                             'comments' => Input::get('comments'),
-                            'complete_status' => Input::get('complete_status'),
-                            'complete_on' => date('Y-m-d H:i:s'),
-                            'complete_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
                         ), Input::get('id'));
-                        $successMessage = 'Demographic Updated Successful';
+                        $successMessage = 'Demographic 2 Added Successful';
+                    } elseif (Input::get('btn') == 'Update') {
+                        $user->updateRecord('clients', array(
+                            'head_household' => Input::get('head_household'),
+                            'education' => Input::get('education'),
+                            'occupation' => Input::get('occupation'),
+                            'health_insurance' => Input::get('health_insurance'),
+                            'insurance_name' => Input::get('insurance_name'),
+                            'pay_services' => Input::get('pay_services'),
+                            'comments' => Input::get('comments'),
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), Input::get('id'));
+                        $successMessage = 'Demographic 2 Updated Successful';
                     }
-                    Redirect::to('info.php?id=2&site_id=' . $user->data()->site_id);
-
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+        } elseif (Input::get('add_demo3')) {
+            $validate = $validate->check($_POST, array());
+            if ($validate->passed()) {
+                try {
+                    // if (Input::get('add_demo2')) {
+                    $user->updateRecord('clients', array(
+                        'complete_status' => Input::get('complete_status'),
+                        'complete_on' => date('Y-m-d H:i:s'),
+                        'complete_id' => $user->data()->id,
+                    ), Input::get('id'));
+                    // }
+                    $successMessage = 'Demographic 3 Added Successful';
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -412,13 +458,13 @@ if ($user->isLoggedIn()) {
                         <!-- end row -->
                     <?php } elseif ($_GET['id'] == 2) { ?>
                         <?php
-                        // if ($_GET['btn'] == 'Add' & $_GET['status'] == 1) {
-                        //     $last = $override->lastRow2('clients', 'status', 1, 'id')[0];
-                        //     $cid = $last['id'];
-                        // } elseif ($_GET['btn'] == 'Update') {
-                        //     $cid = $_GET['cid'];
-                        // }
-                        $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+                        if ($_GET['btn'] == 'Add' & $_GET['status'] == 1) {
+                            $last = $override->lastRow2('clients', 'status', 1, 'id')[0];
+                            $cid = $last['id'];
+                        } elseif ($_GET['btn'] == 'Update') {
+                            $cid = $_GET['cid'];
+                        }
+                        $clients = $override->getNews('clients', 'status', 1, 'id', $cid)[0];
                         $sex = $override->get('sex', 'id', $clients['sex'])[0];
                         $district = $override->get('district', 'id', $clients['district'])[0];
                         $education = $override->get('education', 'id', $clients['education'])[0];
@@ -441,10 +487,10 @@ if ($user->isLoggedIn()) {
                                                 <li class="nav-item" data-target-form="#accountForm">
                                                     <a href="#first" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 py-2">
                                                         <i class="ri-account-circle-line fw-normal fs-20 align-middle me-1"></i>
-                                                        <span class="d-none d-sm-inline">Part A: Demographics </span>
+                                                        <span class="d-none d-sm-inline">Part A: Demographics 1</span>
                                                     </a>
                                                 </li>
-                                                <!-- <li class="nav-item" data-target-form="#profileForm">
+                                                <li class="nav-item" data-target-form="#profileForm">
                                                     <a href="#second" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 py-2">
                                                         <i class="ri-profile-line fw-normal fs-20 align-middle me-1"></i>
                                                         <span class="d-none d-sm-inline">Part A: Demographics 2</span>
@@ -455,7 +501,7 @@ if ($user->isLoggedIn()) {
                                                         <i class="ri-check-double-line fw-normal fs-20 align-middle me-1"></i>
                                                         <span class="d-none d-sm-inline">Finish</span>
                                                     </a>
-                                                </li> -->
+                                                </li>
                                             </ul>
 
 
@@ -594,6 +640,24 @@ if ($user->isLoggedIn()) {
                                                                                                     } ?>" id="house_number" name="house_number" class="form-control" placeholder="Enter house number" required>
                                                                     </div>
                                                                 </div>
+                                                            </div> <!-- end col -->
+                                                        </div> <!-- end row -->
+                                                        <input type="hidden" name="id" value="<?= $value['id']; ?>" />
+                                                        <input type="submit" name="add_demo1" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
+                                                    </form>
+                                                    <?php if ($clients['status']) { ?>
+                                                        <ul class="list-inline wizard mb-0">
+                                                            <li class="next list-inline-item float-end">
+                                                                <a href="javascript:void(0);" class="btn btn-info">Add Demographics 2 <i class="ri-arrow-right-line ms-1"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    <?php } ?>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="second">
+                                                    <form id="profileForm" method="post" class="form-horizontal">
+                                                        <div class="row">
+                                                            <div class="col-12">
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="head_household">Who is the head of your household?</label>
                                                                     <div class="col-md-9">
@@ -692,34 +756,80 @@ if ($user->isLoggedIn()) {
                                                                         </textarea>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="complete_status">Completed ?</label>
-                                                                    <div class="col-md-9">
-                                                                        <select id="complete_status" name="complete_status" class="form-select form-select-lg mb-3" required>
-                                                                            <option value="<?= $yes_no['id'] ?>"><?php if ($clients) {
-                                                                                                                        print_r($yes_no['name']);
-                                                                                                                    } else {
-                                                                                                                        echo 'Select status';
-                                                                                                                    } ?>
-                                                                            </option>
-                                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
-                                                                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-                                                                            <?php } ?>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
                                                             </div> <!-- end col -->
                                                         </div> <!-- end row -->
-                                                        <input type="hidden" name="id" value="<?= $clients['id']; ?>" />
-                                                        <input type="submit" name="add_demographic" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
+                                                        <input type="hidden" name="id" value="<?= $cid; ?>" />
+                                                        <input type="submit" name="add_demo2" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
                                                     </form>
                                                     <?php if ($clients['status']) { ?>
-                                                        <!-- <ul class="list-inline wizard mb-0">
-                                                            <li class="next list-inline-item float-end">
-                                                                <a href="javascript:void(0);" class="btn btn-info">Add Demographics 2 <i class="ri-arrow-right-line ms-1"></i></a>
+                                                        <ul class="pager wizard mb-0 list-inline">
+                                                            <li class="previous list-inline-item">
+                                                                <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Demographics 1</button>
                                                             </li>
-                                                        </ul> -->
+                                                            <?php if ($clients['head_household']) { ?>
+                                                                <li class="next list-inline-item float-end">
+                                                                    <button type="button" class="btn btn-info">Add Final <i class="ri-arrow-right-line ms-1"></i></button>
+                                                                </li>
+                                                            <?php } ?>
+                                                        </ul>
                                                     <?php } ?>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="third">
+                                                    <form id="otherForm" method="post" class="form-horizontal">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="text-center">
+                                                                    <h2 class="mt-0">
+                                                                        <i class="ri-check-double-line"></i>
+                                                                    </h2>
+                                                                    <div class="row mb-3">
+                                                                        <label class="col-md-3 col-form-label" for="complete_status">Completed ?</label>
+                                                                        <div class="col-md-9">
+                                                                            <select id="complete_status" name="complete_status" class="form-select form-select-lg mb-3" required>
+                                                                                <option value="<?= $yes_no['id'] ?>"><?php if ($clients) {
+                                                                                                                            print_r($yes_no['name']);
+                                                                                                                        } else {
+                                                                                                                            echo 'Select status';
+                                                                                                                        } ?>
+                                                                                </option>
+                                                                                <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                                                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php if ($clients['complete_status']) { ?>
+                                                                        <h3 class="mt-0">Thank you ! Please Submit to complete</h3>
+                                                                    <?php } ?>
+
+                                                                    <!-- <p class="w-75 mb-2 mx-auto">Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis
+                                                                    dui. Aliquam mattis dictum aliquet.</p>
+
+                                                                <div class="mb-3">
+                                                                    <div class="form-check d-inline-block">
+                                                                        <input type="checkbox" class="form-check-input" id="customCheck4" required>
+                                                                        <label class="form-check-label" for="customCheck4">I agree with the Terms and Conditions</label>
+                                                                    </div>
+                                                                </div> -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- end col -->
+                                                        </div>
+                                                        <!-- end row -->
+                                                        <input type="hidden" name="id" value="<?= $value['id']; ?>" />
+                                                        <input type="submit" name="add_demo3" value="Save" class="btn btn-info" />
+                                                    </form>
+                                                    <ul class="pager wizard mb-0 list-inline mt-1">
+                                                        <li class="previous list-inline-item">
+                                                            <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Demographics 2</button>
+                                                        </li>
+                                                        <li class="next list-inline-item float-end">
+                                                            <!-- <input type="submit" name="add_demographic" value="Save" class="btn btn-info" /> -->
+
+                                                            <!-- <button type="button" class="btn btn-info">Submit</button> -->
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                             <!-- tab-content -->

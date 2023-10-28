@@ -1,7 +1,7 @@
         <div class="leftside-menu">
 
             <!-- Brand Logo Light -->
-            <a href="index.php" class="logo logo-light">
+            <a href="dashboard.php" class="logo logo-light">
                 <span class="logo-lg">
                     <img src="assets/images/logo.png" alt="logo">
                 </span>
@@ -11,7 +11,7 @@
             </a>
 
             <!-- Brand Logo Dark -->
-            <a href="index.php" class="logo logo-dark">
+            <a href="dashboard.php" class="logo logo-dark">
                 <span class="logo-lg">
                     <img src="assets/images/logo-dark.png" alt="dark logo">
                 </span>
@@ -28,7 +28,7 @@
                     <li class="side-nav-title">Main</li>
 
                     <li class="side-nav-item">
-                        <a href="index.php" class="side-nav-link">
+                        <a href="dashboard.php" class="side-nav-link">
                             <i class="ri-dashboard-3-line"></i>
                             <span class="badge bg-success float-end">9+</span>
                             <span> Dashboard </span>
@@ -71,8 +71,6 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-
-
 
         <!-- Vendor js -->
         <script src="assets/js/vendor.min.js"></script>
