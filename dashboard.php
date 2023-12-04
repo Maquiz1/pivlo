@@ -42,22 +42,22 @@
                                         <li class="breadcrumb-item active">Welcome!</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Welcome!</h4>
+                                <h4 class="page-title">Welcome!</h4><?= $user->data()->site_id ?>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
 
                     <div class="row">
-                        <div class="col-xxl-6 col-sm-6">
+                        <div class="col-xxl-3 col-sm-6">
                             <div class="card widget-flat text-bg-dark">
                                 <div class="card-body">
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <a href="#">
+                                    <a href="info.php?id=1&category=1">
                                         <h6 class="text-uppercase mt-0" title="Customers">Registered</h6>
-                                        <h2 class="my-2"><?= $override->getCount('clients', 'status', 1) ?></h2>
+                                        <h2 class="my-2"><?= $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
                                         <!-- <p class="mb-0">
                                             <span class="badge bg-white bg-opacity-10 me-1">2.97%</span>
                                             <span class="text-nowrap">Since last month</span>
@@ -66,17 +66,54 @@
                                 </div>
                             </div>
                         </div> <!-- end col-->
-                        <div class="col-xxl-6 col-sm-6">
-                            <div class="card widget-flat text-bg-pink">
+
+                        <div class="col-xxl-3 col-sm-6">
+                            <div class="card widget-flat text-bg-purple">
                                 <div class="card-body">
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <a href="#">
+                                    <a href="info.php?id=1&category=2">
                                         <h6 class="text-uppercase mt-0" title="Customers">Screened</h6>
-                                        <h2 class="my-2"><?= $override->getCount('history', 'status', 1) ?></h2>
+                                        <h2 class="my-2"><?= $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
                                         <!-- <p class="mb-0">
-                                            <span class="badge bg-white bg-opacity-10 me-1">2.97%</span>
+                                        <span class="badge bg-white bg-opacity-10 me-1">18.25%</span>
+                                        <span class="text-nowrap">Since last month</span>
+                                    </p> -->
+                                    </a>
+                                </div>
+                            </div>
+                        </div> <!-- end col-->
+
+                        <div class="col-xxl-3 col-sm-6">
+                            <div class="card widget-flat text-bg-grey">
+                                <div class="card-body">
+                                    <div class="float-end">
+                                        <i class="ri-eye-line widget-icon"></i>
+                                    </div>
+                                    <a href="info.php?id=1&category=3">
+                                        <h6 class="text-uppercase mt-0" title="Customers">Eligible</h6>
+                                        <h2 class="my-2"><?= $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
+                                        <!-- <p class="mb-0">
+                                            <span class="badge bg-white bg-opacity-25 me-1">-5.75%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p> -->
+                                    </a>
+                                </div>
+                            </div>
+                        </div> <!-- end col-->
+
+                        <div class="col-xxl-3 col-sm-6">
+                            <div class="card widget-flat text-bg-secondary">
+                                <div class="card-body">
+                                    <div class="float-end">
+                                        <i class="ri-eye-line widget-icon"></i>
+                                    </div>
+                                    <a href="info.php?id=1&category=4">
+                                        <h6 class="text-uppercase mt-0" title="Customers">Enrolled</h6>
+                                        <h2 class="my-2"><?= $override->getCount1('results', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
+                                        <!-- <p class="mb-0">
+                                            <span class="badge bg-white bg-opacity-10 me-1">8.21%</span>
                                             <span class="text-nowrap">Since last month</span>
                                         </p> -->
                                     </a>
