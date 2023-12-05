@@ -109,6 +109,7 @@ if ($user->isLoggedIn()) {
                             'health_insurance' => Input::get('health_insurance'),
                             'insurance_name' => Input::get('insurance_name'),
                             'pay_services' => Input::get('pay_services'),
+                            'client_category' => Input::get('client_category'),                            
                             'complete_status' => Input::get('complete_status'),
                             'complete_on' => date('Y-m-d H:i:s'),
                             'complete_id' => $user->data()->id,
@@ -147,6 +148,7 @@ if ($user->isLoggedIn()) {
                             'health_insurance' => Input::get('health_insurance'),
                             'insurance_name' => Input::get('insurance_name'),
                             'pay_services' => Input::get('pay_services'),
+                            'client_category' => Input::get('client_category'),                            
                             'comments' => Input::get('comments'),
                             'complete_status' => Input::get('complete_status'),
                             'complete_on' => date('Y-m-d H:i:s'),
@@ -157,7 +159,6 @@ if ($user->isLoggedIn()) {
                         $successMessage = 'Demographic Updated Successful';
                     }
                     Redirect::to('info.php?id=2&site_id=' . $user->data()->site_id);
-
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -690,6 +691,28 @@ if ($user->isLoggedIn()) {
                                                                             print_r($clients['comments']);
                                                                         } ?>
                                                                         </textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mb-3">
+                                                                    <label class="col-md-3 col-form-label" for="client_category">Client Category</label>
+                                                                    <div class="col-md-9">
+                                                                        <select name="client_category" id="client_category" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $clients['client_category'] ?>"><?php if ($clients) {
+                                                                                                                                    if ($clients['client_category'] == 1) {
+                                                                                                                                        echo 'Patient';
+                                                                                                                                    } elseif ($clients['client_category'] == 2) {
+                                                                                                                                        echo 'Health care worker';
+                                                                                                                                    } else {
+                                                                                                                                        echo 'Select';
+                                                                                                                                    }
+                                                                                                                                } else {
+                                                                                                                                    echo 'Select';
+                                                                                                                                } ?>
+                                                                            </option>
+                                                                            <option value="1">Patient</option>
+                                                                            <option value="2">Health care worker</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">

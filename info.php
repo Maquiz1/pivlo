@@ -643,7 +643,7 @@ if ($user->isLoggedIn()) {
                                 </div>
                             <?php } ?>
 
-                            <div class="page-title-box">
+                            <!-- <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="dashboard.php">e-CTMIS</a></li>
@@ -652,7 +652,7 @@ if ($user->isLoggedIn()) {
                                     </ol>
                                 </div>
                                 <h4 class="page-title"><?= $Tiltle; ?></h4>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>
@@ -2540,160 +2540,72 @@ if ($user->isLoggedIn()) {
                         <!-- end row-->
 
                     <?php } elseif ($_GET['id'] == 4) { ?>
+                        <!-- start page title -->
                         <div class="row">
-                            <div class="col-xl-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="header-title"><?= $Sub_Tiltle; ?></h4>
-                                        <!-- <p class="text-muted mb-0">
-                                        Add <code>.table-bordered</code> & <code>.border-primary</code> can be added to
-                                        change colors.
-                                    </p> -->
-                                        <h4 class="header-title text-end">
-                                            <a href=" info.php?id=1&category=<?= $_GET['category'] ?>" class="text-reset fs-16 px-1">
-                                                << /i>Back
-                                            </a>
-                                        </h4>
-
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Lung Cancer</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Base UI</a></li>
+                                            <li class="breadcrumb-item active">Clients</li>
+                                        </ol>
                                     </div>
-
-                                    <div class="card-body">
-                                        <div class="table-responsive-sm">
-                                            <table class="table table-bordered border-primary table-centered mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Generic Name</th>
-                                                        <th>Batch Number</th>
-                                                        <th>Balance</th>
-                                                        <th>Units</th>
-                                                        <th>Last Check</th>
-                                                        <th>Next Check</th>
-                                                        <th>Status</th>
-                                                        <th class="text-center">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    if ($override->get5('checking', 'next_check', date('Y-m-d'), 'visit_status', $_GET['visit_status'], 'category', $_GET['category'])) {
-                                                        $amnt = 0;
-                                                        foreach ($override->get5('checking', 'next_check', date('Y-m-d'), 'visit_status', $_GET['visit_status'], 'category', $_GET['category']) as $value) {
-                                                            $generic = $override->getNews('generic', 'status', 1, 'id', $value['generic_id'])[0];
-                                                            $batch = $override->getNews('batch', 'status', 1, 'id', $value['batch_id'])[0];
-                                                            $units = $override->getNews('units', 'status', 1, 'id', $value['units'])[0]['name'];
-                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['generic_id'], 'status', 1)[0]['SUM(amount)'];
-
-                                                            $balance = 0;
-                                                            $total = 'Out of Stock';
-
-                                                            if ($batch['amount'] > 0) {
-                                                                $balance = $value['amount'];
-                                                                $total = ' ';
-                                                                $status = 'Not Checked';
-                                                                if ($value['visit_status'] == 1) {
-                                                                    $status = 'Checked';
-                                                                }
-                                                            }
-
-
-                                                    ?>
-                                                            <tr>
-                                                                <td class="table-user">
-                                                                    <?= $generic['name']; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $batch['name']; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $balance; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $units; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $batch['check_date']; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $value['next_check']; ?>
-                                                                </td>
-                                                                <td><?= $total . ' - ' . $status; ?></td>
-
-                                                                <td class="text-center">
-                                                                    <div class="form-check form-checkbox-success mb-2">
-                                                                        <input type="checkbox" class="form-check-input" id="customCheckcolor2" <?php if ($value['visit_status']) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?> <?php if ($value['visit_status']) {
-                                                                                                                                                            echo 'disabled';
-                                                                                                                                                        } ?>>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#standard-modal<?= $value['id'] ?>" <?php if ($value['visit_status']) {
-                                                                                                                                                                                                        echo 'disabled';
-                                                                                                                                                                                                    } ?>>Check</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <!-- Standard modal content -->
-                                                            <div id="standard-modal<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">value
-                                                                    <div class="modal-content">
-                                                                        <form id="validation" method="post">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">checks</h4>
-                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="checking_date" class="form-label">Enter check Date</label>
-                                                                                            <input type="date" value="<?php if ($value['checking_date']) {
-                                                                                                                            print_r($value['checking_date']);
-                                                                                                                        } ?>" id="checking_date" name="checking_date" class="form-control" placeholder="Enter checking date" required />
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="checking_time" class="form-label">Enter check Time</label>
-                                                                                            <input type="time" value="<?php if ($value['checking_time']) {
-                                                                                                                            print_r($value['checking_time']);
-                                                                                                                        } ?>" id="checking_date" name="checking_time" class="form-control" placeholder="Enter checking date" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
-                                                                                    <div class="col-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
-                                                                                             </textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="Update_check" class="btn btn-primary" value="Save">
-                                                                            </div>
-                                                                    </div><!-- /.modal-content -->
-                                                                    </form>
-                                                                </div><!-- /.modal-dialog -->
-                                                            </div><!-- /.modal -->
-                                                        <?php }
-                                                    } else {
-                                                        ?>
-                                                        <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
-                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                            <strong>Opps! - </strong> No records found!
-                                                        </div>
-                                                    <?php
-                                                    } ?>
-                                                </tbody>
-                                            </table>
-                                        </div> <!-- end table-responsive-->
-
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
+                                    <h4 class="page-title">CLIENTS</h4>
+                                </div>
+                            </div>
                         </div>
+                        <!-- end page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="mb-4 mt-2">Clients Interview Category</h4>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card border-secondary border">
+                                    <div class="card-body">
+                                        <h5 class="card-title">KAP</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <a href="javascript: void(0);" class="btn btn-secondary btn-sm">
+                                            View <span class="badge bg-light text-dark ms-1">4</span>
+                                        </a>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+                            <div class="col-md-4">
+                                <div class="card border-primary border">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">SCREENING</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <a href="javascript: void(0);" class="btn btn-primary btn-sm">
+                                            View <span class="badge bg-light text-dark ms-1">444</span>
+                                        </a>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+
+
+                            <div class="col-md-4">
+                                <div class="card border-success border">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success">HEALTH CARE WORKERS</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <a href="javascript: void(0);" class="btn btn-success btn-sm">View
+                                            <span class="badge bg-light text-dark ms-1">12</span>
+                                        </a>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row -->
                         <!-- end row-->
                     <?php } elseif ($_GET['id'] == 5) { ?>
                         <div class="row">

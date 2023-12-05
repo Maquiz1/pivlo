@@ -53,10 +53,26 @@
                                     </a>
                                     <div class="collapse" id="sidebarSecondLevel">
                                         <ul class="side-nav-third-level">
-                                            <?php foreach ($override->getNews('sites', 'status', 1,'id', $user->data()->site_id) as $value) { ?>
+                                            <?php foreach ($override->getNews('sites', 'status', 1, 'id', $user->data()->site_id) as $value) { ?>
 
                                                 <li>
                                                     <a href="info.php?id=2&site_id=<?= $value['id']; ?>"><?= $value['name']; ?></a>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevel2" aria-expanded="false" aria-controls="sidebarSecondLevel2">
+                                        <span> Manage2 </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarSecondLevel2">
+                                        <ul class="side-nav-third-level">
+                                            <?php foreach ($override->getNews('sites', 'status', 1, 'id', $user->data()->site_id) as $value) { ?>
+
+                                                <li>
+                                                    <a href="info.php?id=4&site_id=<?= $value['id']; ?>"><?= $value['name']; ?></a>
                                                 </li>
                                             <?php } ?>
                                         </ul>
