@@ -1194,6 +1194,303 @@ if ($user->isLoggedIn()) {
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <hr>
+
+                                                                                <h4 class="modal-title" id="standard-modalLabel">Sehemu ya 3; Uchunguzi(Screening) wa saratani ya mapafu. (Usimusmoee machaguo)</h4>
+                                                                                <hr>
+
+                                                                                <div class="row">
+
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="saratani_uchunguzi" class="form-label">1. Je, umewahi kusikia chochote kuhusu uchunguzi wa saratani ya mapafu, inawezekana kwa kusoma mahali Fulani, kusikia kwenye vyombo vya habari au kusikia kutoka kituo cha kutolea huduma za Afya? </label>
+                                                                                            <select name="saratani_uchunguzi" id="saratani_uchunguzi" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['saratani_uchunguzi'] ?>"><?php if ($kap) {
+                                                                                                                                                        if ($kap['saratani_uchunguzi'] == 1) {
+                                                                                                                                                            echo 'Ndio';
+                                                                                                                                                        } elseif ($kap['saratani_uchunguzi'] == 2) {
+                                                                                                                                                            echo 'Hapana';
+                                                                                                                                                        } elseif ($kap['saratani_uchunguzi'] == 99) {
+                                                                                                                                                            echo 'Sijui';
+                                                                                                                                                        }
+                                                                                                                                                    } else {
+                                                                                                                                                        echo 'Select';
+                                                                                                                                                    } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Ndio</option>
+                                                                                                <option value="2">Hapana</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="uchunguzi_maana" class="form-label">2. Nini maana ya uchunguzi wa saratani ya mapafu?</label>
+                                                                                            <select name="uchunguzi_maana" id="uchunguzi_maana" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['uchunguzi_maana'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['uchunguzi_maana'] == 1) {
+                                                                                                                                                        echo 'Uchunguzi wa saratani ya mapafu ni mchakato ambao hutumiwa kugundua uwepo wa saratani ya mapafu kwa watu wenye afya nzuri na wenye hatari kubwa ya kupata saratani ya mapafu.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_maana'] == 2) {
+                                                                                                                                                        echo 'Uchunguzi wa saratani ya mapafu ni mkakati wa uchunguzi wa saratani ya mapafu inayotumiwa kutambua saratani ya mapafu mapema kabla ya kuonyesha dalili ambapo ni hatua ya mwanzoni kabisa ambayo kuna uwezekano mkubwa wa kutibika.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_maana'] == 3) {
+                                                                                                                                                        echo 'Uchunguzi wa saratani ya mapafu ni kipimo cha kugundua saratani ya mapafu mapema kabla ya dalili kutokea.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_maana'] == 99) {
+                                                                                                                                                        echo 'Sijui';
+                                                                                                                                                    } elseif ($kap['uchunguzi_maana'] == 96) {
+                                                                                                                                                        echo 'Nyinginezo, Taja; ________________';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Uchunguzi wa saratani ya mapafu ni mchakato ambao hutumiwa kugundua uwepo wa saratani ya mapafu kwa watu wenye afya nzuri na wenye hatari kubwa ya kupata saratani ya mapafu.</option>
+                                                                                                <option value="2">Uchunguzi wa saratani ya mapafu ni mkakati wa uchunguzi wa saratani ya mapafu inayotumiwa kutambua saratani ya mapafu mapema kabla ya kuonyesha dalili ambapo ni hatua ya mwanzoni kabisa ambayo kuna uwezekano mkubwa wa kutibika.</option>
+                                                                                                <option value="3">Uchunguzi wa saratani ya mapafu ni kipimo cha kugundua saratani ya mapafu mapema kabla ya dalili kutokea.</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                                <option value="96">Nyinginezo, Taja; ________________</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6" id="uchunguzi_maana_other">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="uchunguzi_maana_other" class="form-label">Taja ?</label>
+                                                                                            <input type="text" value="<?php if ($kap) {
+                                                                                                                            print_r($kap['uchunguzi_maana_other']);
+                                                                                                                        } ?>" name="uchunguzi_maana_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="uchunguzi_faida" class="form-label">3. Je, kuna faida gani ya kufanya uchunguzi wa saratani ya mapafu?</label>
+                                                                                            <select name="uchunguzi_faida" id="uchunguzi_faida" class="form-select form-select-lg mb-3" onchange="updateText1(this.value)" required>
+                                                                                                <option value="<?= $kap['uchunguzi_faida'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['uchunguzi_faida'] == 1) {
+                                                                                                                                                        echo 'Utambuzi wa mapema ambao unaokoa maisha.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_faida'] == 2) {
+                                                                                                                                                        echo 'Kugundua saratani ya mapafu katika hatua ya awali wakati kuna uwezekano mkubwa wa kupona.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_faida'] == 3) {
+                                                                                                                                                        echo 'Hupunguza hatari ya kufa kwa saratani ya mapafu';
+                                                                                                                                                    } elseif ($kap['uchunguzi_faida'] == 99) {
+                                                                                                                                                        echo 'Sijui.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_faida'] == 96) {
+                                                                                                                                                        echo 'Nyinginezo, Taja: ________________';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Utambuzi wa mapema ambao unaokoa maisha.</option>
+                                                                                                <option value="2">Kugundua saratani ya mapafu katika hatua ya awali wakati kuna uwezekano mkubwa wa kupona.</option>
+                                                                                                <option value="3">Hupunguza hatari ya kufa kwa saratani ya mapafu.</option>
+                                                                                                <option value="99">Sijui.</option>
+                                                                                                <option value="96">Nyinginezo, Taja: ________________.</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6" id="uchunguzi_faida_other">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="uchunguzi_faida_other" class="form-label">Taja ?</label>
+                                                                                            <input type="text" value="<?php if ($kap) {
+                                                                                                                            print_r($kap['uchunguzi_faida_other']);
+                                                                                                                        } ?>" name="uchunguzi_faida_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="uchunguzi_hatari" class="form-label">4. Je, kuna hatari zozote za kufanya uchunguzi wa saratani ya mapafu?</label>
+                                                                                            <select name="uchunguzi_hatari" id="uchunguzi_hatari" class="form-select form-select-lg mb-3" onchange="updateText4(this.value)" required>
+                                                                                                <option value="<?= $kap['uchunguzi_hatari'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['uchunguzi_hatari'] == 1) {
+                                                                                                                                                        echo 'Ndio';
+                                                                                                                                                    } elseif ($kap['uchunguzi_hatari'] == 2) {
+                                                                                                                                                        echo 'Hapana';
+                                                                                                                                                    } elseif ($kap['uchunguzi_hatari'] == 99) {
+                                                                                                                                                        echo 'Sijui';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Ndio</option>
+                                                                                                <option value="2">Hapana</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="saratani_hatari" class="form-label">5. Kama jibu hapo juu ni ndio, je ni hatari gani zinazoweza kutokana na kufanya uchunguzi wa saratani ya mapafu?</label>
+                                                                                            <select name="saratani_hatari" id="saratani_hatari" class="form-select form-select-lg mb-3" onchange="updateText4(this.value)" required>
+                                                                                                <option value="<?= $kap['saratani_hatari'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['saratani_hatari'] == 1) {
+                                                                                                                                                        echo 'Hatari ya kupata mionzi mwilini, kwa kuwa inatumia skana ya LDCT.';
+                                                                                                                                                    } elseif ($kap['saratani_hatari'] == 2) {
+                                                                                                                                                        echo 'Uwoga Madaktari wanaweza wakagundua magonjwa mengine yanayofanana na  saratani ya mapafu ambayo siyo saratani ya mapafu (False positives).';
+                                                                                                                                                    } elseif ($kap['saratani_hatari'] == 3) {
+                                                                                                                                                        echo 'Unaweza kupata uvimbe vidogo vidogo ambavyo ni saratani zinazokua polepole ambazo hazitakuletea madhara.(';
+                                                                                                                                                    } elseif ($kap['saratani_hatari'] == 4) {
+                                                                                                                                                        echo 'Msongo wa mawaso(Pychological distress)';
+                                                                                                                                                    } elseif ($kap['saratani_hatari'] == 5) {
+                                                                                                                                                        echo 'Uchunguzi wa kupita kiasi (Overdiagnosis)';
+                                                                                                                                                    } elseif ($kap['saratani_hatari'] == 99) {
+                                                                                                                                                        echo 'Sijui.';
+                                                                                                                                                    } elseif ($kap['saratani_hatari'] == 96) {
+                                                                                                                                                        echo 'Nyinginezo, Taja: ________________';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Ndio</option>
+                                                                                                <option value="2">Uwoga Madaktari wanaweza wakagundua magonjwa mengine yanayofanana na saratani ya mapafu ambayo siyo saratani ya mapafu (False positives).</option>
+                                                                                                <option value="3">Unaweza kupata uvimbe vidogo vidogo ambavyo ni saratani zinazokua polepole ambazo hazitakuletea madhara.(</option>
+                                                                                                <option value="4">Msongo wa mawaso(Pychological distress)</option>
+                                                                                                <option value="5">Uchunguzi wa kupita kiasi (Overdiagnosis)</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                                <option value="96">Nyinyinezo: Taja ________________.</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6" id="saratani_hatari_other">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="saratani_hatari_other" class="form-label">Taja ?</label>
+                                                                                            <input type="text" value="<?php if ($kap) {
+                                                                                                                            print_r($kap['saratani_hatari_other']);
+                                                                                                                        } ?>" name="saratani_hatari_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="kundi" class="form-label">6. Je, ni kundi gani la watu linalofaa kufanyiwa uchunguzi wa saratani ya mapafu? (Multiple answer)</label>
+                                                                                            <select name="kundi" id="kundi" class="form-select form-select-lg mb-3" onchange="updateText3(this.value)" required>
+                                                                                                <option value="<?= $kap['kundi'] ?>"><?php if ($kap) {
+                                                                                                                                            if ($kap['kundi'] == 1) {
+                                                                                                                                                echo 'Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani.';
+                                                                                                                                            } elseif ($kap['kundi'] == 2) {
+                                                                                                                                                echo 'Vijana (chini ya miaka 45) ambao wamevuta sigara kwa miaka mingi.';
+                                                                                                                                            } elseif ($kap['kundi'] == 3) {
+                                                                                                                                                echo 'Vijana (chini ya miaka 45)  waliowahi kuvuta sana sigara lakini wakaacha.';
+                                                                                                                                            } elseif ($kap['kundi'] == 4) {
+                                                                                                                                                echo 'Watu ambao wana historia ya kuugua saratani kwenye familia zao.';
+                                                                                                                                            } elseif ($kap['kundi'] == 5) {
+                                                                                                                                                echo 'Watu wenye viashiria vya saratani ya mapafu';
+                                                                                                                                            } elseif ($kap['kundi'] == 6) {
+                                                                                                                                                echo 'Watu wenye afya njema.';
+                                                                                                                                            } elseif ($kap['kundi'] == 99) {
+                                                                                                                                                echo 'Sijui';
+                                                                                                                                            } elseif ($kap['kundi'] == 96) {
+                                                                                                                                                echo 'Zinginezo, taja: ________________';
+                                                                                                                                            }
+                                                                                                                                        } else {
+                                                                                                                                            echo 'Select';
+                                                                                                                                        } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani.</option>
+                                                                                                <option value="2">Vijana (chini ya miaka 45) ambao wamevuta sigara kwa miaka mingi.</option>
+                                                                                                <option value="3">Vijana (chini ya miaka 45) waliowahi kuvuta sana sigara lakini wakaacha.</option>
+                                                                                                <option value="4">Watu ambao wana historia ya kuugua saratani kwenye familia zao.</option>
+                                                                                                <option value="5">Watu wenye viashiria vya saratani ya mapafu</option>
+                                                                                                <option value="6">Watu wenye afya njema.</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                                <option value="96">Zinginezo, taja: ________________</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6" id="kundi_other">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="kundi_other" class="form-label">Taja ?</label>
+                                                                                            <input type="text" value="<?php if ($kap) {
+                                                                                                                            print_r($kap['kundi_other']);
+                                                                                                                        } ?>" name="kundi_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="ushawishi" class="form-label">7. Je! Unazani nani ana ushawishi mkubwa katika kutoa elimu ya ugonjwa wa Saratani ya Mapafu? (Multiple answer)</label>
+                                                                                            <select name="ushawishi" id="ushawishi" class="form-select form-select-lg mb-3" onchange="updateText4(this.value)" required>
+                                                                                                <option value="<?= $kap['ushawishi'] ?>"><?php if ($kap) {
+                                                                                                                                                if ($kap['ushawishi'] == 1) {
+                                                                                                                                                    echo 'Watoa huduma ya Afya ngazi ya jamii (CHWs).';
+                                                                                                                                                } elseif ($kap['ushawishi'] == 2) {
+                                                                                                                                                    echo 'Wataalamu wa Afya.';
+                                                                                                                                                } elseif ($kap['ushawishi'] == 3) {
+                                                                                                                                                    echo 'Watu waliopona ugonjwa wa saratani ya mapafu.';
+                                                                                                                                                } elseif ($kap['ushawishi'] == 4) {
+                                                                                                                                                    echo 'Viongozi wa Dini.';
+                                                                                                                                                } elseif ($kap['ushawishi'] == 5) {
+                                                                                                                                                    echo 'Waganga wa jadi/jamii/Ukoo';
+                                                                                                                                                } elseif ($kap['ushawishi'] == 6) {
+                                                                                                                                                    echo 'Viongozi wa jamii/mtaa/kijiji.';
+                                                                                                                                                } elseif ($kap['ushawishi'] == 7) {
+                                                                                                                                                    echo 'Serikali';
+                                                                                                                                                } elseif ($kap['ushawishi'] == 96) {
+                                                                                                                                                    echo 'Zinginezo, taja: ________________';
+                                                                                                                                                }
+                                                                                                                                            } else {
+                                                                                                                                                echo 'Select';
+                                                                                                                                            } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Watoa huduma ya Afya ngazi ya jamii (CHWs).</option>
+                                                                                                <option value="2">Wataalamu wa Afya.</option>
+                                                                                                <option value="3">Watu waliopona ugonjwa wa saratani ya mapafu.</option>
+                                                                                                <option value="4">Viongozi wa Dini.</option>
+                                                                                                <option value="5">Waganga wa jadi/jamii/Ukoo</option>
+                                                                                                <option value="6">Viongozi wa jamii/mtaa/kijiji.</option>
+                                                                                                <option value="7">Serikali</option>
+                                                                                                <option value="96">Zinginezo, taja: ________________</option>
+                                                                                            </select>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                    <div class="col-6" id="ushawishi_other">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="ushawishi_other" class="form-label">Taja ?</label>
+                                                                                            <input type="text" value="<?php if ($kap) {
+                                                                                                                            print_r($kap['ushawishi_other']);
+                                                                                                                        } ?>" name="ushawishi_other" class="form-control" placeholder="Ingiza matibabu" />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-12" id="hitaji_elimu1">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="hitaji_elimu" class="form-label">8. Je unahisi unahitaji taarifa/elimu Zaidi juu ya uchunguzi wa awali wa ugonjwa wa Saratani ya Mapafu na ugonjwa wenyewe kwa jumla?</label>
+                                                                                            <select name="hitaji_elimu" id="hitaji_elimu" class="form-select form-select-lg mb-3" onchange="updateText5(this.value)">
+                                                                                                <option value="<?= $kap['hitaji_elimu'] ?>"><?php if ($kap) {
+                                                                                                                                                if ($kap['hitaji_elimu'] == 1) {
+                                                                                                                                                    echo 'Ndio';
+                                                                                                                                                } elseif ($kap['hitaji_elimu'] == 2) {
+                                                                                                                                                    echo 'Hapana';
+                                                                                                                                                } elseif ($kap['hitaji_elimu'] == 99) {
+                                                                                                                                                    echo 'Sijui';
+                                                                                                                                                }
+                                                                                                                                            } else {
+                                                                                                                                                echo 'Select';
+                                                                                                                                            } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Ndio</option>
+                                                                                                <option value="2">Hapana</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                </div>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <input type="hidden" name="id" value="<?= $kap['id'] ?>">
