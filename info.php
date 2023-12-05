@@ -64,8 +64,31 @@ if ($user->isLoggedIn()) {
                         'matibabu_saratani' => Input::get('matibabu_saratani'),
                         'matibabu' => Input::get('matibabu'),
                         'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => 1,
-                        'uchunguzi_maana' => 1,
+                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
+                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
+                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
+                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
+                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
+                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
+                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
+                        'saratani_hatari' => Input::get('saratani_hatari'),
+                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
+                        'kundi' => Input::get('kundi'),
+                        'kundi_other' => Input::get('kundi_other'),
+                        'ushawishi' => Input::get('ushawishi'),
+                        'ushawishi_other' => Input::get('ushawishi_other'),
+                        'hitaji_elimu' => Input::get('hitaji_elimu'),
+                        'vifo' => Input::get('vifo'),
+                        'tayari_dalili' => Input::get('tayari_dalili'),
+                        'saratani_kutibika' => Input::get('saratani_kutibika'),
+                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
+                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
+                        'saratani_kufa' => Input::get('saratani_kufa'),
+                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
+                        'wapi_matibabu' => Input::get('wapi_matibabu'),
+                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
+                        'saratani_ushauri' => Input::get('saratani_ushauri'),
+                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
                         'eligible' => 1,
                         'status' => 1,
                         'patient_id' => Input::get('cid'),
@@ -92,8 +115,31 @@ if ($user->isLoggedIn()) {
                         'matibabu_saratani' => Input::get('matibabu_saratani'),
                         'matibabu' => Input::get('matibabu'),
                         'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => 1,
-                        'uchunguzi_maana' => 1,
+                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
+                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
+                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
+                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
+                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
+                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
+                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
+                        'saratani_hatari' => Input::get('saratani_hatari'),
+                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
+                        'kundi' => Input::get('kundi'),
+                        'kundi_other' => Input::get('kundi_other'),
+                        'ushawishi' => Input::get('ushawishi'),
+                        'ushawishi_other' => Input::get('ushawishi_other'),
+                        'hitaji_elimu' => Input::get('hitaji_elimu'),
+                        'vifo' => Input::get('vifo'),
+                        'tayari_dalili' => Input::get('tayari_dalili'),
+                        'saratani_kutibika' => Input::get('saratani_kutibika'),
+                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
+                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
+                        'saratani_kufa' => Input::get('saratani_kufa'),
+                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
+                        'wapi_matibabu' => Input::get('wapi_matibabu'),
+                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
+                        'saratani_ushauri' => Input::get('saratani_ushauri'),
+                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
                         'eligible' => 1,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
@@ -1482,6 +1528,320 @@ if ($user->isLoggedIn()) {
                                                                                                                                             } else {
                                                                                                                                                 echo 'Select';
                                                                                                                                             } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Ndio</option>
+                                                                                                <option value="2">Hapana</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                </div>
+
+                                                                                <h4 class="modal-title" id="standard-modalLabel">Sehemu ya 4; Mtazamo juu ya uchunguzi wa saratani ya mapafu</h4>
+                                                                                <hr>
+                                                                                <p>Fikiria kuhusu uchunguzi wa saratani ya mapafu, unaweza kuniambia ni kwa kiasi gani unakubaliana na kila kauli zifuatazo?</p>
+
+                                                                                <hr>
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="vifo" class="form-label">1. Fikiria kuhusu vifo vinavyotokea kwasababu ya Saratani; “Nisingependa kujua kama nina saratani ya mapafu”. </label>
+                                                                                            <select name="vifo" id="vifo" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['vifo'] ?>"><?php if ($kap) {
+                                                                                                                                        if ($kap['vifo'] == 1) {
+                                                                                                                                            echo 'Nakubali sana.';
+                                                                                                                                        } elseif ($kap['vifo'] == 2) {
+                                                                                                                                            echo 'Nakubali';
+                                                                                                                                        } elseif ($kap['vifo'] == 3) {
+                                                                                                                                            echo 'Kawaida';
+                                                                                                                                        } elseif ($kap['vifo'] == 4) {
+                                                                                                                                            echo 'Sikubali kabisa.';
+                                                                                                                                        } elseif ($kap['vifo'] == 5) {
+                                                                                                                                            echo 'Sikubali';
+                                                                                                                                        }
+                                                                                                                                    } else {
+                                                                                                                                        echo 'Select';
+                                                                                                                                    } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Nakubali sana.</option>
+                                                                                                <option value="2">Nakubali</option>
+                                                                                                <option value="3">Kawaida</option>
+                                                                                                <option value="4">Sikubali kabisa.</option>
+                                                                                                <option value="5">Sikubali</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="tayari_dalili" class="form-label">2. Fikiria jinsi dalili zinavyoonekana, “ Kwenda kwa daktari wangu mapema nikiwa tayari na dalili za ugonjwa wa saratani ya mapafu,akulete utofauti wowote wa mimi kupona saratani ya mapafu”. </label>
+                                                                                            <select name="tayari_dalili" id="tayari_dalili" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['tayari_dalili'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['tayari_dalili'] == 1) {
+                                                                                                                                                        echo 'Nakubali sana.';
+                                                                                                                                                    } elseif ($kap['tayari_dalili'] == 2) {
+                                                                                                                                                        echo 'Nakubali';
+                                                                                                                                                    } elseif ($kap['tayari_dalili'] == 3) {
+                                                                                                                                                        echo 'Kawaida';
+                                                                                                                                                    } elseif ($kap['tayari_dalili'] == 4) {
+                                                                                                                                                        echo 'Sikubali kabisa.';
+                                                                                                                                                    } elseif ($kap['tayari_dalili'] == 5) {
+                                                                                                                                                        echo 'Sikubali';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Nakubali sana.</option>
+                                                                                                <option value="2">Nakubali</option>
+                                                                                                <option value="3">Kawaida</option>
+                                                                                                <option value="4">Sikubali kabisa.</option>
+                                                                                                <option value="5">Sikubali</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="saratani_kutibika" class="form-label">3. Fikiria jinsi dalili zinavyoonekana ; “Endapo saratani ya mapafu ikigundulika mapema, kuna uwezekano mkubwa wa kutibika”. </label>
+                                                                                            <select name="saratani_kutibika" id="saratani_kutibika" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['saratani_kutibika'] ?>"><?php if ($kap) {
+                                                                                                                                                        if ($kap['saratani_kutibika'] == 1) {
+                                                                                                                                                            echo 'Nakubali sana.';
+                                                                                                                                                        } elseif ($kap['saratani_kutibika'] == 2) {
+                                                                                                                                                            echo 'Nakubali';
+                                                                                                                                                        } elseif ($kap['saratani_kutibika'] == 3) {
+                                                                                                                                                            echo 'Kawaida';
+                                                                                                                                                        } elseif ($kap['saratani_kutibika'] == 4) {
+                                                                                                                                                            echo 'Sikubali kabisa.';
+                                                                                                                                                        } elseif ($kap['saratani_kutibika'] == 5) {
+                                                                                                                                                            echo 'Sikubali';
+                                                                                                                                                        }
+                                                                                                                                                    } else {
+                                                                                                                                                        echo 'Select';
+                                                                                                                                                    } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Nakubali sana.</option>
+                                                                                                <option value="2">Nakubali</option>
+                                                                                                <option value="3">Kawaida</option>
+                                                                                                <option value="4">Sikubali kabisa.</option>
+                                                                                                <option value="5">Sikubali</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="saratani_wasiwasi" class="form-label">4. “Ningependelea kutokwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu nina wasiwasi juu ya kile kinachoweza kugundulika wakati wa uchunguzi wa saratani ya mapafu”. </label>
+                                                                                            <select name="saratani_wasiwasi" id="saratani_wasiwasi" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['saratani_wasiwasi'] ?>"><?php if ($kap) {
+                                                                                                                                                        if ($kap['saratani_wasiwasi'] == 1) {
+                                                                                                                                                            echo 'Nakubali sana.';
+                                                                                                                                                        } elseif ($kap['saratani_wasiwasi'] == 2) {
+                                                                                                                                                            echo 'Nakubali';
+                                                                                                                                                        } elseif ($kap['saratani_wasiwasi'] == 3) {
+                                                                                                                                                            echo 'Kawaida';
+                                                                                                                                                        } elseif ($kap['saratani_wasiwasi'] == 4) {
+                                                                                                                                                            echo 'Sikubali kabisa.';
+                                                                                                                                                        } elseif ($kap['saratani_wasiwasi'] == 5) {
+                                                                                                                                                            echo 'Sikubali';
+                                                                                                                                                        }
+                                                                                                                                                    } else {
+                                                                                                                                                        echo 'Select';
+                                                                                                                                                    } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Nakubali sana.</option>
+                                                                                                <option value="2">Nakubali</option>
+                                                                                                <option value="3">Kawaida</option>
+                                                                                                <option value="4">Sikubali kabisa.</option>
+                                                                                                <option value="5">Sikubali</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <hr>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="saratani_umuhimu" class="form-label">5. “Sidhani kama kuna umuhimu wowote wa kwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu haita athiri matokeo”. </label>
+                                                                                            <select name="saratani_umuhimu" id="saratani_umuhimu" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['saratani_umuhimu'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['saratani_umuhimu'] == 1) {
+                                                                                                                                                        echo 'Nakubali sana.';
+                                                                                                                                                    } elseif ($kap['saratani_umuhimu'] == 2) {
+                                                                                                                                                        echo 'Nakubali';
+                                                                                                                                                    } elseif ($kap['saratani_umuhimu'] == 3) {
+                                                                                                                                                        echo 'Kawaida';
+                                                                                                                                                    } elseif ($kap['saratani_umuhimu'] == 4) {
+                                                                                                                                                        echo 'Sikubali kabisa.';
+                                                                                                                                                    } elseif ($kap['saratani_umuhimu'] == 5) {
+                                                                                                                                                        echo 'Sikubali';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Nakubali sana.</option>
+                                                                                                <option value="2">Nakubali</option>
+                                                                                                <option value="3">Kawaida</option>
+                                                                                                <option value="4">Sikubali kabisa.</option>
+                                                                                                <option value="5">Sikubali</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="saratani_kufa" class="form-label">6.“Kufanya uchunguzi wa saratani ya mapafu kunaweza kupunguza uwezekano wangu wa kufa kutokana na saratani ya mapafu.” </label>
+                                                                                            <select name="saratani_kufa" id="saratani_kufa" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['saratani_kufa'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['saratani_kufa'] == 1) {
+                                                                                                                                                        echo 'Nakubali sana.';
+                                                                                                                                                    } elseif ($kap['saratani_kufa'] == 2) {
+                                                                                                                                                        echo 'Nakubali';
+                                                                                                                                                    } elseif ($kap['saratani_kufa'] == 3) {
+                                                                                                                                                        echo 'Kawaida';
+                                                                                                                                                    } elseif ($kap['saratani_kufa'] == 4) {
+                                                                                                                                                        echo 'Sikubali kabisa.';
+                                                                                                                                                    } elseif ($kap['saratani_kufa'] == 5) {
+                                                                                                                                                        echo 'Sikubali';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Nakubali sana.</option>
+                                                                                                <option value="2">Nakubali</option>
+                                                                                                <option value="3">Kawaida</option>
+                                                                                                <option value="4">Sikubali kabisa.</option>
+                                                                                                <option value="5">Sikubali</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-12">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="uchunguzi_haraka" class="form-label">7. “Endapo nitapata dalili zozote za awali za ugonjwa wa Saratani ya mapafu nitakwenda kwa ajili ya uchunguzi wa saratani ya mapafu haraka iwezekanavyo”. </label>
+                                                                                            <select name="uchunguzi_haraka" id="uchunguzi_haraka" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['uchunguzi_haraka'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['uchunguzi_haraka'] == 1) {
+                                                                                                                                                        echo 'Nakubali sana.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_haraka'] == 2) {
+                                                                                                                                                        echo 'Nakubali';
+                                                                                                                                                    } elseif ($kap['uchunguzi_haraka'] == 3) {
+                                                                                                                                                        echo 'Kawaida';
+                                                                                                                                                    } elseif ($kap['uchunguzi_haraka'] == 4) {
+                                                                                                                                                        echo 'Sikubali kabisa.';
+                                                                                                                                                    } elseif ($kap['uchunguzi_haraka'] == 5) {
+                                                                                                                                                        echo 'Sikubali';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Nakubali sana.</option>
+                                                                                                <option value="2">Nakubali</option>
+                                                                                                <option value="3">Kawaida</option>
+                                                                                                <option value="4">Sikubali kabisa.</option>
+                                                                                                <option value="5">Sikubali</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                </div>
+
+                                                                                <hr>
+
+                                                                                <h4 class="modal-title" id="standard-modalLabel">Sehemu ya 5; Utaratibu(Practice) juu ya uchunguzi wa saratani ya mapafu.</h4>
+                                                                                <hr>
+
+                                                                                <div class="row">
+                                                                                    <hr>
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="wapi_matibabu" class="form-label">8. Je katika jamii yako, watu wakiumwa, huwa wanapendelea kwenda wapi kupata matibabu ?</label>
+                                                                                            <select name="wapi_matibabu" id="wapi_matibabu" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['wapi_matibabu'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['wapi_matibabu'] == 1) {
+                                                                                                                                                        echo 'Kituo cha afya kilichopo karibu.';
+                                                                                                                                                    } elseif ($kap['wapi_matibabu'] == 2) {
+                                                                                                                                                        echo 'Mganga wa jadi.';
+                                                                                                                                                    } elseif ($kap['wapi_matibabu'] == 3) {
+                                                                                                                                                        echo 'Kanisani/msikitini.';
+                                                                                                                                                    } elseif ($kap['wapi_matibabu'] == 4) {
+                                                                                                                                                        echo 'Duka la Dawa.';
+                                                                                                                                                    } elseif ($kap['wapi_matibabu'] == 5) {
+                                                                                                                                                        echo 'Kituo cha tiba asili.';
+                                                                                                                                                    } elseif ($kap['wapi_matibabu'] == 6) {
+                                                                                                                                                        echo 'Wanajitibu wenyewe.';
+                                                                                                                                                    } elseif ($kap['wapi_matibabu'] == 99) {
+                                                                                                                                                        echo 'Sijui';
+                                                                                                                                                    } elseif ($kap['wapi_matibabu'] == 96) {
+                                                                                                                                                        echo 'Nyinginezo, Taja; ________________';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Kituo cha afya kilichopo karibu.</option>
+                                                                                                <option value="2">Mganga wa jadi.</option>
+                                                                                                <option value="3">Kanisani/msikitini.</option>
+                                                                                                <option value="4">Duka la Dawa.</option>
+                                                                                                <option value="5">Kituo cha tiba asili.</option>
+                                                                                                <option value="6">Wanajitibu wenyewe.</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                                <option value="96">Nyinginezo, Taja; ________________</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6" id="wapi_matibabu_other">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="wapi_matibabu_other" class="form-label">Taja ?</label>
+                                                                                            <input type="text" value="<?php if ($kap) {
+                                                                                                                            print_r($kap['wapi_matibabu_other']);
+                                                                                                                        } ?>" name="wapi_matibabu_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="saratani_ushauri" class="form-label">9. Je! Wewe/watu katika jamii huwa wanakwenda kwenye vituo vya kutolea huduma za Afya kwa ajili ya ushauri kuhusu uchunguzi wa ugonjwa wa Saratani ya Mapafu?</label>
+                                                                                            <select name="saratani_ushauri" id="saratani_ushauri" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['saratani_ushauri'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['saratani_ushauri'] == 1) {
+                                                                                                                                                        echo 'Ndio';
+                                                                                                                                                    } elseif ($kap['saratani_ushauri'] == 2) {
+                                                                                                                                                        echo 'Hapana';
+                                                                                                                                                    } elseif ($kap['saratani_ushauri'] == 99) {
+                                                                                                                                                        echo 'Sijui';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Ndio</option>
+                                                                                                <option value="2">Hapana</option>
+                                                                                                <option value="99">Sijui</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="saratani_ujumbe" class="form-label">10. Katika mwezi uliopita umesikia ujumbe wa afya kuhusu maswala ya uchunguzi wa awali wa Saratani ya mapafu?</label>
+                                                                                            <select name="saratani_ujumbe" id="saratani_ujumbe" class="form-select form-select-lg mb-3" required>
+                                                                                                <option value="<?= $kap['saratani_ujumbe'] ?>"><?php if ($kap) {
+                                                                                                                                                    if ($kap['saratani_ujumbe'] == 1) {
+                                                                                                                                                        echo 'Ndio';
+                                                                                                                                                    } elseif ($kap['saratani_ujumbe'] == 2) {
+                                                                                                                                                        echo 'Hapana';
+                                                                                                                                                    } elseif ($kap['saratani_ujumbe'] == 99) {
+                                                                                                                                                        echo 'Sijui';
+                                                                                                                                                    }
+                                                                                                                                                } else {
+                                                                                                                                                    echo 'Select';
+                                                                                                                                                } ?>
                                                                                                 </option>
                                                                                                 <option value="1">Ndio</option>
                                                                                                 <option value="2">Hapana</option>
