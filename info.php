@@ -35,6 +35,74 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
+        } elseif (Input::get('add_kap')) {
+            $validate = $validate->check($_POST, array(
+                'interview_date' => array(
+                    'required' => true,
+                ),
+                'saratani_mapafu' => array(
+                    'required' => true,
+                ),
+                'uhusiano_saratani' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                if (Input::get('btn') == 'Add') {
+                    $user->createRecord('kap', array(
+                        'interview_date' => Input::get('interview_date'),
+                        'saratani_mapafu' => Input::get('saratani_mapafu'),
+                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
+                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
+                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
+                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
+                        'dalili_saratani' => Input::get('dalili_saratani'),
+                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
+                        'saratani_vipimo' => Input::get('saratani_vipimo'),
+                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
+                        'saratani_inatibika' => Input::get('saratani_inatibika'),
+                        'matibabu_saratani' => Input::get('matibabu_saratani'),
+                        'matibabu' => Input::get('matibabu'),
+                        'matibabu_other' => Input::get('matibabu_other'),
+                        'saratani_uchunguzi' => 1,
+                        'uchunguzi_maana' => 1,
+                        'eligible' => 1,
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+                    $successMessage = 'Kap  Successful Added';
+                } elseif (Input::get('btn') == 'Update') {
+                    $user->updateRecord('kap', array(
+                        'interview_date' => Input::get('interview_date'),
+                        'saratani_mapafu' => Input::get('saratani_mapafu'),
+                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
+                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
+                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
+                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
+                        'dalili_saratani' => Input::get('dalili_saratani'),
+                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
+                        'saratani_vipimo' => Input::get('saratani_vipimo'),
+                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
+                        'saratani_inatibika' => Input::get('saratani_inatibika'),
+                        'matibabu_saratani' => Input::get('matibabu_saratani'),
+                        'matibabu' => Input::get('matibabu'),
+                        'matibabu_other' => Input::get('matibabu_other'),
+                        'saratani_uchunguzi' => 1,
+                        'uchunguzi_maana' => 1,
+                        'eligible' => 1,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), Input::get('id'));
+                    $successMessage = 'Kap  Successful Updated';
+                }
+            } else {
+                $pageError = $validate->errors();
+            }
         } elseif (Input::get('add_history')) {
             $validate = $validate->check($_POST, array(
                 'screening_date' => array(
@@ -692,8 +760,8 @@ if ($user->isLoggedIn()) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    if ($override->get('clients', 'status', 1, 'site_id', $user->data()->site_id)) {
-                                                        foreach ($override->get('clients', 'status', 1, 'site_id', $user->data()->site_id) as $value) {
+                                                    if ($override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id)) {
+                                                        foreach ($override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id) as $value) {
                                                             // $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['gid'], 'status', 1)[0]['SUM(amount)'];
                                                             $yes_no = $override->get('yes_no', 'status', 1)[0];
                                                             $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
@@ -702,6 +770,8 @@ if ($user->isLoggedIn()) {
                                                             $classification = $override->getNews('classification', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $economic = $override->getNews('economic', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+
+                                                            // var_dump($kap);
 
                                                     ?>
                                                             <tr>
@@ -734,14 +804,14 @@ if ($user->isLoggedIn()) {
                                                                     <!-- <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a> -->
                                                                     <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=Update" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
 
-                                                                    <?php if ($kap['status'] == 0) {
-                                                                        $btn = 'Add';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kap<?= $value['id'] ?>&btn=" .$btn>Add KAP</button>
-                                                                    <?php   } elseif ($kap['status'] == 1) {
-                                                                        $btn = 'Update';
+                                                                    <?php if ($kap['status']) {
+                                                                        $btnKap = 'Update';
                                                                     ?>
                                                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kap<?= $value['id'] ?>&btn=" .$btn>Update KAP</button>
+                                                                    <?php   } else {
+                                                                        $btnKap = 'Add';
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kap<?= $value['id'] ?>&btn=" .$btn>Add KAP</button>
                                                                     <?php   } ?>
 
                                                                     <?php if ($history['status'] == 0) {
@@ -928,7 +998,7 @@ if ($user->isLoggedIn()) {
                                                                                             <label for="vitu_hatarishi_other" class="form-label">Taja ?</label>
                                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                                             print_r($kap['vitu_hatarishi_other']);
-                                                                                                                        } ?>" name="vitu_hatarishi_other" class="form-control" placeholder="Ingiza vitu hatarishi" required />
+                                                                                                                        } ?>" name="vitu_hatarishi_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
@@ -984,7 +1054,7 @@ if ($user->isLoggedIn()) {
                                                                                             <label for="dalili_saratani_other" class="form-label">Taja ?</label>
                                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                                             print_r($kap['dalili_saratani_other']);
-                                                                                                                        } ?>" name="dalili_saratani_other" class="form-control" placeholder="Ingiza dalili_saratani" required />
+                                                                                                                        } ?>" name="dalili_saratani_other" class="form-control" placeholder="Ingiza dalili_saratani" />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
@@ -1026,7 +1096,7 @@ if ($user->isLoggedIn()) {
                                                                                             <label for="saratani_vipimo_other" class="form-label">Taja ?</label>
                                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                                             print_r($kap['saratani_vipimo_other']);
-                                                                                                                        } ?>" name="saratani_vipimo_other" class="form-control" placeholder="Ingiza saratani_vipimo_" required />
+                                                                                                                        } ?>" name="saratani_vipimo_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
@@ -1057,7 +1127,7 @@ if ($user->isLoggedIn()) {
                                                                                     <div class="col-6" id="matibabu_saratani1">
                                                                                         <div class="mb-3">
                                                                                             <label for="matibabu_saratani" class="form-label">8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
-                                                                                            <select name="matibabu_saratani" id="matibabu_saratani" class="form-select form-select-lg mb-3" onchange="updateText5(this.value)" required>
+                                                                                            <select name="matibabu_saratani" id="matibabu_saratani" class="form-select form-select-lg mb-3" onchange="updateText5(this.value)">
                                                                                                 <option value="<?= $kap['matibabu_saratani'] ?>"><?php if ($kap) {
                                                                                                                                                         if ($kap['matibabu_saratani'] == 1) {
                                                                                                                                                             echo 'Ndio';
@@ -1081,7 +1151,7 @@ if ($user->isLoggedIn()) {
                                                                                     <div class="col-6" id="matibabu1">
                                                                                         <div class="mb-3">
                                                                                             <label for="matibabu" class="form-label">9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
-                                                                                            <select name="matibabu" id="matibabu" class="form-select form-select-lg mb-3" onchange="updateText6(this.value)" required>
+                                                                                            <select name="matibabu" id="matibabu" class="form-select form-select-lg mb-3" onchange="updateText6(this.value)">
                                                                                                 <option value="<?= $kap['matibabu'] ?>"><?php if ($kap) {
                                                                                                                                             if ($kap['matibabu'] == 1) {
                                                                                                                                                 echo 'Upasuaji';
@@ -1120,7 +1190,7 @@ if ($user->isLoggedIn()) {
                                                                                             <label for="matibabu_other" class="form-label">Taja ?</label>
                                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                                             print_r($kap['matibabu_other']);
-                                                                                                                        } ?>" name="matibabu_other" class="form-control" placeholder="Ingiza matibabu" required />
+                                                                                                                        } ?>" name="matibabu_other" class="form-control" placeholder="Ingiza matibabu" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1128,9 +1198,9 @@ if ($user->isLoggedIn()) {
                                                                             <div class="modal-footer">
                                                                                 <input type="hidden" name="id" value="<?= $kap['id'] ?>">
                                                                                 <input type="hidden" name="cid" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btnKap ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="add_kap" class="btn btn-primary" value="<?= $btn ?>">
+                                                                                <input type="submit" name="add_kap" class="btn btn-primary" value="<?= $btnKap ?>">
                                                                             </div>
                                                                         </form>
                                                                     </div><!-- /.modal-content -->
@@ -2262,7 +2332,6 @@ if ($user->isLoggedIn()) {
     <script src="assets/js/app.min.js"></script>
     <script>
         function updateText1(val) {
-            // var $el = document.getElementById("adv1");
             if (val == '96') {
                 $('#vitu_hatarishi_other').show();
             } else {
@@ -2279,7 +2348,6 @@ if ($user->isLoggedIn()) {
         }
 
         function updateText3(val) {
-            // var $el = document.getElementById("adv1");
             if (val == '96') {
                 $('#saratani_vipimo_other').show();
             } else {
@@ -2289,7 +2357,6 @@ if ($user->isLoggedIn()) {
 
 
         function updateText4(val) {
-            // var $el = document.getElementById("adv1");
             if (val == '1') {
                 $('#matibabu_saratani1').show();
                 $('#matibabu1').show();
@@ -2300,7 +2367,6 @@ if ($user->isLoggedIn()) {
         }
 
         function updateText5(val) {
-            // var $el = document.getElementById("adv1");
             if (val == '1') {
                 $('#matibabu1').show();
             } else {
@@ -2310,7 +2376,6 @@ if ($user->isLoggedIn()) {
 
 
         function updateText6(val) {
-            // var $el = document.getElementById("adv1");
             if (val == '96') {
                 $('#matibabu_other').show();
             } else {

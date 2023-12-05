@@ -53,7 +53,7 @@
                                     </a>
                                     <div class="collapse" id="sidebarSecondLevel">
                                         <ul class="side-nav-third-level">
-                                            <?php foreach ($override->get('sites', 'status', 1) as $value) { ?>
+                                            <?php foreach ($override->getNews('sites', 'status', 1,'id', $user->data()->site_id) as $value) { ?>
 
                                                 <li>
                                                     <a href="info.php?id=2&site_id=<?= $value['id']; ?>"><?= $value['name']; ?></a>

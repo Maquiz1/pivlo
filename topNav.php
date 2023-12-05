@@ -77,8 +77,12 @@
                               <img src="assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="12">
                               <span class="align-middle d-none d-lg-inline-block">English</span> <i class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
                           </a>
-                          <!-- <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated"> -->
+                          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
+                              <!-- item-->
+                              <a href="javascript:void(0);" class="dropdown-item">
+                                  <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Swahili</span>
+                              </a>
                               <!-- item-->
                               <!-- <a href="javascript:void(0);" class="dropdown-item">
                                   <img src="assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
@@ -99,7 +103,7 @@
                                   <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                               </a> -->
 
-                          <!-- </div> -->
+                          </div>
                       </li>
 
                       <li class="dropdown notification-list">

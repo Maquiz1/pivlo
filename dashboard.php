@@ -55,7 +55,7 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <a href="info.php?id=1&category=1">
+                                    <a href="info.php?id=2&site_id=<?= $user->data()->site_id ?>">
                                         <h6 class="text-uppercase mt-0" title="Customers">Registered</h6>
                                         <h2 class="my-2"><?= $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
                                         <!-- <p class="mb-0">
@@ -73,7 +73,7 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <a href="info.php?id=1&category=2">
+                                    <a href="info.php?id=2&site_id=<?= $user->data()->site_id ?>">
                                         <h6 class="text-uppercase mt-0" title="Customers">Screened</h6>
                                         <h2 class="my-2"><?= $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
                                         <!-- <p class="mb-0">
@@ -91,7 +91,7 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <a href="info.php?id=1&category=3">
+                                    <a href="info.php?id=2&site_id=<?= $user->data()->site_id ?>">
                                         <h6 class="text-uppercase mt-0" title="Customers">Eligible</h6>
                                         <h2 class="my-2"><?= $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
                                         <!-- <p class="mb-0">
@@ -109,9 +109,9 @@
                                     <div class="float-end">
                                         <i class="ri-eye-line widget-icon"></i>
                                     </div>
-                                    <a href="info.php?id=1&category=4">
+                                    <a href="info.php?id=2&site_id=<?= $user->data()->site_id ?>">
                                         <h6 class="text-uppercase mt-0" title="Customers">Enrolled</h6>
-                                        <h2 class="my-2"><?= $override->getCount1('results', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
+                                        <h2 class="my-2"><?= $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id) ?></h2>
                                         <!-- <p class="mb-0">
                                             <span class="badge bg-white bg-opacity-10 me-1">8.21%</span>
                                             <span class="text-nowrap">Since last month</span>
