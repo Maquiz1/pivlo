@@ -98,6 +98,25 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                         'site_id' => $user->data()->site_id,
                     ));
+
+                    $user->createRecord('visit', array(
+                        'visit_name' => 'Month 0',
+                        'classification_date' => '',
+                        'expected_date' => date('Y-m-d'),
+                        'visit_date' => '',
+                        'outcome' => 0,
+                        'visit_status' => 0,
+                        'diagnosis' => '',
+                        'category' => '',
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+
                     $successMessage = 'Kap  Successful Added';
                 } elseif (Input::get('btn') == 'Update') {
                     $user->updateRecord('kap', array(
@@ -181,6 +200,25 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                         'site_id' => $user->data()->site_id,
                     ));
+
+                    $user->createRecord('visit', array(
+                        'visit_name' => 'Month 0',
+                        'classification_date' => '',
+                        'expected_date' => date('Y-m-d'),
+                        'visit_date' => '',
+                        'outcome' => 0,
+                        'visit_status' => 0,
+                        'diagnosis' => '',
+                        'category' => '',
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+
                     $successMessage = 'History  Successful Added';
                 } elseif (Input::get('btn') == 'Update') {
                     $user->updateRecord('history', array(
@@ -806,9 +844,19 @@ if ($user->isLoggedIn()) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    if ($override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id)) {
-                                                        foreach ($override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id) as $value) {
-                                                            // $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['gid'], 'status', 1)[0]['SUM(amount)'];
+
+                                                    $kap = 0;
+                                                    $screening = 0;
+                                                    $health_care = 0;
+                                                    if ($_GET['interview'] == 1) {
+                                                        $interview = 'kap';
+                                                    } elseif ($_GET['interview'] == 2) {
+                                                        $interview = 'screening';
+                                                    } elseif ($_GET['interview'] == 3) {
+                                                        $interview = 'health_care';
+                                                    }
+                                                    if ($override->getNews('clients', 'status', 1, $interview, 1, 'site_id', $user->data()->site_id)) {
+                                                        foreach ($override->getNews3('clients', 'status', 1, $interview, 1, 'site_id', $user->data()->site_id) as $value) {
                                                             $yes_no = $override->get('yes_no', 'status', 1)[0];
                                                             $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
@@ -816,9 +864,6 @@ if ($user->isLoggedIn()) {
                                                             $classification = $override->getNews('classification', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $economic = $override->getNews('economic', 'status', 1, 'patient_id', $value['id'])[0];
                                                             $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
-
-                                                            // var_dump($kap);
-
                                                     ?>
                                                             <tr>
                                                                 <td class="table-user">
@@ -850,54 +895,62 @@ if ($user->isLoggedIn()) {
                                                                     <!-- <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a> -->
                                                                     <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=Update" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
 
-                                                                    <?php if ($kap['status']) {
-                                                                        $btnKap = 'Update';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kap<?= $value['id'] ?>&btn=" .$btn>Update KAP</button>
-                                                                    <?php   } else {
-                                                                        $btnKap = 'Add';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kap<?= $value['id'] ?>&btn=" .$btn>Add KAP</button>
-                                                                    <?php   } ?>
+                                                                    <?php if ($_GET['interview'] == 1) { ?>
+                                                                        <?php if ($kap['status']) {
+                                                                            $btnKap = 'Update';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kap<?= $value['id'] ?>&btn=" .$btn>Update KAP</button>
+                                                                        <?php   } else {
+                                                                            $btnKap = 'Add';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kap<?= $value['id'] ?>&btn=" .$btn>Add KAP</button>
+                                                                        <?php   } ?>
 
-                                                                    <?php if ($history['status'] == 0) {
-                                                                        $btn = 'Add';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Add history</button>
-                                                                    <?php   } elseif ($history['status'] == 1) {
-                                                                        $btn = 'Update';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Update history</button>
-                                                                    <?php   } ?>
+                                                                    <?php } ?>
 
-                                                                    <?php if ($results['status'] == 0) {
-                                                                        $btn = 'Add';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Add Results</button>
-                                                                    <?php   } elseif ($results['status'] == 1) {
-                                                                        $btn = 'Update';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Update Results</button>
-                                                                    <?php   } ?>
-                                                                    <?php if ($classification['status'] == 0) {
-                                                                        $btnC = 'Add';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Add Classification</button>
-                                                                    <?php   } elseif ($classification['status'] == 1) {
-                                                                        $btnC = 'Update';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Update Classification</button>
-                                                                    <?php   } ?>
-                                                                    <?php if ($economic['status'] == 0) {
-                                                                        $btn = 'Add';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Add Economic</button>
-                                                                    <?php   } elseif ($economic['status'] == 1) {
-                                                                        $btn = 'Update';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Update Economic</button>
-                                                                    <?php   } ?>
-                                                                    <a href="info.php?id=3&cid=<?= $value['id'] ?>" class="btn btn-success">Schedule</a>
+                                                                    <?php if ($_GET['interview'] == 2) { ?>
+
+                                                                        <?php if ($history['status'] == 0) {
+                                                                            $btn = 'Add';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Add history</button>
+                                                                        <?php   } elseif ($history['status'] == 1) {
+                                                                            $btn = 'Update';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Update history</button>
+                                                                        <?php   } ?>
+
+                                                                        <?php if ($results['status'] == 0) {
+                                                                            $btn = 'Add';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Add Results</button>
+                                                                        <?php   } elseif ($results['status'] == 1) {
+                                                                            $btn = 'Update';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Update Results</button>
+                                                                        <?php   } ?>
+                                                                        <?php if ($classification['status'] == 0) {
+                                                                            $btnC = 'Add';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Add Classification</button>
+                                                                        <?php   } elseif ($classification['status'] == 1) {
+                                                                            $btnC = 'Update';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Update Classification</button>
+                                                                        <?php   } ?>
+                                                                        <?php if ($economic['status'] == 0) {
+                                                                            $btn = 'Add';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Add Economic</button>
+                                                                        <?php   } elseif ($economic['status'] == 1) {
+                                                                            $btn = 'Update';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Update Economic</button>
+                                                                        <?php   } ?>
+
+                                                                    <?php } ?>
+                                                                    <a href="info.php?id=3&cid=<?= $value['id'] ?>" class="btn btn-success">Clients Schedules</a>
+
 
                                                                     <!-- <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a> -->
                                                                 </td>
@@ -2392,7 +2445,8 @@ if ($user->isLoggedIn()) {
                                                         <th>Visit Date</th>
                                                         <th>Site</th>
                                                         <th>Status</th>
-                                                        <th class="text-center">Action</th>
+                                                        <th class="text-center">Action 1</th>
+                                                        <th class="text-center">Action 2</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -2440,8 +2494,12 @@ if ($user->isLoggedIn()) {
                                                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Missed Visit</button>
 
                                                                     <?php   } ?>
-                                                                </td>
 
+                                                                </td>
+                                                                <td>
+                                                                    <a href="info.php?id=5&cid=<?= $value['id'] ?>&sequence=1" class="btn btn-success">Study Crfs</a>
+
+                                                                </td>
                                                             </tr>
                                                             <div id="visit<?= $visit['id'] ?>&btn=" .$btn class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
@@ -2540,6 +2598,20 @@ if ($user->isLoggedIn()) {
                         <!-- end row-->
 
                     <?php } elseif ($_GET['id'] == 4) { ?>
+                        <?php
+
+                        $kap = 0;
+                        $screening = 0;
+                        $health_care = 0;
+                        if ($_GET['interview'] == 1) {
+                            $interview = 'kap';
+                        } elseif ($_GET['interview'] == 2) {
+                            $interview = 'screening';
+                        } elseif ($_GET['interview'] == 3) {
+                            $interview = 'health_care';
+                        }
+
+                        ?>
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
@@ -2551,14 +2623,16 @@ if ($user->isLoggedIn()) {
                                             <li class="breadcrumb-item active">Clients</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">CLIENTS</h4>
+                                    <h4 class="page-title">Clients Interview Category</h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title -->
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="mb-4 mt-2">Clients Interview Category</h4>
+                                <h4 class="mb-4 mt-2">
+                                    Uchunguzi wa kansa ya mapafu katika kliniki ya huduma na kinga ya VVU; kukusanya takwimu za awali ili kuwezesha utekelezaji wa uchunguzi wa kansa ya mapafu katika huduma za VVU/UKIMWI nchini Tanzania.
+                                </h4>
                             </div> <!-- end col -->
                         </div>
                         <!-- end row -->
@@ -2568,10 +2642,12 @@ if ($user->isLoggedIn()) {
                                 <div class="card border-secondary border">
                                     <div class="card-body">
                                         <h5 class="card-title">KAP</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to
-                                            additional content.</p>
-                                        <a href="javascript: void(0);" class="btn btn-secondary btn-sm">
-                                            View <span class="badge bg-light text-dark ms-1">4</span>
+                                        <p class="card-text">KAP Questionaire.</p>
+                                        <a href="add.php?id=2&interview=1&btn=Add" class="btn btn-secondary btn-sm">
+                                            Add <span class="badge bg-light text-dark ms-1"><i class="ri-pencil-line"></i></span>
+                                        </a>
+                                        <a href="info.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=1" class="btn btn-info btn-sm">
+                                            View <span class="badge bg-light text-dark ms-1"><?= $override->countData1('clients', 'status', 1, 'kap', 1, 'site_id', $user->data()->site_id); ?></span>
                                         </a>
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
@@ -2581,11 +2657,14 @@ if ($user->isLoggedIn()) {
                                 <div class="card border-primary border">
                                     <div class="card-body">
                                         <h5 class="card-title text-primary">SCREENING</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to
-                                            additional content.</p>
-                                        <a href="javascript: void(0);" class="btn btn-primary btn-sm">
-                                            View <span class="badge bg-light text-dark ms-1">444</span>
+                                        <p class="card-text">SCREENING Questionaire.</p>
+                                        <a href="add.php?id=2&interview=2&btn=Add" class="btn btn-secondary btn-sm">
+                                            Add <span class="badge bg-light text-dark ms-1"><i class="ri-pencil-line"></i></span>
                                         </a>
+                                        <a href="info.php?id=5&cid=1&site_id=<?= $_GET['site_id']; ?>&interview=2" class="btn btn-primary btn-sm">
+                                            View <span class="badge bg-light text-dark ms-1"><?= $override->countData1('clients', 'status', 1, 'screening', 1, 'site_id', $user->data()->site_id); ?></span>
+                                        </a>
+
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
                             </div> <!-- end col-->
@@ -2596,279 +2675,124 @@ if ($user->isLoggedIn()) {
                                 <div class="card border-success border">
                                     <div class="card-body">
                                         <h5 class="card-title text-success">HEALTH CARE WORKERS</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to
-                                            additional content.</p>
-                                        <a href="javascript: void(0);" class="btn btn-success btn-sm">View
-                                            <span class="badge bg-light text-dark ms-1">12</span>
+                                        <p class="card-text">HEALTH CARE WORKERS Questionaire.</p>
+
+                                        <a href="add.php?id=2&interview=3&btn=Add" class="btn btn-secondary btn-sm">
+                                            Add <span class="badge bg-light text-dark ms-1"><i class="ri-pencil-line"></i></span>
+                                        </a>
+                                        <a href="info.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=3" class="btn btn-success btn-sm">View
+                                            <span class="badge bg-light text-dark ms-1"><?= $override->countData1('clients', 'status', 1, 'health_care', 1, 'site_id', $user->data()->site_id); ?></span>
                                         </a>
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
                             </div> <!-- end col-->
                         </div>
                         <!-- end row -->
-                        <!-- end row-->
                     <?php } elseif ($_GET['id'] == 5) { ?>
+                        <!-- start page title -->
                         <div class="row">
-                            <div class="col-xl-12">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                                            <li class="breadcrumb-item active">Contact List</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Contact List</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-lg-8">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="header-title"><?= $Sub_Tiltle; ?></h4>
-                                        <!-- <p class="text-muted mb-0">
-                                        Add <code>.table-bordered</code> & <code>.border-primary</code> can be added to
-                                        change colors.
-                                    </p> -->
-                                        <h4 class="header-title text-end">
-                                            <a href=" info.php?id=1&category=<?= $_GET['category'] ?>" class="text-reset fs-16 px-1">
-                                                << /i>Back
-                                            </a>
-                                        </h4>
+                                    <div class="card-body">
+                                        <div class="input-group">
+                                            <input type="text" id="example-input1-group2" name="example-input1-group2" class="form-control" placeholder="Search">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary rounded-start-0"><i class="ri-search-line fs-16"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End row -->
+
+
+                        <div class="row">
+                            <?php if ($_GET['sequence'] == 1) { ?>
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-start justify-content-between">
+                                                <div class="d-flex">
+                                                    <a class="me-3" href="#">
+                                                        <img class="avatar-md rounded-circle bx-s" src="assets/images/users/avatar-2.jpg" alt="">
+                                                    </a>
+                                                    <div class="info">
+                                                        <h5 class="fs-18 my-1">KAP</h5>
+                                                        <p class="text-muted fs-15">KAP</p>
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <a href="add.php?id=3" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
+                                                    <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
+                                                </div>                                            
+
+
+                                            </div>
+
+                                            <hr>
+
+                                        </div>
+                                        <!-- card-body -->
+                                    </div>
+                                    <!-- card -->
+                                </div> <!-- end col -->
+                            <?php }  ?>
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start justify-content-between">
+                                            <div class="d-flex">
+                                                <a class="me-3" href="#">
+                                                    <img class="avatar-md rounded-circle bx-s" src="assets/images/users/avatar-2.jpg" alt="">
+                                                </a>
+                                                <div class="info">
+                                                    <h5 class="fs-18 my-1">HISTORY</h5>
+                                                    <p class="text-muted fs-15">HISTORY</p>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <a href="#" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
+                                                <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
+                                            </div>
+
+                                            <?php if ($override->get3('kap', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
+                                                <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
+                                            <?php } else { ?>
+                                                <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
+                                            <?php } ?>
+
+
+                                        </div>
+
+                                        <hr>
 
                                     </div>
-
-                                    <div class="card-body">
-                                        <div class="table-responsive-sm">
-                                            <table class="table table-bordered border-primary table-centered mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Generic Name</th>
-                                                        <th>Batch Number</th>
-                                                        <th>Balance</th>
-                                                        <th>Units</th>
-                                                        <th>Expire Date</th>
-                                                        <th>Status</th>
-                                                        <th class="text-center">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-
-                                                    if ($_GET['expiration'] == 'valid') {
-                                                        $expiration = $override->get4('batch', 'expire_date', date('Y-m-d'), 'status', 1, 'category', $_GET['category']);
-                                                    } elseif ($_GET['expiration'] == 'expired') {
-                                                        $expiration = $override->get5('batch', 'expire_date', date('Y-m-d'), 'status', 1, 'category', $_GET['category']);
-                                                    }
-                                                    if ($expiration) {
-                                                        $amnt = 0;
-                                                        foreach ($expiration as $value) {
-                                                            $generic = $override->getNews('generic', 'status', 1, 'id', $value['generic_id'])[0];
-                                                            $units = $override->getNews('units', 'status', 1, 'id', $value['units'])[0]['name'];
-                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['generic_id'], 'status', 1)[0]['SUM(amount)'];
-
-                                                            $balance = 0;
-                                                            $total = 'Out of Stock';
-
-                                                            if ($value['amount'] > 0) {
-                                                                $balance = $value['amount'];
-                                                                $total = ' ';
-                                                                $status = 'Expired';
-                                                                if ($value['expire_date'] > date('Y-m-d')) {
-                                                                    $status = 'Valid';
-                                                                }
-                                                            }
-
-                                                    ?>
-                                                            <tr>
-                                                                <td class="table-user">
-                                                                    <?= $generic['name']; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $value['name']; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $balance; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $units; ?>
-                                                                </td>
-                                                                <td class="table-user">
-                                                                    <?= $value['expire_date']; ?>
-                                                                </td>
-                                                                <td><?= $total . ' - ' . $status; ?></td>
-
-                                                                <td class="text-center">
-                                                                    <div class="form-check form-checkbox-success mb-2">
-                                                                        <?php if ($_GET['expiration'] == 'expired') { ?>
-                                                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#standard-modal<?= $value['id'] ?>">Archive</button>
-                                                                        <?php } elseif ($_GET['expiration'] == 'valid') { ?>
-                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#increase<?= $value['id'] ?>">Increase</button>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dispense<?= $value['id'] ?>">Dispense</button>
-                                                                        <?php } ?>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <!-- Standard modal content -->
-                                                            <div id="standard-modal<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <form id="validation" method="post">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">Archive</h4>
-                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="archive_date" class="form-label">Enter Archive Date</label>
-                                                                                            <input type="date" value="" id="archive_date" name="archive_date" class="form-control" placeholder="Enter archive date" required />
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="archive_time" class="form-label">Enter Achive Time</label>
-                                                                                            <input type="time" value="" id="archive_time" name="archive_time" class="form-control" placeholder="Enter archive time" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
-                                                                                    <div class="col-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
-                                                                                             </textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="generic_id" value="<?= $generic['id'] ?>">
-                                                                                <input type="hidden" name="amount" value="<?= $value['amount'] ?>">
-                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="Archive_batch" class="btn btn-primary" value="Save">
-                                                                            </div>
-                                                                    </div><!-- /.modal-content -->
-                                                                    </form>
-                                                                </div><!-- /.modal-dialog -->
-                                                            </div><!-- /.modal -->
-                                                            <div id="increase<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <form id="validation" method="post">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">Increase</h4>
-                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="increase_date" class="form-label">Enter Date</label>
-                                                                                            <input type="date" value="" id="increase_date" name="increase_date" class="form-control" placeholder="Enter increase date" required />
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="increase_time" class="form-label">Enter Time</label>
-                                                                                            <input type="time" value="" id="increase_time" name="increase_time" class="form-control" placeholder="Enter increase time" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
-                                                                                    <div class="col-4">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="added" class="form-label">Enter amount</label>
-                                                                                            <input type="number" value="" min="0" id="added" name="added" class="form-control" placeholder="Enter amount" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-8">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
-                                                                                             </textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="generic_id" value="<?= $generic['id'] ?>">
-                                                                                <input type="hidden" name="amount" value="<?= $value['amount'] ?>">
-                                                                                <input type="hidden" name="units" value="<?= $value['units'] ?>">
-                                                                                <input type="hidden" name="category" value="<?= $generic['category'] ?>">
-                                                                                <input type="hidden" name="brand_name" value="<?= $value['brand_name'] ?>">
-                                                                                <input type="hidden" name="study_id" value="<?= $value['study_id'] ?>">
-                                                                                <input type="hidden" name="site_id" value="<?= $value['site_id'] ?>">
-                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="Increase_batch" class="btn btn-primary" value="Save">
-                                                                            </div>
-                                                                    </div><!-- /.modal-content -->
-                                                                    </form>
-                                                                </div><!-- /.modal-dialog -->
-                                                            </div><!-- /.modal -->
-                                                            <div id="dispense<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <form id="validation" method="post">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">Dispense</h4>
-                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="increase_date" class="form-label">Enter Date</label>
-                                                                                            <input type="date" value="" id="dispense_date" name="dispense_date" class="form-control" placeholder="Enter increase date" required />
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="increase_time" class="form-label">Enter Time</label>
-                                                                                            <input type="time" value="" id="dispense_time" name="dispense_time" class="form-control" placeholder="Enter increase time" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
-                                                                                    <div class="col-4">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="added" class="form-label">Enter amount</label>
-                                                                                            <input type="number" value="" min="0" id="added" name="added" class="form-control" placeholder="Enter amount" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-8">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
-                                                                                             </textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="generic_id" value="<?= $generic['id'] ?>">
-                                                                                <input type="hidden" name="amount" value="<?= $value['amount'] ?>">
-                                                                                <input type="hidden" name="units" value="<?= $value['units'] ?>">
-                                                                                <input type="hidden" name="category" value="<?= $generic['category'] ?>">
-                                                                                <input type="hidden" name="brand_name" value="<?= $value['brand_name'] ?>">
-                                                                                <input type="hidden" name="study_id" value="<?= $value['study_id'] ?>">
-                                                                                <input type="hidden" name="site_id" value="<?= $value['site_id'] ?>">
-                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="Dispense_batch" class="btn btn-primary" value="Save">
-                                                                            </div>
-                                                                    </div><!-- /.modal-content -->
-                                                                    </form>
-                                                                </div><!-- /.modal-dialog -->
-                                                            </div><!-- /.modal -->
-                                                        <?php }
-                                                    } else {
-                                                        ?>
-                                                        <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
-                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                            <strong>Opps! - </strong> No records found!
-                                                        </div>
-                                                    <?php
-                                                    } ?>
-                                                </tbody>
-                                            </table>
-                                        </div> <!-- end table-responsive-->
-
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
+                                    <!-- card-body -->
+                                </div>
+                                <!-- card -->
+                            </div> <!-- end col -->
                         </div>
-                        <!-- end row-->
+
+
                     <?php } ?>
 
 

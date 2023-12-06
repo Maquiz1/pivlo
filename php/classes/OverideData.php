@@ -83,6 +83,12 @@ class OverideData{
         $num = $query->rowCount();
         return $num;
     }
+
+        public function countData1($table,$field,$value,$field1,$value1,$field2,$value2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $field2 = '$value2'");
+        $num = $query->rowCount();
+        return $num;
+    }
     public function getData($table){
         $query = $this->_pdo->query("SELECT * FROM $table");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -103,6 +109,13 @@ class OverideData{
     public function getNews2($table, $where, $id, $where2, $id2, $where3, $id3, $where4, $id4)
     {
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3' AND $where4 = '$id4'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+        public function getNews3($table, $where, $id, $where2, $id2, $where3, $id3)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
