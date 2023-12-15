@@ -805,6 +805,27 @@ if ($user->isLoggedIn()) {
 <!-- Mirrored from techzaa.getappui.com/velonic/layouts/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Oct 2023 15:58:18 GMT -->
 
 <?php include 'header.php'; ?>
+<style>
+    p,
+    label {
+        font:
+            1rem 'Fira Sans',
+            sans-serif;
+    }
+
+    input {
+        margin: 0.4rem;
+    }
+
+
+    #box {
+        display: none;
+        background-color: blueviolet;
+        color: white;
+        width: 100px;
+        height: 100px;
+    }
+</style>
 
 
 <body>
@@ -1060,10 +1081,11 @@ if ($user->isLoggedIn()) {
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="header-title mb-0"> CRF 1 : Screening Form </h4>
+                                        <a href=" info.php?id=4&site_id=<?= $_GET['site_id'] ?>" class="text-reset fs-16 px-1">
+                                            << /i>Back
+                                        </a>
                                     </div>
-                                    <a href=" info.php?id=4&site_id=<?= $_GET['site_id'] ?>" class="text-reset fs-16 px-1">
-                                        << /i>Back
-                                    </a>
+
                                     <div class="card-body">
                                         <div id="rootwizard">
                                             <ul class="nav nav-pills nav-justified form-wizard-header mb-3">
@@ -1089,23 +1111,25 @@ if ($user->isLoggedIn()) {
 
                                             <div class="tab-content mb-0 b-0">
                                                 <div class="tab-pane" id="first">
-                                                    <form id="accountForm" method="post" class="form-horizontal">
+                                                    <form id="demographic-form" method="post" class="form-horizontal">
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="dob">Date of Registration;</label>
+                                                                    <label for="dob">Date of Registration;</label>
                                                                     <div class="col-md-9">
                                                                         <input type="date" value="<?php if ($clients) {
                                                                                                         print_r($clients['date_registered']);
-                                                                                                    } ?>" id="date_registered" name="date_registered" class="form-control" placeholder="Enter Date of Registration" required>
+                                                                                                    } ?>" id="date_registered" name="date_registered" class="form-control" placeholder="Enter Date of Registration">
                                                                     </div>
+                                                                    <div id="date_registeredError" class="text text-danger"></div>
                                                                 </div>
                                                             </div>
+
 
                                                             <div class="col-6">
 
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="hospital_id">Hospital ID ( CTC ID );</label>
+                                                                    <label for="hospital_id">Hospital ID ( CTC ID );</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['hospital_id']);
@@ -1119,7 +1143,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="firstname">First Name</label>
+                                                                    <label for="firstname">First Name</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['firstname']);
@@ -1130,7 +1154,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="middlename">Middle Name</label>
+                                                                    <label for="middlename">Middle Name</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['middlename']);
@@ -1141,7 +1165,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="laststname">Last Name</label>
+                                                                    <label for="laststname">Last Name</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['lastname']);
@@ -1156,7 +1180,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="sex">Sex:</label>
+                                                                    <label for="sex">Sex:</label>
                                                                     <div class="col-md-9">
                                                                         <select id="sex" name="sex" class="form-select form-select-lg mb-3" required>
                                                                             <option value="<?= $sex['id'] ?>"><?php if ($clients) {
@@ -1175,7 +1199,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="dob">Date of birth;</label>
+                                                                    <label for="dob">Date of birth;</label>
                                                                     <div class="col-md-9">
                                                                         <input type="date" value="<?php if ($clients) {
                                                                                                         print_r($clients['dob']);
@@ -1186,7 +1210,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="patient_phone">Patients’ mobile number:</label>
+                                                                    <label for="patient_phone">Patients’ mobile number:</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['patient_phone']);
@@ -1200,7 +1224,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="supporter_name">Name of a treatment supporter or next of kin:</label>
+                                                                    <label for="supporter_name">Name of a treatment supporter or next of kin:</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['supporter_name']);
@@ -1212,7 +1236,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="supporter_phone">Mobile number of a treatment supporter or next of kin:</label>
+                                                                    <label for="supporter_phone">Mobile number of a treatment supporter or next of kin:</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['supporter_phone']);
@@ -1223,11 +1247,41 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="relation_patient">Relation to patient:</label>
+                                                                    <label for="relation_patient">Relation to patient:</label>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" value="<?php if ($clients) {
-                                                                                                        print_r($clients['relation_patient']);
-                                                                                                    } ?>" id="relation_patient" name="relation_patient" class="form-control" placeholder="Enter Relation" required>
+                                                                        <select name="relation_patient" id="relation_patient" class="form-select form-select-lg mb-3" required>
+                                                                            <option value="<?= $clients['relation_patient'] ?>"><?php if ($clients) {
+                                                                                                                                    if ($clients['relation_patient'] == 1) {
+                                                                                                                                        echo 'Mzazi';
+                                                                                                                                    } elseif ($clients['relation_patient'] == 2) {
+                                                                                                                                        echo 'Kaka / Dada';
+                                                                                                                                    } elseif ($clients['relation_patient'] == 3) {
+                                                                                                                                        echo 'Mwenza (Mume / Mke / )';
+                                                                                                                                    } elseif ($clients['relation_patient'] == 4) {
+                                                                                                                                        echo 'Ndugu wengine';
+                                                                                                                                    } elseif ($clients['relation_patient'] == 5) {
+                                                                                                                                        echo 'Rafiki';
+                                                                                                                                    } elseif ($clients['relation_patient'] == 96) {
+                                                                                                                                        echo 'Wengine';
+                                                                                                                                    }
+                                                                                                                                } else {
+                                                                                                                                    echo 'Select';
+                                                                                                                                } ?>
+                                                                            </option>
+                                                                            <option value="1"> Mzazi</option>
+                                                                            <option value="2">Kaka / Dada</option>
+                                                                            <option value="3">Mwenza (Mume / Mke / )</option>
+                                                                            <option value="4">Ndugu wengine</option>
+                                                                            <option value="5">Rafiki</option>
+                                                                            <option value="96">Wengine</option>
+                                                                        </select>
+
+                                                                        <div>
+                                                                            <input type="text" value="<?php if ($clients) {
+                                                                                                            print_r($clients['relation_patient_other']);
+                                                                                                        } ?>" id="relation_patient_other" name="relation_patient_other" class="form-control" placeholder="Enter Relation">
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1236,7 +1290,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="district">District</label>
+                                                                    <label for="district">District</label>
                                                                     <div class="col-md-9">
                                                                         <select id="district" name="district" class="form-select form-select-lg mb-3" required>
                                                                             <option value="<?= $district['id'] ?>"><?php if ($clients) {
@@ -1255,7 +1309,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="street">Residence street</label>
+                                                                    <label for="street">Residence street</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['street']);
@@ -1267,7 +1321,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="house_number">House number, if any</label>
+                                                                    <label for="house_number">House number, if any</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['house_number']);
@@ -1280,7 +1334,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="head_household">Who is the head of your household?</label>
+                                                                    <label for="head_household">Who is the head of your household?</label>
                                                                     <div class="col-md-9">
                                                                         <select id="head_household" name="head_household" class="form-select form-select-lg mb-3" required>
                                                                             <option value="<?= $household['id'] ?>"><?php if ($clients) {
@@ -1300,7 +1354,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="education">Level of education</label>
+                                                                    <label for="education">Level of education</label>
                                                                     <div class="col-md-9">
                                                                         <select id="education" name="education" class="form-select form-select-lg mb-3" required>
                                                                             <option value="<?= $education['id'] ?>"><?php if ($clients) {
@@ -1319,7 +1373,7 @@ if ($user->isLoggedIn()) {
 
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="occupation">Occupation</label>
+                                                                    <label for="occupation">Occupation</label>
                                                                     <div class="col-md-9">
                                                                         <select id="occupation" name="occupation" class="form-select form-select-lg mb-3" required>
                                                                             <option value="<?= $occupation['id'] ?>"><?php if ($clients) {
@@ -1341,13 +1395,13 @@ if ($user->isLoggedIn()) {
                                                         <div class="row">
                                                             <div class="col-4">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="health_insurance">Do you own health insurance?</label>
+                                                                    <label for="health_insurance">Do you own health insurance?</label>
                                                                     <div class="col-md-9">
                                                                         <select id="health_insurance" name="health_insurance" class="form-select form-select-lg mb-3" required>
                                                                             <option value="<?= $yes_no['id'] ?>"><?php if ($clients) {
                                                                                                                         print_r($yes_no['name']);
                                                                                                                     } else {
-                                                                                                                        echo 'Select units';
+                                                                                                                        echo 'Select';
                                                                                                                     } ?>
                                                                             </option>
                                                                             <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
@@ -1359,24 +1413,23 @@ if ($user->isLoggedIn()) {
                                                             </div>
 
 
-                                                            <div class="col-4">
+                                                            <div class="col-4" id="insurance_name">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="insurance_name">Name of insurance</label>
+                                                                    <label for="insurance_name">Name of insurance</label>
                                                                     <div class="col-md-9">
                                                                         <input type="text" value="<?php if ($clients) {
                                                                                                         print_r($clients['insurance_name']);
-                                                                                                    } ?>" id="insurance_name" name="insurance_name" class="form-control" placeholder="Enter insurance name" required>
+                                                                                                    } ?>" name="insurance_name" class="form-control" placeholder="Enter insurance name">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
 
-                                                            <div class="col-4">
-
+                                                            <div class="col-4" id="pay_services">
                                                                 <div class="row mb-3">
-                                                                    <label class="col-md-3 col-form-label" for="pay_services">If no, how do you pay for your health care services</label>
+                                                                    <label for="pay_services">If no, how do you pay for your health care services</label>
                                                                     <div class="col-md-9">
-                                                                        <select id="pay_services" name="pay_services" class="form-select form-select-lg mb-3" required>
+                                                                        <select name="pay_services" class="form-select form-select-lg mb-3">
                                                                             <option value="<?= $payments['id'] ?>"><?php if ($clients) {
                                                                                                                         print_r($payments['name']);
                                                                                                                     } else {
@@ -1406,7 +1459,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="row mb-3">
                                                             <label class="col-md-3 col-form-label" for="complete_status">Completed ?</label>
                                                             <div class="col-md-9">
-                                                                <select id="complete_status" name="complete_status" class="form-select form-select-lg mb-3" required>
+                                                                <select id="complete_status" name="complete_status" class="form-select form-select-lg mb-3">
                                                                     <option value="<?= $yes_no['id'] ?>"><?php if ($clients) {
                                                                                                                 print_r($yes_no['name']);
                                                                                                             } else {
@@ -1422,7 +1475,7 @@ if ($user->isLoggedIn()) {
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
                                             <input type="hidden" name="id" value="<?= $clients['id']; ?>" />
-                                            <input type="submit" name="add_demographic" value="<?= $_GET['btn']; ?>" class="btn btn-info" />
+                                            <input type="submit" name="add_demographic" value="<?= $_GET['btn']; ?>" id="demographic-btn" class="btn btn-info" />
                                             </form>
                                             <?php if ($clients['status']) { ?>
                                                 <!-- <ul class="list-inline wizard mb-0">
@@ -1442,7 +1495,9 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- end row -->
         <?php } elseif ($_GET['id'] == 3) { ?>
+
             <?php
+
                         $kap = 0;
                         $screening = 0;
                         $health_care = 0;
@@ -1460,14 +1515,13 @@ if ($user->isLoggedIn()) {
                             $interview = 'health_care';
                             $btnKap = $_GET['btn'];
                         }
+
             ?>
 
             <div class="content-page">
                 <div class="content">
-
                     <!-- Start Content-->
                     <div class="container-fluid">
-
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
@@ -1541,7 +1595,6 @@ if ($user->isLoggedIn()) {
                                             <!-- end row -->
 
                                             <hr>
-
 
                                             <div class="row">
                                                 <div class="row">
@@ -1624,7 +1677,7 @@ if ($user->isLoggedIn()) {
                                                                 </div>
                                                                 <hr>
                                                                 <div class="row">
-                                                                    <div class="col-3">
+                                                                    <div class="col-6">
                                                                         <div class="mb-3">
                                                                             <label for="kusambazwa_saratani" class="form-label">3. Je, saratani ya mapafu inaweza kusambazwa kutoka kwa mtu mmoja kwenda kwa mtu mwingine? </label>
                                                                             <select name="kusambazwa_saratani" id="kusambazwa_saratani" class="form-select form-select-lg mb-3" required>
@@ -1646,158 +1699,209 @@ if ($user->isLoggedIn()) {
                                                                             </select>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="col-6">
+                                                                        <fieldset>
+                                                                            <legend>4. Je, vitu gani hatarishi vinaweza kusababisha mtu kupata saratani ya mapafu? (Multiple answer)</legend>
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi1" name="vitu_hatarishi" value="1" <?php if ($kap['vitu_hatarishi'] == 1) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi1">Uvutaji sigara</label>
+                                                                            </div>
 
-                                                                    <div class="col-3">
-                                                                        <div class="mb-3">
-                                                                            <label for="vitu_hatarishi" class="form-label">4. Je, vitu gani hatarishi vinaweza kusababisha mtu kupata saratani ya mapafu? (Multiple answer)</label>
-                                                                            <select name="vitu_hatarishi" id="vitu_hatarishi" class="form-select form-select-lg mb-3" onchange="updateText1(this.value)" required>
-                                                                                <option value="<?= $kap['vitu_hatarishi'] ?>"><?php if ($kap) {
-                                                                                                                                    if ($kap['vitu_hatarishi'] == 1) {
-                                                                                                                                        echo 'Uvutaji sigara.';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 2) {
-                                                                                                                                        echo 'Kufanya kazi kwenye migodi.';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 3) {
-                                                                                                                                        echo 'Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali).';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 4) {
-                                                                                                                                        echo 'Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas).';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 5) {
-                                                                                                                                        echo 'Mtu akiwa na saratani nyingine yeyote mwilini .';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 6) {
-                                                                                                                                        echo 'Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu.';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 7) {
-                                                                                                                                        echo 'Kuwa na historia ya kupigwa mionzi ya kifua.';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 8) {
-                                                                                                                                        echo 'Kutumia uzazi wa mpango (vidonge vya majira).';
-                                                                                                                                    } elseif ($kap['vitu_hatarishi'] == 96) {
-                                                                                                                                        echo 'Nyinginezo, Taja: ________________';
-                                                                                                                                    }
-                                                                                                                                } else {
-                                                                                                                                    echo 'Select';
-                                                                                                                                } ?>
-                                                                                </option>
-                                                                                <option value="1">Uvutaji sigara</option>
-                                                                                <option value="2">Kufanya kazi kwenye migodi</option>
-                                                                                <option value="3">Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali).</option>
-                                                                                <option value="4">Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas)..</option>
-                                                                                <option value="5">Mtu akiwa na saratani nyingine yeyote mwilini ..</option>
-                                                                                <option value="6">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu..</option>
-                                                                                <option value="7">Kuwa na historia ya kupigwa mionzi ya kifua..</option>
-                                                                                <option value="8">Kutumia uzazi wa mpango (vidonge vya majira)..</option>
-                                                                                <option value="96">Nyinginezo, Taja: ________________.</option>
-                                                                            </select>
-                                                                            <!-- <input name="adv1" type="text" id="adv1" value="" /> -->
-                                                                        </div>
-                                                                    </div>
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi2" name="vitu_hatarishi" value="2" <?php if ($kap['vitu_hatarishi'] == 2) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi2">Kufanya kazi kwenye migodi</label>
+                                                                            </div>
 
-                                                                    <div class="col-6" id="vitu_hatarishi_other">
-                                                                        <div class="mb-3">
-                                                                            <label for="vitu_hatarishi_other" class="form-label">Taja ?</label>
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi3" name="vitu_hatarishi" value="3" <?php if ($kap['vitu_hatarishi'] == 3) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi3">Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali)</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi4" name="vitu_hatarishi" value="4" <?php if ($kap['vitu_hatarishi'] == 4) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi4">Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas)</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi5" name="vitu_hatarishi" value="5" <?php if ($kap['vitu_hatarishi'] == 5) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi5">Mtu akiwa na saratani nyingine yeyote mwilini</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi6" name="vitu_hatarishi" value="6" <?php if ($kap['vitu_hatarishi'] == 6) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi6">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi7" name="vitu_hatarishi" value="7" <?php if ($kap['vitu_hatarishi'] == 7) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi7">Kuwa na historia ya kupigwa mionzi ya kifua</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi8" name="vitu_hatarishi" value="8" <?php if ($kap['vitu_hatarishi'] == 8) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi8">Kutumia uzazi wa mpango (vidonge vya majira)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="vitu_hatarishi96" name="vitu_hatarishi" value="96" <?php if ($kap['vitu_hatarishi'] == 96) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi96">Nyinginezo, Taja</label>
+                                                                            </div>
+
                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                             print_r($kap['vitu_hatarishi_other']);
-                                                                                                        } ?>" name="vitu_hatarishi_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
-                                                                        </div>
+                                                                                                        } ?>" id="vitu_hatarishi_other" name="vitu_hatarishi_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                                        </fieldset>
                                                                     </div>
                                                                 </div>
 
                                                                 <hr>
                                                                 <div class="row">
                                                                     <div class="col-6">
-                                                                        <div class="mb-3">
-                                                                            <label for="dalili_saratani" class="form-label">5. Je, mtu mwenye Saratani ya mapafu anakua na dalili zipi? (Multiple answer) </label>
-                                                                            <select name="dalili_saratani" id="dalili_saratani" class="form-select form-select-lg mb-3" onchange="updateText2(this.value)" required>
-                                                                                <option value="<?= $kap['dalili_saratani'] ?>"><?php if ($kap) {
-                                                                                                                                    if ($kap['dalili_saratani'] == 1) {
-                                                                                                                                        echo 'Kikohozi cha Zaidi ya  wiki 2 au 3.';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 2) {
-                                                                                                                                        echo 'Kikohozi cha muda mrefu kinachozidi kuwa kibaya.';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 3) {
-                                                                                                                                        echo 'Kukohoa damu au makohozi yenye rangi ya kutu (spit or phlegm).';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 4) {
-                                                                                                                                        echo 'Magonjwa ya mara kwa mara ya kifua kama bronchitis, pneumonia etc.';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 5) {
-                                                                                                                                        echo 'Maumivu ya kifua yanayoongezeka wakati wa kupumua au kukohoa.';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 6) {
-                                                                                                                                        echo 'Kupumua kwa shida (Persistent breathlessness).';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 7) {
-                                                                                                                                        echo 'Uchovu wa mara kwa mara au r lack of energy.';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 8) {
-                                                                                                                                        echo 'Kutoa kisauti wakati wa kupumua (Wheezing).';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 9) {
-                                                                                                                                        echo 'Kukosa pumzi (Shortness of breath).';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 10) {
-                                                                                                                                        echo 'Kupungua uzito kusiko na sababu.';
-                                                                                                                                    } elseif ($kap['dalili_saratani'] == 96) {
-                                                                                                                                        echo 'Nyingine, taja: ________________';
-                                                                                                                                    }
-                                                                                                                                } else {
-                                                                                                                                    echo 'Select';
-                                                                                                                                } ?>
-                                                                                </option>
-                                                                                <option value="1">Kikohozi cha Zaidi ya wiki 2 au 3.</option>
-                                                                                <option value="2">Kikohozi cha muda mrefu kinachozidi kuwa kibaya.</option>
-                                                                                <option value="3">Kukohoa damu au makohozi yenye rangi ya kutu (spit or phlegm).</option>
-                                                                                <option value="4">Magonjwa ya mara kwa mara ya kifua kama bronchitis, pneumonia etc.</option>
-                                                                                <option value="5">Maumivu ya kifua yanayoongezeka wakati wa kupumua au kukohoa.</option>
-                                                                                <option value="6">Kupumua kwa shida (Persistent breathlessness).</option>
-                                                                                <option value="7">Uchovu wa mara kwa mara au r lack of energy.</option>
-                                                                                <option value="8">Kutoa kisauti wakati wa kupumua (Wheezing).</option>
-                                                                                <option value="9">Kukosa pumzi (Shortness of breath).</option>
-                                                                                <option value="10">Kupungua uzito kusiko na sababu.</option>
-                                                                                <option value="96">Nyingine, taja: ________________</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-6" id="dalili_saratani_other">
-                                                                        <div class="mb-3">
-                                                                            <label for="dalili_saratani_other" class="form-label">Taja ?</label>
+                                                                        <fieldset>
+                                                                            <legend>5. Je, mtu mwenye Saratani ya mapafu anakua na dalili zipi? (Multiple answer) </legend>
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="1" <?php if ($kap['dalili_saratani'] == 1) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Kikohozi cha Zaidi ya wiki 2 au 3</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="2" <?php if ($kap['dalili_saratani'] == 2) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Kikohozi cha muda mrefu kinachozidi kuwa kibaya</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="3" <?php if ($kap['dalili_saratani'] == 3) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Kukohoa damu au makohozi yenye rangi ya kutu (spit or phlegm)</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="4" <?php if ($kap['dalili_saratani'] == 4) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Magonjwa ya mara kwa mara ya kifua kama bronchitis, pneumonia etc</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="5" <?php if ($kap['dalili_saratani'] == 5) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Maumivu ya kifua yanayoongezeka wakati wa kupumua au kukohoa</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="6" <?php if ($kap['dalili_saratani'] == 6) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi6">Kupumua kwa shida (Persistent breathlessness)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="7" <?php if ($kap['dalili_saratani'] == 7) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Uchovu wa mara kwa mara au r lack of energy</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="8" <?php if ($kap['dalili_saratani'] == 8) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Kutoa kisauti wakati wa kupumua (Wheezing)</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="8" <?php if ($kap['dalili_saratani'] == 8) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Kukosa pumzi (Shortness of breath)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani" name="dalili_saratani" value="8" <?php if ($kap['dalili_saratani'] == 8) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="dalili_saratani">Kupungua uzito kusiko na sababu</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="dalili_saratani96" name="dalili_saratani" value="96" <?php if ($kap['dalili_saratani'] == 96) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?> />
+                                                                                <label for="dalili_saratani96">Nyinginezo, Taja</label>
+                                                                            </div>
+
                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                             print_r($kap['dalili_saratani_other']);
-                                                                                                        } ?>" name="dalili_saratani_other" class="form-control" placeholder="Ingiza dalili_saratani" />
-                                                                        </div>
+                                                                                                        } ?>" id="dalili_saratani_other" name="dalili_saratani_other" class="form-control" placeholder="Ingiza dalili_saratani" />
+                                                                        </fieldset>
                                                                     </div>
-                                                                </div>
 
-                                                                <hr>
-                                                                <div class="row">
                                                                     <div class="col-6">
-                                                                        <div class="mb-3">
-                                                                            <label for="saratani_vipimo" class="form-label">6. Kama mtu akigundulika ana saratani ya mapafu ,ni vipimo gani vinatakiwa kufanyika? (Multiple answer)</label>
-                                                                            <select name="saratani_vipimo" id="saratani_vipimo" class="form-select form-select-lg mb-3" onchange="updateText3(this.value)" required>
-                                                                                <option value="<?= $kap['saratani_vipimo'] ?>"><?php if ($kap) {
-                                                                                                                                    if ($kap['saratani_vipimo'] == 1) {
-                                                                                                                                        echo 'Vipimo vya damu.';
-                                                                                                                                    } elseif ($kap['saratani_vipimo'] == 2) {
-                                                                                                                                        echo 'Picha ya kifua (Chest X-ray).';
-                                                                                                                                    } elseif ($kap['saratani_vipimo'] == 3) {
-                                                                                                                                        echo 'CT scan ya kifua';
-                                                                                                                                    } elseif ($kap['saratani_vipimo'] == 4) {
-                                                                                                                                        echo 'Kutoa kinyama kwenye mapafu (Lung Biopsy).';
-                                                                                                                                    } elseif ($kap['saratani_vipimo'] == 99) {
-                                                                                                                                        echo 'Sijui';
-                                                                                                                                    } elseif ($kap['saratani_vipimo'] == 96) {
-                                                                                                                                        echo 'Zinginezo, taja: ________________';
-                                                                                                                                    }
-                                                                                                                                } else {
-                                                                                                                                    echo 'Select';
-                                                                                                                                } ?>
-                                                                                </option>
-                                                                                <option value="1">Vipimo vya damu</option>
-                                                                                <option value="2">Picha ya kifua (Chest X-ray)</option>
-                                                                                <option value="3">CT scan ya kifua</option>
-                                                                                <option value="4">Kutoa kinyama kwenye mapafu (Lung Biopsy)</option>
-                                                                                <option value="99">Sijui</option>
-                                                                                <option value="96">Zinginezo, taja: ________________</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
+                                                                        <fieldset>
+                                                                            <legend>6. Kama mtu akigundulika ana saratani ya mapafu ,ni vipimo gani vinatakiwa kufanyika? (Multiple answer) </legend>
+                                                                            <div>
+                                                                                <input type="radio" id="saratani_vipimo" name="saratani_vipimo" value="1" <?php if ($kap['saratani_vipimo'] == 1) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="vitu_hatarishi1">Vipimo vya damu</label>
+                                                                            </div>
 
-                                                                    <div class="col-6" id="saratani_vipimo_other">
-                                                                        <div class="mb-3">
-                                                                            <label for="saratani_vipimo_other" class="form-label">Taja ?</label>
+                                                                            <div>
+                                                                                <input type="radio" id="saratani_vipimo" name="saratani_vipimo" value="2" <?php if ($kap['saratani_vipimo'] == 2) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="saratani_vipimo">Picha ya kifua (Chest X-ray)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="saratani_vipimo" name="saratani_vipimo" value="3" <?php if ($kap['saratani_vipimo'] == 3) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="saratani_vipimo">CT scan ya kifua</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="saratani_vipimo" name="saratani_vipimo" value="4" <?php if ($kap['saratani_vipimo'] == 4) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="saratani_vipimo">Kutoa kinyama kwenye mapafu (Lung Biopsy)</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="saratani_vipimo" name="saratani_vipimo" value="99" <?php if ($kap['saratani_vipimo'] == 99) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?> />
+                                                                                <label for="saratani_vipimo">Sijui</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="saratani_vipimo96" name="saratani_vipimo" value="96" <?php if ($kap['saratani_vipimo'] == 96) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?> />
+                                                                                <label for="saratani_vipimo96">Nyinginezo, Taja</label>
+                                                                            </div>
+
                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                             print_r($kap['saratani_vipimo_other']);
-                                                                                                        } ?>" name="saratani_vipimo_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
-                                                                        </div>
+                                                                                                        } ?>" id="saratani_vipimo_other" name="saratani_vipimo_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
+                                                                        </fieldset>
                                                                     </div>
                                                                 </div>
 
@@ -2627,6 +2731,157 @@ if ($user->isLoggedIn()) {
     <?php include 'settings.php'; ?>
 
 
+    <script>
+        // Register ajax request
+        // $("#demographic-btn").click(function(e) {
+        //     if ($("#demographic-form")[0].checkValidity()) {
+        //   PREVENT PAGE TO REFRESH
+        // e.preventDefault();
+
+        // if($("#FDATE").val() == ''){
+        // $("#FDATEError").text('* Date is empty');
+        // };
+        // if($("#cDATE").val() == ''){
+        // $("#cDATEError").text('* Date is empty');
+        // };
+        // if($("#cpersid").val() == ''){
+        // $("#cpersidError").text('* NAME is empty');
+        // };
+
+
+        // if ($("#date_registered").val() == '') {
+        //     $("#date_registeredError").text('* Date registered is empty');
+        // } else {
+        //     $("#date_registeredError").text('');
+        // };
+
+        // if ($("#renal_urea_units").val() == '') {
+        //     $("#renal_urea_unitsError").text('* Renal Urea Units is empty');
+        // };
+
+        // if ($("#password1").val() != $("#password2").val()) {
+        // $("#passError").text('* Passowrd do not match');
+        // //console.log("Not matched");
+        // $("#register-btn").val('Sign Up');
+        // }
+        // }
+        //     }
+        // });
+
+        // $('#insurance_name').hide();
+        $('#health_insurance').change(function() {
+            var getUid = $(this).val();
+            if (getUid === "1") {
+                $('#insurance_name').show();
+                $('#pay_services').hide();
+            } else if (getUid === "2") {
+                $('#insurance_name').hide();
+                $('#pay_services').show();
+            }
+            //  else {
+            //     $('#insurance_name').hide();
+            // }
+
+        });
+
+        $('#relation_patient').change(function() {
+            var getUid = $(this).val();
+            if (getUid === "96") {
+                $('#relation_patient_other').show();
+                // $('#relation_patient_other').hide();
+            }
+            //  else if (getUid === "2") {
+            //     $('#insurance_name').hide();
+            //     $('#pay_services').show();
+            // }
+            else {
+                $('#relation_patient_other').hide();
+            }
+
+        });
+
+        // $('#vitu_hatarishi96').change(function() {
+        //     var getUid = $(this).val();
+        //     if (getUid === "96") {
+        //         $('#vitu_hatarishi_other').show();
+        // $('#relation_patient_other').hide();
+        // }
+        //  else if (getUid === "2") {
+        //     $('#insurance_name').hide();
+        //     $('#pay_services').show();
+        // }
+        //     else {
+        //         $('#vitu_hatarishi_other').hide();
+        //     }
+
+        // });
+
+
+        // vitu_hatarishi_other.style.display = 'none';
+        const vitu_hatarishi_other = document.getElementById('vitu_hatarishi_other');
+
+        function vitu_hatarishi96() {
+            if (document.getElementById('vitu_hatarishi96').checked) {
+                vitu_hatarishi_other.style.display = 'block';
+            } else {
+                vitu_hatarishi_other.style.display = 'none';
+            }
+        }
+
+        const vitu_hatarishi = document.querySelectorAll('input[name="vitu_hatarishi"]');
+        vitu_hatarishi.forEach(radio => {
+            radio.addEventListener('click', vitu_hatarishi96);
+        });
+
+
+        // saratani_vipimo_other.style.display = 'none';
+        const saratani_vipimo_other = document.getElementById('saratani_vipimo_other');
+
+        function saratani_vipimo96() {
+            if (document.getElementById('saratani_vipimo96').checked) {
+                saratani_vipimo_other.style.display = 'block';
+            } else {
+                saratani_vipimo_other.style.display = 'none';
+
+            }
+        }
+
+        const saratani_vipimo = document.querySelectorAll('input[name="saratani_vipimo"]');
+        saratani_vipimo.forEach(radio => {
+            radio.addEventListener('click', saratani_vipimo96);
+        });
+
+
+        // dalili_saratani_other
+        const dalili_saratani_other = document.getElementById('dalili_saratani_other');
+
+        function dalili_saratani96() {
+            if (document.getElementById('dalili_saratani96').checked) {
+                dalili_saratani_other.style.display = 'block';
+            } else {
+                dalili_saratani_other.style.display = 'none';
+
+            }
+        }
+
+        const dalili_saratani = document.querySelectorAll('input[name="dalili_saratani"]');
+        dalili_saratani.forEach(radio => {
+            radio.addEventListener('click', dalili_saratani96);
+        });
+
+        // function checkQuestionValue21(currentQuestion, elementToHide) {
+        //     var currentQuestionInput = document.getElementById(currentQuestion);
+        //     var elementToHide = document.getElementById(elementToHide);
+
+        //     var questionValue = currentQuestionInput.value;
+
+        //     if (questionValue === "2") {
+        //         elementToHide.classList.remove("hidden");
+        //     } else {
+        //         elementToHide.classList.add("hidden");
+        //     }
+        // }
+    </script>
     <!-- Vendor js -->
     <script src="assets/js/vendor.min.js"></script>
 
@@ -2638,6 +2893,8 @@ if ($user->isLoggedIn()) {
 
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
+
+
 
 </body>
 
