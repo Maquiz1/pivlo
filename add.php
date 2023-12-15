@@ -288,23 +288,23 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    $user->createRecord('visit', array(
-                        'visit_name' => 'Month 0',
-                        'classification_date' => '',
-                        'expected_date' => date('Y-m-d'),
-                        'visit_date' => '',
-                        'outcome' => 0,
-                        'visit_status' => 0,
-                        'diagnosis' => '',
-                        'category' => '',
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
+                    // $user->createRecord('visit', array(
+                    //     'visit_name' => 'Month 0',
+                    //     'classification_date' => '',
+                    //     'expected_date' => date('Y-m-d'),
+                    //     'visit_date' => '',
+                    //     'outcome' => 0,
+                    //     'visit_status' => 0,
+                    //     'diagnosis' => '',
+                    //     'category' => '',
+                    //     'status' => 1,
+                    //     'patient_id' => Input::get('cid'),
+                    //     'create_on' => date('Y-m-d H:i:s'),
+                    //     'staff_id' => $user->data()->id,
+                    //     'update_on' => date('Y-m-d H:i:s'),
+                    //     'update_id' => $user->data()->id,
+                    //     'site_id' => $user->data()->site_id,
+                    // ));
 
                     $successMessage = 'Kap  Successful Added';
                 } elseif (Input::get('btn') == 'Update') {

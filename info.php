@@ -2725,6 +2725,9 @@ if ($user->isLoggedIn()) {
 
                         <div class="row">
                             <?php if ($_GET['sequence'] == 0 || $_GET['sequence'] == 1) { ?>
+                                <?php
+                                $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
+                                ?>
 
                                 <div class="col-md-6">
                                     <div class="card">
@@ -2740,8 +2743,12 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                                 <div class="">
-                                                    <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=<?= $_GET['btn']; ?>" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
-                                                    <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
+                                                    <?php if (!$kap) { ?>
+                                                        <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=Add" class="btn btn-secondary btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add"> <i class="ri-pencil-fill"></i> </a>
+                                                    <?php } else { ?>
+                                                        <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=Update" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
+                                                        <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
+                                                    <?php } ?>
                                                 </div>
 
 
