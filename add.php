@@ -222,6 +222,7 @@ if ($user->isLoggedIn()) {
                 }
             }
         } elseif (Input::get('add_kap')) {
+            // print_r($_POST);
             $validate = $validate->check($_POST, array(
                 'interview_date' => array(
                     'required' => true,
@@ -236,6 +237,8 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 if (Input::get('btn') == 'Add') {
                     $user->createRecord('kap', array(
+                        'sequence' => $_GET['sequence'],
+                        'visit_name' => $_GET['visit_name'],
                         'interview_date' => Input::get('interview_date'),
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
@@ -1354,6 +1357,25 @@ if ($user->isLoggedIn()) {
                         </div>
                         <!-- end row -->
                     <?php } elseif ($_GET['id'] == 3) { ?>
+                        <?php
+                        $kap = 0;
+                        $screening = 0;
+                        $health_care = 0;
+
+                        $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
+
+
+                        if ($_GET['interview'] == 1) {
+                            $interview = 'kap';
+                            $btnKap = $_GET['btn'];
+                        } elseif ($_GET['interview'] == 2) {
+                            $interview = 'screening';
+                            $btnKap = $_GET['btn'];
+                        } elseif ($_GET['interview'] == 3) {
+                            $interview = 'health_care';
+                            $btnKap = $_GET['btn'];
+                        }
+                        ?>
 
                         <div class="content-page">
                             <div class="content">
@@ -2474,10 +2496,10 @@ if ($user->isLoggedIn()) {
 
                                                         <div>
                                                             <input type="hidden" name="id" value="<?= $kap['id'] ?>">
-                                                            <input type="hidden" name="cid" value="<?= $value['id'] ?>">
+                                                            <input type="hidden" name="cid" value="<?= $_GET['cid']; ?>">
                                                             <input type="hidden" name="btn" value="<?= $btnKap ?>">
                                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                            <input type="submit" name="add_kap" class="btn btn-primary" value="Add">
+                                                            <input type="submit" name="add_kap" class="btn btn-primary" value="<?= $_GET['btn'] ?>">
                                                         </div>
                                                     </form>
                                                 </div> <!-- end card-body -->

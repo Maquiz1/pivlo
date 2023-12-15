@@ -949,7 +949,7 @@ if ($user->isLoggedIn()) {
                                                                         <?php   } ?>
 
                                                                     <?php } ?>
-                                                                    <a href="info.php?id=3&cid=<?= $value['id'] ?>" class="btn btn-success">Clients Schedules</a>
+                                                                    <a href="info.php?id=3&cid=<?= $value['id'] ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=<?= $_GET['btn']; ?>" class="btn btn-success">Clients Schedules</a>
 
 
                                                                     <!-- <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a> -->
@@ -2497,7 +2497,7 @@ if ($user->isLoggedIn()) {
 
                                                                 </td>
                                                                 <td>
-                                                                    <a href="info.php?id=5&cid=<?= $value['id'] ?>&sequence=1" class="btn btn-success">Study Crfs</a>
+                                                                    <a href="info.php?id=5&cid=<?= $visit['patient_id'] ?>&visit_name=<?= $visit['visit_name'] ?>&sequence=<?= $visit['sequence'] ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=<?= $_GET['btn']; ?>" class="btn btn-success">Study Crfs</a>
 
                                                                 </td>
                                                             </tr>
@@ -2643,10 +2643,10 @@ if ($user->isLoggedIn()) {
                                     <div class="card-body">
                                         <h5 class="card-title">KAP</h5>
                                         <p class="card-text">KAP Questionaire.</p>
-                                        <a href="add.php?id=2&interview=1&btn=Add" class="btn btn-secondary btn-sm">
+                                        <a href="add.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=1&btn=Add" class="btn btn-secondary btn-sm">
                                             Add <span class="badge bg-light text-dark ms-1"><i class="ri-pencil-line"></i></span>
                                         </a>
-                                        <a href="info.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=1" class="btn btn-info btn-sm">
+                                        <a href="info.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=1&btn=Update" class="btn btn-info btn-sm">
                                             View <span class="badge bg-light text-dark ms-1"><?= $override->countData1('clients', 'status', 1, 'kap', 1, 'site_id', $user->data()->site_id); ?></span>
                                         </a>
                                     </div> <!-- end card-body-->
@@ -2658,10 +2658,10 @@ if ($user->isLoggedIn()) {
                                     <div class="card-body">
                                         <h5 class="card-title text-primary">SCREENING</h5>
                                         <p class="card-text">SCREENING Questionaire.</p>
-                                        <a href="add.php?id=2&interview=2&btn=Add" class="btn btn-secondary btn-sm">
+                                        <a href="add.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=2&btn=Add" class="btn btn-secondary btn-sm">
                                             Add <span class="badge bg-light text-dark ms-1"><i class="ri-pencil-line"></i></span>
                                         </a>
-                                        <a href="info.php?id=5&cid=1&site_id=<?= $_GET['site_id']; ?>&interview=2" class="btn btn-primary btn-sm">
+                                        <a href="info.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=2&btn=Update" class="btn btn-primary btn-sm">
                                             View <span class="badge bg-light text-dark ms-1"><?= $override->countData1('clients', 'status', 1, 'screening', 1, 'site_id', $user->data()->site_id); ?></span>
                                         </a>
 
@@ -2677,10 +2677,10 @@ if ($user->isLoggedIn()) {
                                         <h5 class="card-title text-success">HEALTH CARE WORKERS</h5>
                                         <p class="card-text">HEALTH CARE WORKERS Questionaire.</p>
 
-                                        <a href="add.php?id=2&interview=3&btn=Add" class="btn btn-secondary btn-sm">
+                                        <a href="add.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=3&btn=Add" class="btn btn-secondary btn-sm">
                                             Add <span class="badge bg-light text-dark ms-1"><i class="ri-pencil-line"></i></span>
                                         </a>
-                                        <a href="info.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=3" class="btn btn-success btn-sm">View
+                                        <a href="info.php?id=2&site_id=<?= $_GET['site_id']; ?>&interview=3&btn=Update" class="btn btn-success btn-sm">View
                                             <span class="badge bg-light text-dark ms-1"><?= $override->countData1('clients', 'status', 1, 'health_care', 1, 'site_id', $user->data()->site_id); ?></span>
                                         </a>
                                     </div> <!-- end card-body-->
@@ -2724,7 +2724,7 @@ if ($user->isLoggedIn()) {
 
 
                         <div class="row">
-                            <?php if ($_GET['sequence'] == 1) { ?>
+                            <?php if ($_GET['sequence'] == 0 || $_GET['sequence'] == 1) { ?>
 
                                 <div class="col-md-6">
                                     <div class="card">
@@ -2740,9 +2740,9 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                                 <div class="">
-                                                    <a href="add.php?id=3" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
+                                                    <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=<?= $_GET['btn']; ?>" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
                                                     <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
-                                                </div>                                            
+                                                </div>
 
 
                                             </div>
