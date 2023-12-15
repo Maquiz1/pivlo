@@ -288,23 +288,23 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    // $user->createRecord('visit', array(
-                    //     'visit_name' => 'Month 0',
-                    //     'classification_date' => '',
-                    //     'expected_date' => date('Y-m-d'),
-                    //     'visit_date' => '',
-                    //     'outcome' => 0,
-                    //     'visit_status' => 0,
-                    //     'diagnosis' => '',
-                    //     'category' => '',
-                    //     'status' => 1,
-                    //     'patient_id' => Input::get('cid'),
-                    //     'create_on' => date('Y-m-d H:i:s'),
-                    //     'staff_id' => $user->data()->id,
-                    //     'update_on' => date('Y-m-d H:i:s'),
-                    //     'update_id' => $user->data()->id,
-                    //     'site_id' => $user->data()->site_id,
-                    // ));
+                    $user->createRecord('visit', array(
+                        'visit_name' => 'Month 0',
+                        'classification_date' => '',
+                        'expected_date' => date('Y-m-d'),
+                        'visit_date' => '',
+                        'outcome' => 0,
+                        'visit_status' => 0,
+                        'diagnosis' => '',
+                        'category' => 0,
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
 
                     $successMessage = 'Kap  Successful Added';
                 } elseif (Input::get('btn') == 'Update') {
@@ -1060,6 +1060,9 @@ if ($user->isLoggedIn()) {
                                     <div class="card-header">
                                         <h4 class="header-title mb-0"> CRF 1 : Screening Form </h4>
                                     </div>
+                                    <a href=" info.php?id=4&site_id=<?= $_GET['site_id'] ?>" class="text-reset fs-16 px-1">
+                                        << /i>Back
+                                    </a>
                                     <div class="card-body">
                                         <div id="rootwizard">
                                             <ul class="nav nav-pills nav-justified form-wizard-header mb-3">
@@ -1399,6 +1402,12 @@ if ($user->isLoggedIn()) {
                                         </div>
                                     </div>
                                     <!-- end page title -->
+
+                                    <h4 class="header-title text-end">
+                                        <a href="info.php?id=5&cid=<?= $_GET['cid'] ?>&visit_name=<?= $_GET['visit_name'] ?>&sequence=<?= $_GET['sequence'] ?>&site_id=<?= $_GET['site_id'] ?>&interview=<?= $_GET['interview'] ?>&btn=<?= $_GET['btn'] ?>" class="text-reset fs-16 px-1">
+                                            << /i>Back
+                                        </a>
+                                    </h4>
 
                                     <div class="row">
                                         <div class="col-12">

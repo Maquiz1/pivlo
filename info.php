@@ -817,7 +817,7 @@ if ($user->isLoggedIn()) {
                                         change colors.
                                     </p> -->
                                         <h4 class="header-title text-end">
-                                            <a href=" info.php?id=1&category=<?= $_GET['category'] ?>" class="text-reset fs-16 px-1">
+                                            <a href=" info.php?id=4&site_id=<?= $_GET['site_id'] ?>" class="text-reset fs-16 px-1">
                                                 << /i>Back
                                             </a>
                                             <?php
@@ -2429,7 +2429,7 @@ if ($user->isLoggedIn()) {
                                         change colors.
                                     </p> -->
                                         <h4 class="header-title text-end">
-                                            <a href=" info.php?id=1&category=<?= $_GET['category'] ?>" class="text-reset fs-16 px-1">
+                                            <a href="info.php?id=2&site_id=<?= $_GET['site_id'] ?>&interview=<?= $_GET['interview'] ?>&btn=<?= $_GET['btn'] ?>" class="text-reset fs-16 px-1">
                                                 << /i>Back
                                             </a>
                                         </h4>
@@ -2464,7 +2464,7 @@ if ($user->isLoggedIn()) {
                                                                 </td>
                                                                 <td class="table-user">
                                                                     <?= $visit['expected_date']; ?>
-                                                                </td>outcome
+                                                                </td>
                                                                 <td class="table-user">
                                                                     <?= $visit['visit_date']; ?>
                                                                 </td>
@@ -2706,7 +2706,7 @@ if ($user->isLoggedIn()) {
                         </div>
                         <!-- end page title -->
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
@@ -2719,16 +2719,58 @@ if ($user->isLoggedIn()) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- End row -->
 
-
+                        <h4 class="header-title text-end">
+                            <a href="info.php?id=3&cid=<?= $_GET['cid'] ?>&site_id=<?= $_GET['site_id'] ?>&interview=<?= $_GET['interview'] ?>&btn=<?= $_GET['btn'] ?>" class="text-reset fs-16 px-1">
+                                << /i>Back
+                            </a>
+                        </h4>
                         <div class="row">
-                            <?php if ($_GET['sequence'] == 0 || $_GET['sequence'] == 1) { ?>
-                                <?php
-                                $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
-                                ?>
+                            <?php if ($_GET['interview'] == 1) { ?>
+                                <?php if ($_GET['sequence'] == 0 || $_GET['sequence'] == 1) { ?>
+                                    <?php
+                                    $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
+                                    ?>
 
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-start justify-content-between">
+                                                    <div class="d-flex">
+                                                        <a class="me-3" href="#">
+                                                            <img class="avatar-md rounded-circle bx-s" src="assets/images/users/avatar-2.jpg" alt="">
+                                                        </a>
+                                                        <div class="info">
+                                                            <h5 class="fs-18 my-1">KAP</h5>
+                                                            <p class="text-muted fs-15">KAP</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="">
+                                                        <?php if (!$kap) { ?>
+                                                            <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=Add" class="btn btn-secondary btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add"> <i class="ri-pencil-fill"></i> </a>
+                                                        <?php } else { ?>
+                                                            <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=Update" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
+                                                            <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
+                                                        <?php } ?>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <hr>
+
+                                            </div>
+                                            <!-- card-body -->
+                                        </div>
+                                        <!-- card -->
+                                    </div> <!-- end col -->
+                                <?php }  ?>
+                            <?php }  ?>
+
+                            <?php if ($_GET['interview'] == 2) { ?>
                                 <div class="col-md-6">
                                     <div class="card">
                                         <div class="card-body">
@@ -2738,18 +2780,20 @@ if ($user->isLoggedIn()) {
                                                         <img class="avatar-md rounded-circle bx-s" src="assets/images/users/avatar-2.jpg" alt="">
                                                     </a>
                                                     <div class="info">
-                                                        <h5 class="fs-18 my-1">KAP</h5>
-                                                        <p class="text-muted fs-15">KAP</p>
+                                                        <h5 class="fs-18 my-1">HISTORY</h5>
+                                                        <p class="text-muted fs-15">HISTORY</p>
                                                     </div>
                                                 </div>
                                                 <div class="">
-                                                    <?php if (!$kap) { ?>
-                                                        <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=Add" class="btn btn-secondary btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add"> <i class="ri-pencil-fill"></i> </a>
-                                                    <?php } else { ?>
-                                                        <a href="add.php?id=3&cid=<?= $_GET['cid']; ?>&visit_name=<?= $_GET['visit_name']; ?>&sequence=<?= $_GET['sequence']; ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=Update" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
-                                                        <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
-                                                    <?php } ?>
+                                                    <a href="#" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
+                                                    <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
                                                 </div>
+
+                                                <?php if ($override->get3('kap', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
+                                                    <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
+                                                <?php } else { ?>
+                                                    <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
+                                                <?php } ?>
 
 
                                             </div>
@@ -2761,46 +2805,10 @@ if ($user->isLoggedIn()) {
                                     </div>
                                     <!-- card -->
                                 </div> <!-- end col -->
-                            <?php }  ?>
-
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-start justify-content-between">
-                                            <div class="d-flex">
-                                                <a class="me-3" href="#">
-                                                    <img class="avatar-md rounded-circle bx-s" src="assets/images/users/avatar-2.jpg" alt="">
-                                                </a>
-                                                <div class="info">
-                                                    <h5 class="fs-18 my-1">HISTORY</h5>
-                                                    <p class="text-muted fs-15">HISTORY</p>
-                                                </div>
-                                            </div>
-                                            <div class="">
-                                                <a href="#" class="btn btn-success btn-sm me-1 tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"> <i class="ri-pencil-fill"></i> </a>
-                                                <a href="#" class="btn btn-danger btn-sm tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"> <i class="ri-close-fill"></i> </a>
-                                            </div>
-
-                                            <?php if ($override->get3('kap', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-                                                <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                            <?php } else { ?>
-                                                <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                            <?php } ?>
-
-
-                                        </div>
-
-                                        <hr>
-
-                                    </div>
-                                    <!-- card-body -->
-                                </div>
-                                <!-- card -->
-                            </div> <!-- end col -->
                         </div>
-
-
                     <?php } ?>
+                <?php }  ?>
+
 
 
                 </div> <!-- container -->
