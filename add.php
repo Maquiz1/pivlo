@@ -151,6 +151,7 @@ if ($user->isLoggedIn()) {
                             'visit_status' => 0,
                             'diagnosis' => '',
                             'category' => 0,
+                            'visit_status' => 1,
                             'status' => 1,
                             'patient_id' => $last_row['id'],
                             'create_on' => date('Y-m-d H:i:s'),
@@ -162,7 +163,6 @@ if ($user->isLoggedIn()) {
 
                         $successMessage = 'Demographic  Added Successful';
                     } elseif (Input::get('btn') == 'Update') {
-                        print_r($_POST);
                         $user->updateRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
                             'firstname' => Input::get('firstname'),
@@ -185,7 +185,7 @@ if ($user->isLoggedIn()) {
                             'health_insurance' => Input::get('health_insurance'),
                             'insurance_name' => Input::get('insurance_name'),
                             'pay_services' => Input::get('pay_services'),
-                            'client_category' => $client_category,
+                            // 'client_category' => $client_category,
                             'comments' => Input::get('comments'),
                             'complete_status' => Input::get('complete_status'),
                             'complete_on' => date('Y-m-d H:i:s'),
@@ -215,7 +215,6 @@ if ($user->isLoggedIn()) {
 
                         $successMessage = 'Demographic Updated Successful';
                     }
-                    // info.php?id=2&site_id=1&interview=1
                     $interview = $_GET['interview'];
                     Redirect::to('info.php?id=2&site_id=' . $user->data()->site_id . '&interview=' . $interview);
                 } catch (Exception $e) {
@@ -355,6 +354,8 @@ if ($user->isLoggedIn()) {
                     ), Input::get('id'));
                     $successMessage = 'Kap  Successful Updated';
                 }
+
+                Redirect::to('info.php?id=3&cid=' . $_GET['cid'] . '&site_id=' . $user->data()->site_id . '&interview=' . $interview . '&btn=' . $_GET['btn']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -805,7 +806,7 @@ if ($user->isLoggedIn()) {
 <!-- Mirrored from techzaa.getappui.com/velonic/layouts/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Oct 2023 15:58:18 GMT -->
 
 <?php include 'header.php'; ?>
-<style>
+<!-- <style>
     p,
     label {
         font:
@@ -825,7 +826,7 @@ if ($user->isLoggedIn()) {
         width: 100px;
         height: 100px;
     }
-</style>
+</style> -->
 
 
 <body>
@@ -1276,10 +1277,10 @@ if ($user->isLoggedIn()) {
                                                                             <option value="96">Wengine</option>
                                                                         </select>
 
-                                                                        <div>
+                                                                        <div id="relation_patient_other">
                                                                             <input type="text" value="<?php if ($clients) {
                                                                                                             print_r($clients['relation_patient_other']);
-                                                                                                        } ?>" id="relation_patient_other" name="relation_patient_other" class="form-control" placeholder="Enter Relation">
+                                                                                                        } ?>" name="relation_patient_other" class="form-control" placeholder="Enter Relation">
                                                                         </div>
 
                                                                     </div>
@@ -1497,7 +1498,6 @@ if ($user->isLoggedIn()) {
         <?php } elseif ($_GET['id'] == 3) { ?>
 
             <?php
-
                         $kap = 0;
                         $screening = 0;
                         $health_care = 0;
@@ -1508,14 +1508,22 @@ if ($user->isLoggedIn()) {
                         if ($_GET['interview'] == 1) {
                             $interview = 'kap';
                             $btnKap = $_GET['btn'];
+                            if ($kap == 1) {
+                                $btnKap = 'Update';
+                            }
                         } elseif ($_GET['interview'] == 2) {
                             $interview = 'screening';
                             $btnKap = $_GET['btn'];
+                            if ($kap == 1) {
+                                $btnKap = 'Update';
+                            }
                         } elseif ($_GET['interview'] == 3) {
                             $interview = 'health_care';
                             $btnKap = $_GET['btn'];
+                            if ($kap == 1) {
+                                $btnKap = 'Update';
+                            }
                         }
-
             ?>
 
             <div class="content-page">
@@ -1563,39 +1571,7 @@ if ($user->isLoggedIn()) {
                                     </div>
                                     <div class="card-body">
                                         <form id="validation" method="post">
-                                            <!-- <div class="row">
-                                                                <div class="col-lg-4">
-
-                                                                    <div class="mb-3">
-                                                                        <label for="simpleinput" class="form-label">Text</label>
-                                                                        <input type="text" id="simpleinput" class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-lg-4">
-
-                                                                    <div class="mb-3">
-                                                                        <label for="example-email" class="form-label">Email</label>
-                                                                        <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email">
-                                                                    </div>
-                                                                </div>
-
-
-                                                                <div class="col-lg-4">
-
-                                                                    <div class="mb-0">
-                                                                        <label for="example-helping" class="form-label">Helping text</label>
-                                                                        <input type="text" id="example-helping" class="form-control" placeholder="Helping text">
-                                                                        <span class="help-block"><small>A block of help text that breaks
-                                                                                onto a new line and may extend beyond one
-                                                                                line.</small></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div> -->
-                                            <!-- end row -->
-
                                             <hr>
-
                                             <div class="row">
                                                 <div class="row">
                                                     <div class="col-12">
@@ -1957,50 +1933,100 @@ if ($user->isLoggedIn()) {
 
                                                                 <hr>
                                                                 <div class="row">
-                                                                    <div class="col-6" id="matibabu1">
-                                                                        <div class="mb-3">
-                                                                            <label for="matibabu" class="form-label">9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
-                                                                            <select name="matibabu" id="matibabu" class="form-select form-select-lg mb-3" onchange="updateText6(this.value)">
-                                                                                <option value="<?= $kap['matibabu'] ?>"><?php if ($kap) {
-                                                                                                                            if ($kap['matibabu'] == 1) {
-                                                                                                                                echo 'Upasuaji';
-                                                                                                                            } elseif ($kap['matibabu'] == 2) {
-                                                                                                                                echo 'Tiba kemikali (Chemotherapy).';
-                                                                                                                            } elseif ($kap['matibabu'] == 3) {
-                                                                                                                                echo 'Tiba ya mionzi (Radiotherapy).';
-                                                                                                                            } elseif ($kap['matibabu'] == 4) {
-                                                                                                                                echo 'Tiba ya kinga (Immunotherapy).';
-                                                                                                                            } elseif ($kap['matibabu'] == 5) {
-                                                                                                                                echo 'Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor).';
-                                                                                                                            } elseif ($kap['matibabu'] == 6) {
-                                                                                                                                echo 'Tiba inayolengwa na kinga. (Immune target therapy).';
-                                                                                                                            } elseif ($kap['matibabu'] == 99) {
-                                                                                                                                echo 'Sijui';
-                                                                                                                            } elseif ($kap['matibabu'] == 96) {
-                                                                                                                                echo 'Zinginezo: Taja ________________';
-                                                                                                                            }
-                                                                                                                        } else {
-                                                                                                                            echo 'Select';
-                                                                                                                        } ?>
-                                                                                </option>
-                                                                                <option value="1">Upasuaji</option>
-                                                                                <option value="2">Tiba kemikali (Chemotherapy)</option>
-                                                                                <option value="3">Tiba ya mionzi (Radiotherapy).</option>
-                                                                                <option value="4">Tiba ya kinga (Immunotherapy).</option>
-                                                                                <option value="5">Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor).</option>
-                                                                                <option value="6">Tiba inayolengwa na kinga. (Immune target therapy).</option>
-                                                                                <option value="99">Sijui</option>
-                                                                                <option value="96">Zinginezo: Taja ________________</option>
-                                                                            </select>
-                                                                        </div>
+                                                                    <div class="col-6">
+                                                                        <fieldset>
+                                                                            <legend>7. Je, ugonjwa wa saratani ya mapafu unatibika?</legend>
+                                                                            <div>
+                                                                                <input type="radio" id="saratani_inatibika" name="saratani_inatibika" value="1" <?php if ($kap['matibabu'] == 1) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?> />
+                                                                                <label for="matibabu">Upasuaji</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="2" <?php if ($kap['matibabu'] == 2) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Tiba kemikali (Chemotherapy)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="3" <?php if ($kap['matibabu'] == 3) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Tiba ya mionzi (Radiotherapy)</label>
+                                                                            </div>
+                                                                        </fieldset>
                                                                     </div>
-                                                                    <div class="col-6" id="matibabu_other">
-                                                                        <div class="mb-3">
-                                                                            <label for="matibabu_other" class="form-label">Taja ?</label>
+
+                                                                    <div class="col-6">
+                                                                        <fieldset>
+                                                                            <legend>9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</legend>
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="1" <?php if ($kap['matibabu'] == 1) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Upasuaji</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="2" <?php if ($kap['matibabu'] == 2) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Tiba kemikali (Chemotherapy)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="3" <?php if ($kap['matibabu'] == 3) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Tiba ya mionzi (Radiotherapy)</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="4" <?php if ($kap['matibabu'] == 4) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Tiba ya kinga (Immunotherapy)</label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="5" <?php if ($kap['matibabu'] == 5) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="6" <?php if ($kap['matibabu'] == 6) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Tiba inayolengwa na kinga. (Immune target therapy)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="7" <?php if ($kap['matibabu'] == 7) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu">Kuwa na historia ya kupigwa mionzi ya kifua</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu" name="matibabu" value="8" <?php if ($kap['matibabu'] == 8) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> />
+                                                                                <label for="matibabu96">Kutumia uzazi wa mpango (vidonge vya majira)</label>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <input type="radio" id="matibabu96" name="matibabu" value="96" <?php if ($kap['matibabu'] == 96) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?> />
+                                                                                <label for="matibabu_other">Nyinginezo, Taja</label>
+                                                                            </div>
+
                                                                             <input type="text" value="<?php if ($kap) {
                                                                                                             print_r($kap['matibabu_other']);
-                                                                                                        } ?>" name="matibabu_other" class="form-control" placeholder="Ingiza matibabu" />
-                                                                        </div>
+                                                                                                        } ?>" id="matibabu_other" name="matibabu_other" class="form-control" placeholder="Ingiza matibabu" />
+                                                                        </fieldset>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2692,7 +2718,7 @@ if ($user->isLoggedIn()) {
                                             <div>
                                                 <input type="hidden" name="id" value="<?= $kap['id'] ?>">
                                                 <input type="hidden" name="cid" value="<?= $_GET['cid']; ?>">
-                                                <input type="hidden" name="btn" value="<?= $btnKap ?>">
+                                                <input type="hidden" name="btn" value="<?= $_GET['btn'] ?>">
                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                                 <input type="submit" name="add_kap" class="btn btn-primary" value="<?= $_GET['btn'] ?>">
                                             </div>
@@ -2729,6 +2755,12 @@ if ($user->isLoggedIn()) {
 
     <!-- Theme Settings -->
     <?php include 'settings.php'; ?>
+
+    <!-- demographic Js -->
+    <script src="myjs/add/demographic.js"></script>
+    <script src="myjs/add/insurance.js"></script>
+
+
 
 
     <script>
@@ -2769,36 +2801,36 @@ if ($user->isLoggedIn()) {
         // });
 
         // $('#insurance_name').hide();
-        $('#health_insurance').change(function() {
-            var getUid = $(this).val();
-            if (getUid === "1") {
-                $('#insurance_name').show();
-                $('#pay_services').hide();
-            } else if (getUid === "2") {
-                $('#insurance_name').hide();
-                $('#pay_services').show();
-            }
-            //  else {
-            //     $('#insurance_name').hide();
-            // }
+        // $('#health_insurance').change(function() {
+        //     var getUid = $(this).val();
+        //     if (getUid === "1") {
+        //         $('#insurance_name').show();
+        //         $('#pay_services').hide();
+        //     } else if (getUid === "2") {
+        //         $('#insurance_name').hide();
+        //         $('#pay_services').show();
+        //     }
+        //     //  else {
+        //     //     $('#insurance_name').hide();
+        //     // }
 
-        });
+        // });
 
-        $('#relation_patient').change(function() {
-            var getUid = $(this).val();
-            if (getUid === "96") {
-                $('#relation_patient_other').show();
-                // $('#relation_patient_other').hide();
-            }
-            //  else if (getUid === "2") {
-            //     $('#insurance_name').hide();
-            //     $('#pay_services').show();
-            // }
-            else {
-                $('#relation_patient_other').hide();
-            }
+        // $('#relation_patient').change(function() {
+        //     var getUid = $(this).val();
+        //     if (getUid === "96") {
+        //         $('#relation_patient_other').show();
+        //         // $('#relation_patient_other').hide();
+        //     }
+        //     //  else if (getUid === "2") {
+        //     //     $('#insurance_name').hide();
+        //     //     $('#pay_services').show();
+        //     // }
+        //     else {
+        //         $('#relation_patient_other').hide();
+        //     }
 
-        });
+        // });
 
         // $('#vitu_hatarishi96').change(function() {
         //     var getUid = $(this).val();
@@ -2815,6 +2847,11 @@ if ($user->isLoggedIn()) {
         //     }
 
         // });
+
+
+
+
+
 
 
         // vitu_hatarishi_other.style.display = 'none';

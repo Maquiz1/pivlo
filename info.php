@@ -182,6 +182,7 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 if (Input::get('btn') == 'Add') {
+                    // print_r($_POST);
                     $user->createRecord('history', array(
                         'screening_date' => Input::get('screening_date'),
                         'ever_smoked' => Input::get('ever_smoked'),
@@ -201,23 +202,23 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    $user->createRecord('visit', array(
-                        'visit_name' => 'Month 0',
-                        'classification_date' => '',
-                        'expected_date' => date('Y-m-d'),
-                        'visit_date' => '',
-                        'outcome' => 0,
-                        'visit_status' => 0,
-                        'diagnosis' => '',
-                        'category' => '',
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
+                    // $user->createRecord('visit', array(
+                    //     'visit_name' => 'Month 0',
+                    //     'classification_date' => '',
+                    //     'expected_date' => date('Y-m-d'),
+                    //     'visit_date' => '',
+                    //     'outcome' => 0,
+                    //     'visit_status' => 0,
+                    //     'diagnosis' => '',
+                    //     'category' => '',
+                    //     'status' => 1,
+                    //     'patient_id' => Input::get('cid'),
+                    //     'create_on' => date('Y-m-d H:i:s'),
+                    //     'staff_id' => $user->data()->id,
+                    //     'update_on' => date('Y-m-d H:i:s'),
+                    //     'update_id' => $user->data()->id,
+                    //     'site_id' => $user->data()->site_id,
+                    // ));
 
                     $successMessage = 'History  Successful Added';
                 } elseif (Input::get('btn') == 'Update') {
@@ -339,6 +340,7 @@ if ($user->isLoggedIn()) {
                                 'diagnosis' => Input::get('diagnosis'),
                                 'category' => $value,
                                 'status' => 1,
+                                'sequence' => 1,
                                 'patient_id' => Input::get('cid'),
                                 'create_on' => date('Y-m-d H:i:s'),
                                 'staff_id' => $user->data()->id,
@@ -407,7 +409,9 @@ if ($user->isLoggedIn()) {
                     $user->createRecord('economic', array(
                         'economic_date' => Input::get('economic_date'),
                         'income_household' => Input::get('income_household'),
+                        'income_household_other' => Input::get('income_household_other'),
                         'income_patient' => Input::get('income_patient'),
+                        'income_patient_other' => Input::get('income_patient_other'),
                         'smoking_long' => Input::get('smoking_long'),
                         'monthly_earn' => Input::get('monthly_earn'),
                         'member_earn' => Input::get('member_earn'),
@@ -435,7 +439,9 @@ if ($user->isLoggedIn()) {
                     $user->updateRecord('economic', array(
                         'economic_date' => Input::get('economic_date'),
                         'income_household' => Input::get('income_household'),
+                        'income_household_other' => Input::get('income_household_other'),
                         'income_patient' => Input::get('income_patient'),
+                        'income_patient_other' => Input::get('income_patient_other'),
                         'smoking_long' => Input::get('smoking_long'),
                         'monthly_earn' => Input::get('monthly_earn'),
                         'member_earn' => Input::get('member_earn'),
@@ -856,6 +862,7 @@ if ($user->isLoggedIn()) {
                                                         $interview = 'health_care';
                                                     }
                                                     if ($override->getNews('clients', 'status', 1, $interview, 1, 'site_id', $user->data()->site_id)) {
+                                                        $x = 1;
                                                         foreach ($override->getNews3('clients', 'status', 1, $interview, 1, 'site_id', $user->data()->site_id) as $value) {
                                                             $yes_no = $override->get('yes_no', 'status', 1)[0];
                                                             $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
@@ -893,7 +900,7 @@ if ($user->isLoggedIn()) {
                                                                 <?php   } ?>
                                                                 <td class="text-center">
                                                                     <!-- <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a> -->
-                                                                    <a href="add.php?id=2&cid=<?= $value['id'] ?>&btn=Update" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
+                                                                    <a href="add.php?id=2&cid=<?= $value['id'] ?>&interview=<?= $_GET['interview']; ?>&btn=Update" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
 
                                                                     <?php if ($_GET['interview'] == 1) { ?>
                                                                         <?php if ($kap['status']) {
@@ -911,45 +918,47 @@ if ($user->isLoggedIn()) {
                                                                     <?php if ($_GET['interview'] == 2) { ?>
 
                                                                         <?php if ($history['status'] == 0) {
-                                                                            $btn = 'Add';
+                                                                            $btnH = 'Add';
                                                                         ?>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Add history</button>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btnH>Add history</button>
                                                                         <?php   } elseif ($history['status'] == 1) {
-                                                                            $btn = 'Update';
+                                                                            $btnH = 'Update';
                                                                         ?>
-                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btn>Update history</button>
+                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#history<?= $value['id'] ?>&btn=" .$btnH>Update history</button>
                                                                         <?php   } ?>
 
-                                                                        <?php if ($results['status'] == 0) {
-                                                                            $btn = 'Add';
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Add Results</button>
-                                                                        <?php   } elseif ($results['status'] == 1) {
-                                                                            $btn = 'Update';
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Update Results</button>
-                                                                        <?php   } ?>
-                                                                        <?php if ($classification['status'] == 0) {
-                                                                            $btnC = 'Add';
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Add Classification</button>
-                                                                        <?php   } elseif ($classification['status'] == 1) {
-                                                                            $btnC = 'Update';
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Update Classification</button>
-                                                                        <?php   } ?>
-                                                                        <?php if ($economic['status'] == 0) {
-                                                                            $btn = 'Add';
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Add Economic</button>
-                                                                        <?php   } elseif ($economic['status'] == 1) {
-                                                                            $btn = 'Update';
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Update Economic</button>
-                                                                        <?php   } ?>
+                                                                        <?php if ($history['eligible'] == 1) { ?>
+                                                                            <?php if ($results['status'] == 0) {
+                                                                                $btnR = 'Add';
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Add Results</button>
+                                                                            <?php   } elseif ($results['status'] == 1) {
+                                                                                $btnR = 'Update';
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#results<?= $value['id'] ?>&btn=" .$btn>Update Results</button>
+                                                                            <?php   } ?>
+                                                                            <?php if ($classification['status'] == 0) {
+                                                                                $btnC = 'Add';
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Add Classification</button>
+                                                                            <?php   } elseif ($classification['status'] == 1) {
+                                                                                $btnC = 'Update';
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classification<?= $value['id'] ?>&btn=" .$btnC>Update Classification</button>
+                                                                            <?php   } ?>
+                                                                            <?php if ($economic['status'] == 0) {
+                                                                                $btnE = 'Add';
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Add Economic</button>
+                                                                            <?php   } elseif ($economic['status'] == 1) {
+                                                                                $btnE = 'Update';
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#economic<?= $value['id'] ?>&btn=" .$btn>Update Economic</button>
+                                                                            <?php   } ?>
+                                                                            <a href="info.php?id=3&cid=<?= $value['id'] ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=<?= $_GET['btn']; ?>" class="btn btn-success">Clients Schedules</a>
 
+                                                                        <?php } ?>
                                                                     <?php } ?>
-                                                                    <a href="info.php?id=3&cid=<?= $value['id'] ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=<?= $_GET['btn']; ?>" class="btn btn-success">Clients Schedules</a>
 
 
                                                                     <!-- <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a> -->
@@ -1916,7 +1925,7 @@ if ($user->isLoggedIn()) {
                                                                     </div><!-- /.modal-content -->
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
-                                                            <div id="history<?= $value['id'] ?>&btn=" .$btn class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                            <div id="history<?= $value['id'] ?>&btn=" .$btnH class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <form id="validation" method="post">
@@ -1938,7 +1947,7 @@ if ($user->isLoggedIn()) {
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
                                                                                             <label for="ever_smoked" class="form-label">Have you ever smoked cigarette ?</label>
-                                                                                            <select name="ever_smoked" id="ever_smoked" class="form-select form-select-lg mb-3" required>
+                                                                                            <select name="ever_smoked" id="ever_smoked_<?= $x; ?>" class="form-select form-select-lg mb-3" required>
                                                                                                 <option value="<?= $history['ever_smoked'] ?>"><?php if ($history) {
                                                                                                                                                     if ($history['ever_smoked'] == 1) {
                                                                                                                                                         echo 'Yes';
@@ -1955,28 +1964,32 @@ if ($user->isLoggedIn()) {
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="start_smoking" class="form-label">When did you start smoking?</label>
-                                                                                            <input type="number" value="<?php if ($history) {
-                                                                                                                            print_r($history['start_smoking']);
-                                                                                                                        } ?>" min="1970" min="2023" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" required />
+                                                                                    <span id="smoking_<?= $x; ?>">
+                                                                                        <div class="row">
+                                                                                            <div class="col-6">
+                                                                                                <div class="mb-2">
+                                                                                                    <label for="start_smoking" class="form-label">When did you start smoking?</label>
+                                                                                                    <input type="number" value="<?php if ($history) {
+                                                                                                                                    print_r($history['start_smoking']);
+                                                                                                                                } ?>" min="1970" min="2024" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-6">
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="smoking_long" class="form-label">How long have you been smoking?</label>
+                                                                                                    <input type="number" value="<?php if ($history) {
+                                                                                                                                    print_r($history['smoking_long']);
+                                                                                                                                } ?>" min="0" min="100" id="smoking_long" name="smoking_long" class="form-control" placeholder="Enter Years" />
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="smoking_long" class="form-label">How long have you been smoking?</label>
-                                                                                            <input type="number" value="<?php if ($history) {
-                                                                                                                            print_r($history['smoking_long']);
-                                                                                                                        } ?>" min="1970" min="2023" id="smoking_long" name="smoking_long" class="form-control" placeholder="Enter Years" required />
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    </span>
                                                                                     <hr>
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
                                                                                             <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
-                                                                                            <select name="currently_smoking" id="currently_smoking" class="form-select form-select-lg mb-3" required>
+                                                                                            <select name="currently_smoking" id="currently_smoking_<?= $x; ?>" class="form-select form-select-lg mb-3" required>
                                                                                                 <option value="<?= $history['currently_smoking'] ?>"><?php if ($history) {
                                                                                                                                                             if ($history['currently_smoking'] == 1) {
                                                                                                                                                                 echo 'Yes';
@@ -1992,32 +2005,37 @@ if ($user->isLoggedIn()) {
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-6">
+
+                                                                                    <div class="col-6" id="quit_smoking_<?= $x; ?>">
                                                                                         <div class="mb-3">
                                                                                             <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
                                                                                             <input type="number" value="<?php if ($history) {
                                                                                                                             print_r($history['quit_smoking']);
-                                                                                                                        } ?>" min="1970" min="2023" id="quit_smoking" name="quit_smoking" class="form-control" placeholder="Enter Year" required />
+                                                                                                                        } ?>" min="1970" min="2023" name="quit_smoking" class="form-control" placeholder="Enter Year" />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
 
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="packs_per_day" class="form-label">Number of packs per day</label>
-                                                                                            <input type="number" value="<?php if ($history) {
-                                                                                                                            print_r($history['packs_per_day']);
-                                                                                                                        } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" required />
+                                                                                    <span id="packs_<?= $x; ?>">
+                                                                                        <div class="row">
+                                                                                            <div class="col-6">
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="packs_per_day" class="form-label">Number of packs per day</label>
+                                                                                                    <input type="number" value="<?php if ($history) {
+                                                                                                                                    print_r($history['packs_per_day']);
+                                                                                                                                } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-6">
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="packs_per_year" class="form-label">Number of Packs per years</label>
+                                                                                                    <input type="number" value="<?php if ($history) {
+                                                                                                                                    print_r($history['packs_per_year']);
+                                                                                                                                } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" />
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="packs_per_year" class="form-label">Number of Packs per years</label>
-                                                                                            <input type="number" value="<?php if ($history) {
-                                                                                                                            print_r($history['packs_per_year']);
-                                                                                                                        } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" required />
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    </span>
                                                                                     <hr>
 
                                                                                     <div class="col-12">
@@ -2044,9 +2062,9 @@ if ($user->isLoggedIn()) {
                                                                             <div class="modal-footer">
                                                                                 <input type="hidden" name="id" value="<?= $history['id'] ?>">
                                                                                 <input type="hidden" name="cid" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btnH ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="add_history" class="btn btn-primary" value="<?= $btn ?>">
+                                                                                <input type="submit" name="add_history" class="btn btn-primary" value="<?= $btnH ?>">
                                                                             </div>
                                                                         </form>
                                                                     </div><!-- /.modal-content -->
@@ -2101,9 +2119,9 @@ if ($user->isLoggedIn()) {
                                                                             <div class="modal-footer">
                                                                                 <input type="hidden" name="id" value="<?= $results['id'] ?>">
                                                                                 <input type="hidden" name="cid" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btnR ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="add_results" class="btn btn-primary" value="<?= $btn ?>Results">
+                                                                                <input type="submit" name="add_results" class="btn btn-primary" value="<?= $btnR ?>Results">
                                                                             </div>
                                                                         </form>
                                                                     </div><!-- /.modal-content -->
@@ -2200,14 +2218,14 @@ if ($user->isLoggedIn()) {
                                                                     <div class="modal-content">
                                                                         <form id="validation" method="post">
                                                                             <div class="modal-header">
-                                                                                <h4 class="modal-title" id="standard-modalLabel">CRF3: Socio-economic / Patient cost</h4>
+                                                                                <h4 class="modal-title" id="standard-modalLabel">CRF3: Taarifa za kiuchumi (Wakati wa screening)</h4>
                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <div class="row">
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="economic_date" class="form-label">Date</label>
+                                                                                            <label for="economic_date" class="form-label">Tarehe</label>
                                                                                             <input type="date" value="<?php if ($economic) {
                                                                                                                             print_r($economic['economic_date']);
                                                                                                                         } ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
@@ -2216,155 +2234,219 @@ if ($user->isLoggedIn()) {
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="income_household" class="form-label">Main source of income of the household head?</label>
-                                                                                            <input type="text" value="<?php if ($economic) {
-                                                                                                                            print_r($economic['income_household']);
-                                                                                                                        } ?>" id="income_household" name="income_household" class="form-control" placeholder="Enter household source" required />
+                                                                                            <label for="income_household" class="form-label">Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
+                                                                                            <select class="form-control" id="income_household_<?= $x; ?>" name="income_household" style="width: 100%;" required>
+                                                                                                <option value="<?= $economic['income_household'] ?>"><?php if ($economic) {
+                                                                                                                                                            if ($economic['income_household'] == 1) {
+                                                                                                                                                                echo 'Msharaha kwa mwezi';
+                                                                                                                                                            } elseif ($economic['income_household'] == 2) {
+                                                                                                                                                                echo 'Posho kwa siku';
+                                                                                                                                                            } elseif ($economic['income_household'] == 3) {
+                                                                                                                                                                echo 'Pato kutokana na mauzo ya biashara';
+                                                                                                                                                            } elseif ($economic['income_household'] == 4) {
+                                                                                                                                                                echo 'Pato kutokana na mauzo ya mazao au mifugo';
+                                                                                                                                                            } elseif ($economic['income_household'] == 5) {
+                                                                                                                                                                echo 'Hana kipato';
+                                                                                                                                                            } elseif ($economic['income_household'] == 6) {
+                                                                                                                                                                echo 'Mstaafu';
+                                                                                                                                                            } elseif ($economic['income_household'] == 96) {
+                                                                                                                                                                echo 'Nyingine, taja ';
+                                                                                                                                                            }
+                                                                                                                                                        } else {
+                                                                                                                                                            echo 'Select';
+                                                                                                                                                        } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Msharaha kwa mwezi</option>
+                                                                                                <option value="2">Posho kwa siku</option>
+                                                                                                <option value="3">Pato kutokana na mauzo ya biashara</option>
+                                                                                                <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
+                                                                                                <option value="5">Hana kipato</option>
+                                                                                                <option value="6">Mstaafu</option>
+                                                                                                <option value="96">Nyingine, taja </option>
+                                                                                            </select>
+                                                                                            <span id="income_household_other_<?= $x; ?>">
+                                                                                                <input type="text" value="<?php if ($economic) {
+                                                                                                                                print_r($economic['income_household_other']);
+                                                                                                                            } ?>" name="income_household_other" class="form-control" placeholder="Enter household other source" />
+                                                                                            </span>
+
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
-                                                                                            <label for="income_patient" class="form-label">Main source of income of patient?</label>
-                                                                                            <input type="text" value="<?php if ($economic) {
-                                                                                                                            print_r($economic['income_patient']);
-                                                                                                                        } ?>" min="1970" min="2023" id="income_patient" name="income_patient" class="form-control" placeholder="Enter patient source" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="smoking_long" class="form-label">How long have you been smoking?</label>
-                                                                                            <input type="number" value="<?php if ($economic) {
-                                                                                                                            print_r($economic['smoking_long']);
-                                                                                                                        } ?>" min="0" min="1000" id="smoking_long" name="smoking_long" class="form-control" placeholder="Enter Years" required />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
+                                                                                            <label for="income_patient" class="form-label">Chanzo kikuu cha mapato cha mgonjwa? </label>
+                                                                                            <select class="form-control" id="income_patient_<?= $x; ?>" name="income_patient" style="width: 100%;" required>
+                                                                                                <option value="<?= $economic['income_patient'] ?>"><?php if ($economic) {
+                                                                                                                                                        if ($economic['income_patient'] == 1) {
+                                                                                                                                                            echo 'Msharaha kwa mwezi';
+                                                                                                                                                        } elseif ($economic['income_patient'] == 2) {
+                                                                                                                                                            echo 'Posho kwa siku';
+                                                                                                                                                        } elseif ($economic['income_patient'] == 3) {
+                                                                                                                                                            echo 'Pato kutokana na mauzo ya biashara';
+                                                                                                                                                        } elseif ($economic['income_patient'] == 4) {
+                                                                                                                                                            echo 'Pato kutokana na mauzo ya mazao au mifugo';
+                                                                                                                                                        } elseif ($economic['income_patient'] == 5) {
+                                                                                                                                                            echo 'Hana kipato';
+                                                                                                                                                        } elseif ($economic['income_patient'] == 6) {
+                                                                                                                                                            echo 'Mstaafu';
+                                                                                                                                                        } elseif ($economic['income_patient'] == 96) {
+                                                                                                                                                            echo 'Nyingine, taja ';
+                                                                                                                                                        }
+                                                                                                                                                    } else {
+                                                                                                                                                        echo 'Select';
+                                                                                                                                                    } ?>
+                                                                                                </option>
+                                                                                                <option value="1">Msharaha kwa mwezi</option>
+                                                                                                <option value="2">Posho kwa siku</option>
+                                                                                                <option value="3">Pato kutokana na mauzo ya biashara</option>
+                                                                                                <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
+                                                                                                <option value="5">Hana kipato</option>
+                                                                                                <option value="6">Mstaafu</option>
+                                                                                                <option value="96">Nyingine, taja </option>
+                                                                                            </select>
+                                                                                            <span id="income_patient_other_<?= $x; ?>">
+                                                                                                <input type=" text" value="<?php if ($economic) {
+                                                                                                                                print_r($economic['income_patient_other']);
+                                                                                                                            } ?>" name="income_patient_other" class="form-control" placeholder="Enter other patient source" />
+                                                                                            </span>
 
-                                                                                    <div class="col-6">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <!-- <span id="monthly_earn_<?= $x; ?>"> -->
+                                                                                    <div class="col-6" id="monthly_earn_<?= $x; ?>">
                                                                                         <div class="mb-3">
-                                                                                            <label for="monthly_earn" class="form-label">How much do you earn in monthly basis from all sources of your income? ( TSHS )</label>
+                                                                                            <label for="monthly_earn" class="form-label">Je, unaingiza shilingi ngapi kwa mwezi kutoka kwenye vyanzo vyako vyote vya fedha? ( TSHS )</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['monthly_earn']);
-                                                                                                                        } ?>" min="0" min="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
+                                                                                    <!-- </span> -->
+                                                                                    <hr>
+
+
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="member_earn" class="form-label">In monthly basis, how much does other member of household earn from all source of income?</label>
+                                                                                            <label for="member_earn" class="form-label">Kwa mwezi, ni kiasi gani wanakaya wenzako wanaingiza kutoka kwenye vyanzo vyote vya fedha? (kwa ujumla)? </label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['member_earn']);
-                                                                                                                        } ?>" min="0" min="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <hr>
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="transport" class="form-label">How much did you pay for transport when you visited the health facility for lung cancer screening?</label>
+                                                                                            <label for="transport" class="form-label">Ulilipa kiasi gani kwa ajili ya usafiri ulipoenda hospitali kwa ajili ya kufanyiwa uchunguzi wa saratani ya mapafu? </label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['transport']);
-                                                                                                                        } ?>" min="0" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
+                                                                                    <hr>
+
+
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="support_earn" class="form-label">If you were you accompanied by treatment supporter, how much did he/she pay for transport?</label>
+                                                                                            <label for="support_earn" class="form-label">Kama ulisindikizwa, alilipa fedha kiasi gani kwa ajili ya usafiri? </label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['support_earn']);
-                                                                                                                        } ?>" min="0" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <hr>
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="food_drinks" class="form-label">How much did you pay for food and drinks?</label>
+                                                                                            <label for="food_drinks" class="form-label">Ulilipa fedha kiasi gani kwa ajili ya chakula na vinywaji? </label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['food_drinks']);
-                                                                                                                        } ?>" min="0" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
+
+                                                                                    <hr>
+
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="other_cost" class="form-label">Any other cost incurred? If yes, mention and its amount?</label>
+                                                                                            <label for="other_cost" class="form-label">Je, kuna gharama yoyote ambayo ulilipa tofauti na hizo ulizotaja hapo, kama ndio, ni shilingi ngapi? </label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['other_cost']);
-                                                                                                                        } ?>" min="0" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
 
                                                                                     <div class="col-12">
-                                                                                        How many hours/days did you lost when attending your clinic?
+                                                                                        Je, kwa mwezi, unapoteza muda kiasi gani unapotembelea kliniki?
                                                                                     </div>
                                                                                     <hr>
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="days" class="form-label">Days</label>
+                                                                                            <label for="days" class="form-label">Siku</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['days']);
-                                                                                                                        } ?>" min="0" id="days" name="days" class="form-control" placeholder="Enter days" required />
+                                                                                                                        } ?>" min="0" max="100" id="days" name="days" class="form-control" placeholder="Enter days" required />
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="hours" class="form-label">Hours</label>
+                                                                                            <label for="hours" class="form-label">Masaa</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['hours']);
-                                                                                                                        } ?>" min="0" id="hours" name="hours" class="form-control" placeholder="Enter hours" required />
+                                                                                                                        } ?>" min="0" max="100" id="hours" name="hours" class="form-control" placeholder="Enter hours" required />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
 
                                                                                     <div class="col-12">
-                                                                                        How much did you pay for the following services?
+                                                                                        Je, ulilipa gharama kiasi gani kwa huduma zifuatazo?
                                                                                     </div>
                                                                                     <hr>
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="registration" class="form-label">Registration ( TSHS )</label>
+                                                                                            <label for="registration" class="form-label">Usajili ( TSHS )</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['registration']);
-                                                                                                                        } ?>" min="0" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="consultation" class="form-label">Consultation ( TSHS )</label>
+                                                                                            <label for="consultation" class="form-label">Kumuona daktari (Consultation)_ ( TSHS )</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['consultation']);
-                                                                                                                        } ?>" min="0" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
 
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="diagnostic" class="form-label">Diagnostic tests ( TSHS )</label>
+                                                                                            <label for="diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['diagnostic']);
-                                                                                                                        } ?>" min="0" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="medications" class="form-label">Medications ( TSHS )</label>
+                                                                                            <label for="medications" class="form-label">Dawa (Medications) ( TSHS )</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['medications']);
-                                                                                                                        } ?>" min="0" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr>
 
                                                                                     <div class="col-12">
                                                                                         <div class="mb-3">
-                                                                                            <label for="other_medical_cost" class="form-label">Any other direct medical costs ( TSHS )</label>
+                                                                                            <label for="other_medical_cost" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
                                                                                             <input type="number" value="<?php if ($economic) {
                                                                                                                             print_r($economic['other_medical_cost']);
-                                                                                                                        } ?>" min="0" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                                                                                        } ?>" min="0" max="100000000" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" required />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -2372,9 +2454,9 @@ if ($user->isLoggedIn()) {
                                                                             <div class="modal-footer">
                                                                                 <input type="hidden" name="id" value="<?= $economic['id'] ?>">
                                                                                 <input type="hidden" name="cid" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="btn" value="<?= $btn ?>">
+                                                                                <input type="hidden" name="btn" value="<?= $btnE ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <input type="submit" name="add_economic" class="btn btn-primary" value="<?= $btn ?>Social Economic">
+                                                                                <input type="submit" name="add_economic" class="btn btn-primary" value="<?= $btnE ?>Social Economic">
                                                                             </div>
                                                                         </form>
                                                                     </div><!-- /.modal-content -->
@@ -2400,7 +2482,9 @@ if ($user->isLoggedIn()) {
                                                                     </form>
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
-                                                        <?php }
+                                                        <?php
+                                                            $x++;
+                                                        }
                                                     } else {
                                                         ?>
                                                         <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
@@ -2445,8 +2529,7 @@ if ($user->isLoggedIn()) {
                                                         <th>Visit Date</th>
                                                         <th>Site</th>
                                                         <th>Status</th>
-                                                        <th class="text-center">Action 1</th>
-                                                        <th class="text-center">Action 2</th>
+                                                        <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -2482,22 +2565,22 @@ if ($user->isLoggedIn()) {
                                                                 <?php  } ?>
                                                                 <td class="table-user">
 
-                                                                    <?php if ($visit['visit_status'] == 0) {
-                                                                        $btn = 'Add';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Add Visit</button>
-                                                                    <?php   } elseif ($visit['visit_status'] == 1) {
-                                                                        $btn = 'Update';
-                                                                    ?>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Update Visit</button>
-                                                                    <?php   } else { ?>
-                                                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Missed Visit</button>
+                                                                    <?php if ($visit['sequence'] >= 1) {
+                                                                        if ($visit['visit_status'] == 0) {
 
+                                                                            $btn = 'Add';
+                                                                    ?>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Add Follow Up Visit</button>
+                                                                        <?php   } elseif ($visit['visit_status'] == 1) {
+                                                                            $btn = 'Update';
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Update Follow Up Visit</button>
+                                                                        <?php   } else { ?>
+                                                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#visit<?= $visit['id'] ?>&btn=" .$btn>Missed Follow Up Visit</button>
+
+                                                                        <?php   } ?>
                                                                     <?php   } ?>
 
-                                                                </td>
-                                                                <td>
-                                                                    <a href="info.php?id=5&cid=<?= $visit['patient_id'] ?>&visit_name=<?= $visit['visit_name'] ?>&sequence=<?= $visit['sequence'] ?>&site_id=<?= $_GET['site_id']; ?>&interview=<?= $_GET['interview']; ?>&btn=<?= $_GET['btn']; ?>" class="btn btn-success">Study Crfs</a>
 
                                                                 </td>
                                                             </tr>
@@ -2519,16 +2602,7 @@ if ($user->isLoggedIn()) {
                                                                                                                         } ?>" id="visit_date" name="visit_date" class="form-control" placeholder="Enter visit date" required />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="diagnosis" class="form-label">1.Patient Diagnosis if was scored Lung- RAD 4B:</label>
-                                                                                            <textarea class="form-control" name="diagnosis" id="diagnosis" rows="5">
-                                                                                            <?php if ($visit) {
-                                                                                                print_r($visit['diagnosis']);
-                                                                                            } ?>
-                                                                                            </textarea>
-                                                                                        </div>
-                                                                                    </div>
+
                                                                                     <div class="col-6">
                                                                                         <div class="mb-2">
                                                                                             <label for="visit_status" class="form-label">Status</label>
@@ -2548,23 +2622,35 @@ if ($user->isLoggedIn()) {
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-6">
-                                                                                        <div class="mb-2">
-                                                                                            <label for="outcome" class="form-label">2.Outcome</label>
-                                                                                            <select id="outcome" name="outcome" class="form-select form-select-lg mb-3" required>
-                                                                                                <option value="<?= $outcome['id'] ?>"><?php if ($visit) {
-                                                                                                                                            print_r($outcome['name']);
-                                                                                                                                        } else {
-                                                                                                                                            echo 'Select outcome';
-                                                                                                                                        } ?>
-                                                                                                </option>
-                                                                                                <?php foreach ($override->get('outcome', 'status', 1) as $out) { ?>
-                                                                                                    <option value="<?= $out['id'] ?>"><?= $out['name'] ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
+                                                                                    <div class="row" id="followup">
+                                                                                        <div class="col-6">
+                                                                                            <div class="mb-2">
+                                                                                                <label for="diagnosis" class="form-label">1.Patient Diagnosis if was scored Lung- RAD 4B:</label>
+                                                                                                <textarea class="form-control" name="diagnosis" id="diagnosis" rows="5">
+                                                                                            <?php if ($visit) {
+                                                                                                print_r($visit['diagnosis']);
+                                                                                            } ?>
+                                                                                            </textarea>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-6">
+                                                                                            <div class="mb-2">
+                                                                                                <label for="outcome" class="form-label">2.Outcome</label>
+                                                                                                <select id="outcome" name="outcome" class="form-select form-select-lg mb-3" required>
+                                                                                                    <option value="<?= $outcome['id'] ?>"><?php if ($visit) {
+                                                                                                                                                print_r($outcome['name']);
+                                                                                                                                            } else {
+                                                                                                                                                echo 'Select outcome';
+                                                                                                                                            } ?>
+                                                                                                    </option>
+                                                                                                    <?php foreach ($override->get('outcome', 'status', 1) as $out) { ?>
+                                                                                                        <option value="<?= $out['id'] ?>"><?= $out['name'] ?></option>
+                                                                                                    <?php } ?>
+                                                                                                </select>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
@@ -2578,6 +2664,7 @@ if ($user->isLoggedIn()) {
                                                                     </form>
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
+
                                                         <?php }
                                                     } else {
                                                         ?>
@@ -2838,6 +2925,21 @@ if ($user->isLoggedIn()) {
 
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
+
+
+    <script src="myjs/info/smoking.js"></script>
+    <script src="myjs/info/smoking1.js"></script>
+    <script src="myjs/info/follow_up.js"></script>
+    <script src="myjs/info/economics/household.js"></script>
+    <script src="myjs/info/economics/patient.js"></script>
+    <script src="myjs/info/economics/earnings.js"></script>
+
+
+
+
+
+
+
     <script>
         function updateText1(val) {
             if (val == '96') {
