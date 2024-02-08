@@ -1,11 +1,10 @@
-        <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
-
-        <!-- Bootstrap Wizard Form js -->
-        <script src="assets/vendor/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-
-        <!-- Wizard Form Demo js -->
-        <script src="assets/js/pages/form-wizard.init.js"></script>
-
-        <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2023-2024 <a href="#">Penplus Database</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 1.1.0
+        </div>
+    </footer>
+    </div>
+    <!-- ./wrapper -->

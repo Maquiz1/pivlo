@@ -2,189 +2,365 @@
 require_once 'php/core/init.php';
 $user = new User();
 $override = new OverideData();
-$usr = null;
 $email = new Email();
-$st = null;
 $random = new Random();
-$pageError = null;
-$successMessage = null;
-$errorM = false;
-$errorMessage = null;
-if (!$user->isLoggedIn()) {
-    if (Input::exists('post')) {
-        if (Token::check(Input::get('token'))) {
-            $validate = new validate();
-            $validate = $validate->check($_POST, array(
-                'username' => array('required' => true),
-                'password' => array('required' => true)
-            ));
-            if ($validate->passed()) {
-                $st = $override->get('user', 'username', Input::get('username'));
-                if ($st) {
-                    if ($st[0]['count'] > 3) {
-                        $errorMessage = 'You Account have been deactivated,Someone was trying to access it with wrong credentials. Please contact your system administrator';
-                    } else {
-                        $login = $user->loginUser(Input::get('username'), Input::get('password'), 'user');
-                        if ($login) {
-                            $lastLogin = $override->get('user', 'id', $user->data()->id);
-                            if ($lastLogin[0]['last_login'] == date('Y-m-d')) {
-                            } else {
-                                try {
-                                    $user->updateRecord('user', array(
-                                        'last_login' => date('Y-m-d H:i:s'),
-                                        'count' => 0,
-                                    ), $user->data()->id);
-                                } catch (Exception $e) {
-                                }
-                            }
-                            try {
-                                $user->updateRecord('user', array(
-                                    'count' => 0,
-                                ), $user->data()->id);
-                            } catch (Exception $e) {
-                            }
 
-                            Redirect::to('dashboard.php');
-                        } else {
-                            $usr = $override->get('user', 'username', Input::get('username'));
-                            if ($usr && $usr[0]['count'] < 3) {
-                                try {
-                                    $user->updateRecord('user', array(
-                                        'count' => $usr[0]['count'] + 1,
-                                    ), $usr[0]['id']);
-                                } catch (Exception $e) {
-                                }
-                                $errorMessage = 'Wrong username or password';
-                            } else {
-                                try {
-                                    $user->updateRecord('user', array(
-                                        'count' => $usr[0]['count'] + 1,
-                                    ), $usr[0]['id']);
-                                } catch (Exception $e) {
-                                }
-                                $email->deactivation($usr[0]['email_address'], $usr[0]['lastname'], 'Account Deactivated');
-                                $errorMessage = 'You Account have been deactivated,Someone was trying to access it with wrong credentials. Please contact your system administrator';
-                            }
-                        }
-                    }
-                } else {
-                    $errorMessage = 'Invalid username, Please check your credentials and try again';
-                }
-            } else {
-                $pageError = $validate->errors();
-            }
-        }
+$users = $override->getData('user');
+if ($user->isLoggedIn()) {
+    if ($user->data()->power == 1) {
+        $screened = $override->countData('clients', 'status', 1, 'screened', 1);
+        $eligible = $override->countData('clients', 'status', 1, 'eligible', 1);
+        $enrolled = $override->countData('clients', 'status', 1, 'enrolled', 1);
+        $end = $override->countData('clients', 'status', 1, 'end_study', 1);
+    } else {
+
+        $screened = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $user->data()->site_id);
+        $eligible = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $user->data()->site_id);
+        $enrolled = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $user->data()->site_id);
+        $end = $override->countData2('clients', 'status', 1, 'end_study', 1, 'site_id', $user->data()->site_id);
     }
 } else {
-    Redirect::to('dashboard.php');
+    Redirect::to('index.php');
 }
 
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Penplus Database | Dashboard</title>
 
-<!-- Mirrored from techzaa.getappui.com/velonic/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Oct 2023 15:57:45 GMT -->
-<?php include 'header.php'; ?>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+</head>
 
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
 
-<body class="authentication-bg position-relative">
-    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xxl-8 col-lg-10">
-                    <div class="card overflow-hidden">
-                        <div class="row g-0">
-                            <div class="col-lg-6 d-none d-lg-block p-2">
-                                <img src="assets/images/auth-img.jpg" alt="" class="img-fluid rounded h-100">
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex flex-column h-100">
-                                    <div class="auth-brand p-4">
-                                        <!-- <a href="index.html" class="logo-light">
-                                            <img src="assets/images/logo.png" alt="logo" height="22">
-                                        </a>
-                                        <a href="index.html" class="logo-dark">
-                                            <img src="assets/images/logo-dark.png" alt="dark logo" height="22">
-                                        </a> -->
-                                    </div>
-                                    <div class="p-4 my-auto">
-                                        <h4 class="fs-20">Sign In</h4>
-                                        <p class="text-muted mb-3">Enter your email address and password to access
-                                            account.
-                                        </p>
-
-                                        <!-- form -->
-                                        <form class="form-horizontal" method="post" id="validation">
-                                            <div class="mb-3">
-                                                <label for="username" class="form-label">User Name</label>
-                                                <input class="form-control" type="username" name="username" id="username" required="" placeholder="Enter your username">
-                                            </div>
-                                            <div class="mb-3">
-                                                <a href="auth-forgotpw.html" class="text-muted float-end"><small>Forgot
-                                                        your
-                                                        password?</small></a>
-                                                <label for="password" class="form-label">Password</label>
-                                                <input class="form-control" name="password" type="password" required="" id="password" placeholder="Enter your password">
-                                            </div>
-                                            <!-- <div class="mb-3">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="checkbox-signin">
-                                                    <label class="form-check-label" for="checkbox-signin">Remember
-                                                        me</label>
-                                                </div>
-                                            </div> -->
-                                            <div class="mb-0 text-start">
-                                                <input type="hidden" name="token" value="<?= Token::generate(); ?>">
-                                                <!-- <input type="submit" value="Sign in" class="btn btn-default btn-block"> -->
-                                                <input class="btn btn-soft-primary w-100" type="submit" value="Sign in"><i class="ri-login-circle-fill me-1"></i> <span class="fw-bold"></span>
-                                            </div>
-
-                                            <div class="text-center mt-4">
-                                                <p class="text-muted fs-16">Sign in with</p>
-                                                <div class="d-flex gap-2 justify-content-center mt-3">
-                                                    <a href="javascript: void(0);" class="btn btn-soft-primary"><i class="ri-facebook-circle-fill"></i></a>
-                                                    <a href="javascript: void(0);" class="btn btn-soft-danger"><i class="ri-google-fill"></i></a>
-                                                    <a href="javascript: void(0);" class="btn btn-soft-info"><i class="ri-twitter-fill"></i></a>
-                                                    <a href="javascript: void(0);" class="btn btn-soft-dark"><i class="ri-github-fill"></i></a>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <!-- end form-->
-                                    </div>
-                                </div>
-                            </div> <!-- end col -->
-                        </div>
-                    </div>
-                </div>
-                <!-- end row -->
-            </div>
-            <div class="row">
-                <div class="col-12 text-center">
-                    <!-- <p class="text-dark-emphasis">Don't have an account? <a href="auth-register.html" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Sign up</b></a>
-                    </p> -->
-                </div> <!-- end col -->
-            </div>
-            <!-- end row -->
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
         </div>
-        <!-- end container -->
+
+        <!-- Navbar -->
+        <?php include 'navbar.php'; ?>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <?php include 'sidemenu.php'; ?>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Dashboard</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard v1</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $screened ?></h3>
+
+                                    <p>Screened</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="info.php?id=3&status=1" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3><?= $eligible ?><sup style="font-size: 20px">%</sup></h3>
+
+                                    <p>Eligible</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="info.php?id=3&status=2" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3><?= $enrolled ?></h3>
+
+                                    <p>Enrolled</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="info.php?id=3&status=3" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3><?= $end ?></h3>
+
+                                    <p>End of study</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="info.php?id=3&status=4" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-6 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-chart-pie mr-1"></i>
+                                        TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
+                                    </h3>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills ml-auto">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Bar</a>
+                                            </li>
+                                            <!-- <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li> -->
+                                        </ul>
+                                    </div>
+                                </div><!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <!-- Morris chart - Sales -->
+                                        <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                                            <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                                            <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div><!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+
+                            <!-- Map card -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-chart-pie mr-1"></i>
+                                        TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
+                                    </h3>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills ml-auto">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#revenue-chart2" data-toggle="tab">Bar</a>
+                                            </li>
+                                            <!-- <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li> -->
+                                        </ul>
+                                    </div>
+                                </div><!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <!-- Morris chart - Sales -->
+                                        <div class="chart tab-pane active" id="revenue-chart2" style="position: relative; height: 300px;">
+                                            <canvas id="revenue-chart-canvas2" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                        <div class="chart tab-pane" id="sales-chart2" style="position: relative; height: 300px;">
+                                            <canvas id="sales-chart-canvas2" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div><!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </section>
+                        <!-- /.Left col -->
+
+                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                        <section class="col-lg-6 connectedSortable">
+                            <!-- solid sales graph -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-chart-pie mr-1"></i>
+                                        TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
+                                    </h3>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills ml-auto">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#revenue-chart1" data-toggle="tab">Bar</a>
+                                            </li>
+                                            <!-- <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li> -->
+                                        </ul>
+                                    </div>
+                                </div><!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <!-- Morris chart - Sales -->
+                                        <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: 300px;">
+                                            <canvas id="revenue-chart-canvas1" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                        <div class="chart tab-pane" id="sales-chart1" style="position: relative; height: 300px;">
+                                            <canvas id="sales-chart-canvas1" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div><!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+
+                            <!-- solid sales graph -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-chart-pie mr-1"></i>
+                                        TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
+                                    </h3>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills ml-auto">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#revenue-chart1" data-toggle="tab">Bar</a>
+                                            </li>
+                                            <!-- <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li> -->
+                                        </ul>
+                                    </div>
+                                </div><!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <!-- Morris chart - Sales -->
+                                        <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: 300px;">
+                                            <canvas id="revenue-chart-canvas1" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                        <div class="chart tab-pane" id="sales-chart1" style="position: relative; height: 300px;">
+                                            <canvas id="sales-chart-canvas1" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div><!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+
+                        </section>
+                        <!-- right col -->
+                    </div>
+                    <!-- /.row (main row) -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+
+        <?php include 'footer.php'; ?>
+
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
     </div>
-    <!-- end page -->
+    <!-- ./wrapper -->
 
-    <?php include 'foot.php'; ?>
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <!-- <script src="dist/js/demo.js"></script> -->
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!-- <script src="dist/js/pages/dashboard.js"></script> -->
+    <script src="dist/js/pages/dashboard1.js"></script>
+    <script src="dist/js/pages/dashboard1_2.js"></script>
+    <script src="dist/js/pages/dashboard1_3.js"></script>
 
-    <!-- Vendor js -->
-    <script src="assets/js/vendor.min.js"></script>
 
-    <!-- App js -->
-    <script src="assets/js/app.min.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
 
 </body>
-
-
-<!-- Mirrored from techzaa.getappui.com/velonic/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Oct 2023 15:57:45 GMT -->
 
 </html>
