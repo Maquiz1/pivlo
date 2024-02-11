@@ -8,16 +8,16 @@ $random = new Random();
 $users = $override->getData('user');
 if ($user->isLoggedIn()) {
   if ($user->data()->power == 1) {
-    $screened = $override->countData('clients', 'status', 1, 'screened', 1);
+    $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
     $eligible = $override->countData('clients', 'status', 1, 'eligible', 1);
     $enrolled = $override->countData('clients', 'status', 1, 'enrolled', 1);
     $end = $override->countData('clients', 'status', 1, 'end_study', 1);
   } else {
 
-    $screened = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $user->data()->site_id);
-    $eligible = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $user->data()->site_id);
-    $enrolled = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $user->data()->site_id);
-    $end = $override->countData2('clients', 'status', 1, 'end_study', 1, 'site_id', $user->data()->site_id);
+    $screened = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
+    $eligible = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
+    $enrolled = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
+    $end = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
   }
 } else {
   Redirect::to('index.php');
@@ -32,7 +32,7 @@ if ($user->isLoggedIn()) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Penplus Database | Dashboard</title>
+  <title>Lung Cancer Database | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -158,149 +158,8 @@ if ($user->isLoggedIn()) {
             <!-- ./col -->
           </div>
           <!-- /.row -->
-
-          <!-- Main row -->
-          <div class="row">
-            <!-- Left col -->
-            <section class="col-lg-6 connectedSortable">
-              <!-- Custom tabs (Charts with tabs)-->
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
-                    TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
-                  </h3>
-                  <div class="card-tools">
-                    <ul class="nav nav-pills ml-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Bar</a>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li> -->
-                    </ul>
-                  </div>
-                </div><!-- /.card-header -->
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                    </div>
-                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                    </div>
-                  </div>
-                </div><!-- /.card-body -->
-              </div>
-              <!-- /.card -->             
-
-              <!-- Map card -->
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
-                    TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
-                  </h3>
-                  <div class="card-tools">
-                    <ul class="nav nav-pills ml-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart2" data-toggle="tab">Bar</a>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li> -->
-                    </ul>
-                  </div>
-                </div><!-- /.card-header -->
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart2" style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas2" height="300" style="height: 300px;"></canvas>
-                    </div>
-                    <div class="chart tab-pane" id="sales-chart2" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas2" height="300" style="height: 300px;"></canvas>
-                    </div>
-                  </div>
-                </div><!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </section>
-            <!-- /.Left col -->
-
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
-            <section class="col-lg-6 connectedSortable">
-              <!-- solid sales graph -->
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
-                    TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
-                  </h3>
-                  <div class="card-tools">
-                    <ul class="nav nav-pills ml-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart1" data-toggle="tab">Bar</a>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li> -->
-                    </ul>
-                  </div>
-                </div><!-- /.card-header -->
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas1" height="300" style="height: 300px;"></canvas>
-                    </div>
-                    <div class="chart tab-pane" id="sales-chart1" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas1" height="300" style="height: 300px;"></canvas>
-                    </div>
-                  </div>
-                </div><!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-
-              <!-- solid sales graph -->
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
-                    TOTAL ENROLLMENT as of <?= date('Y-m-d') ?>
-                  </h3>
-                  <div class="card-tools">
-                    <ul class="nav nav-pills ml-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart1" data-toggle="tab">Bar</a>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li> -->
-                    </ul>
-                  </div>
-                </div><!-- /.card-header -->
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas1" height="300" style="height: 300px;"></canvas>
-                    </div>
-                    <div class="chart tab-pane" id="sales-chart1" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas1" height="300" style="height: 300px;"></canvas>
-                    </div>
-                  </div>
-                </div><!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-
-            </section>
-            <!-- right col -->
-          </div>
-          <!-- /.row (main row) -->
-
-        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.container-fluid -->
       </section>
       <!-- /.content -->
     </div>

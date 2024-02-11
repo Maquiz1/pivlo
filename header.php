@@ -8,16 +8,16 @@ $random = new Random();
 $users = $override->getData('user');
 if ($user->isLoggedIn()) {
     if ($user->data()->power == 1) {
-        $screened = $override->countData('clients','status', 1, 'screened', 1);
-        $eligible = $override->countData('clients','status', 1, 'eligible', 1);
-        $enrolled = $override->countData('clients','status', 1, 'enrolled', 1);
-        $end = $override->countData('clients','status', 1, 'end_study', 1);
+        $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
+        $eligible = $override->countData('clients', 'status', 1, 'eligible', 1);
+        $enrolled = $override->countData('clients', 'status', 1, 'enrolled', 1);
+        $end = $override->countData('clients', 'status', 1, 'end_study', 1);
     } else {
 
-        $screened = $override->countData2('clients','status', 1, 'screened', 1,'site_id', $user->data()->site_id);
-        $eligible = $override->countData2('clients','status', 1, 'eligible', 1,'site_id', $user->data()->site_id);
-        $enrolled = $override->countData2('clients','status', 1, 'enrolled', 1,'site_id', $user->data()->site_id);
-        $end = $override->countData2('clients','status', 1, 'end_study', 1,'site_id', $user->data()->site_id);
+        $screened = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
+        $eligible = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
+        $enrolled = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
+        $end = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
     }
 
 

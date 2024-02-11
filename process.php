@@ -4,42 +4,28 @@ $user = new User();
 $override = new OverideData();
 $email = new Email();
 $random = new Random();
+header('Content-Type: application/json');
 
- if ($_GET['content'] == 'generic_name') {
-    if ($_GET['getUid']) {
-        $output = array();
-        $project_id = $override->get('generic', 'id', $_GET['getUid']);
-        foreach ($project_id as $name) {
-            $output['maintainance'] = $name['maintainance'];
-        }
-        echo json_encode($output);
-    }
-}elseif($_GET['content'] == 'generic_id4'){
-    $output = array();
-    $all_generic = $override->get('medications', 'status', 1);
-    foreach ($all_generic as $name) {
-        $output[] = $name['name'];
-    }
-    echo json_encode($output);
-} elseif ($_GET['content'] == 'generic_id5') {
-    if ($_GET['getUid']) {
-        $output = array();
-        $project_id = $override->get('batch',  'status', 1);
-        foreach ($project_id as $name) {
-            // $output['name'] .= $name['name'];
-            $output['category'] .= $name['category'];
-            // $output['amount'] .= $name['amount'];
-        }
-        echo json_encode($output);
-    }
-} elseif ($_GET['content'] == 'generic_id6') {
-    if ($_GET['getUid']) {
-        $output = array();
-        $project_id = $override->getNews('generic_location', 'generic_id', $_GET['getUid'], 'status', 1);
-        foreach ($project_id as $name) {
-            $output['notify_quantity'] .= $name['notify_quantity'];
-        }
-        echo json_encode($output);
-    }
+
+$output = array();
+$all_generic = $override->getcolumns('clients', 'id', 'clinic_date', 'firstname', 'age');
+foreach ($all_generic as $name) {
+    $output[] = $name;
 }
-?>
+echo json_encode($output);
+
+
+if ($_GET['content'] == 'category') {
+    $sub_category = $override->get('sub_category', 'category', $_GET['getUid']); ?>
+    <option value="">Select</option>
+    <?php foreach ($sub_category as $value) { ?>
+        <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+    <?php }
+} elseif ($_GET['content'] == 'all_generic2') {
+    $all_generic = $override->get('generic', 'status', $_GET['getUid_status'], 'name');
+    ?>
+    <option value="">Select Brands</option>
+    <?php foreach ($all_generic as $batch) { ?>
+        <option value="<?= $batch['id'] ?>"><?= $batch['name'] ?></option>
+<?php }
+}

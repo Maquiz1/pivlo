@@ -1,309 +1,102 @@
 <?php
-class OverideData
-{
+class OverideData{
     private $_pdo;
-    function __construct()
-    {
+    function __construct(){
         try {
-            $this->_pdo = new PDO('mysql:host=' . config::get('mysql/host') . ';dbname=' . config::get('mysql/db'), config::get('mysql/username'), config::get('mysql/password'));
-        } catch (PDOException $e) {
+            $this->_pdo = new PDO('mysql:host='.config::get('mysql/host').';dbname='.config::get('mysql/db'),config::get('mysql/username'),config::get('mysql/password'));
+        }catch (PDOException $e){
             $e->getMessage();
         }
     }
-
-    public function unique($table, $field, $value)
-    {
-        if ($this->get($table, $field, $value)) {
+   public function unique($table,$field,$value){
+        if($this->get($table,$field,$value)){
             return true;
-        } else {
+        }else{
             return false;
         }
     }
 
-    public function getNo($table)
-    {
+    public function getNo($table){
         $query = $this->_pdo->query("SELECT * FROM $table");
         $num = $query->rowCount();
         return $num;
     }
-    public function getCount($table, $field, $value)
+
+    public function getCountReport($table,$field,$value,$where2,$id2,$where3,$id3){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field >= '$value' AND $where2 <= '$id2' AND $where3 = '$id3'");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getCountReport1($table, $field, $value, $where2, $id2, $where3, $id3, $where4, $id4)
     {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field >= '$value' AND $where2 <= '$id2' AND $where3 = '$id3' AND $where4 = '$id4'");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getCountReport2($table, $field, $value, $where2, $id2, $where3,$id3, $where4,$id4, $where5, $id5)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field >= '$value' AND $where2 <= '$id2' AND $where3 = '$id3' AND $where4 = '$id4' AND $where5 = '$id5'");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getCount($table,$field,$value){
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value'");
         $num = $query->rowCount();
         return $num;
     }
 
-    public function getCount1($table, $field, $value, $field1, $value1)
-    {
+    public function getCount1($table,$field,$value,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field <= '$value' AND $where2 = '$id2'");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getCount2($table,$field,$value,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field <= '$value' AND $where2 = '$id2'");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getCount3($table,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE notify_amount >= quantity AND $where2 = '$id2'");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getCount4($table,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE notify_amount >= quantity AND $where2 = '$id2'");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getCount5($table,$where2,$id2,$where3,$id3){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE notify_amount >= quantity AND $where2 = '$id2' AND $where3 = '$id3'");
+        $num = $query->rowCount();
+        return $num;
+    }
+    
+    public function countData($table,$field,$value,$field1,$value1){
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1'");
         $num = $query->rowCount();
         return $num;
     }
 
-    public function countData($table, $field, $value, $field1, $value1)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1'");
-        $num = $query->rowCount();
-        return $num;
-    }
-
-    public function countData1($table, $field, $value, $field1, $value1, $field2, $value2)
-    {
+        public function countData1($table,$field,$value,$field1,$value1,$field2,$value2){
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $field2 = '$value2'");
         $num = $query->rowCount();
         return $num;
     }
-
-    public function countData3($table, $where, $id, $where2, $id2, $where3, $id3)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
-        $num = $query->rowCount();
-        return $num;
-    }
-
     public function countData2($table, $field, $value, $field1, $value1, $field2, $value2)
     {
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $field2 = '$value2'");
         $num = $query->rowCount();
         return $num;
     }
-
-    public function countData4($table, $field, $value, $field1, $value1, $field2, $value2, $field3, $value3, $field4, $value4)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND ($field1 = '$value1' OR $field2 = '$value2' OR $field3 = '$value3') AND $field4 = '$value4'");
-        $num = $query->rowCount();
-        return $num;
-    }
-
-    public function countData5($table, $field, $value, $field1, $value1, $field2, $value2, $field3, $value3)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND ($field1 = '$value1' OR $field2 = '$value2' OR $field3 = '$value3')");
-        $num = $query->rowCount();
-        return $num;
-    }
-
-    public function countData6($table, $field, $value, $field1, $value1, $field2, $value2, $field3, $value3)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND ($field1 = '$value1' AND $field2 = '$value2' AND $field3 = '$value3')");
-        $num = $query->rowCount();
-        return $num;
-    }
-    public function getData($table)
-    {
+    public function getData($table){
         $query = $this->_pdo->query("SELECT * FROM $table");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getcolumns($table, $id, $date, $firstname, $age)
-    {
-        $query = $this->_pdo->query("SELECT $id,$date, $firstname, $age FROM $table");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getData2($table, $field, $value)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-    public function getNews($table, $where, $id, $where2, $id2)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-        public function getNewsAsc0($table, $where, $id, $where2, $id2)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' ORDER BY $where2 ASC");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getNewsAsc($table, $where, $id, $where2, $id2, $id3)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' ORDER BY $id3 ASC");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getNewsAsc1($table, $where, $id, $where2, $id2, $where3, $id3, $id4)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3' ORDER BY $id4");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function get2($table, $where, $id, $where2, $id2)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function get3($table, $where, $id, $where2, $id2, $where3, $id3)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function get6($table, $where, $id, $where2, $id2, $where3, $id3, $where4, $id4)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3' AND $where4 = '$id4'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    // public function get3($table, $where, $id, $where2, $id2, $where3, $id3)
-    // {
-    //     $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
-    //     $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    //     return $result;
-    // }
-
-    public function get4($table, $where, $id, $where2)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 >= 20");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function get5($table, $where, $id, $id2, $where2)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $id2 >= '$where2'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getSumD($table, $variable)
-    {
-        $query = $this->_pdo->query("SELECT SUM($variable) FROM $table");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getSumD1($table, $variable, $field, $value)
-    {
-        $query = $this->_pdo->query("SELECT SUM($variable) FROM $table WHERE $field = '$value' ");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getSumD2($table, $variable, $field, $value, $field1, $value1)
-    {
-        $query = $this->_pdo->query("SELECT SUM($variable) FROM $table WHERE $field = '$value' AND $field1 = '$value1'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getIn($table, $where, $id)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where IN '$id'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getInNo($table, $where, $id)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where IN '$id'");
-        $num = $query->rowCount();
-        return $num;
-    }
-
-
-    public function get($table, $where, $id)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-        public function getAsc($table, $where, $id)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' ORDER BY 'medication_id' ASC");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getArray($table, $where, $id)
-    {
-        $query = $this->_pdo->query("SELECT 'cardiac' FROM $table WHERE $where = '$id'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getRQ1($table)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function get_new($table, $where, $id, $where1, $type)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where1 = '$type'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function searchBtnDate2($table, $var, $value, $var1, $value1)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1'");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function delete($table, $field, $value)
-    {
-        return $this->_pdo->query("DELETE FROM $table WHERE $field = $value");
-    }
-
-    public function lastRow($table, $value)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table ORDER BY $value DESC LIMIT 1");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getlastRow($table, $where, $value, $id)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE  $where='$value' ORDER BY $id DESC LIMIT 1");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getlastRow1($table, $where, $value, $where1, $value1, $id)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE  $where='$value' AND $where1='$value1' ORDER BY $id DESC LIMIT 1");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getWithLimit3($table, $where, $id, $where2, $id2, $where3, $id3, $page, $numRec)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3' limit $page,$numRec");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getWithLimit2($table, $field, $value, $field1, $value1, $value2, $field2, $page, $numRec)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $value2 = '$field2' limit $page,$numRec");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-    public function getWithLimit1($table, $where, $id, $where2, $id2, $page, $numRec)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' limit $page,$numRec");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-    public function getWithLimit($table, $where, $id, $page, $numRec)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' limit $page,$numRec");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
@@ -315,19 +108,6 @@ class OverideData
         return $result;
     }
 
-    function tableHeader($table)
-    {
-        $query = $this->_pdo->query("DESCRIBE $table");
-        $result = $query->fetchAll(PDO::FETCH_COLUMN);
-        return $result;
-    }
-
-    public function firstRow($table, $param, $id, $where, $client_id)
-    {
-        $query = $this->_pdo->query("SELECT DISTINCT $param FROM $table WHERE $where = '$client_id' ORDER BY '$id' ASC");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
 
     public function firstRow1($table, $param, $id, $where, $client_id, $where1, $id1)
     {
@@ -343,151 +123,363 @@ class OverideData
         return $result;
     }
 
-    public function clearDataTable($table)
-    {
-        $query = $this->_pdo->query("TRUNCATE TABLE `$table`");
+
+    public function getReport($table1,$table2,$id1,$id2){
+        $query = $this->_pdo->query("SELECT '$table2'.'$id2','$table1'.'$id1' FROM $table2 INNER JOIN '$table1' ON '$table2'.'$id2'='$table1'.'$id1'");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-    // public function clearDataTable($table)
-    // {
-    //     $query = $this->_pdo->query("TRUNCATE TABLE `$table`");
-    //     $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    //     return $result;
-    // }
-
-    public function AllTables()
+    public function getNews($table,$where,$id,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getNews2($table, $where, $id, $where2, $id2, $where3, $id3, $where4, $id4)
     {
-        $query = $this->_pdo->query("SHOW TABLES");
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3' AND $where4 = '$id4'");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-
-    public function AllTablesCont()
+        public function getNews3($table, $where, $id, $where2, $id2, $where3, $id3)
     {
-        $query = $this->_pdo->query("SHOW TABLES");
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getNewsASC($table, $where, $id, $where2, $id2, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' ORDER BY $name ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getNewsASC0($table, $where, $id, $where2, $id2, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 > '$id2' ORDER BY $name ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getNewsASC0Count($table, $where, $id, $where2, $id2, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 > '$id2' ORDER BY $name ASC");
         $num = $query->rowCount();
         return $num;
     }
 
-    public function AllDatabasesCount()
+    public function getNewsASC1($table, $where, $id, $where2, $id2, $name)
     {
-        $query = $this->_pdo->query("SHOW DATABASES");
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 <= '$id2' ORDER BY $name ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getNewsASC1Count($table, $where, $id, $where2, $id2, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 <= '$id2' ORDER BY $name ASC");
         $num = $query->rowCount();
         return $num;
     }
 
-    public function AllDatabases()
+
+    public function getNewsASC0G($table, $where, $id, $where2, $id2,$where3, $id3, $name)
     {
-        $query = $this->_pdo->query("SHOW DATABASES");
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 > '$id2' AND $where3 = '$id3'  ORDER BY $name ASC");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-
-    public function SelectTests($table, $id1, $id2, $table2, $appointment_id, $id3)
+    public function getNewsASC0CountG($table, $where, $id, $where2, $id2,$where3, $id3, $name)
     {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $id1 IN (SELECT $id2 FROM $table2 WHERE $appointment_id = '$id3')");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function SelectTests1($table, $id1, $test_ids)
-    {
-        $query = $this->_pdo->query("SELECT * FROM $table WHERE $id1 IN (" . (implode(',', $test_ids)) . ") order by name asc");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    // public function SelectTests1()
-    // {
-    //     $query = $this->_pdo->query("select a.*,
-    //     (select id from test_list
-    //     from
-    //     (select appointment_test_list
-    //     from visit a left join
-    //     (select distinct (a.study_id) from visit a where a.study_id not in ('') ) g on a.study_id = g.study_id
-    //     where
-    //     g.study_id is not null) a where (case when a.visit_code = 'D0' then a.expected_date in ('') else a.expected_date < CURDATE() end) and a.visit_status is null order by a.study_id");
-    //     $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    //     return $result;
-    // }
-
-
-    public function setSiteId($table, $site_id, $value1, $value2)
-    {
-        $query = $this->_pdo->query("UPDATE $table SET $site_id='$value1' WHERE $value2");
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 > '$id2' AND $where3 = '$id3' ORDER BY $name ASC");
         $num = $query->rowCount();
         return $num;
     }
 
-    public function DoctorConfirm($table, $site_id, $value1, $value2)
+    public function getNewsASC1G($table, $where, $id, $where2, $id2, $where3, $id3, $name)
     {
-        $query = $this->_pdo->query("UPDATE $table SET $site_id='$value1' WHERE $value2");
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 <= '$id2' AND $where3 = '$id3' ORDER BY $name ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getNewsASC1CountG($table, $where, $id, $where2, $id2, $where3, $id3, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 <= '$id2' AND $where3 = '$id3' ORDER BY $name ASC");
+        $num = $query->rowCount();
+        return $num;
+    }
+    
+    public function getNews1($table,$where,$id,$where2,$id2,$where3,$id3){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function get3($table,$where,$id,$where2,$id2,$where3,$id3){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getFull($table,$where,$id,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where > '$id' AND $where2 = '$id2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get4($table,$where,$id,$where2,$id2,$where3,$id3){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where > '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get4b($table,$where,$id,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where > '$id' AND $where2 = '$id2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get5($table,$where,$id,$where2,$id2,$where3,$id3){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where <= '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get6($table,$where,$id,$where2,$id2,$where3,$id3){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where < '$id' AND $where2 = '$id2' AND $where3 = '$id3'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get7($table,$where,$id,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where <= '$id' AND $where2 = '$id2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getSumD($table,$variable){
+        $query = $this->_pdo->query("SELECT SUM($variable) FROM $table");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getSumD1($table,$variable, $field, $value){
+        $query = $this->_pdo->query("SELECT SUM($variable) FROM $table WHERE $field = '$value' ");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getSumD2($table,$variable, $field, $value,$field1, $value1){
+        $query = $this->_pdo->query("SELECT SUM($variable) FROM $table WHERE $field = '$value' AND $field1 = '$value1'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getSumD3($table,$variable, $field, $value,$field1, $value1,$field2, $value2){
+        $query = $this->_pdo->query("SELECT SUM($variable) FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $field2 = '$value2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get($table,$where,$id){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }    
+
+    public function get2($table,$value,$where,$id){
+        $query = $this->_pdo->query("SELECT $value FROM $table WHERE $where = '$id'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getDataAsc($table, $where, $id, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' ORDER BY $name ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function delete($table,$field,$value){
+        return $this->_pdo->query("DELETE FROM $table WHERE $field = $value");
+    }
+    public function lastRow($table,$value){
+        $query = $this->_pdo->query("SELECT * FROM $table ORDER BY $value DESC LIMIT 1");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function lastRow2($table,$field,$value,$orderBy){
+        $query = $this->_pdo->query("SELECT * FROM $table where $field='$value' ORDER BY $orderBy DESC LIMIT 1");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function selectData($table,$field,$value,$field1,$value1,$value2,$field2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $value2 = '$field2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function selectData1($table,$field,$value,$field1,$value1){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getWithLimit2($table,$field,$value,$field1,$value1,$value2,$field2,$page,$numRec){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $value2 = '$field2' limit $page,$numRec");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getWithLimit1($table,$where,$id,$where2,$id2,$page,$numRec){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' limit $page,$numRec");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getWithLimit($table,$where,$id,$page,$numRec){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' limit $page,$numRec");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getWithLimitDescendingOrder($table,$where,$id,$page,$numRec,$value){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' limit $page,$numRec ORDER BY $value DESC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getWithLimit3($table,$value,$where,$id,$page,$numRec){
+        $query = $this->_pdo->query("SELECT DISTINCT $value FROM $table WHERE $where = '$id' limit $page,$numRec");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getWithLimitAscendOrder($table,$where,$id,$page,$numRec,$value){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' limit $page,$numRec ORDER BY $value DESC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getDataWithLimit($table,$page,$numRec){
+        $query = $this->_pdo->query("SELECT * FROM $table limit $page,$numRec");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDate2($table,$var,$value,$var1,$value1){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDate3($table,$var,$value,$var1,$value1,$var2,$value2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 = '$value2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDate4($table, $var, $value, $var1, $value1, $var2,$value2, $var3, $value3)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 = '$value2' AND $var3 = '$value3'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDate5($table, $var, $value, $var1, $value1, $var2, $value2, $var3, $value3, $var4, $value4)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 = '$value2' AND $var3 = '$value3' OR $var4 = '$value4'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
+    public function searchBtnDateSufficient($table,$var,$value,$var1,$value1,$var2,$value2,$var3,$value3,$var4,$value4){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 < '$value2' AND $var3 = '$value3' AND $var4 = '$value4'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDateLow($table,$var,$value,$var1,$value1,$var2,$value2,$var3,$value3,$var4,$value4){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 >= '$value2' AND $var3 = '$value3' AND $var4 = '$value4'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDateOutStock($table,$var,$value,$var1,$value1,$var2,$value2,$var3,$value3,$var4,$value4){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 <= $value2 AND $var3 = '$value3' AND $var4 = '$value4'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDateExpired($table,$var,$value,$var1,$value1,$var2,$value2,$var3,$value3,$var4,$value4){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 <= $value2 AND $var3 = '$value3' AND $var4 = '$value4'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function searchBtnDateNotChecked($table,$var,$value,$var1,$value1,$var2,$value2,$var3,$value3,$var4,$value4){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $var >= '$value' AND $var1 <= '$value1' AND $var2 <= $value2 AND $var3 = '$value3' AND $var4 = '$value4'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getLessThanDate($table,$where,$id,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where <= '$id' AND $where2 = '$id2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getWithLimitLessThanDate($table,$where,$id,$where2,$id2,$page,$numRec){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where <= '$id' AND $where2 = '$id2' limit $page,$numRec");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getLessThanDate30($table,$where,$id,$where2,$id2){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where <= '$id' AND $where2 = '$id2'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getWithLimitLessThan30($table,$where,$id,$where2,$id2,$page,$numRec){
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where <= '$id' AND $where2 = '$id2' limit $page,$numRec");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
+    public function getNewsASC030($table, $where, $id, $where2, $id2, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 > '$id2' ORDER BY $name ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getNewsASC0Count30($table, $where, $id, $where2, $id2, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 > '$id2' ORDER BY $name ASC");
         $num = $query->rowCount();
         return $num;
     }
 
-    public function getNews7Month()
+    public function getNewsASC1G30($table, $where, $id, $where2, $id2, $where3, $id3, $name)
     {
-        $query = $this->_pdo->query("SELECT * FROM clients WHERE MONTH(created_on) >= MONTH(NOW() - INTERVAL 2 MONTH)
-                            AND (YEAR(created_on) <= YEAR(NOW() - INTERVAL 0 MONTH))");
-
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 <= '$id2' AND $where3 = '$id3' ORDER BY $name ASC");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-
-    public function getNews7Month2()
+    public function getNewsASC1CountG30($table, $where, $id, $where2, $id2, $where3, $id3, $name)
     {
-        $query = $this->_pdo->query("SELECT * FROM clients WHERE MONTH(created_on) >= MONTH(NOW() - INTERVAL 2 MONTH)
-                            AND (YEAR(created_on) <= YEAR(NOW() - INTERVAL 0 MONTH))");
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 <= '$id2' AND $where3 = '$id3' ORDER BY $name ASC");
         $num = $query->rowCount();
         return $num;
     }
 
-    public function getMonthData()
+    public function getlastRow($table, $where, $value, $id)
     {
-        $query = $this->_pdo->query("SELECT YEAR(created_on) AS year, MONTH(created_on) AS month, COUNT(*) AS records_count 
-          FROM clients 
-          GROUP BY YEAR(created_on), MONTH(created_on) 
-          ORDER BY YEAR(created_on), MONTH(created_on)");
-
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE  $where='$value' ORDER BY $id DESC LIMIT 1");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-    public function getMonthSum()
-    {
-        $query = $this->_pdo->query("SELECT MONTHNAME(created_on) as monthname, SUM(status) as amount FROM clients WHERE status = 1 GROUP BY monthname");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getMonthCount()
-    {
-        $query = $this->_pdo->query("SELECT MONTHNAME(created_on) as monthname, COUNT(status) as amount FROM clients WHERE status = 1 GROUP BY monthname");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getMonthCountSite($site_id)
-    {
-        $query = $this->_pdo->query("SELECT site_id, MONTHNAME(created_on) as monthname,COUNT(*) as count_data FROM clients WHERE site_id = '$site_id' AND status = 1 GROUP BY monthname, site_id ORDER BY monthname, site_id");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function getMonthCountSiteTest($startDate, $endDate)
-    {
-        $query = $this->_pdo->query("SELECT site_id as site, MONTH(created_on) as month, COUNT(*) as count_data
-        FROM clients
-        WHERE created_on BETWEEN '$startDate' AND '$endDate'
-        GROUP BY site, MONTH(created_on)
-        ORDER BY site, MONTH(created_on)");
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
 }
