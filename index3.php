@@ -37,7 +37,7 @@ if ($user->isLoggedIn()) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Penplus Database | Dashboard</title>
+  <title>Lung Cancer Database | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -169,8 +169,8 @@ if ($user->isLoggedIn()) {
                         $sickle_cell = $override->countData2('clients', 'status', 1, 'sickle_cell', 1, 'site_id', $row['id']);
                         $sickle_cell_Total = $override->countData('clients', 'status', 1, 'sickle_cell', 1);
 
-                        $all_disease = $override->countData4('clients', 'status', 1, 'cardiac', 1, 'diabetes', 1, 'sickle_cell', 1, 'site_id', $row['id']);
-                        $all_disease_Total = $override->countData5('clients', 'status', 1, 'cardiac', 1, 'diabetes', 1, 'sickle_cell', 1);
+                        // $all_disease = $override->countData4('clients', 'status', 1, 'cardiac', 1, 'diabetes', 1, 'sickle_cell', 1, 'site_id', $row['id']);
+                        // $all_disease_Total = $override->countData5('clients', 'status', 1, 'cardiac', 1, 'diabetes', 1, 'sickle_cell', 1);
 
 
                       ?>

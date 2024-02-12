@@ -89,12 +89,14 @@ class OverideData{
         $num = $query->rowCount();
         return $num;
     }
+
     public function countData2($table, $field, $value, $field1, $value1, $field2, $value2)
     {
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value' AND $field1 = '$value1' AND $field2 = '$value2'");
         $num = $query->rowCount();
         return $num;
     }
+
     public function getData($table){
         $query = $this->_pdo->query("SELECT * FROM $table");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -108,6 +110,13 @@ class OverideData{
         return $result;
     }
 
+
+    public function firstRow($table, $param, $id, $where, $client_id)
+    {
+        $query = $this->_pdo->query("SELECT DISTINCT $param FROM $table WHERE $where = '$client_id' ORDER BY '$id' ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
     public function firstRow1($table, $param, $id, $where, $client_id, $where1, $id1)
     {
@@ -265,6 +274,7 @@ class OverideData{
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
     public function getSumD1($table,$variable, $field, $value){
         $query = $this->_pdo->query("SELECT SUM($variable) FROM $table WHERE $field = '$value' ");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -287,7 +297,14 @@ class OverideData{
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id'");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
-    }    
+    }
+
+    public function getData2($table, $field, $value)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $field = '$value'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
     public function get2($table,$value,$where,$id){
         $query = $this->_pdo->query("SELECT $value FROM $table WHERE $where = '$id'");

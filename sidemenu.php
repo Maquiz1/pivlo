@@ -6,7 +6,6 @@ $email = new Email();
 $random = new Random();
 $users = $override->getData('user');
 if ($user->isLoggedIn()) {
-
 } else {
     Redirect::to('index.php');
 }
@@ -73,50 +72,50 @@ if ($user->isLoggedIn()) {
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="add.php?id=4" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Register
-                            <span class="right badge badge-danger">New Client</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="info.php?id=3&status=1" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
-                            Total registered
-                            <i class="fas fa-angle-left right"></i>
-                            <span class="badge badge-info right"></span>
-                        </p>
-                    </a>
-                    
-                </li>
-                <li class="nav-item">
-                    <a href="info.php?id=8" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Medications <i class="fas fa-angle-left right"></i>
+                            Registration <i class="fas fa-angle-left right"></i>
 
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="add.php?id=5&btn=Add" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Add New Medication</p>
+                            <a href="add.php?id=4" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Register
+                                    <span class="right badge badge-danger">New Client</span>
+                                </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="add.php?id=6&btn=Add" class="nav-link">
+                            <a href="info.php?id=3&status=1" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Add New Batch</p>
+                                <p>List of Clients</p>
+                            </a>
+                        </li>                        
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Data <i class="fas fa-angle-left right"></i>
+
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="info.php?id=3&status=1" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List of KAP</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="info.php?id=8" class="nav-link">
+                            <a href="info.php?id=3&status=1" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Expired Batches</p>
+                                <p>List of History</p>
                             </a>
                         </li>
                     </ul>

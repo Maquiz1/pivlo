@@ -22,7 +22,7 @@ function showElement() {
 const health_insuranceValue = localStorage.getItem("selectedValue");
 
 if (health_insuranceValue) {
-  dropdown.value = health_insuranceValue;
+  health_insurance.value = health_insuranceValue;
 }
 
 // Show element if Option 2 is selected

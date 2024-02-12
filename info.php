@@ -759,6 +759,7 @@ if ($user->isLoggedIn()) {
                                                     <th>Study Id</th>
                                                     <th>Age</th>
                                                     <th>Sex</th>
+                                                    <th>interview_type</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -800,6 +801,20 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['sex']; ?>
                                                         </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -815,6 +830,8 @@ if ($user->isLoggedIn()) {
                                                         <?php   } ?>
                                                         <td class="text-center">
                                                             <a href="add.php?id=4&cid=<?= $value['id'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>
+
+                                                            <a href="info.php?id=4&cid=<?= $value['id'] ?>" class="btn btn-success"> <i class="ri-edit-box-line"></i>CRF's</a>
                                                         </td>
                                                     </tr>
 
@@ -827,6 +844,7 @@ if ($user->isLoggedIn()) {
                                                     <th>Study Id</th>
                                                     <th>Age</th>
                                                     <th>Sex</th>
+                                                    <th>interview_type</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -875,26 +893,23 @@ if ($user->isLoggedIn()) {
                                     <div class="card-header">
                                         <?php
                                         $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $visits_status = $override->firstRow1('visit', 'status', 'id', 'client_id', $_GET['cid'], 'visit_code', 'EV')[0]['status'];
+                                        // $visits_status = $override->firstRow1('visit', 'status', 'id', 'patient_id', $_GET['cid'], 'visit_code', 'EV')[0]['status'];
 
-                                        // $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $category = $override->get('main_diagnosis', 'patient_id', $_GET['cid'])[0];
+                                        $patient = $override->get('clients', 'id', $_GET['cid'])[0];
                                         $cat = '';
 
-                                        if ($category['cardiac'] == 1) {
-                                            $cat = 'Cardiac';
-                                        } elseif ($category['diabetes'] == 1) {
-                                            $cat = 'Diabetes';
-                                        } elseif ($category['sickle_cell'] == 1) {
-                                            $cat = 'Sickle cell';
+                                        if ($patient['interview_type'] == 1) {
+                                            $cat = 'Kap & Screening';
+                                        } elseif ($patient['interview_type'] == 2) {
+                                            $cat = 'Health Care Worker';
                                         } else {
-                                            $cat = 'Not Diagnosed';
+                                            $cat = 'Not Screened';
                                         }
 
 
-                                        if ($patient['gender'] == 1) {
+                                        if ($patient['sex'] == 1) {
                                             $gender = 'Male';
-                                        } elseif ($patient['gender'] == 2) {
+                                        } elseif ($patient['sex'] == 2) {
                                             $gender = 'Female';
                                         }
 
@@ -942,31 +957,34 @@ if ($user->isLoggedIn()) {
                                                     <th>Visit Day</th>
                                                     <th>Expected Date</th>
                                                     <th>Visit Date</th>
+                                                    <th>SITE</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $x = 1;
-                                                foreach ($override->get('visit', 'client_id', $_GET['cid']) as $visit) {
-                                                    // print_r($visit['visit_code']);
+                                                foreach ($override->get('visit', 'patient_id', $_GET['cid']) as $visit) {
+                                                    $site = $override->get('sites', 'id', $visit['site_id'])[0];
                                                     $clnt = $override->get('clients', 'id', $_GET['cid'])[0];
-                                                    $cntV = $override->getCount('visit', 'client_id', $visit['client_id']);
+                                                    $cntV = $override->getCount('visit', 'patient_id', $visit['patient_id']);
 
-                                                    $demographic = $override->get3('demographic', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $vital = $override->get3('vital', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $history = $override->get3('history', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $symptoms = $override->get3('symptoms', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $diagnosis = $override->get3('main_diagnosis', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $results = $override->get3('results', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $hospitalization = $override->get3('hospitalization', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $treatment_plan = $override->get3('treatment_plan', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $dgns_complctns_comorbdts = $override->get3('dgns_complctns_comorbdts', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $risks = $override->get3('risks', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $hospitalization_details = $override->get3('hospitalization_details', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $lab_details = $override->get3('lab_details', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $summary = $override->get3('summary', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    $social_economic = $override->get3('social_economic', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    $kap = $override->get('kap', 'patient_id', $_GET['cid']);
+
+                                                    // $kap = $override->get3('kap', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $vital = $override->get3('vital', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $history = $override->get3('history', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $symptoms = $override->get3('symptoms', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $diagnosis = $override->get3('main_diagnosis', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $results = $override->get3('results', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $hospitalization = $override->get3('hospitalization', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $treatment_plan = $override->get3('treatment_plan', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $dgns_complctns_comorbdts = $override->get3('dgns_complctns_comorbdts', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $risks = $override->get3('risks', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $hospitalization_details = $override->get3('hospitalization_details', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $lab_details = $override->get3('lab_details', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $summary = $override->get3('summary', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
+                                                    // $social_economic = $override->get3('social_economic', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
 
 
                                                     // print_r($treatment_plan);
@@ -977,13 +995,16 @@ if ($user->isLoggedIn()) {
                                                     }
 
                                                     $visit_name = $visit['visit_name'];
+                                                    $site_name = $site['name'];
+
 
                                                 ?>
                                                     <tr>
                                                         <td><?= $patient['study_id'] ?></td>
-                                                        <td> <?= $visit['visit_day'] ?></td>
+                                                        <td> <?= $visit['visit_name'] ?></td>
                                                         <td> <?= $visit['expected_date'] ?></td>
                                                         <td> <?= $visit['visit_date'] ?> </td>
+                                                        <td> <?= $site_name; ?> </td>
                                                         <td>
                                                             <?php if ($visit['status'] == 1) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">Done</a>
@@ -993,21 +1014,33 @@ if ($user->isLoggedIn()) {
                                                         </td>
 
                                                         <td>
-                                                            <?php if ($visit['visit_code'] == 'EV') { ?>
+                                                            <?php if ($visit['sequence'] == 0) { ?>
 
-                                                                <?php if ($visit['status'] == 1 && ($visit['visit_code'] == 'EV' || $visit['visit_code'] == 'FV' || $visit['visit_code'] == 'TV' || $visit['visit_code'] == 'UV')) { ?>
+                                                                <?php if ($visit['status'] == 1) { ?>
 
-                                                                    <?php if ($demographic && $vital && $history && $symptoms && $diagnosis && $results && $hospitalization && $treatment_plan && $dgns_complctns_comorbdts && $risks && $hospitalization_details  && $lab_details && $social_economic) { ?>
+                                                                    <?php if ($kap) { ?>
 
-                                                                        <a href="info.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Edit Study Forms </a>
+                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Edit KAP </a>
 
 
                                                                     <?php } else { ?>
-                                                                        <a href="info.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Fill Study Forms </a>
+                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add KAP </a>
 
                                                             <?php }
                                                                 }
                                                             } ?>
+
+
+                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add History </a>
+                                                            <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add Results </a>
+                                                            <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add Classification </a>
+                                                            <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add Economic </a>
+                                                            <!-- <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add History </a>
+                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add History </a>
+                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add History </a>
+                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add History </a>
+                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add History </a>   -->
+
 
 
                                                             <?php if (($visit['visit_code'] == 'FV' || $visit['visit_code'] == 'TV' || $visit['visit_code'] == 'UV')) { ?>
@@ -1407,6 +1440,7 @@ if ($user->isLoggedIn()) {
                                                     <th>Visit Day</th>
                                                     <th>Expected Date</th>
                                                     <th>Visit Date</th>
+                                                    <th>SITE</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
