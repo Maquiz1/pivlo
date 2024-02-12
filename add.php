@@ -34,7 +34,7 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
-                $age = 20;
+                $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
 
                 try {
                     $clients = $override->get('clients', 'id', $_GET['cid']);
@@ -88,32 +88,15 @@ if ($user->isLoggedIn()) {
                         $last_row = $override->lastRow('clients', 'id')[0];
 
                         $user->createRecord('visit', array(
-                            'visit_name' => 'Registration',
+                            'visit_name' => 'Registration & Screening',
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => Input::get('date_registered'),
                             'outcome' => 0,
                             'diagnosis' => '',
                             'category' => 0,
                             'visit_status' => 1,
-                            'sequence' => -1,
-                            'status' => 1,
-                            'patient_id' => $last_row['id'],
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                            'site_id' => $user->data()->site_id,
-                        ));
-                        $user->createRecord('visit', array(
-                            'visit_name' => 'Screening',
-                            'expected_date' => Input::get('date_registered'),
-                            'visit_date' => '',
-                            'outcome' => 0,
-                            'diagnosis' => '',
-                            'category' => 0,
-                            'visit_status' => 0,
                             'sequence' => 0,
-                            'status' => 0,
+                            'status' => 1,
                             'patient_id' => $last_row['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
@@ -341,23 +324,26 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    // $user->createRecord('visit', array(
-                    //     'visit_name' => 'Month 0',
-                    //     'classification_date' => '',
-                    //     'expected_date' => date('Y-m-d'),
-                    //     'visit_date' => '',
-                    //     'outcome' => 0,
-                    //     'visit_status' => 0,
-                    //     'diagnosis' => '',
-                    //     'category' => '',
-                    //     'status' => 1,
-                    //     'patient_id' => Input::get('cid'),
-                    //     'create_on' => date('Y-m-d H:i:s'),
-                    //     'staff_id' => $user->data()->id,
-                    //     'update_on' => date('Y-m-d H:i:s'),
-                    //     'update_id' => $user->data()->id,
-                    //     'site_id' => $user->data()->site_id,
-                    // ));
+                    if (Input::get('eligible') == 1) {
+
+                        $user->createRecord('visit', array(
+                            'visit_name' => 'Month 0',
+                            'expected_date' => Input::get('screening_date'),
+                            'visit_date' => '',
+                            'outcome' => 0,
+                            'diagnosis' => '',
+                            'category' => 0,
+                            'visit_status' => 0,
+                            'sequence' => 1,
+                            'status' => 1,
+                            'patient_id' => $_GET['cid'],
+                            'create_on' => date('Y-m-d H:i:s'),
+                            'staff_id' => $user->data()->id,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                            'site_id' => $user->data()->site_id,
+                        ));
+                    }
 
                     $successMessage = 'History  Successful Added';
                 } else {
@@ -374,6 +360,27 @@ if ($user->isLoggedIn()) {
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
                     ), $history[0]['id']);
+
+                    if (Input::get('eligible') == 1) {
+
+                        $user->createRecord('visit', array(
+                            'visit_name' => 'Month 0',
+                            'expected_date' => Input::get('screening_date'),
+                            'visit_date' => '',
+                            'outcome' => 0,
+                            'diagnosis' => '',
+                            'category' => 0,
+                            'visit_status' => 0,
+                            'sequence' => 1,
+                            'status' => 1,
+                            'patient_id' => $_GET['cid'],
+                            'create_on' => date('Y-m-d H:i:s'),
+                            'staff_id' => $user->data()->id,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                            'site_id' => $user->data()->site_id,
+                        ));
+                    }
                     $successMessage = 'History  Successful Updated';
                 }
 
@@ -413,6 +420,7 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                         'site_id' => $user->data()->site_id,
                     ));
+
                     $successMessage = 'Results  Successful Added';
                 } else {
                     $user->updateRecord('results', array(
@@ -483,6 +491,7 @@ if ($user->isLoggedIn()) {
                                 'diagnosis' => Input::get('diagnosis'),
                                 'category' => $value,
                                 'status' => 1,
+                                'sequence' => 2,
                                 'patient_id' => Input::get('cid'),
                                 'create_on' => date('Y-m-d H:i:s'),
                                 'staff_id' => $user->data()->id,
@@ -2326,7 +2335,7 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <?php if ($history) { ?>
+                                <?php if (!$history) { ?>
                                     <h1>Add New HISTORY</h1>
                                 <?php } else { ?>
                                     <h1>Update HISTORY</h1>
@@ -2342,7 +2351,7 @@ if ($user->isLoggedIn()) {
                                     </li>
 
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <?php if ($history) { ?>
+                                    <?php if (!$history) { ?>
                                         <li class="breadcrumb-item active">Add New HISTORY</li>
                                     <?php } else { ?>
                                         <li class="breadcrumb-item active">Update HISTORY</li>
