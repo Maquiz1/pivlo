@@ -23,585 +23,24 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
-        } elseif (Input::get('delete_batch')) {
-            $validate = $validate->check($_POST, array());
-            if ($validate->passed()) {
-                try {
-                    $user->updateRecord('batch', array(
-                        'status' => 0,
-                    ), Input::get('id'));
-                    $successMessage = 'Name Deleted Successful';
-                } catch (Exception $e) {
-                    die($e->getMessage());
-                }
-            }
-        } elseif (Input::get('add_kap')) {
-            $validate = $validate->check($_POST, array(
-                'interview_date' => array(
-                    'required' => true,
-                ),
-                'saratani_mapafu' => array(
-                    'required' => true,
-                ),
-                'uhusiano_saratani' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-                if (Input::get('btn') == 'Add') {
-                    $user->createRecord('kap', array(
-                        'interview_date' => Input::get('interview_date'),
-                        'saratani_mapafu' => Input::get('saratani_mapafu'),
-                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
-                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
-                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => Input::get('dalili_saratani'),
-                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => Input::get('saratani_vipimo'),
-                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
-                        'saratani_inatibika' => Input::get('saratani_inatibika'),
-                        'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => Input::get('matibabu'),
-                        'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
-                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
-                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
-                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
-                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
-                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
-                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => Input::get('saratani_hatari'),
-                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => Input::get('kundi'),
-                        'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => Input::get('ushawishi'),
-                        'ushawishi_other' => Input::get('ushawishi_other'),
-                        'hitaji_elimu' => Input::get('hitaji_elimu'),
-                        'vifo' => Input::get('vifo'),
-                        'tayari_dalili' => Input::get('tayari_dalili'),
-                        'saratani_kutibika' => Input::get('saratani_kutibika'),
-                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
-                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
-                        'saratani_kufa' => Input::get('saratani_kufa'),
-                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
-                        'wapi_matibabu' => Input::get('wapi_matibabu'),
-                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
-                        'saratani_ushauri' => Input::get('saratani_ushauri'),
-                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
-                        'eligible' => 1,
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
-
-                    $user->createRecord('visit', array(
-                        'visit_name' => 'Month 0',
-                        'classification_date' => '',
-                        'expected_date' => date('Y-m-d'),
-                        'visit_date' => '',
-                        'outcome' => 0,
-                        'visit_status' => 0,
-                        'diagnosis' => '',
-                        'category' => '',
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
-
-                    $successMessage = 'Kap  Successful Added';
-                } elseif (Input::get('btn') == 'Update') {
-                    $user->updateRecord('kap', array(
-                        'interview_date' => Input::get('interview_date'),
-                        'saratani_mapafu' => Input::get('saratani_mapafu'),
-                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
-                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
-                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => Input::get('dalili_saratani'),
-                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => Input::get('saratani_vipimo'),
-                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
-                        'saratani_inatibika' => Input::get('saratani_inatibika'),
-                        'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => Input::get('matibabu'),
-                        'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
-                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
-                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
-                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
-                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
-                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
-                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => Input::get('saratani_hatari'),
-                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => Input::get('kundi'),
-                        'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => Input::get('ushawishi'),
-                        'ushawishi_other' => Input::get('ushawishi_other'),
-                        'hitaji_elimu' => Input::get('hitaji_elimu'),
-                        'vifo' => Input::get('vifo'),
-                        'tayari_dalili' => Input::get('tayari_dalili'),
-                        'saratani_kutibika' => Input::get('saratani_kutibika'),
-                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
-                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
-                        'saratani_kufa' => Input::get('saratani_kufa'),
-                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
-                        'wapi_matibabu' => Input::get('wapi_matibabu'),
-                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
-                        'saratani_ushauri' => Input::get('saratani_ushauri'),
-                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
-                        'eligible' => 1,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), Input::get('id'));
-                    $successMessage = 'Kap  Successful Updated';
-                }
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_history')) {
-            $validate = $validate->check($_POST, array(
-                'screening_date' => array(
-                    'required' => true,
-                ),
-                'ever_smoked' => array(
-                    'required' => true,
-                ),
-                'eligible' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-                if (Input::get('btn') == 'Add') {
-                    // print_r($_POST);
-                    $user->createRecord('history', array(
-                        'screening_date' => Input::get('screening_date'),
-                        'ever_smoked' => Input::get('ever_smoked'),
-                        'start_smoking' => Input::get('start_smoking'),
-                        'smoking_long' => Input::get('smoking_long'),
-                        'currently_smoking' => Input::get('currently_smoking'),
-                        'quit_smoking' => Input::get('quit_smoking'),
-                        'packs_per_day' => Input::get('packs_per_day'),
-                        'packs_per_year' => Input::get('packs_per_year'),
-                        'eligible' => Input::get('eligible'),
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
-
-                    // $user->createRecord('visit', array(
-                    //     'visit_name' => 'Month 0',
-                    //     'classification_date' => '',
-                    //     'expected_date' => date('Y-m-d'),
-                    //     'visit_date' => '',
-                    //     'outcome' => 0,
-                    //     'visit_status' => 0,
-                    //     'diagnosis' => '',
-                    //     'category' => '',
-                    //     'status' => 1,
-                    //     'patient_id' => Input::get('cid'),
-                    //     'create_on' => date('Y-m-d H:i:s'),
-                    //     'staff_id' => $user->data()->id,
-                    //     'update_on' => date('Y-m-d H:i:s'),
-                    //     'update_id' => $user->data()->id,
-                    //     'site_id' => $user->data()->site_id,
-                    // ));
-
-                    $successMessage = 'History  Successful Added';
-                } elseif (Input::get('btn') == 'Update') {
-                    $user->updateRecord('history', array(
-                        'screening_date' => Input::get('screening_date'),
-                        'ever_smoked' => Input::get('ever_smoked'),
-                        'start_smoking' => Input::get('start_smoking'),
-                        'smoking_long' => Input::get('smoking_long'),
-                        'currently_smoking' => Input::get('currently_smoking'),
-                        'quit_smoking' => Input::get('quit_smoking'),
-                        'packs_per_day' => Input::get('packs_per_day'),
-                        'packs_per_year' => Input::get('packs_per_year'),
-                        'eligible' => Input::get('eligible'),
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), Input::get('id'));
-                    $successMessage = 'History  Successful Updated';
-                }
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_results')) {
-            $validate = $validate->check($_POST, array(
-                'results_date' => array(
-                    'required' => true,
-                ),
-                'ldct_results' => array(
-                    'required' => true,
-                ),
-                'rad_score' => array(
-                    'required' => true,
-                ),
-                'findings' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-                if (Input::get('btn') == 'Add') {
-                    $user->createRecord('results', array(
-                        'results_date' => Input::get('results_date'),
-                        'ldct_results' => Input::get('ldct_results'),
-                        'rad_score' => Input::get('rad_score'),
-                        'findings' => Input::get('findings'),
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
-                    $successMessage = 'Results  Successful Added';
-                } elseif (Input::get('btn') == 'Update') {
-                    $user->updateRecord('results', array(
-                        'results_date' => Input::get('results_date'),
-                        'ldct_results' => Input::get('ldct_results'),
-                        'rad_score' => Input::get('rad_score'),
-                        'findings' => Input::get('findings'),
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), Input::get('id'));
-                    $successMessage = 'Results  Successful Updated';
-                }
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_classification')) {
-            $validate = $validate->check($_POST, array(
-                'classification_date' => array(
-                    'required' => true,
-                ),
-                // 'category' => array(
-                //     'required' => true,
-                // ),
-            ));
-
-            if ($validate->passed()) {
-                if (count(Input::get('category')) == 1) {
-                    foreach (Input::get('category') as $value) {
-                        if (Input::get('btn') == 'Add') {
-                            $user->createRecord('classification', array(
-                                'classification_date' => Input::get('classification_date'),
-                                'category' => $value,
-                                'status' => 1,
-                                'patient_id' => Input::get('cid'),
-                                'create_on' => date('Y-m-d H:i:s'),
-                                'staff_id' => $user->data()->id,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                                'site_id' => $user->data()->site_id,
-                            ));
-
-                            if ($value == 1) {
-                                $visit = 'Month 12';
-                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 2) {
-                                $visit = 'Month 12';
-                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 3) {
-                                $visit = 'Month 6';
-                                $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 4) {
-                                $visit = 'Month 3';
-                                $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 5) {
-                                $visit = 'Referred';
-                                $expected_date = 'N / A';
-                            }
-
-                            $user->createRecord('visit', array(
-                                'visit_name' => $visit,
-                                'classification_date' => Input::get('classification_date'),
-                                'expected_date' => $expected_date,
-                                'visit_date' => '',
-                                'outcome' => 0,
-                                'visit_status' => 0,
-                                'diagnosis' => Input::get('diagnosis'),
-                                'category' => $value,
-                                'status' => 1,
-                                'sequence' => 1,
-                                'patient_id' => Input::get('cid'),
-                                'create_on' => date('Y-m-d H:i:s'),
-                                'staff_id' => $user->data()->id,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                                'site_id' => $user->data()->site_id,
-                            ));
-
-                            $successMessage = 'Classification  Successful Added';
-                        } elseif (Input::get('btn') == 'Update') {
-                            $user->updateRecord('classification', array(
-                                'classification_date' => Input::get('classification_date'),
-                                'category' => $value,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                            ), Input::get('id'));
-                            $successMessage = 'Classification  Successful Updated';
-                        }
-                    }
-                } else {
-                    $errorMessage = 'Please chose only one Classification!';
-                }
-            } else {
-                $pageError = $validate->errors();
-            }
         } elseif (Input::get('add_visit')) {
             $validate = $validate->check($_POST, array(
                 'visit_date' => array(
                     'required' => true,
                 ),
-                // 'category' => array(
-                //     'required' => true,
-                // ),
             ));
 
             if ($validate->passed()) {
                 $user->updateRecord('visit', array(
                     'visit_date' => Input::get('visit_date'),
                     'visit_status' => Input::get('visit_status'),
-                    'diagnosis' => Input::get('diagnosis'),
-                    'outcome' => Input::get('outcome'),
-                    'status' => 1,
+                    'comments' => Input::get('comments'),
                     'patient_id' => Input::get('cid'),
                     'update_on' => date('Y-m-d H:i:s'),
                     'update_id' => $user->data()->id,
                 ), Input::get('id'));
 
                 $successMessage = 'Visit Updates  Successful';
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_economic')) {
-            $validate = $validate->check($_POST, array(
-                'economic_date' => array(
-                    'required' => true,
-                ),
-                'income_household' => array(
-                    'required' => true,
-                ),
-                'income_patient' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-                if (Input::get('btn') == 'Add') {
-                    $user->createRecord('economic', array(
-                        'economic_date' => Input::get('economic_date'),
-                        'income_household' => Input::get('income_household'),
-                        'income_household_other' => Input::get('income_household_other'),
-                        'income_patient' => Input::get('income_patient'),
-                        'income_patient_other' => Input::get('income_patient_other'),
-                        'smoking_long' => Input::get('smoking_long'),
-                        'monthly_earn' => Input::get('monthly_earn'),
-                        'member_earn' => Input::get('member_earn'),
-                        'transport' => Input::get('transport'),
-                        'support_earn' => Input::get('support_earn'),
-                        'food_drinks' => Input::get('food_drinks'),
-                        'other_cost' => Input::get('other_cost'),
-                        'days' => Input::get('days'),
-                        'hours' => Input::get('hours'),
-                        'registration' => Input::get('registration'),
-                        'consultation' => Input::get('consultation'),
-                        'diagnostic' => Input::get('diagnostic'),
-                        'medications' => Input::get('medications'),
-                        'other_medical_cost' => Input::get('other_medical_cost'),
-                        'status' => 1,
-                        'patient_id' => Input::get('cid'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
-                    $successMessage = 'Economic  Successful Added';
-                } elseif (Input::get('btn') == 'Update') {
-                    $user->updateRecord('economic', array(
-                        'economic_date' => Input::get('economic_date'),
-                        'income_household' => Input::get('income_household'),
-                        'income_household_other' => Input::get('income_household_other'),
-                        'income_patient' => Input::get('income_patient'),
-                        'income_patient_other' => Input::get('income_patient_other'),
-                        'smoking_long' => Input::get('smoking_long'),
-                        'monthly_earn' => Input::get('monthly_earn'),
-                        'member_earn' => Input::get('member_earn'),
-                        'transport' => Input::get('transport'),
-                        'support_earn' => Input::get('support_earn'),
-                        'food_drinks' => Input::get('food_drinks'),
-                        'other_cost' => Input::get('other_cost'),
-                        'days' => Input::get('days'),
-                        'hours' => Input::get('hours'),
-                        'registration' => Input::get('registration'),
-                        'consultation' => Input::get('consultation'),
-                        'diagnostic' => Input::get('diagnostic'),
-                        'medications' => Input::get('medications'),
-                        'other_medical_cost' => Input::get('other_medical_cost'),
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), Input::get('id'));
-                    $successMessage = 'Economic  Successful Updated';
-                }
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('Archive_batch')) {
-            $validate = $validate->check($_POST, array(
-                'archive_date' => array(
-                    'required' => true,
-                ),
-                'archive_time' => array(
-                    'required' => true,
-                ),
-                'remarks' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-                $user->updateRecord('batch', array(
-                    'status' => 2,
-                ), Input::get('id'));
-
-                $user->createRecord('archiving', array(
-                    'generic_id' => Input::get('generic_id'),
-                    'batch_id' => Input::get('id'),
-                    'archive_date' => Input::get('archive_date'),
-                    'archive_time' => Input::get('archive_time'),
-                    'amount' => Input::get('amount'),
-                    'remarks' => Input::get('remarks'),
-                    'status' => 1,
-                    'create_on' => date('Y-m-d H:i:s'),
-                    'update_on' => date('Y-m-d H:i:s'),
-                    'staff_id' => $user->data()->id,
-                    'update_id' => $user->data()->id,
-                    'site_id' => $_GET['site'],
-                    'site' => $_GET['site'],
-                    'study_id' => $_GET['study'],
-                    'study' => $_GET['study'],
-                ));
-
-                $successMessage = 'Archived Successful';
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('Increase_batch')) {
-            $validate = $validate->check($_POST, array(
-                'increase_date' => array(
-                    'required' => true,
-                ),
-                'increase_time' => array(
-                    'required' => true,
-                ),
-                'added' => array(
-                    'required' => true,
-                ),
-                'remarks' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-
-                $amount = Input::get('amount') +    Input::get('added');
-
-                $user->updateRecord('batch', array(
-                    'amount' => $amount,
-                ), Input::get('id'));
-
-                $user->createRecord('batch_records', array(
-                    'generic_id' => Input::get('generic_id'),
-                    'batch_id' => Input::get('id'),
-                    'amount' => $amount,
-                    'added' => Input::get('added'),
-                    'removed' => 0,
-                    'brand_name' => Input::get('brand_name'),
-                    'status' => 1,
-                    'increase_date' => Input::get('increase_date'),
-                    'increase_time' => Input::get('increase_time'),
-                    'remarks' => Input::get('remarks'),
-                    'units' => Input::get('units'),
-                    'create_on' => date('Y-m-d H:i:s'),
-                    'staff_id' => $user->data()->id,
-                    'site_id' => Input::get('site_id'),
-                    'site' => Input::get('site_id'),
-                    'study_id' => Input::get('study_id'),
-                    'study' => Input::get('study_id'),
-                    'category' => Input::get('category'),
-                ));
-
-                $successMessage = 'Increased Successful';
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('Dispense_batch')) {
-            $validate = $validate->check($_POST, array(
-                'dispense_date' => array(
-                    'required' => true,
-                ),
-                'dispense_time' => array(
-                    'required' => true,
-                ),
-                'added' => array(
-                    'required' => true,
-                ),
-                'remarks' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-
-                if (Input::get('added') <= Input::get('amount')) {
-
-                    $amount = Input::get('amount') -  Input::get('added');
-                    $added =  Input::get('added');
-
-                    $user->updateRecord('batch', array(
-                        'amount' => $amount,
-                    ), Input::get('id'));
-
-                    $user->createRecord('batch_records', array(
-                        'generic_id' => Input::get('generic_id'),
-                        'batch_id' => Input::get('id'),
-                        'amount' => $amount,
-                        'added' => 0,
-                        'removed' => $added,
-                        'brand_name' => Input::get('brand_name'),
-                        'status' => 1,
-                        'increase_date' => Input::get('dispense_date'),
-                        'increase_time' => Input::get('dispense_time'),
-                        'remarks' => Input::get('remarks'),
-                        'units' => Input::get('units'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'site_id' => Input::get('site_id'),
-                        'site' => Input::get('site_id'),
-                        'study_id' => Input::get('study_id'),
-                        'study' => Input::get('study_id'),
-                        'category' => Input::get('category'),
-                    ));
-
-                    $successMessage = 'Dispensed Successful';
-                } else {
-                    $errorMessage = 'Amount not Enough';
-                }
             } else {
                 $pageError = $validate->errors();
             }
@@ -965,71 +404,94 @@ if ($user->isLoggedIn()) {
                                             <tbody>
                                                 <?php $x = 1;
                                                 foreach ($override->get('visit', 'patient_id', $_GET['cid']) as $visit) {
-                                                    // $site = $override->get('sites', 'id', $visit['site_id'])[0];
-                                                    // $clnt = $override->get('clients', 'id', $_GET['cid'])[0];
-                                                    // $cntV = $override->getCount('visit', 'patient_id', $visit['patient_id']);
-
+                                                    $site = $override->get('sites', 'id', $visit['site_id'])[0];
                                                     $kap = $override->get('kap', 'patient_id', $_GET['cid']);
-
+                                                    $history = $override->get('history', 'patient_id', $_GET['cid']);
+                                                    $results = $override->get('results', 'patient_id', $_GET['cid']);
+                                                    $classification = $override->get('classification', 'patient_id', $_GET['cid']);
+                                                    $economic = $override->get('economic', 'patient_id', $_GET['cid']);
+                                                    $outcome = $override->get('outcome', 'patient_id', $_GET['cid']);
                                                     // $kap = $override->get3('kap', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $vital = $override->get3('vital', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $history = $override->get3('history', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $symptoms = $override->get3('symptoms', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $diagnosis = $override->get3('main_diagnosis', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $results = $override->get3('results', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $hospitalization = $override->get3('hospitalization', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $treatment_plan = $override->get3('treatment_plan', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $dgns_complctns_comorbdts = $override->get3('dgns_complctns_comorbdts', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $risks = $override->get3('risks', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $hospitalization_details = $override->get3('hospitalization_details', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $lab_details = $override->get3('lab_details', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $summary = $override->get3('summary', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-                                                    // $social_economic = $override->get3('social_economic', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);
-
-
-                                                    // print_r($treatment_plan);
-                                                    // if ($visit['status'] == 0) {
-                                                    //     $btnV = 'Add';
-                                                    // } elseif ($visit['status'] == 1) {
-                                                    //     $btnV = 'Edit';
-                                                    // }
-
-                                                    // $visit_name = $visit['visit_name'];
-                                                    $site_name = $site['name'];
-
-
+                                                    // $vital = $override->get3('vital', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);                                                   
                                                 ?>
                                                     <tr>
                                                         <td><?= $patient['study_id'] ?></td>
                                                         <td> <?= $visit['visit_name'] ?></td>
                                                         <td> <?= $visit['expected_date'] ?></td>
                                                         <td> <?= $visit['visit_date'] ?> </td>
-                                                        <td> <?= $site_name; ?> </td>
+                                                        <td> <?= $site['name'] ?> </td>
                                                         <td>
-                                                            <?php if ($visit['status'] == 1) { ?>
+                                                            <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">Done</a>
-                                                            <?php } elseif ($visit['status'] == 0) { ?>
+                                                            <?php } elseif ($visit['visit_status'] == 0) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Pending</a>
                                                             <?php } ?>
                                                         </td>
 
                                                         <td>
-                                                            <?php if ($visit['sequence'] == 0) { ?>
+                                                            <?php if ($visit['visit_status'] == 1) { ?>
 
-                                                                <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Edit KAP </a>
-                                                                <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add History </a>
-                                                                <?php if ($visit['sequence'] == 1) { ?>
+                                                                <?php if ($visit['sequence'] == 0) { ?>
 
-                                                                    <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add Results </a>
-                                                                    <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add Classification </a>
-                                                                    <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add Economic </a>
+                                                                    <?php if ($kap) { ?>
+                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update KAP </a>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Add KAP </a>
+
+                                                                    <?php } ?>
+
+                                                                    <?php if ($history) { ?>
+                                                                        <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update History </a>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add History </a>
+                                                                    <?php } ?>
                                                                 <?php } ?>
                                                             <?php } ?>
 
 
-                                                            <?php if ($visit['sequence'] == 2) { ?>
+                                                            <?php if ($visit['visit_status'] == 1) { ?>
 
+                                                                <?php if ($visit['sequence'] == 1) { ?>
+                                                                    <?php if ($results) { ?>
+                                                                        <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Results </a>
+                                                                    <?php } ?>
+
+                                                                    <?php if ($classification) { ?>
+                                                                        <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Classification </a>
+                                                                    <?php } ?>
+
+                                                                    <?php if ($economic) { ?>
+                                                                        <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Economic </a>
+                                                                    <?php } ?>
+                                                                <?php } ?>
                                                             <?php } ?>
+
+
+                                                            <?php if ($visit['visit_status'] == 1) { ?>
+
+                                                                <?php if ($visit['sequence'] == 2) { ?>
+
+                                                                    <?php if ($outcome) { ?>
+                                                                        <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Outcome </a>
+                                                                    <?php } ?>
+
+                                                                    <?php if ($economic) { ?>
+                                                                        <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $visit['id'] ?>&vcode=<?= $visit['visit_code'] ?>&seq=<?= $visit['seq_no'] ?>&sid=<?= $visit['study_id'] ?>&vday=<?= $visit['visit_day'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Economic </a>
+                                                                    <?php } ?>
+
+                                                                <?php } ?>
+                                                            <?php } ?>
+
 
                                                             <?php if (($visit['visit_code'] == 'FV' || $visit['visit_code'] == 'TV' || $visit['visit_code'] == 'UV')) { ?>
 
@@ -1055,52 +517,62 @@ if ($user->isLoggedIn()) {
                                                             <form method="post">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h4 class="modal-title">Default Modal</h4>
+                                                                        <h4 class="modal-title">Update visit Status</h4>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <?php $screening = $override->get('screening', 'patient_id', $client['id'])[0];
-                                                                    ?>
                                                                     <div class="modal-body">
                                                                         <div class="row">
-
-                                                                            <div class="row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row-form clearfix">
-                                                                                        <!-- select -->
-                                                                                        <div class="form-group">
-                                                                                            <label>Visit Date</label>
-                                                                                            <input value="<?php if ($visit['status'] != 0) {
-                                                                                                                echo $visit['visit_date'];
-                                                                                                            } ?>" class="validate[required,custom[date]]" type="text" name="visit_date" id="visit_date" />
-                                                                                            <span>Example: 2010-12-01</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row-form clearfix">
-                                                                                        <!-- select -->
-                                                                                        <div class="form-group">
-                                                                                            <label>Notes / Remarks /Comments</label>
-                                                                                            <textarea name="reasons" rows="4"><?php if ($visit['status'] != 0) {
-                                                                                                                                    echo $visit['reasons'];
-                                                                                                                                } ?></textarea>
-                                                                                        </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row-form clearfix">
+                                                                                    <!-- select -->
+                                                                                    <div class="form-group">
+                                                                                        <label>Visit Date</label>
+                                                                                        <input value="<?php if ($visit['status'] != 0) {
+                                                                                                            echo $visit['visit_date'];
+                                                                                                        } ?>" class="form-control" type="date" name="visit_date" id="visit_date" required />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="dr"><span></span></div>
+                                                                            <div class="col-6">
+                                                                                <div class="mb-2">
+                                                                                    <label for="income_household" class="form-label">Visit Status</label>
+                                                                                    <select class="form-control" id="visit_status" name="visit_status" style="width: 100%;" required>
+                                                                                        <option value="<?= $visit['visit_status'] ?>"><?php if ($visit) {
+                                                                                                                                            if ($visit['visit_status'] == 1) {
+                                                                                                                                                echo 'Attended';
+                                                                                                                                            } elseif ($visit['visit_status'] == 2) {
+                                                                                                                                                echo 'Missed';
+                                                                                                                                            }
+                                                                                                                                        } else {
+                                                                                                                                            echo 'Select';
+                                                                                                                                        } ?>
+                                                                                        </option>
+                                                                                        <option value="1">Attended</option>
+                                                                                        <option value="2">Missed</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row-form clearfix">
+                                                                                    <!-- select -->
+                                                                                    <div class="form-group">
+                                                                                        <label>Notes / Remarks /Comments</label>
+                                                                                        <textarea class="form-control" name="comments" rows="3"><?php if ($visit['comments']) {
+                                                                                                                                                    echo $visit['comments'];
+                                                                                                                                                } ?></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
+                                                                        <div class="dr"><span></span></div>
                                                                     </div>
                                                                     <div class="modal-footer justify-content-between">
                                                                         <input type="hidden" name="id" value="<?= $visit['id'] ?>">
-                                                                        <input type="hidden" name="vc" value="<?= $visit['visit_code'] ?>">
-                                                                        <input type="hidden" name="visit_name" value="<?= $visit['visit_name'] ?>">
-                                                                        <input type="hidden" name="cid" value="<?= $visit['client_id'] ?>">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                        <input type="submit" name="edit_visit" class="btn btn-primary" value="Save changes">
+                                                                        <input type="submit" name="add_visit" class="btn btn-primary" value="Save changes">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.modal-content -->
@@ -1585,547 +1057,10 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 8) { ?>
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1>Medications</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Medications</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div><!-- /.container-fluid -->
-                </section>
 
-                <!-- Main content -->
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <?php
-                                        $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $visits_status = $override->firstRow1('visit', 'status', 'id', 'client_id', $_GET['cid'], 'visit_code', 'EV')[0]['status'];
-
-                                        // $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $category = $override->get('main_diagnosis', 'patient_id', $_GET['cid'])[0];
-                                        $cat = '';
-
-                                        if ($category['cardiac'] == 1) {
-                                            $cat = 'Cardiac';
-                                        } elseif ($category['diabetes'] == 1) {
-                                            $cat = 'Diabetes';
-                                        } elseif ($category['sickle_cell'] == 1) {
-                                            $cat = 'Sickle cell';
-                                        } else {
-                                            $cat = 'Not Diagnosed';
-                                        }
-
-
-                                        if ($patient['gender'] == 1) {
-                                            $gender = 'Male';
-                                        } elseif ($patient['gender'] == 2) {
-                                            $gender = 'Female';
-                                        }
-
-                                        $name = 'Name: ' . $patient['firstname'] . ' ' . $patient['lastname'] . ' Age: ' . $patient['age'] . ' Gender: ' . $gender . ' Type: ' . $cat;
-
-                                        ?>
-
-                                        <div class="col-sm-6">
-                                            <ol class="breadcrumb float-sm-right">
-                                                <li class="breadcrumb-item">
-                                                    <a href='index1.php' class="btn btn-default">Back</a>
-                                                    </a>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <table id="example1" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Form</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $x = 1;
-                                                foreach ($override->get('medications', 'status', 1) as $value) {
-
-                                                    $batch_sum = $override->getSumD2('batch', 'amount', 'status', 1, 'medication_id', $value['id'])[0]['SUM(amount)'];
-                                                    $forms = $override->getNewsAsc0('forms', 'status', 1, 'id', $value['forms'])[0];
-                                                    if ($batch_sum) {
-                                                        $batch_sum = $batch_sum;
-                                                    } elseif ($visit['status'] == 1) {
-                                                        $batch_sum = 0;
-                                                    }
-
-                                                ?>
-                                                    <tr>
-                                                        <td><?= $value['name'] ?></td>
-                                                        <td> <?= $batch_sum ?></td>
-                                                        <td> <?= $forms['name'] ?></td>
-                                                        <td>
-                                                            <?php if ($value['expire_date'] > date('Y-m-d')) { ?>
-                                                                <a href="#editVisit<?= $value['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">Valid</a>
-                                                            <?php } elseif ($visit['status'] == 0) { ?>
-                                                                <a href="#editVisit<?= $value['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Expired</a>
-                                                            <?php } ?>
-                                                        </td>
-                                                        <td>
-                                                            <a href="add.php?id=5&medication_id=<?= $value['id'] ?>&forms=<?= $value['forms'] ?>&use_group=<?= $value['use_group'] ?>&maintainance=<?= $value['maintainance'] ?>&btn=Update" role="button" class="btn btn-info">Update</a>
-                                                            <a href="info.php?id=9&medication_id=<?= $value['id'] ?>&forms=<?= $value['forms'] ?>&use_group=<?= $value['use_group'] ?>&maintainance=<?= $value['maintainance'] ?>&btn=Update" role="button" class="btn btn-success">View</a>
-                                                            <a href="#delete_medication<?= $value['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                    <div class="modal fade" id="delete_medication<?= $value['id'] ?>">
-                                                        <div class="modal-dialog">
-                                                            <form method="post">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title">Delete Medication</h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p class="text-muted text-center">Are you sure yoy want to delete this medication ?</p>
-                                                                    </div>
-                                                                    <div class="modal-footer justify-content-between">
-                                                                        <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                        <input type="hidden" name="name" value="<?= $value['name'] ?>">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                                        <input type="submit" name="delete_medication" class="btn btn-danger" value="Yes, Delete">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- /.modal-content -->
-                                                            </form>
-                                                        </div>
-                                                        <!-- /.modal-dialog -->
-                                                    </div>
-                                                    <!-- /.modal -->
-                                                <?php $x++;
-                                                } ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Form</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!--/.col (right) -->
-                        </div>
-                        <!-- /.row -->
-                    </div><!-- /.container-fluid -->
-                </section>
-                <!-- /.content -->
-            </div>
-            <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 9) { ?>
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1>Medications</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Medications</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div><!-- /.container-fluid -->
-                </section>
 
-                <!-- Main content -->
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <?php
-                                        $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $visits_status = $override->firstRow1('visit', 'status', 'id', 'client_id', $_GET['cid'], 'visit_code', 'EV')[0]['status'];
-
-                                        // $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $category = $override->get('main_diagnosis', 'patient_id', $_GET['cid'])[0];
-                                        $cat = '';
-
-                                        if ($category['cardiac'] == 1) {
-                                            $cat = 'Cardiac';
-                                        } elseif ($category['diabetes'] == 1) {
-                                            $cat = 'Diabetes';
-                                        } elseif ($category['sickle_cell'] == 1) {
-                                            $cat = 'Sickle cell';
-                                        } else {
-                                            $cat = 'Not Diagnosed';
-                                        }
-
-
-                                        if ($patient['gender'] == 1) {
-                                            $gender = 'Male';
-                                        } elseif ($patient['gender'] == 2) {
-                                            $gender = 'Female';
-                                        }
-
-                                        $name = 'Name: ' . $patient['firstname'] . ' ' . $patient['lastname'] . ' Age: ' . $patient['age'] . ' Gender: ' . $gender . ' Type: ' . $cat;
-
-                                        ?>
-
-                                        <div class="col-sm-6">
-                                            <ol class="breadcrumb float-sm-right">
-                                                <li class="breadcrumb-item"><a href="index1.php">
-                                                        <a href='info.php?id=8' class="btn btn-default">Back</a>
-                                                    </a>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                    </div>
-
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <table id="example1" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Batch / Serial No.</th>
-                                                    <th>Amount</th>
-                                                    <th>Expire Date</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $x = 1;
-                                                foreach ($override->getNews('batch', 'status', 1, 'medication_id', $_GET['medication_id']) as $value) {
-
-                                                    $batch_sum = $override->getSumD2('batch', 'amount', 'status', 1, 'medication_id', $value['id'])[0]['SUM(amount)'];
-                                                    $forms = $override->get('forms', 'status', 1, 'id', $value['forms'])[0];
-                                                    if ($batch_sum) {
-                                                        $batch_sum = $batch_sum;
-                                                    } elseif ($visit['status'] == 1) {
-                                                        $batch_sum = 0;
-                                                    }
-
-                                                ?>
-                                                    <tr>
-                                                        <td><?= $value['name'] ?></td>
-                                                        <td><?= $value['serial_name'] ?></td>
-                                                        <td><?= $value['amount'] ?></td>
-                                                        <td><?= $value['expire_date'] ?></td>
-                                                        <td>
-                                                            <?php if ($value['expire_date'] > date('Y-m-d')) { ?>
-                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">Valid</a>
-                                                            <?php } elseif ($visit['status'] == 0) { ?>
-                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Expired</a>
-                                                            <?php } ?>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-info" data-toggle="modal">Update</a>
-                                                            <a href="info.php?id=9&generic_id=<?= $value['id'] ?>" role="button" class="btn btn-success">View</a>
-                                                        </td>
-
-                                                    </tr>
-
-                                                    <div class="modal fade" id="editVisit<?= $visit['id'] ?>">
-                                                        <div class="modal-dialog">
-                                                            <form method="post">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title">Default Modal</h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <?php $screening = $override->get('screening', 'patient_id', $client['id'])[0];
-                                                                    ?>
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-
-                                                                            <div class="row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row-form clearfix">
-                                                                                        <!-- select -->
-                                                                                        <div class="form-group">
-                                                                                            <label>Visit Date</label>
-                                                                                            <input value="<?php if ($visit['status'] != 0) {
-                                                                                                                echo $visit['visit_date'];
-                                                                                                            } ?>" class="validate[required,custom[date]]" type="text" name="visit_date" id="visit_date" />
-                                                                                            <span>Example: 2010-12-01</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <!-- <div class="col-sm-3">
-                                                                                    <div class="row-form clearfix"> -->
-                                                                                <!-- select -->
-                                                                                <!-- <div class="form-group">
-                                                                                            <label>Visit Name</label>
-                                                                                            <select name="visit_name" style="width: 100%;" required>
-                                                                                                <option value="">Select</option>
-                                                                                                <?php foreach ($override->getData('schedule') as $study) { ?>
-                                                                                                    <option value="<?= $study['name'] ?>"><?= $study['name'] ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div> -->
-
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row-form clearfix">
-                                                                                        <!-- select -->
-                                                                                        <div class="form-group">
-                                                                                            <label>Notes / Remarks /Comments</label>
-                                                                                            <textarea name="reasons" rows="4"><?php if ($visit['status'] != 0) {
-                                                                                                                                    echo $visit['reasons'];
-                                                                                                                                } ?></textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="dr"><span></span></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer justify-content-between">
-                                                                        <input type="hidden" name="id" value="<?= $visit['id'] ?>">
-                                                                        <input type="hidden" name="vc" value="<?= $visit['visit_code'] ?>">
-                                                                        <input type="hidden" name="visit_name" value="<?= $visit['visit_name'] ?>">
-                                                                        <input type="hidden" name="cid" value="<?= $visit['client_id'] ?>">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                        <input type="submit" name="edit_visit" class="btn btn-primary" value="Save changes">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- /.modal-content -->
-                                                            </form>
-                                                        </div>
-                                                        <!-- /.modal-dialog -->
-                                                    </div>
-                                                    <!-- /.modal -->
-                                                <?php $x++;
-                                                } ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Batch / Serial No.</th>
-                                                    <th>Amount</th>
-                                                    <th>Expire Date</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!--/.col (right) -->
-                        </div>
-                        <!-- /.row -->
-                    </div><!-- /.container-fluid -->
-                </section>
-                <!-- /.content -->
-            </div>
-            <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 10) { ?>
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1>Medications Batch</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Medications Batch</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div><!-- /.container-fluid -->
-                </section>
-
-                <!-- Main content -->
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <?php
-                                        $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $visits_status = $override->firstRow1('visit', 'status', 'id', 'client_id', $_GET['cid'], 'visit_code', 'EV')[0]['status'];
-
-                                        // $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $category = $override->get('main_diagnosis', 'patient_id', $_GET['cid'])[0];
-                                        $cat = '';
-
-                                        if ($category['cardiac'] == 1) {
-                                            $cat = 'Cardiac';
-                                        } elseif ($category['diabetes'] == 1) {
-                                            $cat = 'Diabetes';
-                                        } elseif ($category['sickle_cell'] == 1) {
-                                            $cat = 'Sickle cell';
-                                        } else {
-                                            $cat = 'Not Diagnosed';
-                                        }
-
-
-                                        if ($patient['gender'] == 1) {
-                                            $gender = 'Male';
-                                        } elseif ($patient['gender'] == 2) {
-                                            $gender = 'Female';
-                                        }
-
-                                        $name = 'Name: ' . $patient['firstname'] . ' ' . $patient['lastname'] . ' Age: ' . $patient['age'] . ' Gender: ' . $gender . ' Type: ' . $cat;
-
-                                        ?>
-
-                                        <div class="col-sm-6">
-                                            <ol class="breadcrumb float-sm-right">
-                                                <li class="breadcrumb-item"><a href="index1.php">
-                                                        <a href='info.php?id=8' class="btn btn-default">Back</a>
-                                                    </a>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                    </div>
-
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <table id="example1" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Batch / Serial No.</th>
-                                                    <th>Amount</th>
-                                                    <th>Forms</th>
-                                                    <th>Expire Date</th>
-                                                    <th>Status</th>
-                                                    <th>Remarks</th>
-                                                    <th>Price</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $x = 1;
-                                                foreach ($override->getAsc('batch', 'status', 1) as $value) {
-                                                    $medication = $override->getNews('medications', 'status', 1, 'id', $value['medication_id'])['0'];
-                                                    $batch_sum = $override->getSumD2('batch', 'amount', 'status', 1, 'medication_id', $value['id'])[0]['SUM(amount)'];
-                                                    $forms = $override->getNews('forms', 'status', 1, 'id', $medication['forms'])[0];
-                                                    if ($batch_sum) {
-                                                        $batch_sum = $batch_sum;
-                                                    } elseif ($visit['status'] == 1) {
-                                                        $batch_sum = 0;
-                                                    }
-
-                                                ?>
-                                                    <tr>
-                                                        <td><?= $medication['name'] ?></td>
-                                                        <td><?= $value['serial_name'] ?></td>
-                                                        <td><?= $value['amount'] ?></td>
-                                                        <td><?= $forms['name'] ?></td>
-                                                        <td><?= $value['expire_date'] ?></td>
-                                                        <td>
-                                                            <?php if ($value['expire_date'] > date('Y-m-d')) { ?>
-                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">Valid</a>
-                                                            <?php } elseif ($visit['status'] == 0) { ?>
-                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Expired</a>
-                                                            <?php } ?>
-                                                        </td>
-                                                        <td><?= $value['remarks'] ?></td>
-                                                        <td><?= $value['price'] ?></td>
-                                                        <td>
-                                                            <a href="add.php?id=6&batch_id=<?= $value['id'] ?>&medication_id=<?= $medication['id'] ?>&btn=Update" role="button" class="btn btn-info">Update</a>
-                                                            <a href="#delete_batch<?= $value['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                    <div class="modal fade" id="delete_batch<?= $value['id'] ?>">
-                                                        <div class="modal-dialog">
-                                                            <form method="post">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title">Delete Medication Batch</h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p class="text-muted text-center">Are you sure yoy want to delete this medication batch ?</p>
-                                                                    </div>
-                                                                    <div class="modal-footer justify-content-between">
-                                                                        <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                        <input type="hidden" name="name" value="<?= $value['serial_name'] ?>">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                                        <input type="submit" name="delete_batch" class="btn btn-danger" value="Yes, Delete">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- /.modal-content -->
-                                                            </form>
-                                                        </div>
-                                                        <!-- /.modal-dialog -->
-                                                    </div>
-                                                    <!-- /.modal -->
-                                                <?php $x++;
-                                                } ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Batch / Serial No.</th>
-                                                    <th>Amount</th>
-                                                    <th>Forms</th>
-                                                    <th>Expire Date</th>
-                                                    <th>Status</th>
-                                                    <th>Remarks</th>
-                                                    <th>Price</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!--/.col (right) -->
-                        </div>
-                        <!-- /.row -->
-                    </div><!-- /.container-fluid -->
-                </section>
-                <!-- /.content -->
-            </div>
-            <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 11) { ?>
         <?php } elseif ($_GET['id'] == 12) { ?>
         <?php } elseif ($_GET['id'] == 13) { ?>

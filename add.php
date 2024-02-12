@@ -94,7 +94,7 @@ if ($user->isLoggedIn()) {
                             'outcome' => 0,
                             'diagnosis' => '',
                             'category' => 0,
-                            'visit_status' => 1,
+                            'visit_status' => 0,
                             'sequence' => 0,
                             'status' => 1,
                             'patient_id' => $last_row['id'],
@@ -361,26 +361,6 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                     ), $history[0]['id']);
 
-                    if (Input::get('eligible') == 1) {
-
-                        $user->createRecord('visit', array(
-                            'visit_name' => 'Month 0',
-                            'expected_date' => Input::get('screening_date'),
-                            'visit_date' => '',
-                            'outcome' => 0,
-                            'diagnosis' => '',
-                            'category' => 0,
-                            'visit_status' => 0,
-                            'sequence' => 1,
-                            'status' => 1,
-                            'patient_id' => $_GET['cid'],
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                            'site_id' => $user->data()->site_id,
-                        ));
-                    }
                     $successMessage = 'History  Successful Updated';
                 }
 
@@ -608,6 +588,54 @@ if ($user->isLoggedIn()) {
                     ), Input::get('id'));
                     $successMessage = 'Economic  Successful Updated';
                 }
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_outcome')) {
+            $validate = $validate->check($_POST, array(
+                'outcome_date' => array(
+                    'required' => true,
+                ),
+                'diagnosis' => array(
+                    'required' => true,
+                ),
+                'outcome' => array(
+                    'required' => true,
+                ),
+            ));
+
+            if ($validate->passed()) {
+                $outcome = $override->get('outcome', 'patient_id', $_GET['cid']);
+
+                if (!$outcome) {
+                    $user->createRecord('outcome', array(
+                        'outcome_date' => Input::get('outcome_date'),
+                        'diagnosis' => Input::get('diagnosis'),
+                        'outcome' => Input::get('outcome'),
+                        'status' => 1,
+                        'patient_id' => $_GET['cid'],
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+                    $successMessage = 'Outcome  Successful Added';
+                } else {
+                    $user->updateRecord('outcome', array(
+                        'outcome_date' => Input::get('outcome_date'),
+                        'diagnosis' => Input::get('diagnosis'),
+                        'outcome' => Input::get('outcome'),
+                        'status' => 1,
+                        'patient_id' => Input::get('cid'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), $outcome[0]['id']);
+
+                    $successMessage = 'Outcome  Successful Updated';
+                }
+
+                $successMessage = 'Outcome Updated  Successful';
             } else {
                 $pageError = $validate->errors();
             }
@@ -3058,6 +3086,123 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 10) { ?>
+            <?php
+            $outcome = $override->getNews('outcome', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if ($outcome) { ?>
+                                    <h1>Add New outcome results</h1>
+                                <?php } else { ?>
+                                    <h1>Update outcome results</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&cid=<?= $_GET['cid']; ?>">
+                                            < Back</a>
+                                    </li>
+                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
+                                            Go to list > </a>
+                                    </li>
+
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <?php if ($results) { ?>
+                                        <li class="breadcrumb-item active">Add New outcome results</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update outcome results</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">CRF 3: FOLLOW UP ( PATIENT OUTCOME AFTER SCREENING )</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="outcome_date" class="form-label">Date</label>
+                                                        <input type="date" value="<?php if ($outcome) {
+                                                                                        print_r($outcome['outcome_date']);
+                                                                                    } ?>" id="outcome_date" name="outcome_date" class="form-control" placeholder="Enter outcome date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="diagnosis" class="form-label">Patient Diagnosis if was scored Lung- RAD 4B</label>
+                                                        <input type="text" value="<?php if ($outcome) {
+                                                                                        print_r($outcome['diagnosis']);
+                                                                                    } ?>" id="diagnosis" name="diagnosis" class="form-control" placeholder="Enter diagnosis results" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="outcome" class="form-label">Outcome</label>
+                                                        <select class="form-control" id="outcome" name="outcome" style="width: 100%;" required>
+                                                            <option value="<?= $outcome['outcome'] ?>"><?php if ($outcome) {
+                                                                                                            if ($outcome['outcome'] == 1) {
+                                                                                                                echo 'Await another screening';
+                                                                                                            } elseif ($outcome['outcome'] == 2) {
+                                                                                                                echo 'On treatment';
+                                                                                                            } elseif ($outcome['outcome'] == 3) {
+                                                                                                                echo 'Recovered';
+                                                                                                            } elseif ($outcome['outcome'] == 4) {
+                                                                                                                echo 'Died';
+                                                                                                            } elseif ($outcome['outcome'] == 5) {
+                                                                                                                echo 'Unknown/Loss to follow up1';
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            echo 'Select';
+                                                                                                        } ?>
+                                                            </option>
+                                                            <option value="1">Await another screening</option>
+                                                            <option value="2">On treatment</option>
+                                                            <option value="3">Recovered</option>
+                                                            <option value="4">Died</option>
+                                                            <option value="5">Unknown/Loss to follow up</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                            <input type="submit" name="add_outcome" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 11) { ?>
 
