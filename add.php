@@ -36,15 +36,31 @@ if ($user->isLoggedIn()) {
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
 
+                $client_study = $override->getNews('clients', 'id', Input::get('id'), 'status', 1)[0];
+                $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
+                // $screening_id = $override->getNews('screening', 'patient_id', Input::get('id'), 'status', 1)[0];
+                // $visit_id = $override->get('visit', 'client_id', Input::get('id'))[0];
+                // $last_visit = $override->getlastRow('visit', 'client_id', Input::get('id'), 'id')[0];
+                // $visit = $override->get3('visit', 'client_id', Input::get('id'), 'seq_no', 1, 'visit_name', Input::get('visit_name'));
+                // $visit_id = $override->get3('visit', 'client_id', Input::get('id'), 'seq_no', 1, 'visit_name', Input::get('visit_name'))[0];
+
+                if (!$client_study['study_id']) {
+                    $study_id = $std_id['study_id'];
+                } else {
+                    $study_id = $client_study['study_id'];
+                }
+
                 try {
                     $clients = $override->get('clients', 'id', $_GET['cid']);
-
 
                     if (!$clients) {
 
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
-                            'study_id' => '',
+                            'visit_code' => 'RS',
+                            'visit_name' => 'Registration & Screening',
+                            'study_id' => $study_id,
+                            'sequence' => 0,
                             'firstname' => Input::get('firstname'),
                             'middlename' => Input::get('middlename'),
                             'lastname' => Input::get('lastname'),
@@ -88,14 +104,16 @@ if ($user->isLoggedIn()) {
                         $last_row = $override->lastRow('clients', 'id')[0];
 
                         $user->createRecord('visit', array(
+                            'visit_code' => 'RS',
                             'visit_name' => 'Registration & Screening',
+                            'study_id' => $study_id,
+                            'sequence' => 0,
                             'expected_date' => Input::get('date_registered'),
-                            'visit_date' => Input::get('date_registered'),
+                            'visit_date' => '',
                             'outcome' => 0,
                             'diagnosis' => '',
                             'category' => 0,
                             'visit_status' => 0,
-                            'sequence' => 0,
                             'status' => 1,
                             'patient_id' => $last_row['id'],
                             'create_on' => date('Y-m-d H:i:s'),
@@ -109,6 +127,10 @@ if ($user->isLoggedIn()) {
                     } else {
                         $user->updateRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
+                            'visit_code' => 'RS',
+                            'visit_name' => 'Registration & Screening',
+                            'study_id' => $study_id,
+                            'sequence' => 0,
                             'firstname' => Input::get('firstname'),
                             'middlename' => Input::get('middlename'),
                             'lastname' => Input::get('lastname'),
@@ -162,13 +184,14 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                print_r($_POST);
-                $kap = $override->get('kap', 'id', $_GET['cid']);
-
+                $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 if (!$kap) {
                     $user->createRecord('kap', array(
-                        'sequence' => 1,
-                        'visit_name' => 1,
+                        'visit_code' => 'RS',
+                        'visit_name' => 'Registration & Screening',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 0,
                         'interview_date' => Input::get('interview_date'),
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
@@ -208,9 +231,10 @@ if ($user->isLoggedIn()) {
                         'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
                         'saratani_ushauri' => Input::get('saratani_ushauri'),
                         'saratani_ujumbe' => Input::get('saratani_ujumbe'),
+                        'comments' => Input::get('comments'),
                         'eligible' => 1,
                         'status' => 1,
-                        'patient_id' => Input::get('cid'),
+                        'patient_id' => $_GET['cid'],
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
@@ -218,28 +242,14 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    // $user->createRecord('visit', array(
-                    //     'visit_name' => 'Month 0',
-                    //     'classification_date' => '',
-                    //     'expected_date' => date('Y-m-d'),
-                    //     'visit_date' => '',
-                    //     'outcome' => 0,
-                    //     'visit_status' => 0,
-                    //     'diagnosis' => '',
-                    //     'category' => 0,
-                    //     'status' => 1,
-                    //     'patient_id' => Input::get('cid'),
-                    //     'create_on' => date('Y-m-d H:i:s'),
-                    //     'staff_id' => $user->data()->id,
-                    //     'update_on' => date('Y-m-d H:i:s'),
-                    //     'update_id' => $user->data()->id,
-                    //     'site_id' => $user->data()->site_id,
-                    // ));
-
                     $successMessage = 'Kap  Successful Added';
                 } else {
                     $user->updateRecord('kap', array(
                         'interview_date' => Input::get('interview_date'),
+                        'visit_code' => 'RS',
+                        'visit_name' => 'Registration & Screening',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 0,
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
                         'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
@@ -278,6 +288,7 @@ if ($user->isLoggedIn()) {
                         'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
                         'saratani_ushauri' => Input::get('saratani_ushauri'),
                         'saratani_ujumbe' => Input::get('saratani_ujumbe'),
+                        'comments' => Input::get('comments'),
                         'eligible' => 1,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
@@ -303,10 +314,15 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 $history = $override->get('history', 'patient_id', $_GET['cid']);
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (!$history) {
                     $user->createRecord('history', array(
                         'screening_date' => Input::get('screening_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'ever_smoked' => Input::get('ever_smoked'),
                         'start_smoking' => Input::get('start_smoking'),
                         'smoking_long' => Input::get('smoking_long'),
@@ -327,14 +343,16 @@ if ($user->isLoggedIn()) {
                     if (Input::get('eligible') == 1) {
 
                         $user->createRecord('visit', array(
-                            'visit_name' => 'Month 0',
                             'expected_date' => Input::get('screening_date'),
                             'visit_date' => '',
+                            'visit_code' => 'M0',
+                            'visit_name' => 'MONTH 0',
+                            'study_id' => $clients['study_id'],
+                            'sequence' => 1,
                             'outcome' => 0,
                             'diagnosis' => '',
                             'category' => 0,
                             'visit_status' => 0,
-                            'sequence' => 1,
                             'status' => 1,
                             'patient_id' => $_GET['cid'],
                             'create_on' => date('Y-m-d H:i:s'),
@@ -349,6 +367,10 @@ if ($user->isLoggedIn()) {
                 } else {
                     $user->updateRecord('history', array(
                         'screening_date' => Input::get('screening_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'ever_smoked' => Input::get('ever_smoked'),
                         'start_smoking' => Input::get('start_smoking'),
                         'smoking_long' => Input::get('smoking_long'),
@@ -385,10 +407,15 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 $results = $override->get('results', 'patient_id', $_GET['cid']);
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (!$results) {
                     $user->createRecord('results', array(
                         'results_date' => Input::get('results_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'ldct_results' => Input::get('ldct_results'),
                         'rad_score' => Input::get('rad_score'),
                         'findings' => Input::get('findings'),
@@ -405,6 +432,10 @@ if ($user->isLoggedIn()) {
                 } else {
                     $user->updateRecord('results', array(
                         'results_date' => Input::get('results_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'ldct_results' => Input::get('ldct_results'),
                         'rad_score' => Input::get('rad_score'),
                         'findings' => Input::get('findings'),
@@ -428,6 +459,7 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
 
                 $classification = $override->getNews('classification', 'status', 1, 'patient_id', $_GET['cid'])[0];
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (count(Input::get('category')) == 1) {
                     foreach (Input::get('category') as $value) {
@@ -444,46 +476,61 @@ if ($user->isLoggedIn()) {
                                 'site_id' => $user->data()->site_id,
                             ));
 
-                            if ($value == 1) {
-                                $visit = 'Month 12';
-                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 2) {
-                                $visit = 'Month 12';
-                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 3) {
-                                $visit = 'Month 6';
-                                $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 4) {
-                                $visit = 'Month 3';
-                                $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
-                            } elseif ($value == 5) {
-                                $visit = 'Referred';
-                                $expected_date = 'N / A';
+                            if ($_GET['sequence'] == 1) {
+
+                                if ($value == 1) {
+                                    $code = 'M12';
+                                    $visit = 'Month 12';
+                                    $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
+                                } elseif ($value == 2) {
+                                    $code = 'M12';
+                                    $visit = 'Month 12';
+                                    $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
+                                } elseif ($value == 3) {
+                                    $code = 'M06';
+                                    $visit = 'Month 6';
+                                    $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
+                                } elseif ($value == 4) {
+                                    $code = 'MO3';
+                                    $visit = 'Month 3';
+                                    $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
+                                } elseif ($value == 5) {
+                                    $code = 'RFT';
+                                    $visit = 'Referred';
+                                    $expected_date = 'N / A';
+                                }
+
+                                $user->createRecord('visit', array(
+                                    'classification_date' => Input::get('classification_date'),
+                                    'expected_date' => $expected_date,
+                                    'visit_date' => '',
+                                    'visit_code' => $code,
+                                    'visit_name' => $visit,
+                                    'study_id' => $clients['study_id'],
+                                    'sequence' => 2,
+                                    'outcome' => 0,
+                                    'visit_status' => 0,
+                                    'diagnosis' => Input::get('diagnosis'),
+                                    'category' => $value,
+                                    'status' => 1,
+                                    'patient_id' => Input::get('cid'),
+                                    'create_on' => date('Y-m-d H:i:s'),
+                                    'staff_id' => $user->data()->id,
+                                    'update_on' => date('Y-m-d H:i:s'),
+                                    'update_id' => $user->data()->id,
+                                    'site_id' => $user->data()->site_id,
+                                ));
                             }
 
-                            $user->createRecord('visit', array(
-                                'visit_name' => $visit,
-                                'classification_date' => Input::get('classification_date'),
-                                'expected_date' => $expected_date,
-                                'visit_date' => '',
-                                'outcome' => 0,
-                                'visit_status' => 0,
-                                'diagnosis' => Input::get('diagnosis'),
-                                'category' => $value,
-                                'status' => 1,
-                                'sequence' => 2,
-                                'patient_id' => Input::get('cid'),
-                                'create_on' => date('Y-m-d H:i:s'),
-                                'staff_id' => $user->data()->id,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                                'site_id' => $user->data()->site_id,
-                            ));
 
                             $successMessage = 'Classification  Successful Added';
                         } else {
                             $user->updateRecord('classification', array(
                                 'classification_date' => Input::get('classification_date'),
+                                'visit_code' => $code,
+                                'visit_name' => $visit,
+                                'study_id' => $clients['study_id'],
+                                'sequence' => 2,
                                 'category' => $value,
                                 'update_on' => date('Y-m-d H:i:s'),
                                 'update_id' => $user->data()->id,
@@ -502,9 +549,6 @@ if ($user->isLoggedIn()) {
                 'visit_date' => array(
                     'required' => true,
                 ),
-                // 'category' => array(
-                //     'required' => true,
-                // ),
             ));
 
             if ($validate->passed()) {
@@ -536,9 +580,16 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                if (Input::get('btn') == 'Add') {
+                $economic = $override->getNews('economic', 'status', 1, 'patient_id', $_GET['cid'])[0];
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+
+                if (!$economic) {
                     $user->createRecord('economic', array(
                         'economic_date' => Input::get('economic_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'income_household' => Input::get('income_household'),
                         'income_patient' => Input::get('income_patient'),
                         'smoking_long' => Input::get('smoking_long'),
@@ -564,9 +615,13 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
                     $successMessage = 'Economic  Successful Added';
-                } elseif (Input::get('btn') == 'Update') {
+                } else {
                     $user->updateRecord('economic', array(
                         'economic_date' => Input::get('economic_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'income_household' => Input::get('income_household'),
                         'income_patient' => Input::get('income_patient'),
                         'smoking_long' => Input::get('smoking_long'),
@@ -606,10 +661,15 @@ if ($user->isLoggedIn()) {
 
             if ($validate->passed()) {
                 $outcome = $override->get('outcome', 'patient_id', $_GET['cid']);
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (!$outcome) {
                     $user->createRecord('outcome', array(
                         'outcome_date' => Input::get('outcome_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'diagnosis' => Input::get('diagnosis'),
                         'outcome' => Input::get('outcome'),
                         'status' => 1,
@@ -624,6 +684,10 @@ if ($user->isLoggedIn()) {
                 } else {
                     $user->updateRecord('outcome', array(
                         'outcome_date' => Input::get('outcome_date'),
+                        'visit_code' => 'M0',
+                        'visit_name' => 'MONTH 0',
+                        'study_id' => $clients['study_id'],
+                        'sequence' => 1,
                         'diagnosis' => Input::get('diagnosis'),
                         'outcome' => Input::get('outcome'),
                         'status' => 1,
@@ -1299,6 +1363,9 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 5) { ?>
+            <?php
+            $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -1306,11 +1373,15 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Add New KAP</h1>
+                                <?php if (!$kap) { ?>
+                                    <h1>Add New KAP</h1>
+                                <?php } else { ?>
+                                    <h1>Update KAP</h1>
+                                <?php } ?>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&cid=<?= $_GET['cid']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>">
                                             < Back</a>
                                     </li>
                                     <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
@@ -1318,7 +1389,11 @@ if ($user->isLoggedIn()) {
                                     </li>
 
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Add New KAP</li>
+                                    <?php if (!$kap) { ?>
+                                        <li class="breadcrumb-item active">Add New KAP</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update KAP</li>
+                                    <?php } ?>
                                 </ol>
                             </div>
                         </div>
@@ -1338,9 +1413,7 @@ if ($user->isLoggedIn()) {
                             $yes_no = $override->get('yes_no', 'id', $clients['health_insurance'])[0];
                             $payments = $override->get('payments', 'id', $clients['pay_services'])[0];
                             $household = $override->get('household', 'id', $clients['head_household'])[0];
-                            // $kap = $override->get('household', 'id', $clients['kap'])[0];
-                            // $screening = $override->get('household', 'id', $clients['screening'])[0];
-                            // $health_care = $override->get('household', 'id', $clients['health_care'])[0];
+
 
                             ?>
                             <!-- right column -->
@@ -1357,7 +1430,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-2">
                                                         <label for="interview_date" class="form-label">Interview Date</label>
-                                                        <input type="date" value="<?php if ($kap) {
+                                                        <input type="date" value="<?php if ($kap['interview_date']) {
                                                                                         print_r($kap['interview_date']);
                                                                                     } ?>" id="interview_date" name="interview_date" class="form-control" placeholder="Enter interview date" required />
                                                     </div>
@@ -1367,7 +1440,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="mb-2">
                                                         <label for="saratani_mapafu" class="form-label">1. Je, unaweza kuniambia nini maana ya ugonjwa wa Saratani ya mapafu? </label>
                                                         <select name="saratani_mapafu" id="saratani_mapafu" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_mapafu'] ?>"><?php if ($kap) {
+                                                            <option value="<?= $kap['saratani_mapafu'] ?>"><?php if ($kap['saratani_mapafu']) {
                                                                                                                 if ($kap['saratani_mapafu'] == 1) {
                                                                                                                     echo 'Ugonjwa wa saratani ya mapafu ni ugonjwa ambao unatokea endapo seli za mapafu zinazaliana bila mpangilio maalum, na unaweza ukasambaa kwenye tezi za mwili na sehemu zinginezo.';
                                                                                                                 } elseif ($kap['saratani_mapafu'] == 2) {
@@ -2323,8 +2396,8 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Remarks / Comments:</label>
-                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($clients['comments']) {
-                                                                                                                                                            print_r($clients['comments']);
+                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($kap['comments']) {
+                                                                                                                                                            print_r($kap['comments']);
                                                                                                                                                         }  ?>
                                                                 </textarea>
                                                         </div>
@@ -2334,10 +2407,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='index1.php' class="btn btn-default">Back</a>
-                                            <input type="hidden" name="id" value="<?= $kap['id'] ?>">
-                                            <input type="hidden" name="cid" value="<?= $value['id'] ?>">
-                                            <input type="hidden" name="btn" value="<?= $btnKap ?>">
+                                            <a href='info.php?id=4&cid=<?= $_GET['cid']; ?>' class="btn btn-default">Back</a>
                                             <input type="submit" name="add_kap" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
@@ -2525,7 +2595,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <a href='info.php?id=4&cid=<?= $_GET['cid']; ?>' class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_history" value="Submit" class="btn btn-primary">
                                         </div>
