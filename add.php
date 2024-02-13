@@ -317,12 +317,16 @@ if ($user->isLoggedIn()) {
                 $years = '';
                 $packs = '';
                 $packs_year = '';
-                if (Input::get('currently_smoking') == 1) {
+
+
+                if (Input::get('ever_smoked') == 1) {
 
                     if (Input::get('currently_smoking') == 1) {
+                        $date1 = date('Y-m-d', strtotime(Input::get('start_smoking')));
+                        $date2 = date('Y-m-d', strtotime(Input::get('screening_date')));
                         if (Input::get('type_smoked') == 1) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
+                            $years = $user->dateDiffYears($date2, $date1);
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -331,7 +335,7 @@ if ($user->isLoggedIn()) {
                             }
                         } elseif (Input::get('type_smoked') == 2) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
+                            $years = $user->dateDiffYears($date2, $date1);
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -340,9 +344,11 @@ if ($user->isLoggedIn()) {
                             }
                         }
                     } elseif (Input::get('currently_smoking') == 2) {
+                        $date1 = date('Y-m-d', strtotime(Input::get('start_smoking')));
+                        $date2 = date('Y-m-d', strtotime(Input::get('quit_smoking')));
                         if (Input::get('type_smoked') == 1) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears(Input::get('quit_smoking'), Input::get('start_smoking'));
+                            $years = $user->dateDiffYears($date2, $date1);
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -351,7 +357,7 @@ if ($user->isLoggedIn()) {
                             }
                         } elseif (Input::get('type_smoked') == 2) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears(Input::get('quit_smoking'), Input::get('start_smoking'));
+                            $years = $user->dateDiffYears($date2, $date1);
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -363,7 +369,7 @@ if ($user->isLoggedIn()) {
                 }
 
 
-                print_r($eligible);
+                print_r($years);
 
 
                 if (!$history) {
@@ -2625,7 +2631,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="mb-2">
-                                                            <label for="type_smoked" class="form-label">Type smoked ?</label>
+                                                            <label for="type_smoked" class="form-label">Amount smoked per day in cigarette sticks/packs?</label>
                                                             <select name="type_smoked" id="type_smoked" class="form-control" required>
                                                                 <option value="<?= $history['type_smoked'] ?>"><?php if ($history) {
                                                                                                                     if ($history['type_smoked'] == 1) {
@@ -2677,7 +2683,7 @@ if ($user->isLoggedIn()) {
 
                                                     <div class="col-4" id="packs_per_day2">
                                                         <div class="mb-3">
-                                                            <label for="packs_per_year" class="form-label">Number of Packs per years</label>
+                                                            <label for="packs_per_year" class="form-label">Number of Pack year</label>
                                                             <input type="number" value="<?php if ($history) {
                                                                                             print_r($history['packs_per_year']);
                                                                                         } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
@@ -2688,7 +2694,7 @@ if ($user->isLoggedIn()) {
                                                             <label for="packs_per_year" class="form-label">PATIENT ELIGIBLE ?</label>
                                                             <input type="number" value="<?php if ($history) {
                                                                                             if ($history['eligible'] == 1) {
-                                                                                                print_r($history['eligible']);
+                                                                                                echo 'YES';
                                                                                             } elseif ($history['eligible'] == 2) {
                                                                                                 echo 'NO';
                                                                                             }

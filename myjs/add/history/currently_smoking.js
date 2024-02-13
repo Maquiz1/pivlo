@@ -5,9 +5,9 @@ const quit_smoking = document.getElementById("quit_smoking");
 
 function showElement() {
   if (currently_smoking.value === "1") {
-    quit_smoking.style.display = "block";
-  } else if (currently_smoking.value === "2") {
     quit_smoking.style.display = "none";
+  } else if (currently_smoking.value === "2") {
+    quit_smoking.style.display = "block";
   } else {
     quit_smoking.style.display = "none";
   }
