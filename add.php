@@ -52,9 +52,7 @@ if ($user->isLoggedIn()) {
 
                 try {
                     $clients = $override->get('clients', 'id', $_GET['cid']);
-
                     if (!$clients) {
-
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
                             'visit_code' => 'RS',
@@ -316,6 +314,11 @@ if ($user->isLoggedIn()) {
                 $history = $override->get('history', 'patient_id', $_GET['cid']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
+                $eligible = 0;
+                if (Input::get('packs_per_year') >= 20) {
+                        $eligible = 1;
+                }
+
                 if (!$history) {
                     $user->createRecord('history', array(
                         'screening_date' => Input::get('screening_date'),
@@ -330,7 +333,7 @@ if ($user->isLoggedIn()) {
                         'quit_smoking' => Input::get('quit_smoking'),
                         'packs_per_day' => Input::get('packs_per_day'),
                         'packs_per_year' => Input::get('packs_per_year'),
-                        'eligible' => Input::get('eligible'),
+                        'eligible' => $eligible,
                         'status' => 1,
                         'patient_id' => $_GET['cid'],
                         'create_on' => date('Y-m-d H:i:s'),
@@ -378,15 +381,38 @@ if ($user->isLoggedIn()) {
                         'quit_smoking' => Input::get('quit_smoking'),
                         'packs_per_day' => Input::get('packs_per_day'),
                         'packs_per_year' => Input::get('packs_per_year'),
-                        'eligible' => Input::get('eligible'),
+                        'eligible' => $eligible,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
                     ), $history[0]['id']);
+                    
+                    // if (Input::get('eligible') == 1) {
+                    //     $user->visit_delete('visit', 'patient_id', $_GET['cid']);
+                    //     $user->createRecord('visit', array(
+                    //         'expected_date' => Input::get('screening_date'),
+                    //         'visit_date' => '',
+                    //         'visit_code' => 'M0',
+                    //         'visit_name' => 'MONTH 0',
+                    //         'study_id' => $clients['study_id'],
+                    //         'sequence' => 1,
+                    //         'outcome' => 0,
+                    //         'diagnosis' => '',
+                    //         'category' => 0,
+                    //         'visit_status' => 0,
+                    //         'status' => 1,
+                    //         'patient_id' => $_GET['cid'],
+                    //         'create_on' => date('Y-m-d H:i:s'),
+                    //         'staff_id' => $user->data()->id,
+                    //         'update_on' => date('Y-m-d H:i:s'),
+                    //         'update_id' => $user->data()->id,
+                    //         'site_id' => $user->data()->site_id,
+                    //     ));
+                    // }
 
                     $successMessage = 'History  Successful Updated';
                 }
 
-                Redirect::to('add.php?id=' . $_GET['id'] . '&cid=' . $_GET['cid']);
+                // Redirect::to('add.php?id=' . $_GET['id'] . '&cid=' . $_GET['cid']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -464,19 +490,6 @@ if ($user->isLoggedIn()) {
                 if (count(Input::get('category')) == 1) {
                     foreach (Input::get('category') as $value) {
                         if (!$classification) {
-                            $user->createRecord('classification', array(
-                                'classification_date' => Input::get('classification_date'),
-                                'category' => $value,
-                                'status' => 1,
-                                'patient_id' => Input::get('cid'),
-                                'create_on' => date('Y-m-d H:i:s'),
-                                'staff_id' => $user->data()->id,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                                'site_id' => $user->data()->site_id,
-                            ));
-
-                            if ($_GET['sequence'] == 1) {
 
                                 if ($value == 1) {
                                     $code = 'M12';
@@ -500,6 +513,25 @@ if ($user->isLoggedIn()) {
                                     $expected_date = 'N / A';
                                 }
 
+
+                            if ($_GET['sequence'] == 1) {
+
+                                $user->createRecord('classification', array(
+                                    'classification_date' => Input::get('classification_date'),
+                                    'visit_code' => $code,
+                                    'visit_name' => $visit,
+                                    'study_id' => $clients['study_id'],
+                                    'sequence' => 2,
+                                    'category' => $value,
+                                    'status' => 1,
+                                    'patient_id' => Input::get('cid'),
+                                    'create_on' => date('Y-m-d H:i:s'),
+                                    'staff_id' => $user->data()->id,
+                                    'update_on' => date('Y-m-d H:i:s'),
+                                    'update_id' => $user->data()->id,
+                                    'site_id' => $user->data()->site_id,
+                                ));
+
                                 $user->createRecord('visit', array(
                                     'classification_date' => Input::get('classification_date'),
                                     'expected_date' => $expected_date,
@@ -521,8 +553,6 @@ if ($user->isLoggedIn()) {
                                     'site_id' => $user->data()->site_id,
                                 ));
                             }
-
-
                             $successMessage = 'Classification  Successful Added';
                         } else {
                             $user->updateRecord('classification', array(

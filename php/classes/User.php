@@ -222,6 +222,18 @@ class User {
         }return true;
     }
 
+
+    function visit_delete($client_id)
+    {
+        $this->deleteRecord('visit', 'client_id', $client_id);
+    }
+
+
+    function visit_delete2($client_id)
+    {
+        $this->deleteRecord('visit', 'client_id', $client_id);
+    }
+
     public function find($user = null){
         if($user){
             $field = (is_numeric($user)) ? 'id' : 'email';
