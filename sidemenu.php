@@ -94,7 +94,7 @@ if ($user->isLoggedIn()) {
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>List of Clients</p>
                             </a>
-                        </li>                        
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -107,13 +107,43 @@ if ($user->isLoggedIn()) {
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="info.php?id=3&status=1" class="nav-link">
+                            <a href="info.php?id=9&status=2" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>List of KAP</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="info.php?id=3&status=1" class="nav-link">
+                            <a href="info.php?id=9&status=2" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List of History</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="info.php?id=9&status=2" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List of Results</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="info.php?id=9&status=2" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List of Classification</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="info.php?id=9&status=2" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List of Outcome</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="info.php?id=9&status=2" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List of Economics</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="info.php?id=9&status=2" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>List of History</p>
                             </a>

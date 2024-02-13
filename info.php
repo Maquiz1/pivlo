@@ -120,18 +120,23 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     } elseif ($_GET['status'] == 2) {
                                         echo $title = 'Eligibility';
+                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 3) {
                                         echo  $title = 'Enrollment';
+                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 4) {
                                         echo $title = 'Termination';
+                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 5) {
-                                        echo  $title = 'Registration'; ?>
+                                        echo  $title = 'Registration';
+                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
+                                    ?>
                                     <?php
                                     } ?>
                                 </h1>
@@ -1092,6 +1097,222 @@ if ($user->isLoggedIn()) {
         <?php } elseif ($_GET['id'] == 8) { ?>
 
         <?php } elseif ($_GET['id'] == 9) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($_GET['status'] == 1) {
+                                        echo $title = 'Screening';
+                                        $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                                    ?>
+                                    <?php
+                                    } elseif ($_GET['status'] == 2) {
+                                        echo $title = 'Eligibility';
+                                        $data = $override->getNews('history', 'status', 1, 'site_id', $user->data()->site_id);
+                                    ?>
+                                    <?php
+                                    } elseif ($_GET['status'] == 3) {
+                                        echo  $title = 'Enrollment';
+                                        $data = $override->getNews('results', 'status', 1, 'site_id', $user->data()->site_id);
+                                    ?>
+                                    <?php
+                                    } elseif ($_GET['status'] == 4) {
+                                        echo $title = 'Termination';
+                                        $data = $override->getNews('classification', 'status', 1, 'site_id', $user->data()->site_id);
+                                    ?>
+                                    <?php
+                                    } elseif ($_GET['status'] == 5) {
+                                        echo  $title = 'Registration';
+                                        $data = $override->getNews('outcome', 'status', 1, 'site_id', $user->data()->site_id);
+                                    ?>
+                                    <?php
+                                    } elseif ($_GET['status'] == 5) {
+                                        echo  $title = 'Registration';
+                                        $data = $override->getNews('economic', 'status', 1, 'site_id', $user->data()->site_id);
+                                    ?>
+                                    <?php
+                                    } ?>
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active"><?= $title; ?></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6">
+                                                    <div class="card-header">
+                                                        <?php
+                                                        if ($_GET['status'] == 1) { ?>
+                                                            <h3 class="card-title">List of Screened Clients</h3>
+                                                        <?php
+                                                        } elseif ($_GET['status'] == 2) { ?>
+                                                            <h3 class="card-title">List of Eligible Clients</h3>
+                                                        <?php
+                                                        } elseif ($_GET['status'] == 3) { ?>
+                                                            <h3 class="card-title">List of Enrolled Clients</h3>
+                                                        <?php
+                                                        } elseif ($_GET['status'] == 4) { ?>
+                                                            <h3 class="card-title">List of Terminated Clients</h3>
+                                                        <?php
+                                                        } elseif ($_GET['status'] == 5) { ?>
+                                                            <h3 class="card-title">List of Registered Clients</h3>
+                                                        <?php
+                                                        } ?>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item"><a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item"><a href="add.php?id=4">
+                                                                Add new Client > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Study Id</th>
+                                                    <th>Age</th>
+                                                    <th>Sex</th>
+                                                    <th>Interview Type</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+
+                                                $kap = 0;
+                                                $screening = 0;
+                                                $health_care = 0;
+                                                if ($_GET['interview'] == 1) {
+                                                    $interview = 'kap';
+                                                } elseif ($_GET['interview'] == 2) {
+                                                    $interview = 'screening';
+                                                } elseif ($_GET['interview'] == 3) {
+                                                    $interview = 'health_care';
+                                                }
+                                                $x = 1;
+                                                foreach ($data as $value) {
+                                                    $yes_no = $override->get('yes_no', 'status', 1)[0];
+                                                    $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
+                                                    $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
+                                                    $results = $override->getNews('results', 'status', 1, 'patient_id', $value['id'])[0];
+                                                    $classification = $override->getNews('classification', 'status', 1, 'patient_id', $value['id'])[0];
+                                                    $economic = $override->getNews('economic', 'status', 1, 'patient_id', $value['id'])[0];
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['firstname'] . '  ' . $value['middlename'] . ' ' . $value['lastname']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <?php if ($value['age'] >= 18) { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-success"> <i class="ri-edit-box-line"></i>Eligible for KAP</a>
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-danger"> <i class="ri-edit-box-line"></i>Not Eligible for KAP</a>
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="text-center">
+                                                            <a href="add.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>
+                                                            <?php if ($value['age'] >= 18) { ?>
+                                                                <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>
+                                                            <?php   } ?>
+                                                        </td>
+                                                    </tr>
+
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Study Id</th>
+                                                    <th>Age</th>
+                                                    <th>Sex</th>
+                                                    <th>Interview Type</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 10) { ?>
         <?php } elseif ($_GET['id'] == 11) { ?>
