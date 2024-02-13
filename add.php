@@ -318,15 +318,18 @@ if ($user->isLoggedIn()) {
                 $packs = '';
                 $packs_year = '';
 
+                // $date1 = date('Y-m-d', strtotime(Input::get('start_smoking')));
+                // $years = $user->dateDiffYears($date2, $date1);
+
 
                 if (Input::get('ever_smoked') == 1) {
 
                     if (Input::get('currently_smoking') == 1) {
-                        $date1 = date('Y-m-d', strtotime(Input::get('start_smoking')));
-                        $date2 = date('Y-m-d', strtotime(Input::get('screening_date')));
+                        $date1 = Input::get('start_smoking');
+                        $date2 = date('Y', strtotime(Input::get('screening_date')));
                         if (Input::get('type_smoked') == 1) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears($date2, $date1);
+                            $years = $date2 - $date1;
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -335,7 +338,7 @@ if ($user->isLoggedIn()) {
                             }
                         } elseif (Input::get('type_smoked') == 2) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears($date2, $date1);
+                            $years = $date2 - $date1;
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -344,11 +347,11 @@ if ($user->isLoggedIn()) {
                             }
                         }
                     } elseif (Input::get('currently_smoking') == 2) {
-                        $date1 = date('Y-m-d', strtotime(Input::get('start_smoking')));
-                        $date2 = date('Y-m-d', strtotime(Input::get('quit_smoking')));
+                        $date1 = Input::get('start_smoking');
+                        $date2 = Input::get('quit_smoking');
                         if (Input::get('type_smoked') == 1) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears($date2, $date1);
+                            $years = $date2 - $date1;
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -357,7 +360,7 @@ if ($user->isLoggedIn()) {
                             }
                         } elseif (Input::get('type_smoked') == 2) {
                             $packs = Input::get('packs_per_day');
-                            $years = $user->dateDiffYears($date2, $date1);
+                            $years = $date2 - $date1;
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
@@ -366,10 +369,12 @@ if ($user->isLoggedIn()) {
                             }
                         }
                     }
+                } else {
+                    $eligible = 0;
                 }
 
 
-                print_r($years);
+                // print_r($eligible);
 
 
                 if (!$history) {
@@ -2694,9 +2699,9 @@ if ($user->isLoggedIn()) {
                                                             <label for="packs_per_year" class="form-label">PATIENT ELIGIBLE ?</label>
                                                             <input type="number" value="<?php if ($history) {
                                                                                             if ($history['eligible'] == 1) {
-                                                                                                echo 'YES';
+                                                                                                print('YES');
                                                                                             } elseif ($history['eligible'] == 2) {
-                                                                                                echo 'NO';
+                                                                                                echo $history['eligible'];
                                                                                             }
                                                                                         } ?>" min="0" id="eligible" name="eligible" class="form-control" readonly />
                                                         </div>

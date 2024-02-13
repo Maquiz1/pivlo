@@ -8,15 +8,15 @@ $random = new Random();
 $users = $override->getData('user');
 if ($user->isLoggedIn()) {
   if ($user->data()->power == 1) {
-    $screened = $override->getCount('clients', 'status', 1);
-    $eligible = $override->getCount('clients', 'status', 1);
-    $enrolled = $override->getCount('clients', 'status', 1);
-    $end = $override->getCount('clients', 'status', 1);
+    $screened = $override->getCount('history', 'status', 1);
+    $eligible = $override->getCount('history', 'eligible', 1);
+    $enrolled = $override->getCount('history', 'eligible', 1);
+    $end = $override->getCount('clients', 'status', 0);
   } else {
-    $screened = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
-    $eligible = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
-    $enrolled = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
-    $end = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
+    $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
+    $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
+    $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
+    $end = $override->getCount1('clients', 'status', 0, 'site_id', $user->data()->site_id);
   }
 } else {
   Redirect::to('index.php');

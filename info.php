@@ -115,6 +115,7 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($_GET['status'] == 1) {
                                         echo $title = 'Screening';
+                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 2) {
@@ -218,7 +219,7 @@ if ($user->isLoggedIn()) {
                                                     $interview = 'health_care';
                                                 }
                                                 $x = 1;
-                                                foreach ($override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id) as $value) {
+                                                foreach ($data as $value) {
                                                     $yes_no = $override->get('yes_no', 'status', 1)[0];
                                                     $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
                                                     $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
