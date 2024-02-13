@@ -313,11 +313,26 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 $history = $override->get('history', 'patient_id', $_GET['cid']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-
                 $eligible = 0;
-                if (Input::get('packs_per_year') >= 20) {
-                        $eligible = 1;
+                $years = '';
+
+                if (Input::get('currently_smoking') == 1) {
+                    if (Input::get('currently_smoking') == 1) {
+                        $packs = Input::get('packs_per_day');
+                        $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
+                        $packs_year = $packs * $years;
+                    } elseif (Input::get('currently_smoking') == 2) {
+                        $packs = Input::get('packs_per_day');
+                        $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
+                        $packs_year = $packs * $years;
+                    }
+                    $eligible = 1;
+                } elseif (Input::get('currently_smoking') == 2) {
+                    $packs = Input::get('packs_per_day');
+                    $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
+                    $packs_year = $packs * $years;
                 }
+
 
                 if (!$history) {
                     $user->createRecord('history', array(
@@ -385,7 +400,7 @@ if ($user->isLoggedIn()) {
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
                     ), $history[0]['id']);
-                    
+
                     // if (Input::get('eligible') == 1) {
                     //     $user->visit_delete('visit', 'patient_id', $_GET['cid']);
                     //     $user->createRecord('visit', array(
@@ -491,27 +506,27 @@ if ($user->isLoggedIn()) {
                     foreach (Input::get('category') as $value) {
                         if (!$classification) {
 
-                                if ($value == 1) {
-                                    $code = 'M12';
-                                    $visit = 'Month 12';
-                                    $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                                } elseif ($value == 2) {
-                                    $code = 'M12';
-                                    $visit = 'Month 12';
-                                    $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                                } elseif ($value == 3) {
-                                    $code = 'M06';
-                                    $visit = 'Month 6';
-                                    $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
-                                } elseif ($value == 4) {
-                                    $code = 'MO3';
-                                    $visit = 'Month 3';
-                                    $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
-                                } elseif ($value == 5) {
-                                    $code = 'RFT';
-                                    $visit = 'Referred';
-                                    $expected_date = 'N / A';
-                                }
+                            if ($value == 1) {
+                                $code = 'M12';
+                                $visit = 'Month 12';
+                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 2) {
+                                $code = 'M12';
+                                $visit = 'Month 12';
+                                $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 3) {
+                                $code = 'M06';
+                                $visit = 'Month 6';
+                                $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 4) {
+                                $code = 'MO3';
+                                $visit = 'Month 3';
+                                $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
+                            } elseif ($value == 5) {
+                                $code = 'RFT';
+                                $visit = 'Referred';
+                                $expected_date = 'N / A';
+                            }
 
 
                             if ($_GET['sequence'] == 1) {
