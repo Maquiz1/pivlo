@@ -306,7 +306,7 @@ if ($user->isLoggedIn()) {
                 'ever_smoked' => array(
                     'required' => true,
                 ),
-                'eligible' => array(
+                'type_smoked' => array(
                     'required' => true,
                 ),
             ));
@@ -315,48 +315,55 @@ if ($user->isLoggedIn()) {
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 $eligible = '';
                 $years = '';
-
+                $packs = '';
+                $packs_year = '';
                 if (Input::get('currently_smoking') == 1) {
+
                     if (Input::get('currently_smoking') == 1) {
-                        $packs = Input::get('packs_per_day');
-                        $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
-                        $packs_year = $packs * $years;
-                        if ($packs_year >= 20) {
-                            $eligible = 1;
-                        } else {
-                            $eligible = 0;
+                        if (Input::get('type_smoked') == 1) {
+                            $packs = Input::get('packs_per_day');
+                            $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
+                            $packs_year = $packs * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
+                            } else {
+                                $eligible = 0;
+                            }
+                        } elseif (Input::get('type_smoked') == 2) {
+                            $packs = Input::get('packs_per_day');
+                            $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
+                            $packs_year = ($packs / 20) * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
+                            } else {
+                                $eligible = 0;
+                            }
                         }
                     } elseif (Input::get('currently_smoking') == 2) {
-                        $packs = Input::get('packs_per_day');
-                        $years = $user->dateDiffYears(Input::get('quit_smoking'), Input::get('start_smoking'));
-                        $packs_year = $packs * $years;
-                        if ($packs_year >= 20) {
-                            $eligible = 1;
-                        } else {
-                            $eligible = 0;
-                        }
-                    }
-                } elseif (Input::get('currently_smoking') == 2) {
-                    if (Input::get('currently_smoking') == 1) {
-                        $packs = Input::get('packs_per_day');
-                        $years = $user->dateDiffYears(Input::get('screening_date'), Input::get('start_smoking'));
-                        $packs_year = $packs * $years;
-                        if ($packs_year >= 20) {
-                            $eligible = 1;
-                        } else {
-                            $eligible = 0;
-                        }
-                    } elseif (Input::get('currently_smoking') == 2) {
-                        $packs = Input::get('packs_per_day');
-                        $years = $user->dateDiffYears(Input::get('quit_smoking'), Input::get('start_smoking'));
-                        $packs_year = $packs * $years;
-                        if ($packs_year >= 20) {
-                            $eligible = 1;
-                        } else {
-                            $eligible = 0;
+                        if (Input::get('type_smoked') == 1) {
+                            $packs = Input::get('packs_per_day');
+                            $years = $user->dateDiffYears(Input::get('quit_smoking'), Input::get('start_smoking'));
+                            $packs_year = $packs * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
+                            } else {
+                                $eligible = 0;
+                            }
+                        } elseif (Input::get('type_smoked') == 2) {
+                            $packs = Input::get('packs_per_day');
+                            $years = $user->dateDiffYears(Input::get('quit_smoking'), Input::get('start_smoking'));
+                            $packs_year = ($packs / 20) * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
+                            } else {
+                                $eligible = 0;
+                            }
                         }
                     }
                 }
+
+
+                print_r($eligible);
 
 
                 if (!$history) {
@@ -369,10 +376,11 @@ if ($user->isLoggedIn()) {
                         'ever_smoked' => Input::get('ever_smoked'),
                         'start_smoking' => Input::get('start_smoking'),
                         'smoking_long' => Input::get('smoking_long'),
+                        'type_smoked' => Input::get('type_smoked'),
                         'currently_smoking' => Input::get('currently_smoking'),
                         'quit_smoking' => Input::get('quit_smoking'),
                         'packs_per_day' => Input::get('packs_per_day'),
-                        'packs_per_year' => Input::get('packs_per_year'),
+                        'packs_per_year' => $packs_year,
                         'eligible' => $eligible,
                         'status' => 1,
                         'patient_id' => $_GET['cid'],
@@ -384,7 +392,6 @@ if ($user->isLoggedIn()) {
                     ));
 
                     if (Input::get('eligible') == 1) {
-
                         $user->createRecord('visit', array(
                             'expected_date' => Input::get('screening_date'),
                             'visit_date' => '',
@@ -417,10 +424,11 @@ if ($user->isLoggedIn()) {
                         'ever_smoked' => Input::get('ever_smoked'),
                         'start_smoking' => Input::get('start_smoking'),
                         'smoking_long' => Input::get('smoking_long'),
+                        'type_smoked' => Input::get('type_smoked'),
                         'currently_smoking' => Input::get('currently_smoking'),
                         'quit_smoking' => Input::get('quit_smoking'),
                         'packs_per_day' => Input::get('packs_per_day'),
-                        'packs_per_year' => Input::get('packs_per_year'),
+                        'packs_per_year' => $packs_year,
                         'eligible' => $eligible,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
@@ -2557,7 +2565,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-2">
                                                         <label for="ever_smoked" class="form-label">Have you ever smoked cigarette ?</label>
-                                                        <select name="ever_smoked" id="ever_smoked_<?= $x; ?>" class="form-control" required>
+                                                        <select name="ever_smoked" id="ever_smoked" class="form-control" required>
                                                             <option value="<?= $history['ever_smoked'] ?>"><?php if ($history) {
                                                                                                                 if ($history['ever_smoked'] == 1) {
                                                                                                                     echo 'Yes';
@@ -2573,77 +2581,125 @@ if ($user->isLoggedIn()) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <hr>
-                                                <div class="col-6" id="start_smoking">
-                                                    <div class="mb-2">
-                                                        <label for="start_smoking" class="form-label">When did you start smoking?</label>
-                                                        <input type="number" value="<?php if ($history) {
-                                                                                        print_r($history['start_smoking']);
-                                                                                    } ?>" min="1970" min="2024" name="start_smoking" class="form-control" placeholder="Enter Year" />
+                                            </div>
+
+
+                                            <hr>
+                                            <div id="ever_smoked1">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="mb-2">
+                                                            <label for="start_smoking" class="form-label">When did you start smoking?</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            print_r($history['start_smoking']);
+                                                                                        } ?>" min="1970" min="2024" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" />
+                                                        </div>
+                                                    </div>
+
+                                                    <hr>
+                                                    <div class="col-6">
+                                                        <div class="mb-3">
+                                                            <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
+                                                            <select name="currently_smoking" id="currently_smoking" class="form-control" required>
+                                                                <option value="<?= $history['currently_smoking'] ?>"><?php if ($history) {
+                                                                                                                            if ($history['currently_smoking'] == 1) {
+                                                                                                                                echo 'Yes';
+                                                                                                                            } elseif ($history['currently_smoking'] == 2) {
+                                                                                                                                echo 'No';
+                                                                                                                            }
+                                                                                                                        } else {
+                                                                                                                            echo 'Select';
+                                                                                                                        } ?>
+                                                                </option>
+                                                                <option value="1">Yes</option>
+                                                                <option value="2">No</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <hr>
-                                                <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
-                                                        <select name="currently_smoking" id="currently_smoking" class="form-control" required>
-                                                            <option value="<?= $history['currently_smoking'] ?>"><?php if ($history) {
-                                                                                                                        if ($history['currently_smoking'] == 1) {
-                                                                                                                            echo 'Yes';
-                                                                                                                        } elseif ($history['currently_smoking'] == 2) {
-                                                                                                                            echo 'No';
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 'Select';
-                                                                                                                    } ?>
-                                                            </option>
-                                                            <option value="1">Yes</option>
-                                                            <option value="2">No</option>
-                                                        </select>
+                                            </div>
+
+
+                                            <div id="ever_smoked2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="mb-2">
+                                                            <label for="type_smoked" class="form-label">Type smoked ?</label>
+                                                            <select name="type_smoked" id="type_smoked" class="form-control" required>
+                                                                <option value="<?= $history['type_smoked'] ?>"><?php if ($history) {
+                                                                                                                    if ($history['type_smoked'] == 1) {
+                                                                                                                        echo 'Packs';
+                                                                                                                    } elseif ($history['type_smoked'] == 2) {
+                                                                                                                        echo 'Cigarette';
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    echo 'Select';
+                                                                                                                } ?>
+                                                                </option>
+                                                                <option value="1">Packs</option>
+                                                                <option value="2">Cigarette</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6" id="quit_smoking">
+                                                        <div class="mb-3">
+                                                            <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            print_r($history['quit_smoking']);
+                                                                                        } ?>" min="1970" min="2023" name="quit_smoking" class="form-control" placeholder="Enter Year" />
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div id="ever_smoked3">
+                                                <div class="row">
+                                                    <div class="col-4" id="packs_per_day3">
+                                                        <div class="mb-3">
+                                                            <label for="packs_per_day" class="form-label">
+                                                                <label for="packs_per_day2" id="cigarette_per_day" class="form-label">
+                                                                    Number of Cigarette per day
+                                                                </label>
+                                                                <label for="packs_per_day3" id="packs_per_day" class="form-label">
+                                                                    Number of packs per day
+                                                                </label>
+                                                                <input type="number" value="<?php if ($history) {
+                                                                                                print_r($history['packs_per_day']);
+                                                                                            } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-4" id="packs_per_day2">
+                                                        <div class="mb-3">
+                                                            <label for="packs_per_year" class="form-label">Number of Packs per years</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            print_r($history['packs_per_year']);
+                                                                                        } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4" id="packs_per_day3">
+                                                        <div class="mb-3">
+                                                            <label for="packs_per_year" class="form-label">PATIENT ELIGIBLE ?</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            if ($history['eligible'] == 1) {
+                                                                                                print_r($history['eligible']);
+                                                                                            } elseif ($history['eligible'] == 2) {
+                                                                                                echo 'NO';
+                                                                                            }
+                                                                                        } ?>" min="0" id="eligible" name="eligible" class="form-control" readonly />
+                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-6" id="quit_smoking">
-                                                    <div class="mb-3">
-                                                        <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
-                                                        <input type="number" value="<?php if ($history) {
-                                                                                        print_r($history['quit_smoking']);
-                                                                                    } ?>" min="1970" min="2023" name="quit_smoking" class="form-control" placeholder="Enter Year" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6" id="start_smoking2">
-                                                    <div class=" mb-3">
-                                                        <label for="smoking_long" class="form-label">How long have you been smoking?</label>
-                                                        <input type="number" value="<?php if ($history) {
-                                                                                        print_r($history['smoking_long']);
-                                                                                    } ?>" min="0" min="100" id="smoking_long" name="smoking_long" class="form-control" placeholder="Enter Years" />
-                                                    </div>
-                                                </div>
-
-                                                <hr>
-
-                                                <div class="col-6" id="packs_per_day1">
-                                                    <div class="mb-3">
-                                                        <label for="packs_per_day" class="form-label">Number of packs per day</label>
-                                                        <input type="number" value="<?php if ($history) {
-                                                                                        print_r($history['packs_per_day']);
-                                                                                    } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6" id="packs_per_day2">
-                                                    <div class="mb-3">
-                                                        <label for="packs_per_year" class="form-label">Number of Packs per years</label>
-                                                        <input type="number" value="<?php if ($history) {
-                                                                                        print_r($history['packs_per_year']);
-                                                                                    } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <hr>
                                             </div>
                                         </div>
+                                        <hr>
+
                                         <!-- /.card-body -->
                                         <div class="card-footer">
                                             <a href='info.php?id=4&cid=<?= $_GET['cid']; ?>' class="btn btn-default">Back</a>
@@ -3404,6 +3460,15 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/demographic.js"></script>
     <script src="myjs/add/insurance.js"></script>
 
+    <!-- HISTORY Js -->
+    <script src="myjs/add/history/currently_smoking.js"></script>
+    <script src="myjs/add/history/ever_smoked.js"></script>
+    <script src="myjs/add/history/type_smoked.js"></script>
+
+
+
+
+
 
     <script>
         $(function() {
@@ -3488,6 +3553,7 @@ if ($user->isLoggedIn()) {
             })
 
         })
+
         // BS-Stepper Init
         document.addEventListener('DOMContentLoaded', function() {
             window.stepper = new Stepper(document.querySelector('.bs-stepper'))
@@ -3547,6 +3613,16 @@ if ($user->isLoggedIn()) {
             myDropzone.removeAllFiles(true)
         }
         // DropzoneJS Demo Code End
+
+
+        // $("#packs_per_day, #packs_per_day").on("input", function() {
+        //     setTimeout(function() {
+        //         var weight = $("#packs_per_day").val();
+        //         var height = $("#packs_per_day").val() / 100; // Convert cm to m
+        //         var bmi = weight / (height * height);
+        //         $("#packs_per_year").text(bmi.toFixed(2));
+        //     }, 1);
+        // });
     </script>
 
 </body>
