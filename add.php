@@ -990,14 +990,13 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="index1.php">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=1">
-                                            Go to list > </a>
-                                    </li>
-
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item active">Add New Client</li>
                                 </ol>
                             </div>
@@ -1447,7 +1446,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="submit" name="add_client" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
@@ -1481,14 +1480,13 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
-                                            Go to list > </a>
-                                    </li>
-
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
                                     <?php if (!$kap) { ?>
                                         <li class="breadcrumb-item active">Add New KAP</li>
                                     <?php } else { ?>
@@ -2507,7 +2505,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='info.php?id=4&cid=<?= $_GET['cid']; ?>' class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="submit" name="add_kap" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
@@ -2541,14 +2539,13 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&cid=<?= $_GET['cid']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
-                                            Go to list > </a>
-                                    </li>
-
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
                                     <?php if (!$history) { ?>
                                         <li class="breadcrumb-item active">Add New HISTORY</li>
                                     <?php } else { ?>
@@ -2724,7 +2721,7 @@ if ($user->isLoggedIn()) {
 
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='info.php?id=4&cid=<?= $_GET['cid']; ?>' class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_history" value="Submit" class="btn btn-primary">
                                         </div>
@@ -2759,14 +2756,13 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&cid=<?= $_GET['cid']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
-                                            Go to list > </a>
-                                    </li>
-
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
                                     <?php if ($results) { ?>
                                         <li class="breadcrumb-item active">Add New test results</li>
                                     <?php } else { ?>
@@ -2831,7 +2827,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_results" value="Submit" class="btn btn-primary">
                                         </div>
@@ -2869,12 +2865,11 @@ if ($user->isLoggedIn()) {
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
-                                    </li>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
                                             Go to screening list > </a>
-                                    </li>
-
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    </li>&nbsp;&nbsp;
                                     <?php if ($classification) { ?>
                                         <li class="breadcrumb-item active">Add New LUNG- RADS CLASSIFICATION</li>
                                     <?php } else { ?>
@@ -3004,14 +2999,13 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&cid=<?= $_GET['cid']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
-                                            Go to list > </a>
-                                    </li>
-
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
                                     <?php if ($history) { ?>
                                         <li class="breadcrumb-item active">Add New CRF3</li>
                                     <?php } else { ?>
@@ -3268,7 +3262,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_economic" value="Submit" class="btn btn-primary">
                                         </div>
@@ -3303,14 +3297,13 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&cid=<?= $_GET['cid']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
-                                            Go to list > </a>
-                                    </li>
-
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
                                     <?php if ($results) { ?>
                                         <li class="breadcrumb-item active">Add New outcome results</li>
                                     <?php } else { ?>
@@ -3386,7 +3379,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_outcome" value="Submit" class="btn btn-primary">
                                         </div>
