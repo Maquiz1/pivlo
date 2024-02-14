@@ -313,12 +313,14 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <ol class="breadcrumb float-sm-right">
-                                                        <li class="breadcrumb-item"><a href="index1.php">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
                                                                 < Back</a>
                                                         </li>
                                                         &nbsp;
-                                                        <li class="breadcrumb-item"><a href="add.php?id=4">
-                                                                Add new Client > </a>
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
                                                         </li>
                                                     </ol>
                                                 </div>
@@ -512,7 +514,7 @@ if ($user->isLoggedIn()) {
                                                             < Back</a>
                                                     </li>
                                                     <li class="breadcrumb-item">
-                                                            <a href="index1.php">Go Home</a>
+                                                        <a href="index1.php">Go Home</a>
                                                         </a>
                                                     </li>
                                                 </ol>
