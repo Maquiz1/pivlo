@@ -43,7 +43,7 @@ if ($user->isLoggedIn()) {
                             'date_registered' => Input::get('date_registered'),
                             'visit_code' => 'RS',
                             'visit_name' => 'Registration & Screening',
-                            'study_id' => $study_id['study_id'],
+                            'study_id' => '',
                             'sequence' => 0,
                             'firstname' => Input::get('firstname'),
                             'middlename' => Input::get('middlename'),
@@ -128,10 +128,6 @@ if ($user->isLoggedIn()) {
                     } else {
                         $user->updateRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
-                            'visit_code' => 'RS',
-                            'visit_name' => 'Registration & Screening',
-                            'study_id' => $study_id,
-                            'sequence' => 0,
                             'firstname' => Input::get('firstname'),
                             'middlename' => Input::get('middlename'),
                             'lastname' => Input::get('lastname'),
@@ -153,13 +149,7 @@ if ($user->isLoggedIn()) {
                             'insurance_name' => Input::get('insurance_name'),
                             'pay_services' => Input::get('pay_services'),
                             'interview_type' => Input::get('interview_type'),
-                            'kap' => 0,
-                            'screening' => 0,
-                            'health_care' => 0,
                             'comments' => Input::get('comments'),
-                            'complete_status' => 0,
-                            'complete_on' => date('Y-m-d H:i:s'),
-                            'complete_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
                         ), $_GET['cid']);
