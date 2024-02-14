@@ -615,7 +615,7 @@ if ($user->isLoggedIn()) {
                                         'update_on' => date('Y-m-d H:i:s'),
                                         'update_id' => $user->data()->id,
                                     ), $visit_id[0]['id']);
-                                }else{
+                                } else {
                                     $user->createRecord('visit', array(
                                         'classification_date' => Input::get('classification_date'),
                                         'expected_date' => $expected_date,
@@ -2867,7 +2867,7 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&cid=<?= $_GET['cid']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=8&cid=1&sequence=1&visit_code=M0&study_id=1-001&status=1">
                                             < Back</a>
                                     </li>
                                     <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
@@ -2968,7 +2968,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <a href='info.php?id=8&cid=1&sequence=1&visit_code=M0&study_id=1-001&status=1' class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_classification" value="Submit" class="btn btn-primary">
                                         </div>
