@@ -2867,11 +2867,11 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=8&cid=1&sequence=1&visit_code=M0&study_id=1-001&status=1">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="info.php?id=<?= $_GET['id']; ?>&status=<?= $_GET['status']; ?>">
-                                            Go to list > </a>
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
                                     </li>
 
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
@@ -2968,7 +2968,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href='info.php?id=8&cid=1&sequence=1&visit_code=M0&study_id=1-001&status=1' class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_classification" value="Submit" class="btn btn-primary">
                                         </div>
