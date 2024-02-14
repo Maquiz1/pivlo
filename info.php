@@ -113,29 +113,159 @@ if ($user->isLoggedIn()) {
                             <div class="col-sm-6">
                                 <h1>
                                     <?php
+                                    if ($user->data()->power == 1) {
+                                        if ($_GET['sid'] != null) {
+                                            // $pagNum = 0;
+                                            // if ($_GET['status'] == 1) {
+                                            //     $pagNum = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['sid']);
+                                            // } elseif ($_GET['status'] == 2) {
+                                            //     $pagNum = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $_GET['sid']);
+                                            // } elseif ($_GET['status'] == 3) {
+                                            //     $pagNum = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $_GET['sid']);
+                                            // } elseif ($_GET['status'] == 4) {
+                                            //     $pagNum = $override->countData2('clients', 'status', 1, 'end_study', 1, 'site_id', $_GET['sid']);
+                                            // } elseif ($_GET['status'] == 5) {
+                                            //     $pagNum = $override->countData('clients', 'status', 1, 'site_id', $_GET['site_id']);
+                                            // } elseif ($_GET['status'] == 6) {
+                                            //     $pagNum = $override->countData2('clients', 'status', 1, 'screened', 0, 'site_id', $_GET['sid']);
+                                            // } elseif ($_GET['status'] == 7) {
+                                            //     $pagNum = $override->getCount('clients', 'site_id', $_GET['sid']);
+                                            // } elseif ($_GET['status'] == 8) {
+                                            //     $pagNum = $override->countData('clients', 'status', 0, 'site_id', $_GET['sid']);
+                                            // }
+                                            // $pages = ceil($pagNum / $numRec);
+                                            // if (!$_GET['page'] || $_GET['page'] == 1) {
+                                            //     $page = 0;
+                                            // } else {
+                                            //     $page = ($_GET['page'] * $numRec) - $numRec;
+                                            // }
+
+                                            // if ($_GET['status'] == 1) {
+                                            //     $clients = $override->getWithLimit4('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['sid'], $page, $numRec);
+                                            // } elseif ($_GET['status'] == 2) {
+                                            //     $clients = $override->getWithLimit4('clients', 'status', 1, 'eligible', 1, 'site_id', $_GET['sid'], $page, $numRec);
+                                            // } elseif ($_GET['status'] == 3) {
+                                            //     $clients = $override->getWithLimit4('clients', 'status', 1, 'enrolled', 1, 'site_id', $_GET['sid'], $page, $numRec);
+                                            // } elseif ($_GET['status'] == 4) {
+                                            //     $clients = $override->getWithLimit4('clients', 'status', 1, 'end_study', 1, 'site_id', $_GET['sid'], $page, $numRec);
+                                            // } elseif ($_GET['status'] == 5) {
+                                            //     $clients = $override->getWithLimit1('clients', 'status', 1, 'site_id', $_GET['site_id'], $page, $numRec);
+                                            // } elseif ($_GET['status'] == 6) {
+                                            //     $clients = $override->getWithLimit4('clients', 'status', 1, 'screened', 0, 'site_id', $_GET['sid'], $page, $numRec);
+                                            // } elseif ($_GET['status'] == 7) {
+                                            //     $clients = $override->getWithLimit('clients', 'site_id', $_GET['sid'], $page, $numRec);
+                                            // } elseif ($_GET['status'] == 8) {
+                                            //     $clients = $override->getWithLimit1('clients', 'status', 0, 'site_id', $_GET['sid'], $page, $numRec);
+                                            // }
+                                        } else {
+                                            $pagNum = 0;
+                                            if ($_GET['status'] == 1) {
+                                                $pagNum = $override->getCount1('clients', 'status', 1, 'screened', 1);
+                                            } elseif ($_GET['status'] == 2) {
+                                                $pagNum = $override->getCount1('clients', 'status', 1, 'eligible', 1);
+                                            } elseif ($_GET['status'] == 3) {
+                                                $pagNum = $override->getCount1('clients', 'status', 1, 'enrolled', 1);
+                                            } elseif ($_GET['status'] == 4) {
+                                                $pagNum = $override->getCount1('clients', 'status', 1, 'end_study', 1);
+                                            } elseif ($_GET['status'] == 5) {
+                                                $pagNum = $override->getCount('clients', 'status', 1);
+                                            } elseif ($_GET['status'] == 6) {
+                                                $pagNum = $override->getCount1('clients', 'status', 1, 'screened', 0);
+                                            } elseif ($_GET['status'] == 7) {
+                                                $clients = $override->getNo('clients');
+                                            } elseif ($_GET['status'] == 8) {
+                                                $pagNum = $override->getCount('clients', 'status', 0);
+                                            }
+                                            $pages = ceil($pagNum / $numRec);
+                                            if (!$_GET['page'] || $_GET['page'] == 1) {
+                                                $page = 0;
+                                            } else {
+                                                $page = ($_GET['page'] * $numRec) - $numRec;
+                                            }
+
+                                            if ($_GET['status'] == 1) {
+                                                $clients = $override->getDataDesc2('clients', 'status', 1, 'screened', 1, 'id');
+                                            } elseif ($_GET['status'] == 2) {
+                                                $clients = $override->getDataDesc2('clients', 'status', 1, 'eligible', 1, 'id');
+                                            } elseif ($_GET['status'] == 3) {
+                                                $clients = $override->getDataDesc2('clients', 'status', 1, 'enrolled', 1, 'id');
+                                            } elseif ($_GET['status'] == 4) {
+                                                $clients = $override->getDataDesc2('clients', 'status', 1, 'end_study', 1, 'id');
+                                            } elseif ($_GET['status'] == 5) {
+                                                $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            } elseif ($_GET['status'] == 6) {
+                                                $clients = $override->getDataDesc2('clients', 'status', 1, 'screened', 0, 'id');
+                                            } elseif ($_GET['status'] == 7) {
+                                                $clients = $override->getDataDesc('clients', 'id');
+                                            } elseif ($_GET['status'] == 8) {
+                                                $clients = $override->getDataDesc1('clients', 'status', 0, 'id');
+                                            }
+                                        }
+                                    } else {
+
+                                        $pagNum = 0;
+                                        if ($_GET['status'] == 1) {
+                                            $pagNum = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $user->data()->site_id);
+                                        } elseif ($_GET['status'] == 2) {
+                                            $pagNum = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $user->data()->site_id);
+                                        } elseif ($_GET['status'] == 3) {
+                                            $pagNum = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $user->data()->site_id);
+                                        } elseif ($_GET['status'] == 4) {
+                                            $pagNum = $override->countData2('clients', 'status', 1, 'end_study', 1, 'site_id', $user->data()->site_id);
+                                        } elseif ($_GET['status'] == 5) {
+                                            $pagNum = $override->countData('clients', 'status', 1, 'site_id', $_GET['site_id']);
+                                        } elseif ($_GET['status'] == 6) {
+                                            $pagNum = $override->countData2('clients', 'status', 1, 'screened', 0, 'site_id', $user->data()->site_id);
+                                        } elseif ($_GET['status'] == 7) {
+                                            $pagNum = $override->getCount('clients', 'site_id', $user->data()->site_id);
+                                        } elseif ($_GET['status'] == 8) {
+                                            $pagNum = $override->countData('clients', 'status', 0, 'site_id', $user->data()->site_id);
+                                        }
+
+                                        $pages = ceil($pagNum / $numRec);
+                                        if (!$_GET['page'] || $_GET['page'] == 1) {
+                                            $page = 0;
+                                        } else {
+                                            $page = ($_GET['page'] * $numRec) - $numRec;
+                                        }
+
+                                        if ($_GET['status'] == 1) {
+                                            $clients = $override->getWithLimit4('clients', 'status', 1, 'screened', 1, 'site_id', $user->data()->site_id, $page, $numRec);
+                                        } elseif ($_GET['status'] == 2) {
+                                            $clients = $override->getWithLimit4('clients', 'status', 1, 'eligible', 1, 'site_id', $user->data()->site_id, $page, $numRec);
+                                        } elseif ($_GET['status'] == 3) {
+                                            $clients = $override->getWithLimit4('clients', 'status', 1, 'enrolled', 1, 'site_id', $user->data()->site_id, $page, $numRec);
+                                        } elseif ($_GET['status'] == 4) {
+                                            $clients = $override->getWithLimit4('clients', 'status', 1, 'end_study', 1, 'site_id', $user->data()->site_id, $page, $numRec);
+                                        } elseif ($_GET['status'] == 5) {
+                                            $clients = $override->getWithLimit1('clients', 'status', 1, 'site_id', $_GET['site_id'], $page, $numRec);
+                                        } elseif ($_GET['status'] == 6) {
+                                            $clients = $override->getWithLimit4('clients', 'status', 1, 'screened', 0, 'site_id', $user->data()->site_id, $page, $numRec);
+                                        } elseif ($_GET['status'] == 7) {
+                                            $clients = $override->getWithLimit('clients', 'site_id', $user->data()->site_id, $page, $numRec);
+                                        } elseif ($_GET['status'] == 8) {
+                                            $clients = $override->getWithLimit1('clients', 'status', 0, 'site_id', $user->data()->site_id, $page, $numRec);
+                                        }
+                                    } ?>
+                                    <?php
                                     if ($_GET['status'] == 1) {
                                         echo $title = 'Screening';
-                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 2) {
                                         echo $title = 'Eligibility';
-                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 3) {
                                         echo  $title = 'Enrollment';
-                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 4) {
                                         echo $title = 'Termination';
-                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } elseif ($_GET['status'] == 5) {
                                         echo  $title = 'Registration';
-                                        $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                                     ?>
                                     <?php
                                     } ?>
@@ -224,7 +354,7 @@ if ($user->isLoggedIn()) {
                                                     $interview = 'health_care';
                                                 }
                                                 $x = 1;
-                                                foreach ($data as $value) {
+                                                foreach ($clients as $value) {
                                                     $yes_no = $override->get('yes_no', 'status', 1)[0];
                                                     $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
                                                     $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
@@ -271,11 +401,14 @@ if ($user->isLoggedIn()) {
                                                         </td>
                                                         <?php if ($value['age'] >= 18) { ?>
                                                             <td class="text-center">
-                                                                <a href="#" class="btn btn-success"> <i class="ri-edit-box-line"></i>Eligible for KAP</a>
+                                                                <a href="#" class="btn btn-success">
+                                                                    <i class="ri-edit-box-line">
+                                                                    </i>Eligible for KAP <?php if ($value['age'] >= 45 & $value['age'] <= 80) {  ?> & History Screening <?php } ?>
+                                                                </a>
                                                             </td>
-                                                        <?php } else { ?>
+                                                        <?php  } else { ?>
                                                             <td class="text-center">
-                                                                <a href="#" class="btn btn-danger"> <i class="ri-edit-box-line"></i>Not Eligible for KAP</a>
+                                                                <a href="#" class="btn btn-danger"> <i class="ri-edit-box-line"></i>Not Eligible</a>
                                                             </td>
                                                         <?php } ?>
                                                         <td class="text-center">
@@ -428,16 +561,20 @@ if ($user->isLoggedIn()) {
                                                     // $vital = $override->get3('vital', 'patient_id', $_GET['cid'], 'seq_no', $visit['seq_no'], 'visit_code', $visit['visit_code']);                                                   
                                                 ?>
                                                     <tr>
-                                                        <td><?= $patient['study_id'] ?></td>
+                                                        <td><?= $clients['study_id'] ?></td>
                                                         <td> <?= $visit['visit_name'] ?></td>
                                                         <td> <?= $visit['expected_date'] ?></td>
                                                         <td> <?= $visit['visit_date'] ?> </td>
                                                         <td> <?= $site['name'] ?> </td>
                                                         <td>
                                                             <?php if ($visit['visit_status'] == 1) { ?>
-                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">Done</a>
+                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">
+                                                                    Done <?php if ($clients['eligible'] == 1) {  ?> & ELigible for Tests <?php } else { ?>& <p style="color:#FF0000" ;>Not ELigible for Tests</p> <?php } ?>
+                                                                </a>
                                                             <?php } elseif ($visit['visit_status'] == 0) { ?>
-                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Pending</a>
+                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
+                                                                    Pending <?php if ($clients['eligible'] == 1) {  ?> & ELigible for Tests <?php } else { ?>& <p style="color:#FF0000" ;>> Not ELigible for Tests </p><?php } ?>
+                                                                </a>
                                                             <?php } ?>
                                                         </td>
 
@@ -445,14 +582,14 @@ if ($user->isLoggedIn()) {
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($visit['sequence'] == 0) { ?>
                                                                     <?php if ($kap) { ?>
-                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update KAP </a>
+                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update KAP </a>&nbsp;&nbsp;
                                                                     <?php } else { ?>
                                                                         <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add KAP </a>
                                                                     <?php } ?>
 
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history) { ?>
-                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update History </a>
+                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update History </a>&nbsp;&nbsp;
                                                                         <?php } else { ?>
                                                                             <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add History </a>
                                                                         <?php } ?>
@@ -467,25 +604,25 @@ if ($user->isLoggedIn()) {
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history[0]['eligible'] == 1) { ?>
                                                                             <?php if ($results) { ?>
-                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>
+                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>&nbsp;&nbsp;
                                                                             <?php } else { ?>
                                                                                 <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Results </a>
                                                                             <?php } ?>
 
                                                                             <?php if ($classification) { ?>
-                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>
+                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>&nbsp;&nbsp;
                                                                             <?php } else { ?>
                                                                                 <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Classification </a>
                                                                             <?php } ?>
 
                                                                             <?php if ($outcome) { ?>
-                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>
+                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>&nbsp;&nbsp;
                                                                             <?php } else { ?>
                                                                                 <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Outcome </a>
                                                                             <?php } ?>
 
                                                                             <?php if ($economic) { ?>
-                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>
+                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>&nbsp;&nbsp;
                                                                             <?php } else { ?>
                                                                                 <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Economic </a>
                                                                             <?php } ?>

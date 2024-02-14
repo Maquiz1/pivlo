@@ -323,7 +323,6 @@ if ($user->isLoggedIn()) {
 
 
                 if (Input::get('ever_smoked') == 1) {
-
                     if (Input::get('currently_smoking') == 1) {
                         $date1 = Input::get('start_smoking');
                         $date2 = date('Y', strtotime(Input::get('screening_date')));
@@ -374,9 +373,6 @@ if ($user->isLoggedIn()) {
                 }
 
 
-                // print_r($eligible);
-
-
                 if (!$history) {
                     $user->createRecord('history', array(
                         'screening_date' => Input::get('screening_date'),
@@ -402,27 +398,36 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    if (Input::get('eligible') == 1) {
-                        $user->createRecord('visit', array(
-                            'expected_date' => Input::get('screening_date'),
-                            'visit_date' => '',
-                            'visit_code' => 'M0',
-                            'visit_name' => 'MONTH 0',
-                            'study_id' => $clients['study_id'],
-                            'sequence' => 1,
-                            'outcome' => 0,
-                            'diagnosis' => '',
-                            'category' => 0,
-                            'visit_status' => 0,
-                            'status' => 1,
-                            'patient_id' => $_GET['cid'],
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                            'site_id' => $user->data()->site_id,
-                        ));
+                    if ($eligible == 1) {
+                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 1);
+
+                        // $user->createRecord('visit', array(
+                        //     'expected_date' => Input::get('screening_date'),
+                        //     'visit_date' => '',
+                        //     'visit_code' => 'M0',
+                        //     'visit_name' => 'MONTH 0',
+                        //     'study_id' => $clients['study_id'],
+                        //     'sequence' => 1,
+                        //     'outcome' => 0,
+                        //     'diagnosis' => '',
+                        //     'category' => 0,
+                        //     'visit_status' => 0,
+                        //     'status' => 1,
+                        //     'patient_id' => $_GET['cid'],
+                        //     'create_on' => date('Y-m-d H:i:s'),
+                        //     'staff_id' => $user->data()->id,
+                        //     'update_on' => date('Y-m-d H:i:s'),
+                        //     'update_id' => $user->data()->id,
+                        //     'site_id' => $user->data()->site_id,
+                        // ));
+                    } else {
+                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 0);
                     }
+
+                    $user->updateRecord('clients', array(
+                        'screened' => 1,
+                        'eligible' => $eligible,
+                    ), $_GET['cid']);
 
                     $successMessage = 'History  Successful Added';
                 } else {
@@ -445,31 +450,21 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                     ), $history[0]['id']);
 
-                    // if (Input::get('eligible') == 1) {
-                    //     $user->visit_delete('visit', 'patient_id', $_GET['cid']);
-                    //     $user->createRecord('visit', array(
-                    //         'expected_date' => Input::get('screening_date'),
-                    //         'visit_date' => '',
-                    //         'visit_code' => 'M0',
-                    //         'visit_name' => 'MONTH 0',
-                    //         'study_id' => $clients['study_id'],
-                    //         'sequence' => 1,
-                    //         'outcome' => 0,
-                    //         'diagnosis' => '',
-                    //         'category' => 0,
-                    //         'visit_status' => 0,
-                    //         'status' => 1,
-                    //         'patient_id' => $_GET['cid'],
-                    //         'create_on' => date('Y-m-d H:i:s'),
-                    //         'staff_id' => $user->data()->id,
-                    //         'update_on' => date('Y-m-d H:i:s'),
-                    //         'update_id' => $user->data()->id,
-                    //         'site_id' => $user->data()->site_id,
-                    //     ));
-                    // }
-
-                    $successMessage = 'History  Successful Updated';
+                    if ($eligible == 1) {
+                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 1);
+                    } else {
+                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 0);
+                    }
                 }
+
+
+
+                $user->updateRecord('clients', array(
+                    'screened' => 1,
+                    'eligible' => $eligible,
+                ), $_GET['cid']);
+
+                $successMessage = 'History  Successful Updated';
 
                 // Redirect::to('add.php?id=' . $_GET['id'] . '&cid=' . $_GET['cid']);
             } else {
