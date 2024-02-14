@@ -36,23 +36,16 @@ if ($user->isLoggedIn()) {
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
 
-                $client_study = $override->getNews('clients', 'id', Input::get('id'), 'status', 1)[0];
-                $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
-
-                if (!$client_study['study_id']) {
-                    $study_id = $std_id['study_id'];
-                } else {
-                    $study_id = $client_study['study_id'];
-                }
-
                 try {
                     $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
                     if (!$clients) {
+                        $study_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
+
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
                             'visit_code' => 'RS',
                             'visit_name' => 'Registration & Screening',
-                            'study_id' => $study_id,
+                            'study_id' => $study_id['study_id'],
                             'sequence' => 0,
                             'firstname' => Input::get('firstname'),
                             'middlename' => Input::get('middlename'),
@@ -94,8 +87,6 @@ if ($user->isLoggedIn()) {
                             'site_id' => $user->data()->site_id,
                         ));
 
-                        $last_row = $override->lastRow('clients', 'id')[0];
-
                         $user->createRecord('visit', array(
                             'visit_code' => 'RS',
                             'visit_name' => 'Registration & Screening',
@@ -105,7 +96,7 @@ if ($user->isLoggedIn()) {
                             'visit_date' => '',
                             'visit_status' => 0,
                             'status' => 1,
-                            'patient_id' => $last_row['id'],
+                            'patient_id' => $_GET['cid'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
@@ -155,8 +146,7 @@ if ($user->isLoggedIn()) {
 
                         $successMessage = 'Client Updated Successful';
                     }
-                    // $interview = $_GET['interview'];
-                    // Redirect::to('info.php?id=2&site_id=' . $user->data()->site_id . '&interview=' . $interview);
+                    Redirect::to('info.php?id=3&status=7');
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
