@@ -469,15 +469,15 @@ if ($user->isLoggedIn()) {
                 if (!$results) {
                     $user->createRecord('results', array(
                         'results_date' => Input::get('results_date'),
-                        'visit_code' => 'M0',
+                        'visit_code' => $_GET['visit_code'],
                         'visit_name' => 'MONTH 0',
                         'study_id' => $clients['study_id'],
-                        'sequence' => 1,
+                        'sequence' => $_GET['sequence'],
                         'ldct_results' => Input::get('ldct_results'),
                         'rad_score' => Input::get('rad_score'),
                         'findings' => Input::get('findings'),
                         'status' => 1,
-                        'patient_id' => Input::get('cid'),
+                        'patient_id' => $_GET['cid'],
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
@@ -489,22 +489,22 @@ if ($user->isLoggedIn()) {
                 } else {
                     $user->updateRecord('results', array(
                         'results_date' => Input::get('results_date'),
-                        'visit_code' => 'M0',
+                        'visit_code' => $_GET['visit_code'],
                         'visit_name' => 'MONTH 0',
                         'study_id' => $clients['study_id'],
-                        'sequence' => 1,
+                        'sequence' => $_GET['sequence'],
                         'ldct_results' => Input::get('ldct_results'),
                         'rad_score' => Input::get('rad_score'),
                         'findings' => Input::get('findings'),
                         'status' => 1,
-                        'patient_id' => Input::get('cid'),
+                        'patient_id' => $_GET['cid'],
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
                     ), $results[0]['id']);
                     $successMessage = 'Results  Successful Updated';
                 }
 
-                $user->updateRecord('results', array(
+                $user->updateRecord('clients', array(
                     'enrolled' => 1,
                 ), $_GET['cid']);
             } else {
@@ -791,15 +791,14 @@ if ($user->isLoggedIn()) {
                         'diagnosis' => Input::get('diagnosis'),
                         'outcome' => Input::get('outcome'),
                         'status' => 1,
-                        'patient_id' => Input::get('cid'),
+                        'patient_id' => $_GET['cid'],
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
                     ), $outcome[0]['id']);
 
                     $successMessage = 'Outcome  Successful Updated';
                 }
-
-                $successMessage = 'Outcome Updated  Successful';
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -2772,11 +2771,15 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
                                     </li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                    <li class="breadcrumb-item">
+                                        <a href="index1.php">Home</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=3&status=<?= $_GET['status']; ?>">
                                             Go to screening list > </a>
                                     </li>&nbsp;&nbsp;
                                     <?php if ($results) { ?>

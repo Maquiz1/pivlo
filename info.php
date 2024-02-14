@@ -158,30 +158,6 @@ if ($user->isLoggedIn()) {
                                             //     $clients = $override->getWithLimit1('clients', 'status', 0, 'site_id', $_GET['sid'], $page, $numRec);
                                             // }
                                         } else {
-                                            $pagNum = 0;
-                                            if ($_GET['status'] == 1) {
-                                                $pagNum = $override->getCount1('clients', 'status', 1, 'screened', 1);
-                                            } elseif ($_GET['status'] == 2) {
-                                                $pagNum = $override->getCount1('clients', 'status', 1, 'eligible', 1);
-                                            } elseif ($_GET['status'] == 3) {
-                                                $pagNum = $override->getCount1('clients', 'status', 1, 'enrolled', 1);
-                                            } elseif ($_GET['status'] == 4) {
-                                                $pagNum = $override->getCount1('clients', 'status', 1, 'end_study', 1);
-                                            } elseif ($_GET['status'] == 5) {
-                                                $pagNum = $override->getCount('clients', 'status', 1);
-                                            } elseif ($_GET['status'] == 6) {
-                                                $pagNum = $override->getCount1('clients', 'status', 1, 'screened', 0);
-                                            } elseif ($_GET['status'] == 7) {
-                                                $clients = $override->getNo('clients');
-                                            } elseif ($_GET['status'] == 8) {
-                                                $pagNum = $override->getCount('clients', 'status', 0);
-                                            }
-                                            $pages = ceil($pagNum / $numRec);
-                                            if (!$_GET['page'] || $_GET['page'] == 1) {
-                                                $page = 0;
-                                            } else {
-                                                $page = ($_GET['page'] * $numRec) - $numRec;
-                                            }
 
                                             if ($_GET['status'] == 1) {
                                                 $clients = $override->getDataDesc2('clients', 'status', 1, 'screened', 1, 'id');
