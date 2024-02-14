@@ -89,13 +89,6 @@ if ($user->isLoggedIn()) {
 
                         $client_study = $override->getNews('clients', 'id', $last_row['id'], 'status', 1)[0];
                         $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
-                        // $screening_id = $override->getNews('screening', 'patient_id', $_GET['cid'], 'status', 1)[0];
-                        // $visit_id = $override->get('visit', 'client_id', $_GET['cid'])[0];
-                        // $last_visit = $override->getlastRow('visit', 'client_id', $_GET['cid'], 'id')[0];
-                        // $expected_date = $override->getNews('visit', 'expected_date', Input::get('expected_date'), 'client_id', $_GET['cid'])[0];
-
-                        // $sq = $last_visit['seq_no'] + 1;
-                        // $visit_day = 'Day ' . $sq;
 
                         if (!$client_study['study_id']) {
                             $study_id = $std_id['study_id'];
