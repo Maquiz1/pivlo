@@ -390,7 +390,9 @@ if ($user->isLoggedIn()) {
                                                             </td>
                                                         <?php } ?>
                                                         <td class="text-center">
-                                                            <a href="add.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>
+                                                            <?php if ($_GET['status'] == 7) { ?>
+                                                                <a href="add.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>
+                                                            <?php } ?>
                                                             <?php if ($value['age'] >= 18) { ?>
                                                                 <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>
                                                             <?php   } ?>

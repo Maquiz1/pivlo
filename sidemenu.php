@@ -92,13 +92,7 @@ if ($user->isLoggedIn()) {
                         <li class="nav-item">
                             <a href="info.php?id=3&status=7" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>List of Clients</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="info.php?id=3&status=1" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of Screened Clients</p>
+                                <p>List of Registered Clients</p>
                             </a>
                         </li>
                     </ul>

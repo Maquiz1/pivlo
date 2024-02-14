@@ -38,11 +38,6 @@ if ($user->isLoggedIn()) {
 
                 $client_study = $override->getNews('clients', 'id', Input::get('id'), 'status', 1)[0];
                 $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
-                // $screening_id = $override->getNews('screening', 'patient_id', Input::get('id'), 'status', 1)[0];
-                // $visit_id = $override->get('visit', 'client_id', Input::get('id'))[0];
-                // $last_visit = $override->getlastRow('visit', 'client_id', Input::get('id'), 'id')[0];
-                // $visit = $override->get3('visit', 'client_id', Input::get('id'), 'seq_no', 1, 'visit_name', Input::get('visit_name'));
-                // $visit_id = $override->get3('visit', 'client_id', Input::get('id'), 'seq_no', 1, 'visit_name', Input::get('visit_name'))[0];
 
                 if (!$client_study['study_id']) {
                     $study_id = $std_id['study_id'];
@@ -51,7 +46,7 @@ if ($user->isLoggedIn()) {
                 }
 
                 try {
-                    $clients = $override->get('clients', 'id', $_GET['cid']);
+                    $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
                     if (!$clients) {
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
@@ -179,7 +174,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
+                $kap = $override->get3('kap', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 if (!$kap) {
                     $user->createRecord('kap', array(
@@ -291,7 +286,7 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Kap  Successful Updated';
                 }
 
-                // Redirect::to('info.php?id=3&cid=' . $_GET['cid'] . '&site_id=' . $user->data()->site_id . '&interview=' . $interview . '&btn=' . $_GET['btn']);
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -308,7 +303,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $history = $override->get('history', 'patient_id', $_GET['cid']);
+                $history = $override->get3('history', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 $eligible = '';
                 $years = '';
@@ -443,7 +438,7 @@ if ($user->isLoggedIn()) {
 
                 $successMessage = 'History  Successful Updated';
 
-                // Redirect::to('add.php?id=' . $_GET['id'] . '&cid=' . $_GET['cid']);
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -463,7 +458,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $results = $override->get('results', 'patient_id', $_GET['cid']);
+                $results = $override->get3('results', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (!$results) {
@@ -507,6 +502,8 @@ if ($user->isLoggedIn()) {
                 $user->updateRecord('clients', array(
                     'enrolled' => 1,
                 ), $_GET['cid']);
+
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -518,8 +515,7 @@ if ($user->isLoggedIn()) {
             ));
 
             if ($validate->passed()) {
-
-                $classification = $override->getNews('classification', 'status', 1, 'patient_id', $_GET['cid']);
+                $classification = $override->get3('classification', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (count(Input::get('category')) == 1) {
@@ -638,6 +634,8 @@ if ($user->isLoggedIn()) {
 
                             $successMessage = 'Classification  Successful Updated';
                         }
+
+                        Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
                     }
                 } else {
                     $errorMessage = 'Please chose only one Classification!';
@@ -680,7 +678,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $economic = $override->getNews('economic', 'status', 1, 'patient_id', $_GET['cid'])[0];
+                $economic = $override->get3('economic', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (!$economic) {
@@ -740,9 +738,11 @@ if ($user->isLoggedIn()) {
                         'other_medical_cost' => Input::get('other_medical_cost'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                    ), Input::get('id'));
+                    ), $economic[0]['id']);
                     $successMessage = 'Economic  Successful Updated';
                 }
+
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -760,7 +760,7 @@ if ($user->isLoggedIn()) {
             ));
 
             if ($validate->passed()) {
-                $outcome = $override->get('outcome', 'patient_id', $_GET['cid']);
+                $outcome = $override->get3('outcome', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 if (!$outcome) {
