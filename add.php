@@ -39,8 +39,6 @@ if ($user->isLoggedIn()) {
                 try {
                     $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
                     if (!$clients) {
-                        $study_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
-
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
                             'visit_code' => 'RS',
@@ -87,6 +85,28 @@ if ($user->isLoggedIn()) {
                             'site_id' => $user->data()->site_id,
                         ));
 
+                        $last_row = $override->lastRow('clients', 'id')[0];
+
+                        $client_study = $override->getNews('clients', 'id', $last_row['id'], 'status', 1)[0];
+                        $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
+                        // $screening_id = $override->getNews('screening', 'patient_id', $_GET['cid'], 'status', 1)[0];
+                        // $visit_id = $override->get('visit', 'client_id', $_GET['cid'])[0];
+                        // $last_visit = $override->getlastRow('visit', 'client_id', $_GET['cid'], 'id')[0];
+                        // $expected_date = $override->getNews('visit', 'expected_date', Input::get('expected_date'), 'client_id', $_GET['cid'])[0];
+
+                        // $sq = $last_visit['seq_no'] + 1;
+                        // $visit_day = 'Day ' . $sq;
+
+                        if (!$client_study['study_id']) {
+                            $study_id = $std_id['study_id'];
+                        } else {
+                            $study_id = $client_study['study_id'];
+                        }
+
+                        $user->updateRecord('clients', array(
+                            'study_id' => $study_id,
+                        ), $last_row['id']);
+
                         $user->createRecord('visit', array(
                             'visit_code' => 'RS',
                             'visit_name' => 'Registration & Screening',
@@ -96,7 +116,7 @@ if ($user->isLoggedIn()) {
                             'visit_date' => '',
                             'visit_status' => 0,
                             'status' => 1,
-                            'patient_id' => $_GET['cid'],
+                            'patient_id' => $last_row['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
