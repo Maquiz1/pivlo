@@ -511,21 +511,8 @@ if ($user->isLoggedIn()) {
                                                     <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status'] ?>">
                                                             < Back</a>
                                                     </li>
-                                                    <li class="breadcrumb-item"><a href="#">
-                                                            <?php if ($visit['seq_no'] >= 1) {
-                                                                $summary = '';
-                                                            ?>
-                                                                <?php
-                                                                //  if ($visit['visit_status']) {
-                                                                ?>
-                                                                <a href="#addSchedule<?= $visit['id'] ?>" role="button" class="btn btn-info" data-toggle="modal">Update</a>
-                                                            <?php } else {
-                                                                $summary = 1;
-                                                            ?>
-                                                                <a href="add.php?id=22&cid=<?= $_GET['cid'] ?>&status=<?= $_GET['status'] ?>&btn=Add">Add Next Visit Summary</a>
-                                                            <?php
-                                                                //  }
-                                                            } ?>
+                                                    <li class="breadcrumb-item">
+                                                            <a href="index1.php">Go Home</a>
                                                         </a>
                                                     </li>
                                                 </ol>

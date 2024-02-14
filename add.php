@@ -990,12 +990,28 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&&status=<?= $_GET['status']; ?>">
                                             < Back</a>
                                     </li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                            Go to screening list > </a>
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            <?php if ($_GET['status'] == 1) { ?>
+                                                Go to screening list >
+                                            <?php } elseif ($_GET['status'] == 2) { ?>
+                                                Go to eligible list >
+                                            <?php } elseif ($_GET['status'] == 3) { ?>
+                                                Go to enrollment list >
+                                            <?php } elseif ($_GET['status'] == 4) { ?>
+                                                Go to terminated / end study list >
+                                            <?php } elseif ($_GET['status'] == 5) { ?>
+                                                Go to registered list >
+                                            <?php } elseif ($_GET['status'] == 6) { ?>
+                                                Go to registered list >
+                                            <?php } elseif ($_GET['status'] == 7) { ?>
+                                                Go to registered list >
+                                            <?php } ?>
+                                        </a>
                                     </li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item active">Add New Client</li>
                                 </ol>
@@ -1446,7 +1462,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <a href="info.php?id=3&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="submit" name="add_client" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
