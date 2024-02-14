@@ -3484,8 +3484,8 @@ if ($user->isLoggedIn()) {
 
 
     <!-- demographic Js -->
-    <script src="myjs/add/demographic.js"></script>
-    <script src="myjs/add/insurance.js"></script>
+    <script src="myjs/add/clients/insurance.js"></script>
+    <script src="myjs/add/clients/relation_patient.js"></script>
 
     <!-- HISTORY Js -->
     <script src="myjs/add/history/currently_smoking.js"></script>
