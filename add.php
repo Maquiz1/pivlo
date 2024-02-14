@@ -1178,7 +1178,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>Relation to patient</label>
                                                             <select name="relation_patient" id="relation_patient" class="form-control" required>
-                                                                <option value="<?= $clients['relation_patient'] ?>"><?php if ($clients['relation_patient']) {
+                                                                <option value="<?= $clients['relation_patient'] ?>"><?php if ($clients) {
                                                                                                                         if ($clients['relation_patient'] == 1) {
                                                                                                                             echo 'Mzazi';
                                                                                                                         } elseif ($clients['relation_patient'] == 2) {
@@ -1318,7 +1318,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
 
                                                 </div>
-                                                <div class="col-sm-4" id="exposure">
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1353,7 +1353,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>Do you own health insurance?</label>
                                                             <select id="health_insurance" name="health_insurance" class="form-control" required>
-                                                                <option value="<?= $clients['health_insurance'] ?>"><?php if ($clients['health_insurance']) {
+                                                                <option value="<?= $clients['health_insurance'] ?>"><?php if ($clients) {
                                                                                                                         if ($clients['health_insurance'] == 1) {
                                                                                                                             echo 'Yes';
                                                                                                                         } elseif ($clients['health_insurance'] == 2) {
