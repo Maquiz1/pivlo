@@ -1521,18 +1521,6 @@ if ($user->isLoggedIn()) {
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <?php
-                            // $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-                            // $sex = $override->get('sex', 'id', $clients['sex'])[0];
-                            // $district = $override->get('district', 'id', $clients['district'])[0];
-                            // $education = $override->get('education', 'id', $clients['education'])[0];
-                            // $occupation = $override->get('occupation', 'id', $clients['occupation'])[0];
-                            // $yes_no = $override->get('yes_no', 'id', $clients['health_insurance'])[0];
-                            // $payments = $override->get('payments', 'id', $clients['pay_services'])[0];
-                            // $household = $override->get('household', 'id', $clients['head_household'])[0];
-
-
-                            ?>
                             <!-- right column -->
                             <div class="col-md-12">
                                 <!-- general form elements disabled -->
