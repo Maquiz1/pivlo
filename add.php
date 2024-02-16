@@ -1430,13 +1430,25 @@ if ($user->isLoggedIn()) {
                                             </div>
 
 
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Type of Interview</h3>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="card card-warning">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">Type of Interview</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card card-warning">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">ANY OTHER COMENT OR REMARKS</h3>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1458,16 +1470,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">ANY COMENT OR REMARKS</h3>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-8">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
