@@ -33,6 +33,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
+                print_r($_POST);
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
 
@@ -56,6 +57,7 @@ if ($user->isLoggedIn()) {
                             'supporter_name' => Input::get('supporter_name'),
                             'supporter_phone' => Input::get('supporter_phone'),
                             'relation_patient' => Input::get('relation_patient'),
+                            'relation_patient_other' => Input::get('relation_patient_other'),
                             'district' => Input::get('district'),
                             'street' => Input::get('street'),
                             'house_number' => Input::get('house_number'),
@@ -64,6 +66,7 @@ if ($user->isLoggedIn()) {
                             'occupation' => Input::get('occupation'),
                             'health_insurance' => Input::get('health_insurance'),
                             'insurance_name' => Input::get('insurance_name'),
+                            'insurance_name_other' => Input::get('insurance_name_other'),
                             'pay_services' => Input::get('pay_services'),
                             'comments' => Input::get('comments'),
                             'interview_type' => Input::get('interview_type'),
@@ -132,6 +135,7 @@ if ($user->isLoggedIn()) {
                             'supporter_name' => Input::get('supporter_name'),
                             'supporter_phone' => Input::get('supporter_phone'),
                             'relation_patient' => Input::get('relation_patient'),
+                            'relation_patient_other' => Input::get('relation_patient_other'),
                             'district' => Input::get('district'),
                             'street' => Input::get('street'),
                             'house_number' => Input::get('house_number'),
@@ -141,6 +145,7 @@ if ($user->isLoggedIn()) {
                             'health_insurance' => Input::get('health_insurance'),
                             'insurance_name' => Input::get('insurance_name'),
                             'pay_services' => Input::get('pay_services'),
+                            'insurance_name_other' => Input::get('insurance_name_other'),
                             'interview_type' => Input::get('interview_type'),
                             'comments' => Input::get('comments'),
                             'update_on' => date('Y-m-d H:i:s'),
@@ -1018,17 +1023,14 @@ if ($user->isLoggedIn()) {
                         <div class="row">
                             <?php
                             $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+                            $relation = $override->get('relation', 'id', $clients['relation_patient'])[0];
                             $sex = $override->get('sex', 'id', $clients['sex'])[0];
                             $district = $override->get('district', 'id', $clients['district'])[0];
                             $education = $override->get('education', 'id', $clients['education'])[0];
                             $occupation = $override->get('occupation', 'id', $clients['occupation'])[0];
-                            $yes_no = $override->get('yes_no', 'id', $clients['health_insurance'])[0];
+                            $insurance = $override->get('insurance', 'id', $clients['health_insurance'])[0];
                             $payments = $override->get('payments', 'id', $clients['pay_services'])[0];
                             $household = $override->get('household', 'id', $clients['head_household'])[0];
-                            // $kap = $override->get('household', 'id', $clients['kap'])[0];
-                            // $screening = $override->get('household', 'id', $clients['screening'])[0];
-                            // $health_care = $override->get('household', 'id', $clients['health_care'])[0];
-
                             ?>
                             <!-- right column -->
                             <div class="col-md-12">
@@ -1178,30 +1180,16 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>Relation to patient</label>
                                                             <select name="relation_patient" id="relation_patient" class="form-control" required>
-                                                                <option value="<?= $clients['relation_patient'] ?>"><?php if ($clients['relation_patient']) {
-                                                                                                                        if ($clients['relation_patient'] == 1) {
-                                                                                                                            echo 'Mzazi';
-                                                                                                                        } elseif ($clients['relation_patient'] == 2) {
-                                                                                                                            echo 'Kaka / Dada';
-                                                                                                                        } elseif ($clients['relation_patient'] == 3) {
-                                                                                                                            echo 'Mwenza (Mume / Mke / )';
-                                                                                                                        } elseif ($clients['relation_patient'] == 4) {
-                                                                                                                            echo 'Ndugu wengine';
-                                                                                                                        } elseif ($clients['relation_patient'] == 5) {
-                                                                                                                            echo 'Rafiki';
-                                                                                                                        } elseif ($clients['relation_patient'] == 96) {
-                                                                                                                            echo 'Wengine';
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 'Select';
-                                                                                                                    } ?>
+                                                                <option value="<?= $relation['id'] ?>"><?php if ($clients['relation_patient']) {
+                                                                                                            print_r($relation['name']);
+                                                                                                        } else {
+                                                                                                            echo 'Select pay';
+                                                                                                        } ?>
                                                                 </option>
-                                                                <option value="1"> Mzazi</option>
-                                                                <option value="2">Kaka / Dada</option>
-                                                                <option value="3">Mwenza (Mume / Mke / )</option>
-                                                                <option value="4">Ndugu wengine</option>
-                                                                <option value="5">Rafiki</option>
-                                                                <option value="96">Wengine</option>
+                                                                <?php foreach ($override->get('relation', 'status', 1) as $relation) { ?>
+                                                                    <option value="<?= $relation['id'] ?>"><?= $relation['name'] ?>
+                                                                    </option>
+                                                                <?php } ?>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -1394,24 +1382,16 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>Name of insurance:</label>
                                                             <select id="insurance_name" name="insurance_name" class="form-control">
-                                                                <option value="<?= $clients['insurance_name'] ?>"><?php if ($clients['insurance_name']) {
-                                                                                                                        if ($clients['insurance_name'] == 1) {
-                                                                                                                            echo 'NHIF';
-                                                                                                                        } elseif ($clients['insurance_name'] == 2) {
-                                                                                                                            echo 'iCHF';
-                                                                                                                        } elseif ($clients['insurance_name'] == 3) {
-                                                                                                                            echo 'Private insurance';
-                                                                                                                        } elseif ($clients['insurance_name'] == 96) {
-                                                                                                                            echo 'Other';
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 'Select';
-                                                                                                                    } ?>
+                                                                <option value="<?= $insurance['id'] ?>"><?php if ($clients['insurance_name']) {
+                                                                                                            print_r($insurance['name']);
+                                                                                                        } else {
+                                                                                                            echo 'Select pay';
+                                                                                                        } ?>
                                                                 </option>
-                                                                <option value="1">NHIF</option>
-                                                                <option value="2">iCHF</option>
-                                                                <option value="3">Private insurance</option>
-                                                                <option value="96">Other</option>
+                                                                <?php foreach ($override->get('insurance', 'status', 1) as $insurance) { ?>
+                                                                    <option value="<?= $insurance['id'] ?>"><?= $insurance['name'] ?>
+                                                                    </option>
+                                                                <?php } ?>
                                                             </select>
                                                         </div>
                                                     </div>
