@@ -3575,12 +3575,32 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/clients/insurance_name.js"></script>
     <script src="myjs/add/clients/relation_patient.js"></script>
 
+    <!-- KAP Js -->
+    <script src="myjs/add/kap/dalili_saratani.js"></script>
+    <script src="myjs/add/kap/kundi.js"></script>
+    <script src="myjs/add/kap/matibabu.js"></script>
+    <script src="myjs/add/kap/matibabu_saratani.js"></script>
+    <script src="myjs/add/kap/saratani_hatari.js"></script>
+    <script src="myjs/add/kap/saratani_inatibika.js"></script>
+    <script src="myjs/add/kap/saratani_vipimo.js"></script>
+    <script src="myjs/add/kap/uchunguzi_faida.js"></script>
+    <script src="myjs/add/kap/uchunguzi_hatari.js"></script>
+    <script src="myjs/add/kap/uchunguzi_hatari.js"></script>
+    <script src="myjs/add/kap/uchunguzi_hatari.js"></script>
+    <script src="myjs/add/kap/uchunguzi_maana.js"></script>
+    <script src="myjs/add/kap/ushawishi.js"></script>
+    <script src="myjs/add/kap/vitu_hatarishi.js"></script>
+    <script src="myjs/add/kap/wapi_matibabu.js"></script>
+
+
+
+
+
+
     <!-- HISTORY Js -->
     <script src="myjs/add/history/currently_smoking.js"></script>
     <script src="myjs/add/history/ever_smoked.js"></script>
     <script src="myjs/add/history/type_smoked.js"></script>
-
-
 
 
 
