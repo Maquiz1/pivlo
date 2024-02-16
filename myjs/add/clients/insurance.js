@@ -1,16 +1,16 @@
 const health_insurance = document.getElementById("health_insurance");
-const insurance_name = document.getElementById("insurance_name");
+const insurance_name1 = document.getElementById("insurance_name1");
 const pay_services = document.getElementById("pay_services");
 
 function showElement() {
   if (health_insurance.value === "1") {
-    insurance_name.style.display = "block";
+    insurance_name1.style.display = "block";
     pay_services.style.display = "none";
   } else if (health_insurance.value === "2") {
-    insurance_name.style.display = "none";
+    insurance_name1.style.display = "none";
     pay_services.style.display = "block";
   } else {
-    insurance_name.style.display = "none";
+    insurance_name1.style.display = "none";
     pay_services.style.display = "none";
   }
 

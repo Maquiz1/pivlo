@@ -1079,7 +1079,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>SEX</label>
                                                             <select class="form-control" name="sex" style="width: 100%;" required>
-                                                                <option value="<?= $clients['sex'] ?>"><?php if ($clients) {
+                                                                <option value="<?= $clients['sex'] ?>"><?php if ($clients['sex']) {
                                                                                                             if ($clients['sex'] == 1) {
                                                                                                                 echo 'Male';
                                                                                                             } elseif ($clients['sex'] == 2) {
@@ -1178,7 +1178,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>Relation to patient</label>
                                                             <select name="relation_patient" id="relation_patient" class="form-control" required>
-                                                                <option value="<?= $clients['relation_patient'] ?>"><?php if ($clients) {
+                                                                <option value="<?= $clients['relation_patient'] ?>"><?php if ($clients['relation_patient']) {
                                                                                                                         if ($clients['relation_patient'] == 1) {
                                                                                                                             echo 'Mzazi';
                                                                                                                         } elseif ($clients['relation_patient'] == 2) {
@@ -1211,9 +1211,9 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Other relation patient other</label>
-                                                            <input class="form-control" type="text" name="relation_patient_other" value="<?php if ($clients['relation_patient_other']) {
-                                                                                                                                                print_r($clients['relation_patient_other']);
-                                                                                                                                            }  ?>" />
+                                                            <input class="form-control" type="text" name="relation_patient_other" id="relation_patient_other1" value="<?php if ($clients['relation_patient_other']) {
+                                                                                                                                                                            print_r($clients['relation_patient_other']);
+                                                                                                                                                                        }  ?>" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1347,13 +1347,13 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Do you own health insurance?</label>
                                                             <select id="health_insurance" name="health_insurance" class="form-control" required>
-                                                                <option value="<?= $clients['health_insurance'] ?>"><?php if ($clients) {
+                                                                <option value="<?= $clients['health_insurance'] ?>"><?php if ($clients['health_insurance']) {
                                                                                                                         if ($clients['health_insurance'] == 1) {
                                                                                                                             echo 'Yes';
                                                                                                                         } elseif ($clients['health_insurance'] == 2) {
@@ -1369,18 +1369,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4" id="insurance_name">
-                                                    <div class="row-form clearfix">
-                                                        <!-- select -->
-                                                        <div class="form-group">
-                                                            <label>Name of insurance:</label>
-                                                            <input class="form-control" type="text" name="insurance_name" value="<?php if ($clients['insurance_name']) {
-                                                                                                                                        print_r($clients['insurance_name']);
-                                                                                                                                    }  ?>" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4" id="pay_services">
+                                                <div class="col-sm-3" id="pay_services">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1396,6 +1385,45 @@ if ($user->isLoggedIn()) {
                                                                     <option value="<?= $payment['id'] ?>"><?= $payment['name'] ?></option>
                                                                 <?php } ?>
                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3" id="insurance_name1">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Name of insurance:</label>
+                                                            <select id="insurance_name" name="insurance_name" class="form-control">
+                                                                <option value="<?= $clients['insurance_name'] ?>"><?php if ($clients['insurance_name']) {
+                                                                                                                        if ($clients['insurance_name'] == 1) {
+                                                                                                                            echo 'NHIF';
+                                                                                                                        } elseif ($clients['insurance_name'] == 2) {
+                                                                                                                            echo 'iCHF';
+                                                                                                                        } elseif ($clients['insurance_name'] == 3) {
+                                                                                                                            echo 'Private insurance';
+                                                                                                                        } elseif ($clients['insurance_name'] == 96) {
+                                                                                                                            echo 'Other';
+                                                                                                                        }
+                                                                                                                    } else {
+                                                                                                                        echo 'Select';
+                                                                                                                    } ?>
+                                                                </option>
+                                                                <option value="1">NHIF</option>
+                                                                <option value="2">iCHF</option>
+                                                                <option value="3">Private insurance</option>
+                                                                <option value="96">Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3" id="insurance_name_other">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Other Name of insurance:</label>
+                                                            <input class="form-control" type="text" name="insurance_name_other" value="<?php if ($clients['insurance_name_other']) {
+                                                                                                                                            print_r($clients['insurance_name_other']);
+                                                                                                                                        }  ?>" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3485,6 +3513,7 @@ if ($user->isLoggedIn()) {
 
     <!-- demographic Js -->
     <script src="myjs/add/clients/insurance.js"></script>
+    <script src="myjs/add/clients/insurance_name.js"></script>
     <script src="myjs/add/clients/relation_patient.js"></script>
 
     <!-- HISTORY Js -->

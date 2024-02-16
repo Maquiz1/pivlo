@@ -36,3 +36,21 @@ showElement();
 
 // Listen for changes in the dropdown
 ever_smoked.addEventListener("change", showElement);
+
+
+
+
+
+// $(function () {
+//   $("#detailssame").click(function () {
+//     var checked = $(this).is(":checked");
+//     if (checked) {
+//       $("#detailssamehide").hide();
+//     } else {
+//       $("#detailssamehide").show();
+//     }
+//     $(".fullboxform input[type=text], .fullboxform select").each(function () {
+//       $(this).prop("required", !checked);
+//     });
+//   });
+// });

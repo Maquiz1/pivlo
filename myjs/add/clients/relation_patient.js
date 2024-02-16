@@ -5,8 +5,10 @@ const relation_patient_other = document.getElementById(
 
 function showElement() {
   if (relation_patient.value === "96") {
+    relation_patient_other.attr("required", "");
     relation_patient_other.style.display = "block";
   } else {
+    relation_patient_other.removeAttr("required");
     relation_patient_other.style.display = "none";
   }
 
