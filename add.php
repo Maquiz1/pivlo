@@ -1799,6 +1799,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" name="dalili_saratani_other" class="form-control" placeholder="Ingiza dalili_saratani" />
                                                     </div>
                                                 </div>
+
                                                 <hr>
 
                                                 <div class="col-6">
@@ -1869,7 +1870,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6" id="matibabu_saratani1">
                                                     <div class="mb-3">
                                                         <label for="matibabu_saratani" class="form-label">8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
-                                                        <select name="matibabu_saratani" id="matibabu_saratani" class="form-control" onchange="updateText5(this.value)">
+                                                        <select name="matibabu_saratani" id="matibabu_saratani" class="form-control">
                                                             <option value="<?= $kap['matibabu_saratani'] ?>"><?php if ($kap['matibabu_saratani']) {
                                                                                                                     if ($kap['matibabu_saratani'] == 1) {
                                                                                                                         echo 'Ndio';
