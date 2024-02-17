@@ -54,6 +54,11 @@ $errorMessage = null;
         <canvas id="myChart"></canvas>
         <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
     </div>
+    <div class="buttonBox">
+        <button onclick="showData(5)">Show limited Data</button>
+        <button onclick="showData(7)">Show 7 limited Data</button>
+        <button onclick="resetData()">Show All Data</button>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -92,6 +97,20 @@ $errorMessage = null;
 
         //RENDER BLOCK
         const myChart = new Chart(document.getElementById('myChart'), config);
+
+        function showData(num) {
+            const revenueSliced = revenue.slice(0, num);
+            const lableaxisSliced = lableaxis.slice(0, num)
+            myChart.data.datasets[0].data = revenueSliced;
+            myChart.data.labels = lableaxisSliced;
+            myChart.update();
+        }
+
+        function resetData(num) {
+            myChart.data.datasets[0].data = revenue;
+            myChart.data.labels = lableaxis;
+            myChart.update();
+        }
     </script>
 
 </body>

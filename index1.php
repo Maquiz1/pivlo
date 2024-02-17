@@ -53,6 +53,11 @@ if ($user->isLoggedIn()) {
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+  <style type="text/css">
+    .chartBox {
+      width: 900px;
+    }
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -157,6 +162,26 @@ if ($user->isLoggedIn()) {
             <!-- ./col -->
           </div>
           <!-- /.row -->
+
+
+          <?php
+          $barchart = $override->getDataRegister();
+          $month = array();
+          $amount = array();
+
+          foreach ($barchart as $value) {
+            $month[] = $value['monthname'];
+            $amount[] = $value['amount'];
+          }
+
+          ?>
+
+          <div class="row">
+            <div class="chartBox">
+              <canvas id="myChart"></canvas>
+              <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
+            </div>
+          </div>
         </div>
         <!-- /.container-fluid -->
       </section>
@@ -217,6 +242,39 @@ if ($user->isLoggedIn()) {
 
 
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
+  <script>
+    // SETUP BLOCK
+
+    const month = <?php echo json_encode($month) ?>;
+    const amount = <?php echo json_encode($amount) ?>;
+
+    const data = {
+      labels: month,
+      datasets: [{
+        label: '# of Votes',
+        data: amount,
+        backgroundColor: 'rgba(54,162,235,0.2)',
+        borderColor: 'rgba(54,162,235,1)',
+        borderWidth: 1
+      }]
+    }
+    //CONFIG BLOCK
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+
+    //RENDER BLOCK
+    const myChart = new Chart(document.getElementById('myChart'), config);
+  </script>
 
 
 </body>

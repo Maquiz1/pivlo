@@ -600,4 +600,11 @@ class OverideData
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function getDataRegister()
+    {
+        $query = $this->_pdo->query("SELECT MONTHNAME(date_registered) as monthname, SUM(status) as amount FROM clients GROUP BY monthname");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
