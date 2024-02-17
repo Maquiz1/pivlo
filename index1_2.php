@@ -167,19 +167,6 @@ if ($user->isLoggedIn()) {
           </div>
           <!-- /.row -->
 
-          <hr>
-
-          <div class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-12">
-                  <h1 class="m-0 text-center">Screaning Progres as of <?= date('Y-m-d'); ?></h1>
-                </div>
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </div>
-
-          <hr>
 
           <div class="row">
             <div class="chartBox">
@@ -187,10 +174,6 @@ if ($user->isLoggedIn()) {
               <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
             </div>
           </div>
-
-          <hr>
-
-
         </div>
         <!-- /.container-fluid -->
       </section>
@@ -249,6 +232,9 @@ if ($user->isLoggedIn()) {
   <script src="dist/js/pages/dashboard1_3.js"></script>
 
 
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
   <script>
     // SETUP BLOCK
 
@@ -256,12 +242,8 @@ if ($user->isLoggedIn()) {
       .then(response => response.json())
       .then(data => {
         const monthname = Object.keys(data);
-        const amana = monthname.map(monthname => data[monthname]['1']);
-        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
-        const temeke = monthname.map(monthname => data[monthname]['3']);
-        const mbagala = monthname.map(monthname => data[monthname]['4']);
-        const magomeni = monthname.map(monthname => data[monthname]['5']);
-
+        const kondoa = monthname.map(monthname => data[monthname]['1']);
+        const karatu = monthname.map(monthname => data[monthname]['2']);
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
@@ -269,25 +251,13 @@ if ($user->isLoggedIn()) {
           data: {
             labels: monthname,
             datasets: [{
-              label: 'Amana RRH',
+              label: 'Kondoa',
               backgroundColor: 'pink',
-              data: amana
+              data: kondoa
             }, {
-              label: 'Mwananyamala RRH',
+              label: 'Karatu',
               backgroundColor: 'blue',
-              data: mwananyamala
-            }, {
-              label: 'Temeke RRH',
-              backgroundColor: 'yellow',
-              data: temeke
-            }, {
-              label: 'Mbagala Rangi Tatu Hospital',
-              backgroundColor: 'green',
-              data: mbagala
-            }, {
-              label: 'Magomeni Hospital',
-              backgroundColor: 'orange',
-              data: magomeni
+              data: karatu
             }]
           },
           options: {
@@ -317,7 +287,7 @@ if ($user->isLoggedIn()) {
     //     borderWidth: 1
     //   }]
     // }
-    // // //CONFIG BLOCK
+    // //CONFIG BLOCK
     // const config = {
     //   type: 'bar',
     //   data,
@@ -330,7 +300,7 @@ if ($user->isLoggedIn()) {
     //   }
     // }
 
-    // // //RENDER BLOCK
+    // //RENDER BLOCK
     // const myChart = new Chart(document.getElementById('myChart'), config);
   </script>
 

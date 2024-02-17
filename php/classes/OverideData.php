@@ -607,4 +607,25 @@ class OverideData
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function getDataRegister1()
+    {
+        $query = $this->_pdo->query("SELECT MONTHNAME(date_registered) , site_id, COUNT(*) as count FROM clients GROUP BY date_registered, site_id");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getDataRegister2()
+    {
+        $query = $this->_pdo->query("SELECT DATE_FORMAT(registration_date, '%Y-%m') AS month, gender, COUNT(*) AS count FROM registration_data GROUP BY month, gender");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getDataRegister3()
+    {
+        $query = $this->_pdo->query("SELECT MONTHNAME(date_registered) AS monthname, site_id as site_id, COUNT(*) AS count FROM clients GROUP BY monthname, site_id");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
