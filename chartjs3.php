@@ -29,22 +29,16 @@ $errorMessage = null;
 
 <body>
     <?php
-    $barchart = $override->getDataPoints();
+    $barchart = $override->getData('barchart');
     $revenue = array();
-    $lableaxis = array();
-
+    $cost = array();
+    $profit = array();
 
     foreach ($barchart as $value) {
-        $revenue[] = $value['datapoint'];
-        $lableaxis[] = ucwords($value['lableaxis']);
-        $descriptionlabel = $value['descriptionlabel'];
-        $bgcolor = $value['bgcolor'];
-        $bordercolor = $value['bordercolor'];
+        $revenue[] = $value['revenue'];
+        $cost[] = $value['cost'];
+        $profit[] = $value['profit'];
     }
-
-    // print_r($bordercolor);
-
-
 
     ?>
 
@@ -62,18 +56,28 @@ $errorMessage = null;
         // SETUP BLOCK
 
         const revenue = <?php echo json_encode($revenue) ?>;
-        const lableaxis = <?php echo json_encode($lableaxis) ?>;
-        const descriptionlabel = <?php echo json_encode($descriptionlabel) ?>;
-        const bgcolor = <?php echo json_encode($bgcolor) ?>;
-        const bordercolor = <?php echo json_encode($bordercolor) ?>;
+        const cost = <?php echo json_encode($cost) ?>;
+        const profit = <?php echo json_encode($profit) ?>;
 
         const data = {
-            labels: lableaxis,
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', '7', '8', '9', '10'],
             datasets: [{
-                label: descriptionlabel,
+                label: '# of Votes',
                 data: revenue,
-                backgroundColor: bgcolor,
-                borderColor: bordercolor,
+                backgroundColor: 'rgba(54,162,235,0.2)',
+                borderColor: 'rgba(54,162,235,1)',
+                borderWidth: 1
+            }, {
+                label: '# of Votes',
+                data: cost,
+                backgroundColor: 'rgba(255,99,132,0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1
+            }, {
+                label: '# of Votes',
+                data: profit,
+                backgroundColor: 'rgba(75,192,192,0.2)',
+                borderColor: 'rgba(75,192,192,1)',
                 borderWidth: 1
             }]
         }
