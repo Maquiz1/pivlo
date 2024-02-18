@@ -2156,7 +2156,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="kundi" class="form-label">6. Je, ni kundi gani la watu linalofaa kufanyiwa uchunguzi wa saratani ya mapafu? (Multiple answer)</label>
-                                                        <select name="kundi" id="kundi" class="form-control" onchange="updateText3(this.value)" required>
+                                                        <select name="kundi" id="kundi" class="form-control" required>
                                                             <option value="<?= $kap['kundi'] ?>"><?php if ($kap['kundi']) {
                                                                                                         if ($kap['kundi'] == 1) {
                                                                                                             echo 'Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani.';
@@ -2207,7 +2207,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="ushawishi" class="form-label">7. Je! Unazani nani ana ushawishi mkubwa katika kutoa elimu ya ugonjwa wa Saratani ya Mapafu? (Multiple answer)</label>
-                                                        <select name="ushawishi" id="ushawishi" class="form-control" onchange="updateText4(this.value)" required>
+                                                        <select name="ushawishi" id="ushawishi" class="form-control" required>
                                                             <option value="<?= $kap['ushawishi'] ?>"><?php if ($kap['ushawishi']) {
                                                                                                             if ($kap['ushawishi'] == 1) {
                                                                                                                 echo 'Watoa huduma ya Afya ngazi ya jamii (CHWs).';
