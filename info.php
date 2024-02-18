@@ -516,10 +516,10 @@ if ($user->isLoggedIn()) {
 
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history) { ?>
-                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=1&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update History </a>&nbsp;&nbsp; <br><br>
+                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update History </a>&nbsp;&nbsp; <br><br>
 
                                                                         <?php } else { ?>
-                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=1&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add History </a>&nbsp;&nbsp; <br><br>
+                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add History </a>&nbsp;&nbsp; <br><br>
 
                                                                         <?php } ?>
                                                                     <?php } ?>

@@ -72,14 +72,13 @@ if ($user->isLoggedIn()) {
                         ), $_GET['cid']);
 
                         $successMessage = 'Client Updated Successful';
-
                     } else {
 
                         $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
 
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
-                            'study_id' => $std_id,
+                            'study_id' => $std_id['study_id'],
                             'firstname' => Input::get('firstname'),
                             'middlename' => Input::get('middlename'),
                             'lastname' => Input::get('lastname'),
@@ -118,9 +117,14 @@ if ($user->isLoggedIn()) {
 
                         $last_row = $override->lastRow('clients', 'id')[0];
 
+                        $user->updateRecord('study_id', array(
+                            'status' => 1,
+                            'client_id' => $last_row['id'],
+                        ), $std_id['id']);
+
                         $user->createRecord('visit', array(
                             'sequence' => 0,
-                            'study_id' => $std_id,
+                            'study_id' => $std_id['study_id'],
                             'visit_code' => 'RS',
                             'visit_name' => 'Registration & Screening',
                             'expected_date' => Input::get('date_registered'),
@@ -283,19 +287,10 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $history = $override->get3('history', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
-                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-                // $eligible = '';
-                // $years = '';
-                // $packs = '';
-                // $packs_year = '';
-
-                // $date1 = date('Y-m-d', strtotime(Input::get('start_smoking')));
-                // $years = $user->dateDiffYears($date2, $date1);
+                $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid']);
                 $date1 = Input::get('start_smoking');
                 $packs = Input::get('packs_per_day');
-
-
+                $eligible = 0;
 
                 if (Input::get('ever_smoked') == 1) {
                     if (Input::get('currently_smoking') == 1) {
@@ -305,16 +300,12 @@ if ($user->isLoggedIn()) {
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
-                            } else {
-                                $eligible = 0;
                             }
                         } elseif (Input::get('type_smoked') == 2) {
                             $years = $date2 - $date1;
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
-                            } else {
-                                $eligible = 0;
                             }
                         }
                     } elseif (Input::get('currently_smoking') == 2) {
@@ -324,30 +315,21 @@ if ($user->isLoggedIn()) {
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
-                            } else {
-                                $eligible = 0;
                             }
                         } elseif (Input::get('type_smoked') == 2) {
                             $years = $date2 - $date1;
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
                                 $eligible = 1;
-                            } else {
-                                $eligible = 0;
                             }
                         }
                     }
-                } else {
-                    $eligible = 0;
                 }
 
                 if (!$history) {
                     $user->createRecord('history', array(
                         'screening_date' => Input::get('screening_date'),
-                        'visit_code' => 'M0',
-                        'visit_name' => 'MONTH 0',
-                        'study_id' => $clients['study_id'],
-                        'sequence' => 1,
+                        'study_id' => $_GET['study_id'],
                         'ever_smoked' => Input::get('ever_smoked'),
                         'start_smoking' => Input::get('start_smoking'),
                         'smoking_long' => Input::get('smoking_long'),
@@ -366,10 +348,10 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    if ($eligible == 1) {
-                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 1);
+                    if ($eligible1) {
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 1);
                     } else {
-                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 0);
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 0);
                     }
 
                     $user->updateRecord('clients', array(
@@ -378,13 +360,12 @@ if ($user->isLoggedIn()) {
                     ), $_GET['cid']);
 
                     $successMessage = 'History  Successful Added';
+
+                    Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
                 } else {
                     $user->updateRecord('history', array(
                         'screening_date' => Input::get('screening_date'),
-                        'visit_code' => 'M0',
-                        'visit_name' => 'MONTH 0',
-                        'study_id' => $clients['study_id'],
-                        'sequence' => 1,
+                        'study_id' => $_GET['study_id'],
                         'ever_smoked' => Input::get('ever_smoked'),
                         'start_smoking' => Input::get('start_smoking'),
                         'smoking_long' => Input::get('smoking_long'),
@@ -398,14 +379,12 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                     ), $history[0]['id']);
 
-                    if ($eligible == 1) {
-                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 1);
+                    if ($eligible1) {
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 1);
                     } else {
-                        $user->visit_delete2($_GET['cid'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $user->data()->site_id, 'M0', 'MONTH 0', 0);
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 0);
                     }
                 }
-
-
 
                 $user->updateRecord('clients', array(
                     'screened' => 1,
@@ -414,7 +393,7 @@ if ($user->isLoggedIn()) {
 
                 $successMessage = 'History  Successful Updated';
 
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -1157,7 +1136,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>Relation to patient</label>
                                                             <select name="relation_patient" id="relation_patient" class="form-control" required>
-                                                                <option value="<?= $relation['id'] ?>"><?php if ($clients['relation_patient']) {
+                                                                <option value="<?= $relation['id'] ?>"><?php if ($relation['name']) {
                                                                                                             print_r($relation['name']);
                                                                                                         } else {
                                                                                                             echo 'Select pay';
@@ -1176,9 +1155,9 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Other relation patient other</label>
-                                                            <input class="form-control" type="text" name="relation_patient_other" id="relation_patient_other1" value="<?php if ($clients['relation_patient_other']) {
-                                                                                                                                                                            print_r($clients['relation_patient_other']);
-                                                                                                                                                                        }  ?>" />
+                                                            <input class="form-control" type="text" name="relation_patient_other" value="<?php if ($clients['relation_patient_other']) {
+                                                                                                                                                print_r($clients['relation_patient_other']);
+                                                                                                                                            }  ?>" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2632,7 +2611,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 6) { ?>
             <?php
-            $history = $override->get3('history', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
+            $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -2788,7 +2767,7 @@ if ($user->isLoggedIn()) {
 
                                             <div id="ever_smoked3">
                                                 <div class="row">
-                                                    <div class="col-4">
+                                                    <div class="col-6">
                                                         <div class="mb-3">
                                                             <label for="packs_per_day" id="packs_per_day" class="form-label">
                                                                 Number of packs per day
@@ -2803,7 +2782,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
 
 
-                                                    <div class="col-4" id="packs_per_year">
+                                                    <div class="col-6" id="packs_per_year">
                                                         <div class="mb-3">
                                                             <label for="packs_per_year" class="form-label">Number of Pack year</label>
                                                             <input type="number" value="<?php if ($history['packs_per_year']) {
@@ -2811,17 +2790,16 @@ if ($user->isLoggedIn()) {
                                                                                         } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
                                                         </div>
                                                     </div>
-                                                    <div class="col-4" id="eligible">
-                                                        <div class="mb-3">
-                                                            <label for="eligible" class="form-label">PATIENT ELIGIBLE ?</label>
-                                                            <input type="number" value="<?php if ($history['eligible']) {
-                                                                                            if ($history['eligible'] == 1) {
-                                                                                                print('YES');
-                                                                                            } elseif ($history['eligible'] == 2) {
-                                                                                                print('No');
-                                                                                            }
-                                                                                        } ?>" min="0" id="eligible" name="eligible" class="form-control" readonly />
-                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12" id="eligible">
+                                                    <div class="mb-3">
+                                                        <?php if ($history['eligible']) { ?>
+                                                            <a class="btn btn-success">Client is Eligible</a>
+                                                        <?php } else { ?>
+                                                            <a class="btn btn-warning">Client is Not Eligible</a>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div>
