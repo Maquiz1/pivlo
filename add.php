@@ -2706,7 +2706,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-2">
                                                         <label for="screening_date" class="form-label">Screening date</label>
-                                                        <input type="date" value="<?php if ($history) {
+                                                        <input type="date" value="<?php if ($history['screening_date']) {
                                                                                         print_r($history['screening_date']);
                                                                                     } ?>" id="screening_date" name="screening_date" class="form-control" placeholder="Enter screening date" required />
                                                     </div>
@@ -2716,7 +2716,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="mb-2">
                                                         <label for="ever_smoked" class="form-label">Have you ever smoked cigarette ?</label>
                                                         <select name="ever_smoked" id="ever_smoked" class="form-control" required>
-                                                            <option value="<?= $history['ever_smoked'] ?>"><?php if ($history) {
+                                                            <option value="<?= $history['ever_smoked'] ?>"><?php if ($history['ever_smoked']) {
                                                                                                                 if ($history['ever_smoked'] == 1) {
                                                                                                                     echo 'Yes';
                                                                                                                 } elseif ($history['ever_smoked'] == 2) {
@@ -2742,7 +2742,7 @@ if ($user->isLoggedIn()) {
                                                             <label for="start_smoking" class="form-label">When did you start smoking?</label>
                                                             <input type="number" value="<?php if ($history['start_smoking']) {
                                                                                             print_r($history['start_smoking']);
-                                                                                        } ?>" min="1970" min="2024" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" />
+                                                                                        } ?>" min="1970" max="2024" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" />
                                                         </div>
                                                     </div>
 
@@ -2795,9 +2795,9 @@ if ($user->isLoggedIn()) {
                                                     <div class="col-6" id="quit_smoking">
                                                         <div class="mb-3">
                                                             <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
-                                                            <input type="number" value="<?php if ($history) {
+                                                            <input type="number" value="<?php if ($history['quit_smoking']) {
                                                                                             print_r($history['quit_smoking']);
-                                                                                        } ?>" min="1970" min="2023" name="quit_smoking" class="form-control" placeholder="Enter Year" />
+                                                                                        } ?>" min="1970" max="2024" name="quit_smoking" class="form-control" placeholder="Enter Year" />
                                                         </div>
                                                     </div>
 
@@ -2817,7 +2817,7 @@ if ($user->isLoggedIn()) {
                                                             <label for="cigarette_per_day" id="cigarette_per_day" class="form-label">
                                                                 Number of Cigarette per day
                                                             </label>
-                                                            <input type="number" value="<?php if ($history) {
+                                                            <input type="number" value="<?php if ($history['packs_per_day']) {
                                                                                             print_r($history['packs_per_day']);
                                                                                         } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
                                                         </div>
@@ -2827,7 +2827,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="col-4" id="packs_per_year">
                                                         <div class="mb-3">
                                                             <label for="packs_per_year" class="form-label">Number of Pack year</label>
-                                                            <input type="number" value="<?php if ($history) {
+                                                            <input type="number" value="<?php if ($history['packs_per_year']) {
                                                                                             print_r($history['packs_per_year']);
                                                                                         } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
                                                         </div>
