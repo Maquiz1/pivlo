@@ -1530,7 +1530,7 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="interview_date" class="form-label">Interview Date</label>
                                                         <input type="date" value="<?php if ($kap['interview_date']) {
@@ -1539,7 +1539,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-9">
                                                     <div class="mb-2">
                                                         <label for="saratani_mapafu" class="form-label">1. Je, unaweza kuniambia nini maana ya ugonjwa wa Saratani ya mapafu? </label>
                                                         <select name="saratani_mapafu" id="saratani_mapafu" class="form-control" required>
@@ -1571,8 +1571,7 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-
-                                                <div class="col-6">
+                                                <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="uhusiano_saratani" class="form-label">2. Je, kuna uhusiano kati ya saratani ya mapafu na maambukizi ya Virusi vya UKIMWI? </label>
                                                         <select name="uhusiano_saratani" id="uhusiano_saratani" class="form-control" required>
@@ -1595,7 +1594,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="kusambazwa_saratani" class="form-label">3. Je, saratani ya mapafu inaweza kusambazwa kutoka kwa mtu mmoja kwenda kwa mtu mwingine? </label>
                                                         <select name="kusambazwa_saratani" id="kusambazwa_saratani" class="form-control" required>
@@ -1720,7 +1719,7 @@ if ($user->isLoggedIn()) {
                                                                                                                 } elseif ($kap['vitu_hatarishi'] == 8) {
                                                                                                                     echo 'Kutumia uzazi wa mpango (vidonge vya majira).';
                                                                                                                 } elseif ($kap['vitu_hatarishi'] == 96) {
-                                                                                                                    echo 'Nyinginezo, Taja: ________________';
+                                                                                                                    echo 'Nyinginezo';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
@@ -1734,7 +1733,7 @@ if ($user->isLoggedIn()) {
                                                             <option value="6">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu..</option>
                                                             <option value="7">Kuwa na historia ya kupigwa mionzi ya kifua..</option>
                                                             <option value="8">Kutumia uzazi wa mpango (vidonge vya majira)..</option>
-                                                            <option value="96">Nyinginezo, Taja: ________________.</option>
+                                                            <option value="96">Nyinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -1743,9 +1742,10 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6" id="vitu_hatarishi_other">
                                                     <div class="mb-3">
                                                         <label for="vitu_hatarishi_other" class="form-label">4. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['vitu_hatarishi_other']) {
-                                                                                        print_r($kap['vitu_hatarishi_other']);
-                                                                                    } ?>" name="vitu_hatarishi_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                        <textarea class="form-control" name="vitu_hatarishi_other" rows="2" placeholder="Type other here..."><?php if ($kap['vitu_hatarishi_other']) {
+                                                                                                                                                                    print_r($kap['vitu_hatarishi_other']);
+                                                                                                                                                                }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1778,7 +1778,7 @@ if ($user->isLoggedIn()) {
                                                                                                                 } elseif ($kap['dalili_saratani'] == 10) {
                                                                                                                     echo 'Kupungua uzito kusiko na sababu.';
                                                                                                                 } elseif ($kap['dalili_saratani'] == 96) {
-                                                                                                                    echo 'Nyingine, taja: ________________';
+                                                                                                                    echo 'Nyingine';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
@@ -1794,16 +1794,17 @@ if ($user->isLoggedIn()) {
                                                             <option value="8">Kutoa kisauti wakati wa kupumua (Wheezing).</option>
                                                             <option value="9">Kukosa pumzi (Shortness of breath).</option>
                                                             <option value="10">Kupungua uzito kusiko na sababu.</option>
-                                                            <option value="96">Nyingine, taja: ________________</option>
+                                                            <option value="96">Nyingine</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-6" id="dalili_saratani_other">
                                                     <div class="mb-3">
                                                         <label for="dalili_saratani_other" class="form-label">5. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['dalili_saratani_other']) {
-                                                                                        print_r($kap['dalili_saratani_other']);
-                                                                                    } ?>" name="dalili_saratani_other" class="form-control" placeholder="Ingiza dalili_saratani" />
+                                                        <textarea class="form-control" name="dalili_saratani_other" rows="2" placeholder="Type other here..."><?php if ($kap['dalili_saratani_other']) {
+                                                                                                                                                                    print_r($kap['dalili_saratani_other']);
+                                                                                                                                                                }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
 
@@ -1827,7 +1828,7 @@ if ($user->isLoggedIn()) {
                                                                                                                 } elseif ($kap['saratani_vipimo'] == 99) {
                                                                                                                     echo 'Sijui';
                                                                                                                 } elseif ($kap['saratani_vipimo'] == 96) {
-                                                                                                                    echo 'Zinginezo, taja: ________________';
+                                                                                                                    echo 'Zinginezo';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
@@ -1838,7 +1839,7 @@ if ($user->isLoggedIn()) {
                                                             <option value="3">CT scan ya kifua</option>
                                                             <option value="4">Kutoa kinyama kwenye mapafu (Lung Biopsy)</option>
                                                             <option value="99">Sijui</option>
-                                                            <option value="96">Zinginezo, taja: ________________</option>
+                                                            <option value="96">Zinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -1846,16 +1847,17 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6" id="saratani_vipimo_other">
                                                     <div class="mb-3">
                                                         <label for="saratani_vipimo_other" class="form-label">6. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['saratani_vipimo_other']) {
-                                                                                        print_r($kap['saratani_vipimo_other']);
-                                                                                    } ?>" name="saratani_vipimo_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
+                                                        <textarea class="form-control" name="saratani_vipimo_other" rows="3" placeholder="Type other here..."><?php if ($kap['saratani_vipimo_other']) {
+                                                                                                                                                                    print_r($kap['saratani_vipimo_other']);
+                                                                                                                                                                }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="saratani_inatibika" class="form-label">7. Je, ugonjwa wa saratani ya mapafu unatibika?</label>
                                                         <select name="saratani_inatibika" id="saratani_inatibika" class="form-control" onchange="updateText4(this.value)" required>
@@ -1878,7 +1880,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6" id="matibabu_saratani1">
+                                                <div class="col-8" id="matibabu_saratani1">
                                                     <div class="mb-3">
                                                         <label for="matibabu_saratani" class="form-label">8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
                                                         <select name="matibabu_saratani" id="matibabu_saratani" class="form-control">
@@ -1924,7 +1926,7 @@ if ($user->isLoggedIn()) {
                                                                                                         } elseif ($kap['matibabu'] == 99) {
                                                                                                             echo 'Sijui';
                                                                                                         } elseif ($kap['matibabu'] == 96) {
-                                                                                                            echo 'Zinginezo: Taja ________________';
+                                                                                                            echo 'Zinginezo';
                                                                                                         }
                                                                                                     } else {
                                                                                                         echo 'Select';
@@ -1937,16 +1939,17 @@ if ($user->isLoggedIn()) {
                                                             <option value="5">Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor).</option>
                                                             <option value="6">Tiba inayolengwa na kinga. (Immune target therapy).</option>
                                                             <option value="99">Sijui</option>
-                                                            <option value="96">Zinginezo: Taja ________________</option>
+                                                            <option value="96">Zinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-6" id="matibabu_other">
                                                     <div class="mb-3">
                                                         <label for="matibabu_other" class="form-label">9. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['matibabu_other']) {
-                                                                                        print_r($kap['matibabu_other']);
-                                                                                    } ?>" name="matibabu_other" class="form-control" placeholder="Ingiza matibabu" />
+                                                        <textarea class="form-control" name="matibabu_other" rows="3" placeholder="Type other here..."><?php if ($kap['matibabu_other']) {
+                                                                                                                                                            print_r($kap['matibabu_other']);
+                                                                                                                                                        }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1962,7 +1965,7 @@ if ($user->isLoggedIn()) {
 
                                             <div class="row">
 
-                                                <div class="col-6">
+                                                <div class="col-12">
                                                     <div class="mb-2">
                                                         <label for="saratani_uchunguzi" class="form-label">1. Je, umewahi kusikia chochote kuhusu uchunguzi wa saratani ya mapafu, inawezekana kwa kusoma mahali Fulani, kusikia kwenye vyombo vya habari au kusikia kutoka kituo cha kutolea huduma za Afya? </label>
                                                         <select name="saratani_uchunguzi" id="saratani_uchunguzi" class="form-control" required>
@@ -1985,7 +1988,14 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-3">
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row">
+
+
+                                                <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="uchunguzi_maana" class="form-label">2. Nini maana ya uchunguzi wa saratani ya mapafu?</label>
                                                         <select name="uchunguzi_maana" id="uchunguzi_maana" class="form-control" required>
@@ -1999,7 +2009,7 @@ if ($user->isLoggedIn()) {
                                                                                                                 } elseif ($kap['uchunguzi_maana'] == 99) {
                                                                                                                     echo 'Sijui';
                                                                                                                 } elseif ($kap['uchunguzi_maana'] == 96) {
-                                                                                                                    echo 'Nyinginezo, Taja; ________________';
+                                                                                                                    echo 'Nyinginezo';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
@@ -2009,17 +2019,18 @@ if ($user->isLoggedIn()) {
                                                             <option value="2">Uchunguzi wa saratani ya mapafu ni mkakati wa uchunguzi wa saratani ya mapafu inayotumiwa kutambua saratani ya mapafu mapema kabla ya kuonyesha dalili ambapo ni hatua ya mwanzoni kabisa ambayo kuna uwezekano mkubwa wa kutibika.</option>
                                                             <option value="3">Uchunguzi wa saratani ya mapafu ni kipimo cha kugundua saratani ya mapafu mapema kabla ya dalili kutokea.</option>
                                                             <option value="99">Sijui</option>
-                                                            <option value="96">Nyinginezo, Taja; ________________</option>
+                                                            <option value="96">Nyinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-3" id="uchunguzi_maana_other">
+                                                <div class="col-6" id="uchunguzi_maana_other">
                                                     <div class=" mb-3">
                                                         <label for="uchunguzi_maana_other" class="form-label">2. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['uchunguzi_maana_other']) {
-                                                                                        print_r($kap['uchunguzi_maana_other']);
-                                                                                    } ?>" name="uchunguzi_maana_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                        <textarea class="form-control" name="uchunguzi_maana_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_maana_other']) {
+                                                                                                                                                                    print_r($kap['uchunguzi_maana_other']);
+                                                                                                                                                                }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2040,7 +2051,7 @@ if ($user->isLoggedIn()) {
                                                                                                                 } elseif ($kap['uchunguzi_faida'] == 99) {
                                                                                                                     echo 'Sijui.';
                                                                                                                 } elseif ($kap['uchunguzi_faida'] == 96) {
-                                                                                                                    echo 'Nyinginezo, Taja: ________________';
+                                                                                                                    echo 'Nyinginezo';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
@@ -2050,7 +2061,7 @@ if ($user->isLoggedIn()) {
                                                             <option value="2">Kugundua saratani ya mapafu katika hatua ya awali wakati kuna uwezekano mkubwa wa kupona.</option>
                                                             <option value="3">Hupunguza hatari ya kufa kwa saratani ya mapafu.</option>
                                                             <option value="99">Sijui.</option>
-                                                            <option value="96">Nyinginezo, Taja: ________________.</option>
+                                                            <option value="96">Nyinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -2058,16 +2069,17 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6" id="uchunguzi_faida_other">
                                                     <div class="mb-3">
                                                         <label for="uchunguzi_faida_other" class="form-label">3. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['uchunguzi_faida_other']) {
-                                                                                        print_r($kap['uchunguzi_faida_other']);
-                                                                                    } ?>" name="uchunguzi_faida_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                        <textarea class="form-control" name="uchunguzi_faida_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_faida_other']) {
+                                                                                                                                                                    print_r($kap['uchunguzi_faida_other']);
+                                                                                                                                                                }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="uchunguzi_hatari" class="form-label">4. Je, kuna hatari zozote za kufanya uchunguzi wa saratani ya mapafu?</label>
                                                         <select name="uchunguzi_hatari" id="uchunguzi_hatari" class="form-control" required>
@@ -2089,8 +2101,11 @@ if ($user->isLoggedIn()) {
                                                         </select>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="col-4" id="saratani_hatari1">
+                                            <hr>
+                                            <div class="row" id="saratani_hatari1">
+                                                <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="saratani_hatari" class="form-label">5. Kama jibu hapo juu ni ndio, je ni hatari gani zinazoweza kutokana na kufanya uchunguzi wa saratani ya mapafu?</label>
                                                         <select name="saratani_hatari" id="saratani_hatari" class="form-control">
@@ -2108,7 +2123,7 @@ if ($user->isLoggedIn()) {
                                                                                                                 } elseif ($kap['saratani_hatari'] == 99) {
                                                                                                                     echo 'Sijui.';
                                                                                                                 } elseif ($kap['saratani_hatari'] == 96) {
-                                                                                                                    echo 'Nyinginezo, Taja: ________________';
+                                                                                                                    echo 'Nyinginezo';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
@@ -2120,17 +2135,18 @@ if ($user->isLoggedIn()) {
                                                             <option value="4">Msongo wa mawaso(Pychological distress)</option>
                                                             <option value="5">Uchunguzi wa kupita kiasi (Overdiagnosis)</option>
                                                             <option value="99">Sijui</option>
-                                                            <option value="96">Nyinyinezo: Taja ________________.</option>
+                                                            <option value="96">Nyinyinezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4" id="saratani_hatari_other">
+                                                <div class="col-6" id="saratani_hatari_other">
                                                     <div class="mb-3">
                                                         <label for="saratani_hatari_other" class="form-label">5. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['saratani_hatari_other']) {
-                                                                                        print_r($kap['saratani_hatari_other']);
-                                                                                    } ?>" name="saratani_hatari_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
+                                                        <textarea class="form-control" name="saratani_hatari_other" rows="3" placeholder="Type other here..."><?php if ($kap['saratani_hatari_other']) {
+                                                                                                                                                                    print_r($kap['saratani_hatari_other']);
+                                                                                                                                                                }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2157,7 +2173,7 @@ if ($user->isLoggedIn()) {
                                                                                                         } elseif ($kap['kundi'] == 99) {
                                                                                                             echo 'Sijui';
                                                                                                         } elseif ($kap['kundi'] == 96) {
-                                                                                                            echo 'Zinginezo, taja: ________________';
+                                                                                                            echo 'Zinginezo';
                                                                                                         }
                                                                                                     } else {
                                                                                                         echo 'Select';
@@ -2170,7 +2186,7 @@ if ($user->isLoggedIn()) {
                                                             <option value="5">Watu wenye viashiria vya saratani ya mapafu</option>
                                                             <option value="6">Watu wenye afya njema.</option>
                                                             <option value="99">Sijui</option>
-                                                            <option value="96">Zinginezo, taja: ________________</option>
+                                                            <option value="96">Zinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -2178,16 +2194,17 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6" id="kundi_other">
                                                     <div class="mb-3">
                                                         <label for="kundi_other" class="form-label">6. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['kundi_other']) {
-                                                                                        print_r($kap['kundi_other']);
-                                                                                    } ?>" name="kundi_other" class="form-control" placeholder="Ingiza saratani_vipimo_" />
+                                                        <textarea class="form-control" name="kundi_other" rows="3" placeholder="Type other here..."><?php if ($kap['kundi_other']) {
+                                                                                                                                                        print_r($kap['kundi_other']);
+                                                                                                                                                    }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="ushawishi" class="form-label">7. Je! Unazani nani ana ushawishi mkubwa katika kutoa elimu ya ugonjwa wa Saratani ya Mapafu? (Multiple answer)</label>
                                                         <select name="ushawishi" id="ushawishi" class="form-control" onchange="updateText4(this.value)" required>
@@ -2207,7 +2224,7 @@ if ($user->isLoggedIn()) {
                                                                                                             } elseif ($kap['ushawishi'] == 7) {
                                                                                                                 echo 'Serikali';
                                                                                                             } elseif ($kap['ushawishi'] == 96) {
-                                                                                                                echo 'Zinginezo, taja: ________________';
+                                                                                                                echo 'Zinginezo';
                                                                                                             }
                                                                                                         } else {
                                                                                                             echo 'Select';
@@ -2220,21 +2237,26 @@ if ($user->isLoggedIn()) {
                                                             <option value="5">Waganga wa jadi/jamii/Ukoo</option>
                                                             <option value="6">Viongozi wa jamii/mtaa/kijiji.</option>
                                                             <option value="7">Serikali</option>
-                                                            <option value="96">Zinginezo, taja: ________________</option>
+                                                            <option value="96">Zinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4" id="ushawishi_other">
+                                                <div class="col-6" id="ushawishi_other">
                                                     <div class="mb-3">
                                                         <label for="ushawishi_other" class="form-label">7. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['ushawishi_other']) {
-                                                                                        print_r($kap['ushawishi_other']);
-                                                                                    } ?>" name="ushawishi_other" class="form-control" placeholder="Ingiza matibabu" />
+                                                        <textarea class="form-control" name="ushawishi_other" rows="3" placeholder="Type other here..."><?php if ($kap['ushawishi_other']) {
+                                                                                                                                                            print_r($kap['ushawishi_other']);
+                                                                                                                                                        }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="col-4" id="hitaji_elimu1">
+                                            <hr>
+                                            <div class="row">
+
+                                                <div class="col-12" id="hitaji_elimu1">
                                                     <div class="mb-3">
                                                         <label for="hitaji_elimu" class="form-label">8. Je unahisi unahitaji taarifa/elimu Zaidi juu ya uchunguzi wa awali wa ugonjwa wa Saratani ya Mapafu na ugonjwa wenyewe kwa jumla?</label>
                                                         <select name="hitaji_elimu" id="hitaji_elimu" class="form-control">
@@ -2270,7 +2292,7 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="vifo" class="form-label">1. Fikiria kuhusu vifo vinavyotokea kwasababu ya Saratani; “Nisingependa kujua kama nina saratani ya mapafu”. </label>
                                                         <select name="vifo" id="vifo" class="form-control" required>
@@ -2299,7 +2321,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-8">
                                                     <div class="mb-3">
                                                         <label for="tayari_dalili" class="form-label">2. Fikiria jinsi dalili zinavyoonekana, “ Kwenda kwa daktari wangu mapema nikiwa tayari na dalili za ugonjwa wa saratani ya mapafu,akulete utofauti wowote wa mimi kupona saratani ya mapafu”. </label>
                                                         <select name="tayari_dalili" id="tayari_dalili" class="form-control" required>
@@ -2331,7 +2353,7 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-5">
                                                     <div class="mb-2">
                                                         <label for="saratani_kutibika" class="form-label">3. Fikiria jinsi dalili zinavyoonekana ; “Endapo saratani ya mapafu ikigundulika mapema, kuna uwezekano mkubwa wa kutibika”. </label>
                                                         <select name="saratani_kutibika" id="saratani_kutibika" class="form-control" required>
@@ -2359,7 +2381,7 @@ if ($user->isLoggedIn()) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-7">
                                                     <div class="mb-2">
                                                         <label for="saratani_wasiwasi" class="form-label">4. “Ningependelea kutokwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu nina wasiwasi juu ya kile kinachoweza kugundulika wakati wa uchunguzi wa saratani ya mapafu”. </label>
                                                         <select name="saratani_wasiwasi" id="saratani_wasiwasi" class="form-control" required>
@@ -2507,7 +2529,7 @@ if ($user->isLoggedIn()) {
                                                                                                                 } elseif ($kap['wapi_matibabu'] == 99) {
                                                                                                                     echo 'Sijui';
                                                                                                                 } elseif ($kap['wapi_matibabu'] == 96) {
-                                                                                                                    echo 'Nyinginezo, Taja; ________________';
+                                                                                                                    echo 'Nyinginezo';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
@@ -2520,7 +2542,7 @@ if ($user->isLoggedIn()) {
                                                             <option value="5">Kituo cha tiba asili.</option>
                                                             <option value="6">Wanajitibu wenyewe.</option>
                                                             <option value="99">Sijui</option>
-                                                            <option value="96">Nyinginezo, Taja; ________________</option>
+                                                            <option value="96">Nyinginezo</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -2528,16 +2550,17 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6" id="wapi_matibabu_other">
                                                     <div class="mb-3">
                                                         <label for="wapi_matibabu_other" class="form-label">8. Taja ?</label>
-                                                        <input type="text" value="<?php if ($kap['wapi_matibabu_other']) {
-                                                                                        print_r($kap['wapi_matibabu_other']);
-                                                                                    } ?>" name="wapi_matibabu_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                        <textarea class="form-control" name="wapi_matibabu_other" rows="2" placeholder="Type other here..."><?php if ($kap['wapi_matibabu_other']) {
+                                                                                                                                                                print_r($kap['wapi_matibabu_other']);
+                                                                                                                                                            }  ?>
+                                                                </textarea>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-12">
                                                     <div class="mb-2">
                                                         <label for="saratani_ushauri" class="form-label">9. Je! Wewe/watu katika jamii huwa wanakwenda kwenye vituo vya kutolea huduma za Afya kwa ajili ya ushauri kuhusu uchunguzi wa ugonjwa wa Saratani ya Mapafu?</label>
                                                         <select name="saratani_ushauri" id="saratani_ushauri" class="form-control" required>
@@ -2559,8 +2582,12 @@ if ($user->isLoggedIn()) {
                                                         </select>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="col-6">
+                                            <hr>
+                                            <div class="row">
+
+                                                <div class="col-12">
                                                     <div class="mb-2">
                                                         <label for="saratani_ujumbe" class="form-label">10. Katika mwezi uliopita umesikia ujumbe wa afya kuhusu maswala ya uchunguzi wa awali wa Saratani ya mapafu?</label>
                                                         <select name="saratani_ujumbe" id="saratani_ujumbe" class="form-control" required>
