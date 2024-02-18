@@ -357,9 +357,6 @@ if ($user->isLoggedIn()) {
                     $eligible = 0;
                 }
 
-                print_r($clients['study_id']);
-
-
                 if (!$history) {
                     $user->createRecord('history', array(
                         'screening_date' => Input::get('screening_date'),

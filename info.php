@@ -342,9 +342,17 @@ if ($user->isLoggedIn()) {
                                                             <?php if ($_GET['status'] == 7) { ?>
                                                                 <a href="add.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>&nbsp;&nbsp;
                                                             <?php } ?>
-                                                            <?php if ($value['age'] >= 18) { ?>
-                                                                <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>&nbsp;&nbsp;
+                                                            <?php if ($value['interview_type'] == 1) { ?>
+                                                                <?php if ($value['age'] >= 18) { ?>
+                                                                    <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>&nbsp;&nbsp;
+                                                                <?php   } ?>
                                                             <?php   } ?>
+                                                            <?php if ($value['interview_type'] == 2) { ?>
+                                                                <?php if ($value['age'] >= 18) { ?>
+                                                                    <a href="add.php?id=11&cid=<?= $value['id'] ?>&sequence=0&visit_code=RS&study_id=<?= $_GET['study_id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add Health Care Kap</a>&nbsp;&nbsp;
+                                                                <?php   } ?>
+                                                            <?php   } ?>
+
                                                         </td>
                                                     </tr>
 
