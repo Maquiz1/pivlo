@@ -414,14 +414,22 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 $results = $override->get3('results', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
-                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
-                if (!$results) {
+                if ($results) {
+                    $user->updateRecord('results', array(
+                        'results_date' => Input::get('results_date'),
+                        'ldct_results' => Input::get('ldct_results'),
+                        'rad_score' => Input::get('rad_score'),
+                        'findings' => Input::get('findings'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), $results[0]['id']);
+                    $successMessage = 'Results  Successful Updated';
+                } else {
                     $user->createRecord('results', array(
                         'results_date' => Input::get('results_date'),
                         'visit_code' => $_GET['visit_code'],
-                        'visit_name' => 'MONTH 0',
-                        'study_id' => $clients['study_id'],
+                        'study_id' => $_GET['study_id'],
                         'sequence' => $_GET['sequence'],
                         'ldct_results' => Input::get('ldct_results'),
                         'rad_score' => Input::get('rad_score'),
@@ -435,30 +443,14 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
+                    $user->updateRecord('clients', array(
+                        'enrolled' => 1,
+                    ), $_GET['cid']);
+
                     $successMessage = 'Results  Successful Added';
-                } else {
-                    $user->updateRecord('results', array(
-                        'results_date' => Input::get('results_date'),
-                        'visit_code' => $_GET['visit_code'],
-                        'visit_name' => 'MONTH 0',
-                        'study_id' => $clients['study_id'],
-                        'sequence' => $_GET['sequence'],
-                        'ldct_results' => Input::get('ldct_results'),
-                        'rad_score' => Input::get('rad_score'),
-                        'findings' => Input::get('findings'),
-                        'status' => 1,
-                        'patient_id' => $_GET['cid'],
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), $results[0]['id']);
-                    $successMessage = 'Results  Successful Updated';
                 }
 
-                $user->updateRecord('clients', array(
-                    'enrolled' => 1,
-                ), $_GET['cid']);
-
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -470,131 +462,149 @@ if ($user->isLoggedIn()) {
             ));
 
             if ($validate->passed()) {
-                $classification = $override->get3('classification', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
-                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-
                 if (count(Input::get('category')) == 1) {
                     foreach (Input::get('category') as $value) {
-                        // print_r($value);
-                        $code = '';
-                        $visit = '';
+                        $visit_code = '';
+                        $visit_name = '';
 
                         if ($value == 1) {
-                            $code = 'M12';
-                            $visit = 'Month 12';
+                            $visit_code = 'M12';
+                            $visit_name = 'Month 12';
                             $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
                         } elseif ($value == 2) {
-                            $code = 'M12';
-                            $visit = 'Month 12';
+                            $visit_code = 'M12';
+                            $visit_name = 'Month 12';
                             $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
                         } elseif ($value == 3) {
-                            $code = 'M06';
-                            $visit = 'Month 6';
+                            $visit_code = 'M06';
+                            $visit_name = 'Month 6';
                             $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
                         } elseif ($value == 4) {
-                            $code = 'M03';
-                            $visit = 'Month 3';
+                            $visit_code = 'M03';
+                            $visit_name = 'Month 3';
                             $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
                         } elseif ($value == 5) {
-                            $code = 'RFT';
-                            $visit = 'Referred';
+                            $visit_code = 'RFT';
+                            $visit_name = 'Referred';
                             $expected_date = date('Y-m-d', strtotime('+2 month', strtotime(Input::get('classification_date'))));
                         }
-
-                        if (!$classification) {
-
-                            if ($_GET['sequence'] == 1) {
-
-                                $user->createRecord('classification', array(
-                                    'classification_date' => Input::get('classification_date'),
-                                    'visit_code' => $code,
-                                    'visit_name' => $visit,
-                                    'study_id' => $_GET['study_id'],
-                                    'sequence' => 2,
-                                    'category' => $value,
-                                    'status' => 1,
-                                    'patient_id' => Input::get('cid'),
-                                    'create_on' => date('Y-m-d H:i:s'),
-                                    'staff_id' => $user->data()->id,
-                                    'update_on' => date('Y-m-d H:i:s'),
-                                    'update_id' => $user->data()->id,
-                                    'site_id' => $user->data()->site_id,
-                                ));
-
-                                $user->createRecord('visit', array(
-                                    'classification_date' => Input::get('classification_date'),
-                                    'expected_date' => $expected_date,
-                                    'visit_date' => '',
-                                    'visit_code' => $code,
-                                    'visit_name' => $visit,
-                                    'study_id' => $_GET['study_id'],
-                                    'sequence' => 2,
-                                    'visit_status' => 0,
-                                    'status' => 1,
-                                    'patient_id' => Input::get('cid'),
-                                    'create_on' => date('Y-m-d H:i:s'),
-                                    'staff_id' => $user->data()->id,
-                                    'update_on' => date('Y-m-d H:i:s'),
-                                    'update_id' => $user->data()->id,
-                                    'site_id' => $user->data()->site_id,
-                                ));
-
-                                $successMessage = 'Classification  Successful Added';
-                            }
-                        } else {
-                            $user->updateRecord('classification', array(
-                                'classification_date' => Input::get('classification_date'),
-                                'visit_code' => $code,
-                                'visit_name' => $visit,
-                                'study_id' => $_GET['study_id'],
-                                'sequence' => 2,
-                                'category' => $value,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                            ), $classification[0]['id']);
-
-                            if ($_GET['sequence'] == 1) {
-
-                                $visit_id = $override->getNews('visit', 'patient_id', $_GET['cid'], 'sequence', 2);
-
-                                if ($visit_id) {
-                                    $user->updateRecord('visit', array(
-                                        'classification_date' => Input::get('classification_date'),
-                                        'expected_date' => $expected_date,
-                                        'visit_code' => $code,
-                                        'visit_name' => $visit,
-                                        'update_on' => date('Y-m-d H:i:s'),
-                                        'update_id' => $user->data()->id,
-                                    ), $visit_id[0]['id']);
-                                } else {
-                                    $user->createRecord('visit', array(
-                                        'classification_date' => Input::get('classification_date'),
-                                        'expected_date' => $expected_date,
-                                        'visit_date' => '',
-                                        'visit_code' => $code,
-                                        'visit_name' => $visit,
-                                        'study_id' => $_GET['study_id'],
-                                        'sequence' => 2,
-                                        'visit_status' => 0,
-                                        'status' => 1,
-                                        'patient_id' => Input::get('cid'),
-                                        'create_on' => date('Y-m-d H:i:s'),
-                                        'staff_id' => $user->data()->id,
-                                        'update_on' => date('Y-m-d H:i:s'),
-                                        'update_id' => $user->data()->id,
-                                        'site_id' => $user->data()->site_id,
-                                    ));
-                                }
-                            }
-
-                            $successMessage = 'Classification  Successful Updated';
-                        }
-
-                        Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
                     }
                 } else {
                     $errorMessage = 'Please chose only one Classification!';
                 }
+
+
+                $classification = $override->get3('classification', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
+
+                if ($classification) {
+                    $user->updateRecord('classification', array(
+                        'classification_date' => Input::get('classification_date'),
+                        'category' => $value,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), $classification[0]['id']);
+
+
+                    if ($_GET['sequence'] == 1) {
+
+                        $user->createRecord('visit', array(
+                            'classification_date' => Input::get('classification_date'),
+                            'expected_date' => $expected_date,
+                            'visit_date' => '',
+                            'visit_code' => $visit_code,
+                            'visit_name' => $visit_name,
+                            'study_id' => $_GET['study_id'],
+                            'sequence' => 2,
+                            'visit_status' => 0,
+                            'status' => 1,
+                            'patient_id' => $_GET['cid'],
+                            'create_on' => date('Y-m-d H:i:s'),
+                            'staff_id' => $user->data()->id,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                            'site_id' => $user->data()->site_id,
+                        ));
+                    }
+
+
+
+
+                    if ($_GET['sequence'] == 1) {
+
+                        $visit_id = $override->getNews('visit', 'patient_id', $_GET['cid'], 'sequence', 1);
+
+                        if ($visit_id) {
+                            $user->updateRecord('visit', array(
+                                'classification_date' => Input::get('classification_date'),
+                                'expected_date' => $expected_date,
+                                'visit_code' => $visit_code,
+                                'visit_name' => $visit_name,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                            ), $visit_id[0]['id']);
+                        } else {
+                            $user->createRecord('visit', array(
+                                'classification_date' => Input::get('classification_date'),
+                                'expected_date' => $expected_date,
+                                'visit_date' => '',
+                                'visit_code' => $visit_code,
+                                'visit_name' => $visit_name,
+                                'study_id' => $_GET['study_id'],
+                                'sequence' => 2,
+                                'visit_status' => 0,
+                                'status' => 1,
+                                'patient_id' => $_GET['cid'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $user->data()->site_id,
+                            ));
+                        }
+                    }
+
+                    $successMessage = 'Classification  Successful Updated';
+                } else {
+                    $user->createRecord('classification', array(
+                        'classification_date' => Input::get('classification_date'),
+                        'visit_code' => $_GET['visit_code'],
+                        'study_id' => $_GET['study_id'],
+                        'sequence' => $_GET['sequence'],
+                        'category' => $value,
+                        'status' => 1,
+                        'patient_id' => $_GET['cid'],
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+
+                    if ($_GET['sequence'] == 1) {
+
+                        $user->createRecord('visit', array(
+                            'classification_date' => Input::get('classification_date'),
+                            'expected_date' => $expected_date,
+                            'visit_date' => '',
+                            'visit_code' => $visit_code,
+                            'visit_name' => $visit_name,
+                            'study_id' => $_GET['study_id'],
+                            'sequence' => 2,
+                            'visit_status' => 0,
+                            'status' => 1,
+                            'patient_id' => $_GET['cid'],
+                            'create_on' => date('Y-m-d H:i:s'),
+                            'staff_id' => $user->data()->id,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                            'site_id' => $user->data()->site_id,
+                        ));
+
+                    }
+                    $successMessage = 'Classification  Successful Added';
+                }
+
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }

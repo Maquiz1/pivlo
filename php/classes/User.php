@@ -269,7 +269,7 @@ class User
                     'sequence' => 1,
                     'expected_date' => $screening_date,
                     'visit_date' => '',
-                    'visit_code' => 'MO',
+                    'visit_code' => 'M0',
                     'visit_name' => 'Month 0',
                     'study_id' => $study_id,
                     'visit_status' => 0,
