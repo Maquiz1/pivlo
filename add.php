@@ -670,6 +670,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
+                print_r($_POST);
                 $economic = $override->get3('economic', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
@@ -682,7 +683,6 @@ if ($user->isLoggedIn()) {
                         'sequence' => 1,
                         'income_household' => Input::get('income_household'),
                         'income_patient' => Input::get('income_patient'),
-                        'smoking_long' => Input::get('smoking_long'),
                         'monthly_earn' => Input::get('monthly_earn'),
                         'member_earn' => Input::get('member_earn'),
                         'transport' => Input::get('transport'),
@@ -714,7 +714,6 @@ if ($user->isLoggedIn()) {
                         'sequence' => 1,
                         'income_household' => Input::get('income_household'),
                         'income_patient' => Input::get('income_patient'),
-                        'smoking_long' => Input::get('smoking_long'),
                         'monthly_earn' => Input::get('monthly_earn'),
                         'member_earn' => Input::get('member_earn'),
                         'transport' => Input::get('transport'),
@@ -752,6 +751,7 @@ if ($user->isLoggedIn()) {
             ));
 
             if ($validate->passed()) {
+
                 $outcome = $override->get3('outcome', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
@@ -3162,7 +3162,7 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="economic_date" class="form-label">Tarehe</label>
                                                         <input type="date" value="<?php if ($economic['economic_date']) {
@@ -3171,10 +3171,10 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-5">
                                                     <div class="mb-2">
                                                         <label for="income_household" class="form-label">Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
-                                                        <select class="form-control" id="income_household_<?= $x; ?>" name="income_household" style="width: 100%;" required>
+                                                        <select class="form-control" id="income_household" name="income_household" style="width: 100%;" required>
                                                             <option value="<?= $economic['income_household'] ?>"><?php if ($economic['income_household']) {
                                                                                                                         if ($economic['income_household'] == 1) {
                                                                                                                             echo 'Msharaha kwa mwezi';
@@ -3189,7 +3189,7 @@ if ($user->isLoggedIn()) {
                                                                                                                         } elseif ($economic['income_household'] == 6) {
                                                                                                                             echo 'Mstaafu';
                                                                                                                         } elseif ($economic['income_household'] == 96) {
-                                                                                                                            echo 'Nyingine, taja ';
+                                                                                                                            echo 'Nyingine';
                                                                                                                         }
                                                                                                                     } else {
                                                                                                                         echo 'Select';
@@ -3201,21 +3201,28 @@ if ($user->isLoggedIn()) {
                                                             <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
                                                             <option value="5">Hana kipato</option>
                                                             <option value="6">Mstaafu</option>
-                                                            <option value="96">Nyingine, taja </option>
+                                                            <option value="96">Nyingine</option>
                                                         </select>
-                                                        <span id="income_household_other_<?= $x; ?>">
-                                                            <input type="text" value="<?php if ($economic['income_household_other']) {
-                                                                                            print_r($economic['income_household_other']);
-                                                                                        } ?>" name="income_household_other" class="form-control" placeholder="Enter household other source" />
-                                                        </span>
-
                                                     </div>
                                                 </div>
-                                                <hr>
+                                                <div class="col-4" id="income_household_other">
+                                                    <div class="mb-3">
+                                                        <label for="monthly_earn" class="form-label">Taja</label>
+                                                        <textarea class="form-control" name="income_household_other" rows="2" placeholder="Type other here...">
+                                                            <?php if ($economic['income_household_other']) {
+                                                                print_r($economic['income_household_other']);
+                                                            }  ?>
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-6">
                                                     <div class="mb-2">
                                                         <label for="income_patient" class="form-label">Chanzo kikuu cha mapato cha mgonjwa? </label>
-                                                        <select class="form-control" id="income_patient_<?= $x; ?>" name="income_patient" style="width: 100%;" required>
+                                                        <select class="form-control" id="income_patient" name="income_patient" style="width: 100%;" required>
                                                             <option value="<?= $economic['income_patient'] ?>"><?php if ($economic['income_patient']) {
                                                                                                                     if ($economic['income_patient'] == 1) {
                                                                                                                         echo 'Msharaha kwa mwezi';
@@ -3230,7 +3237,7 @@ if ($user->isLoggedIn()) {
                                                                                                                     } elseif ($economic['income_patient'] == 6) {
                                                                                                                         echo 'Mstaafu';
                                                                                                                     } elseif ($economic['income_patient'] == 96) {
-                                                                                                                        echo 'Nyingine, taja ';
+                                                                                                                        echo 'Nyingine';
                                                                                                                     }
                                                                                                                 } else {
                                                                                                                     echo 'Select';
@@ -3242,18 +3249,24 @@ if ($user->isLoggedIn()) {
                                                             <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
                                                             <option value="5">Hana kipato</option>
                                                             <option value="6">Mstaafu</option>
-                                                            <option value="96">Nyingine, taja </option>
+                                                            <option value="96">Nyingine</option>
                                                         </select>
-                                                        <span id="income_patient_other">
-                                                            <input type=" text" value="<?php if ($economic['income_patient_other']) {
-                                                                                            print_r($economic['income_patient_other']);
-                                                                                        } ?>" name="income_patient_other" class="form-control" placeholder="Enter other patient source" />
-                                                        </span>
-
                                                     </div>
                                                 </div>
+                                                <div class="col-6" id="income_patient_other">
+                                                    <div class="mb-3">
+                                                        <label for="income_patient_other" class="form-label">Taja</label>
+                                                        <textarea class="form-control" name="income_patient_other" rows="2" placeholder="Type other here...">
+                                                            <?php if ($economic['income_patient_other']) {
+                                                                print_r($economic['income_patient_other']);
+                                                            }  ?>
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                <!-- <span id="monthly_earn_<?= $x; ?>"> -->
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-6" id="monthly_earn">
                                                     <div class="mb-3">
                                                         <label for="monthly_earn" class="form-label">Je, unaingiza shilingi ngapi kwa mwezi kutoka kwenye vyanzo vyako vyote vya fedha? ( TSHS )</label>
@@ -3262,9 +3275,6 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                                <!-- </span> -->
-                                                <hr>
-
 
                                                 <div class="col-6">
                                                     <div class="mb-3">
@@ -3274,7 +3284,10 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
+                                            </div>
 
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="transport" class="form-label">Ulilipa kiasi gani kwa ajili ya usafiri ulipoenda hospitali kwa ajili ya kufanyiwa uchunguzi wa saratani ya mapafu? </label>
@@ -3283,8 +3296,6 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                                <hr>
-
 
                                                 <div class="col-6">
                                                     <div class="mb-3">
@@ -3295,6 +3306,11 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
+                                            </div>
+
+                                            <hr>
+                                            <div class="row">
+
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="food_drinks" class="form-label">Ulilipa fedha kiasi gani kwa ajili ya chakula na vinywaji? </label>
@@ -3304,7 +3320,6 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <hr>
 
                                                 <div class="col-6">
                                                     <div class="mb-3">
@@ -3314,13 +3329,19 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                                <hr>
+                                            </div>
 
-                                                <div class="col-12">
-                                                    Je, kwa mwezi, unapoteza muda kiasi gani unapotembelea kliniki?
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Je, kwa mwezi, unapoteza muda kiasi gani unapotembelea kliniki?</h3>
                                                 </div>
-                                                <hr>
+                                            </div>
 
+
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="days" class="form-label">Siku</label>
@@ -3337,13 +3358,18 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100" id="hours" name="hours" class="form-control" placeholder="Enter hours" required />
                                                     </div>
                                                 </div>
-                                                <hr>
+                                            </div>
 
-                                                <div class="col-12">
-                                                    Je, ulilipa gharama kiasi gani kwa huduma zifuatazo?
+                                            <hr>
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title"> Je, ulilipa gharama kiasi gani kwa huduma zifuatazo?
+                                                    </h3>
                                                 </div>
-                                                <hr>
+                                            </div>
 
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="registration" class="form-label">Usajili ( TSHS )</label>
@@ -3360,8 +3386,10 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                                <hr>
+                                            </div>
 
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
@@ -3378,8 +3406,10 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                                <hr>
+                                            </div>
 
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="other_medical_cost" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
@@ -3410,7 +3440,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 10) { ?>
             <?php
-            $outcome = $override->get3('outcome', 'status', 1,'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
+            $outcome = $override->get3('outcome', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
