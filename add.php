@@ -2708,7 +2708,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="col-6">
                                                         <div class="mb-3">
                                                             <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
-                                                            <select name="currently_smoking" id="currently_smoking" class="form-control" required>
+                                                            <select name="currently_smoking" id="currently_smoking" class="form-control">
                                                                 <option value="<?= $history['currently_smoking'] ?>"><?php if ($history['currently_smoking']) {
                                                                                                                             if ($history['currently_smoking'] == 1) {
                                                                                                                                 echo 'Yes';
@@ -2734,7 +2734,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="col-6">
                                                         <div class="mb-2">
                                                             <label for="type_smoked" class="form-label">Amount smoked per day in cigarette sticks/packs?</label>
-                                                            <select name="type_smoked" id="type_smoked" class="form-control" required>
+                                                            <select name="type_smoked" id="type_smoked" class="form-control">
                                                                 <option value="<?= $history['type_smoked'] ?>"><?php if ($history['type_smoked']) {
                                                                                                                     if ($history['type_smoked'] == 1) {
                                                                                                                         echo 'Packs';
