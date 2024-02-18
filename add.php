@@ -36,10 +36,10 @@ if ($user->isLoggedIn()) {
                 // $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
 
+                    $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
+
                     $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
 
-                    $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
-                    
                     if ($clients) {
                         $user->updateRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
@@ -100,15 +100,11 @@ if ($user->isLoggedIn()) {
                             'education' => Input::get('education'),
                             'occupation' => Input::get('occupation'),
                             'health_insurance' => Input::get('health_insurance'),
-                            'insurance_name' => 1,
+                            'insurance_name' => Input::get('insurance_name'),
                             'insurance_name_other' => Input::get('insurance_name_other'),
-                            'pay_services' => 1,
+                            'pay_services' => Input::get('pay_services'),
                             'comments' => Input::get('comments'),
                             'interview_type' => Input::get('interview_type'),
-                            'kap' => 0,
-                            'screening' => 0,
-                            'health_care' => 0,
-                            'complete_status' => 0,
                             'complete_on' => date('Y-m-d H:i:s'),
                             'complete_id' => $user->data()->id,
                             'status' => 1,
