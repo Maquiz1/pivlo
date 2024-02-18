@@ -1755,7 +1755,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="dalili_saratani" class="form-label">5. Je, mtu mwenye Saratani ya mapafu anakua na dalili zipi? (Multiple answer) </label>
-                                                        <select name="dalili_saratani" id="dalili_saratani" class="form-control" onchange="updateText2(this.value)" required>
+                                                        <select name="dalili_saratani" id="dalili_saratani" class="form-control" required>
                                                             <option value="<?= $kap['dalili_saratani'] ?>"><?php if ($kap['dalili_saratani']) {
                                                                                                                 if ($kap['dalili_saratani'] == 1) {
                                                                                                                     echo 'Kikohozi cha Zaidi ya  wiki 2 au 3.';
@@ -1814,7 +1814,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="saratani_vipimo" class="form-label">6. Kama mtu akigundulika ana saratani ya mapafu ,ni vipimo gani vinatakiwa kufanyika? (Multiple answer)</label>
-                                                        <select name="saratani_vipimo" id="saratani_vipimo" class="form-control" onchange="updateText3(this.value)" required>
+                                                        <select name="saratani_vipimo" id="saratani_vipimo" class="form-control" required>
                                                             <option value="<?= $kap['saratani_vipimo'] ?>"><?php if ($kap['saratani_vipimo']) {
                                                                                                                 if ($kap['saratani_vipimo'] == 1) {
                                                                                                                     echo 'Vipimo vya damu.';
@@ -2089,12 +2089,11 @@ if ($user->isLoggedIn()) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <hr>
 
                                                 <div class="col-4" id="saratani_hatari1">
                                                     <div class="mb-3">
                                                         <label for="saratani_hatari" class="form-label">5. Kama jibu hapo juu ni ndio, je ni hatari gani zinazoweza kutokana na kufanya uchunguzi wa saratani ya mapafu?</label>
-                                                        <select name="saratani_hatari" id="saratani_hatari" class="form-control" onchange="updateText4(this.value)" required>
+                                                        <select name="saratani_hatari" id="saratani_hatari" class="form-control">
                                                             <option value="<?= $kap['saratani_hatari'] ?>"><?php if ($kap['saratani_hatari']) {
                                                                                                                 if ($kap['saratani_hatari'] == 1) {
                                                                                                                     echo 'Hatari ya kupata mionzi mwilini, kwa kuwa inatumia skana ya LDCT.';
@@ -2235,1546 +2234,1538 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                            </div>
-
-
-                                            <div class="col-4" id="hitaji_elimu1">
-                                                <div class="mb-3">
-                                                    <label for="hitaji_elimu" class="form-label">8. Je unahisi unahitaji taarifa/elimu Zaidi juu ya uchunguzi wa awali wa ugonjwa wa Saratani ya Mapafu na ugonjwa wenyewe kwa jumla?</label>
-                                                    <select name="hitaji_elimu" id="hitaji_elimu" class="form-control" onchange="updateText5(this.value)">
-                                                        <option value="<?= $kap['hitaji_elimu'] ?>"><?php if ($kap['hitaji_elimu']) {
-                                                                                                        if ($kap['hitaji_elimu'] == 1) {
-                                                                                                            echo 'Ndio';
-                                                                                                        } elseif ($kap['hitaji_elimu'] == 2) {
-                                                                                                            echo 'Hapana';
-                                                                                                        } elseif ($kap['hitaji_elimu'] == 99) {
-                                                                                                            echo 'Sijui';
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        echo 'Select';
-                                                                                                    } ?>
-                                                        </option>
-                                                        <option value="1">Ndio</option>
-                                                        <option value="2">Hapana</option>
-                                                        <option value="99">Sijui</option>
-                                                    </select>
+                                                <div class="col-4" id="hitaji_elimu1">
+                                                    <div class="mb-3">
+                                                        <label for="hitaji_elimu" class="form-label">8. Je unahisi unahitaji taarifa/elimu Zaidi juu ya uchunguzi wa awali wa ugonjwa wa Saratani ya Mapafu na ugonjwa wenyewe kwa jumla?</label>
+                                                        <select name="hitaji_elimu" id="hitaji_elimu" class="form-control">
+                                                            <option value="<?= $kap['hitaji_elimu'] ?>"><?php if ($kap['hitaji_elimu']) {
+                                                                                                            if ($kap['hitaji_elimu'] == 1) {
+                                                                                                                echo 'Ndio';
+                                                                                                            } elseif ($kap['hitaji_elimu'] == 2) {
+                                                                                                                echo 'Hapana';
+                                                                                                            } elseif ($kap['hitaji_elimu'] == 99) {
+                                                                                                                echo 'Sijui';
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            echo 'Select';
+                                                                                                        } ?>
+                                                            </option>
+                                                            <option value="1">Ndio</option>
+                                                            <option value="2">Hapana</option>
+                                                            <option value="99">Sijui</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <hr>
-                                        </div>
 
-                                        <div class="card card-warning">
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Sehemu ya 4; Mtazamo juu ya uchunguzi wa saratani ya mapafu</h3>
+                                                </div>
+                                            </div>
+
                                             <div class="card-header">
-                                                <h3 class="card-title">Sehemu ya 4; Mtazamo juu ya uchunguzi wa saratani ya mapafu</h3>
+                                                <h3 class="card-title">Fikiria kuhusu uchunguzi wa saratani ya mapafu, unaweza kuniambia ni kwa kiasi gani unakubaliana na kila kauli zifuatazo?</h3>
                                             </div>
-                                        </div>
 
-                                        <hr>
-                                        <div class="card-header">
-                                            <h3 class="card-title">Fikiria kuhusu uchunguzi wa saratani ya mapafu, unaweza kuniambia ni kwa kiasi gani unakubaliana na kila kauli zifuatazo?</h3>
-                                        </div>
-
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="mb-2">
-                                                    <label for="vifo" class="form-label">1. Fikiria kuhusu vifo vinavyotokea kwasababu ya Saratani; “Nisingependa kujua kama nina saratani ya mapafu”. </label>
-                                                    <select name="vifo" id="vifo" class="form-control" required>
-                                                        <option value="<?= $kap['vifo'] ?>"><?php if ($kap['vifo']) {
-                                                                                                if ($kap['vifo'] == 1) {
-                                                                                                    echo 'Nakubali sana.';
-                                                                                                } elseif ($kap['vifo'] == 2) {
-                                                                                                    echo 'Nakubali';
-                                                                                                } elseif ($kap['vifo'] == 3) {
-                                                                                                    echo 'Kawaida';
-                                                                                                } elseif ($kap['vifo'] == 4) {
-                                                                                                    echo 'Sikubali kabisa.';
-                                                                                                } elseif ($kap['vifo'] == 5) {
-                                                                                                    echo 'Sikubali';
-                                                                                                }
-                                                                                            } else {
-                                                                                                echo 'Select';
-                                                                                            } ?>
-                                                        </option>
-                                                        <option value="1">Nakubali sana.</option>
-                                                        <option value="2">Nakubali</option>
-                                                        <option value="3">Kawaida</option>
-                                                        <option value="4">Sikubali kabisa.</option>
-                                                        <option value="5">Sikubali</option>
-                                                    </select>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="vifo" class="form-label">1. Fikiria kuhusu vifo vinavyotokea kwasababu ya Saratani; “Nisingependa kujua kama nina saratani ya mapafu”. </label>
+                                                        <select name="vifo" id="vifo" class="form-control" required>
+                                                            <option value="<?= $kap['vifo'] ?>"><?php if ($kap['vifo']) {
+                                                                                                    if ($kap['vifo'] == 1) {
+                                                                                                        echo 'Nakubali sana.';
+                                                                                                    } elseif ($kap['vifo'] == 2) {
+                                                                                                        echo 'Nakubali';
+                                                                                                    } elseif ($kap['vifo'] == 3) {
+                                                                                                        echo 'Kawaida';
+                                                                                                    } elseif ($kap['vifo'] == 4) {
+                                                                                                        echo 'Sikubali kabisa.';
+                                                                                                    } elseif ($kap['vifo'] == 5) {
+                                                                                                        echo 'Sikubali';
+                                                                                                    }
+                                                                                                } else {
+                                                                                                    echo 'Select';
+                                                                                                } ?>
+                                                            </option>
+                                                            <option value="1">Nakubali sana.</option>
+                                                            <option value="2">Nakubali</option>
+                                                            <option value="3">Kawaida</option>
+                                                            <option value="4">Sikubali kabisa.</option>
+                                                            <option value="5">Sikubali</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-6">
-                                                <div class="mb-2">
-                                                    <label for="tayari_dalili" class="form-label">2. Fikiria jinsi dalili zinavyoonekana, “ Kwenda kwa daktari wangu mapema nikiwa tayari na dalili za ugonjwa wa saratani ya mapafu,akulete utofauti wowote wa mimi kupona saratani ya mapafu”. </label>
-                                                    <select name="tayari_dalili" id="tayari_dalili" class="form-control" required>
-                                                        <option value="<?= $kap['tayari_dalili'] ?>"><?php if ($kap['tayari_dalili']) {
-                                                                                                            if ($kap['tayari_dalili'] == 1) {
-                                                                                                                echo 'Nakubali sana.';
-                                                                                                            } elseif ($kap['tayari_dalili'] == 2) {
-                                                                                                                echo 'Nakubali';
-                                                                                                            } elseif ($kap['tayari_dalili'] == 3) {
-                                                                                                                echo 'Kawaida';
-                                                                                                            } elseif ($kap['tayari_dalili'] == 4) {
-                                                                                                                echo 'Sikubali kabisa.';
-                                                                                                            } elseif ($kap['tayari_dalili'] == 5) {
-                                                                                                                echo 'Sikubali';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                        </option>
-                                                        <option value="1">Nakubali sana.</option>
-                                                        <option value="2">Nakubali</option>
-                                                        <option value="3">Kawaida</option>
-                                                        <option value="4">Sikubali kabisa.</option>
-                                                        <option value="5">Sikubali</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="mb-2">
-                                                    <label for="saratani_kutibika" class="form-label">3. Fikiria jinsi dalili zinavyoonekana ; “Endapo saratani ya mapafu ikigundulika mapema, kuna uwezekano mkubwa wa kutibika”. </label>
-                                                    <select name="saratani_kutibika" id="saratani_kutibika" class="form-control" required>
-                                                        <option value="<?= $kap['saratani_kutibika'] ?>"><?php if ($kap['saratani_kutibika']) {
-                                                                                                                if ($kap['saratani_kutibika'] == 1) {
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="tayari_dalili" class="form-label">2. Fikiria jinsi dalili zinavyoonekana, “ Kwenda kwa daktari wangu mapema nikiwa tayari na dalili za ugonjwa wa saratani ya mapafu,akulete utofauti wowote wa mimi kupona saratani ya mapafu”. </label>
+                                                        <select name="tayari_dalili" id="tayari_dalili" class="form-control" required>
+                                                            <option value="<?= $kap['tayari_dalili'] ?>"><?php if ($kap['tayari_dalili']) {
+                                                                                                                if ($kap['tayari_dalili'] == 1) {
                                                                                                                     echo 'Nakubali sana.';
-                                                                                                                } elseif ($kap['saratani_kutibika'] == 2) {
+                                                                                                                } elseif ($kap['tayari_dalili'] == 2) {
                                                                                                                     echo 'Nakubali';
-                                                                                                                } elseif ($kap['saratani_kutibika'] == 3) {
+                                                                                                                } elseif ($kap['tayari_dalili'] == 3) {
                                                                                                                     echo 'Kawaida';
-                                                                                                                } elseif ($kap['saratani_kutibika'] == 4) {
+                                                                                                                } elseif ($kap['tayari_dalili'] == 4) {
                                                                                                                     echo 'Sikubali kabisa.';
-                                                                                                                } elseif ($kap['saratani_kutibika'] == 5) {
+                                                                                                                } elseif ($kap['tayari_dalili'] == 5) {
                                                                                                                     echo 'Sikubali';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
                                                                                                             } ?>
-                                                        </option>
-                                                        <option value="1">Nakubali sana.</option>
-                                                        <option value="2">Nakubali</option>
-                                                        <option value="3">Kawaida</option>
-                                                        <option value="4">Sikubali kabisa.</option>
-                                                        <option value="5">Sikubali</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="mb-2">
-                                                    <label for="saratani_wasiwasi" class="form-label">4. “Ningependelea kutokwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu nina wasiwasi juu ya kile kinachoweza kugundulika wakati wa uchunguzi wa saratani ya mapafu”. </label>
-                                                    <select name="saratani_wasiwasi" id="saratani_wasiwasi" class="form-control" required>
-                                                        <option value="<?= $kap['saratani_wasiwasi'] ?>"><?php if ($kap['saratani_wasiwasi']) {
-                                                                                                                if ($kap['saratani_wasiwasi'] == 1) {
-                                                                                                                    echo 'Nakubali sana.';
-                                                                                                                } elseif ($kap['saratani_wasiwasi'] == 2) {
-                                                                                                                    echo 'Nakubali';
-                                                                                                                } elseif ($kap['saratani_wasiwasi'] == 3) {
-                                                                                                                    echo 'Kawaida';
-                                                                                                                } elseif ($kap['saratani_wasiwasi'] == 4) {
-                                                                                                                    echo 'Sikubali kabisa.';
-                                                                                                                } elseif ($kap['saratani_wasiwasi'] == 5) {
-                                                                                                                    echo 'Sikubali';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                        </option>
-                                                        <option value="1">Nakubali sana.</option>
-                                                        <option value="2">Nakubali</option>
-                                                        <option value="3">Kawaida</option>
-                                                        <option value="4">Sikubali kabisa.</option>
-                                                        <option value="5">Sikubali</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="mb-2">
-                                                    <label for="saratani_umuhimu" class="form-label">5. “Sidhani kama kuna umuhimu wowote wa kwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu haita athiri matokeo”. </label>
-                                                    <select name="saratani_umuhimu" id="saratani_umuhimu" class="form-control" required>
-                                                        <option value="<?= $kap['saratani_umuhimu'] ?>"><?php if ($kap['saratani_umuhimu']) {
-                                                                                                            if ($kap['saratani_umuhimu'] == 1) {
-                                                                                                                echo 'Nakubali sana.';
-                                                                                                            } elseif ($kap['saratani_umuhimu'] == 2) {
-                                                                                                                echo 'Nakubali';
-                                                                                                            } elseif ($kap['saratani_umuhimu'] == 3) {
-                                                                                                                echo 'Kawaida';
-                                                                                                            } elseif ($kap['saratani_umuhimu'] == 4) {
-                                                                                                                echo 'Sikubali kabisa.';
-                                                                                                            } elseif ($kap['saratani_umuhimu'] == 5) {
-                                                                                                                echo 'Sikubali';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                        </option>
-                                                        <option value="1">Nakubali sana.</option>
-                                                        <option value="2">Nakubali</option>
-                                                        <option value="3">Kawaida</option>
-                                                        <option value="4">Sikubali kabisa.</option>
-                                                        <option value="5">Sikubali</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="mb-2">
-                                                    <label for="saratani_kufa" class="form-label">6.“Kufanya uchunguzi wa saratani ya mapafu kunaweza kupunguza uwezekano wangu wa kufa kutokana na saratani ya mapafu.” </label>
-                                                    <select name="saratani_kufa" id="saratani_kufa" class="form-control" required>
-                                                        <option value="<?= $kap['saratani_kufa'] ?>"><?php if ($kap['saratani_kufa']) {
-                                                                                                            if ($kap['saratani_kufa'] == 1) {
-                                                                                                                echo 'Nakubali sana.';
-                                                                                                            } elseif ($kap['saratani_kufa'] == 2) {
-                                                                                                                echo 'Nakubali';
-                                                                                                            } elseif ($kap['saratani_kufa'] == 3) {
-                                                                                                                echo 'Kawaida';
-                                                                                                            } elseif ($kap['saratani_kufa'] == 4) {
-                                                                                                                echo 'Sikubali kabisa.';
-                                                                                                            } elseif ($kap['saratani_kufa'] == 5) {
-                                                                                                                echo 'Sikubali';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                        </option>
-                                                        <option value="1">Nakubali sana.</option>
-                                                        <option value="2">Nakubali</option>
-                                                        <option value="3">Kawaida</option>
-                                                        <option value="4">Sikubali kabisa.</option>
-                                                        <option value="5">Sikubali</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4">
-                                                <div class="mb-2">
-                                                    <label for="uchunguzi_haraka" class="form-label">7. “Endapo nitapata dalili zozote za awali za ugonjwa wa Saratani ya mapafu nitakwenda kwa ajili ya uchunguzi wa saratani ya mapafu haraka iwezekanavyo”. </label>
-                                                    <select name="uchunguzi_haraka" id="uchunguzi_haraka" class="form-control" required>
-                                                        <option value="<?= $kap['uchunguzi_haraka'] ?>"><?php if ($kap['uchunguzi_haraka']) {
-                                                                                                            if ($kap['uchunguzi_haraka'] == 1) {
-                                                                                                                echo 'Nakubali sana.';
-                                                                                                            } elseif ($kap['uchunguzi_haraka'] == 2) {
-                                                                                                                echo 'Nakubali';
-                                                                                                            } elseif ($kap['uchunguzi_haraka'] == 3) {
-                                                                                                                echo 'Kawaida';
-                                                                                                            } elseif ($kap['uchunguzi_haraka'] == 4) {
-                                                                                                                echo 'Sikubali kabisa.';
-                                                                                                            } elseif ($kap['uchunguzi_haraka'] == 5) {
-                                                                                                                echo 'Sikubali';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                        </option>
-                                                        <option value="1">Nakubali sana.</option>
-                                                        <option value="2">Nakubali</option>
-                                                        <option value="3">Kawaida</option>
-                                                        <option value="4">Sikubali kabisa.</option>
-                                                        <option value="5">Sikubali</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        </div>
-
-                                </div>
-
-                                <div class="card card-warning">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Sehemu ya 5; Utaratibu(Practice) juu ya uchunguzi wa saratani ya mapafu</h3>
-                                    </div>
-                                </div>
-
-                                <hr>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="mb-3">
-                                            <label for="wapi_matibabu" class="form-label">8. Je katika jamii yako, watu wakiumwa, huwa wanapendelea kwenda wapi kupata matibabu ?</label>
-                                            <select name="wapi_matibabu" id="wapi_matibabu" class="form-control" required>
-                                                <option value="<?= $kap['wapi_matibabu'] ?>"><?php if ($kap['wapi_matibabu']) {
-                                                                                                    if ($kap['wapi_matibabu'] == 1) {
-                                                                                                        echo 'Kituo cha afya kilichopo karibu.';
-                                                                                                    } elseif ($kap['wapi_matibabu'] == 2) {
-                                                                                                        echo 'Mganga wa jadi.';
-                                                                                                    } elseif ($kap['wapi_matibabu'] == 3) {
-                                                                                                        echo 'Kanisani/msikitini.';
-                                                                                                    } elseif ($kap['wapi_matibabu'] == 4) {
-                                                                                                        echo 'Duka la Dawa.';
-                                                                                                    } elseif ($kap['wapi_matibabu'] == 5) {
-                                                                                                        echo 'Kituo cha tiba asili.';
-                                                                                                    } elseif ($kap['wapi_matibabu'] == 6) {
-                                                                                                        echo 'Wanajitibu wenyewe.';
-                                                                                                    } elseif ($kap['wapi_matibabu'] == 99) {
-                                                                                                        echo 'Sijui';
-                                                                                                    } elseif ($kap['wapi_matibabu'] == 96) {
-                                                                                                        echo 'Nyinginezo, Taja; ________________';
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    echo 'Select';
-                                                                                                } ?>
-                                                </option>
-                                                <option value="1">Kituo cha afya kilichopo karibu.</option>
-                                                <option value="2">Mganga wa jadi.</option>
-                                                <option value="3">Kanisani/msikitini.</option>
-                                                <option value="4">Duka la Dawa.</option>
-                                                <option value="5">Kituo cha tiba asili.</option>
-                                                <option value="6">Wanajitibu wenyewe.</option>
-                                                <option value="99">Sijui</option>
-                                                <option value="96">Nyinginezo, Taja; ________________</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6" id="wapi_matibabu_other">
-                                        <div class="mb-3">
-                                            <label for="wapi_matibabu_other" class="form-label">Taja ?</label>
-                                            <input type="text" value="<?php if ($kap['wapi_matibabu_other']) {
-                                                                            print_r($kap['wapi_matibabu_other']);
-                                                                        } ?>" name="wapi_matibabu_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="mb-2">
-                                            <label for="saratani_ushauri" class="form-label">9. Je! Wewe/watu katika jamii huwa wanakwenda kwenye vituo vya kutolea huduma za Afya kwa ajili ya ushauri kuhusu uchunguzi wa ugonjwa wa Saratani ya Mapafu?</label>
-                                            <select name="saratani_ushauri" id="saratani_ushauri" class="form-control" required>
-                                                <option value="<?= $kap['saratani_ushauri'] ?>"><?php if ($kap['saratani_ushauri']) {
-                                                                                                    if ($kap['saratani_ushauri'] == 1) {
-                                                                                                        echo 'Ndio';
-                                                                                                    } elseif ($kap['saratani_ushauri'] == 2) {
-                                                                                                        echo 'Hapana';
-                                                                                                    } elseif ($kap['saratani_ushauri'] == 99) {
-                                                                                                        echo 'Sijui';
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    echo 'Select';
-                                                                                                } ?>
-                                                </option>
-                                                <option value="1">Ndio</option>
-                                                <option value="2">Hapana</option>
-                                                <option value="99">Sijui</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <div class="mb-2">
-                                            <label for="saratani_ujumbe" class="form-label">10. Katika mwezi uliopita umesikia ujumbe wa afya kuhusu maswala ya uchunguzi wa awali wa Saratani ya mapafu?</label>
-                                            <select name="saratani_ujumbe" id="saratani_ujumbe" class="form-control" required>
-                                                <option value="<?= $kap['saratani_ujumbe'] ?>"><?php if ($kap['saratani_ujumbe']) {
-                                                                                                    if ($kap['saratani_ujumbe'] == 1) {
-                                                                                                        echo 'Ndio';
-                                                                                                    } elseif ($kap['saratani_ujumbe'] == 2) {
-                                                                                                        echo 'Hapana';
-                                                                                                    } elseif ($kap['saratani_ujumbe'] == 99) {
-                                                                                                        echo 'Sijui';
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    echo 'Select';
-                                                                                                } ?>
-                                                </option>
-                                                <option value="1">Ndio</option>
-                                                <option value="2">Hapana</option>
-                                                <option value="99">Sijui</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                </div>
-
-
-                                <div class="card card-warning">
-                                    <div class="card-header">
-                                        <h3 class="card-title">ANY COMENT OR REMARKS</h3>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="row-form clearfix">
-                                            <!-- select -->
-                                            <div class="form-group">
-                                                <label>Remarks / Comments:</label>
-                                                <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($kap['comments']) {
-                                                                                                                                                print_r($kap['comments']);
-                                                                                                                                            }  ?>
-                                                                </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                <input type="submit" name="add_kap" value="Submit" class="btn btn-primary">
-                            </div>
-                            </form>
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!--/.col (right) -->
-            </div>
-            <!-- /.row -->
-    </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-<?php } elseif ($_GET['id'] == 6) { ?>
-    <?php
-            $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid'])[0];
-    ?>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <?php if (!$history) { ?>
-                            <h1>Add New HISTORY</h1>
-                        <?php } else { ?>
-                            <h1>Update HISTORY</h1>
-                        <?php } ?>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                    < Back</a>
-                            </li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                    Go to screening list > </a>
-                            </li>&nbsp;&nbsp;
-                            <?php if (!$history) { ?>
-                                <li class="breadcrumb-item active">Add New HISTORY</li>
-                            <?php } else { ?>
-                                <li class="breadcrumb-item active">Update HISTORY</li>
-                            <?php } ?>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- right column -->
-                    <div class="col-md-12">
-                        <!-- general form elements disabled -->
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">Part B: Smoking history</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="screening_date" class="form-label">Screening date</label>
-                                                <input type="date" value="<?php if ($history) {
-                                                                                print_r($history['screening_date']);
-                                                                            } ?>" id="screening_date" name="screening_date" class="form-control" placeholder="Enter screening date" required />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="ever_smoked" class="form-label">Have you ever smoked cigarette ?</label>
-                                                <select name="ever_smoked" id="ever_smoked" class="form-control" required>
-                                                    <option value="<?= $history['ever_smoked'] ?>"><?php if ($history) {
-                                                                                                        if ($history['ever_smoked'] == 1) {
-                                                                                                            echo 'Yes';
-                                                                                                        } elseif ($history['ever_smoked'] == 2) {
-                                                                                                            echo 'No';
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        echo 'Select';
-                                                                                                    } ?>
-                                                    </option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="2">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <hr>
-                                    <div id="ever_smoked1">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="mb-2">
-                                                    <label for="start_smoking" class="form-label">When did you start smoking?</label>
-                                                    <input type="number" value="<?php if ($history) {
-                                                                                    print_r($history['start_smoking']);
-                                                                                } ?>" min="1970" min="2024" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" />
+                                                            </option>
+                                                            <option value="1">Nakubali sana.</option>
+                                                            <option value="2">Nakubali</option>
+                                                            <option value="3">Kawaida</option>
+                                                            <option value="4">Sikubali kabisa.</option>
+                                                            <option value="5">Sikubali</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <hr>
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
-                                                    <select name="currently_smoking" id="currently_smoking" class="form-control" required>
-                                                        <option value="<?= $history['currently_smoking'] ?>"><?php if ($history) {
-                                                                                                                    if ($history['currently_smoking'] == 1) {
-                                                                                                                        echo 'Yes';
-                                                                                                                    } elseif ($history['currently_smoking'] == 2) {
-                                                                                                                        echo 'No';
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="saratani_kutibika" class="form-label">3. Fikiria jinsi dalili zinavyoonekana ; “Endapo saratani ya mapafu ikigundulika mapema, kuna uwezekano mkubwa wa kutibika”. </label>
+                                                        <select name="saratani_kutibika" id="saratani_kutibika" class="form-control" required>
+                                                            <option value="<?= $kap['saratani_kutibika'] ?>"><?php if ($kap['saratani_kutibika']) {
+                                                                                                                    if ($kap['saratani_kutibika'] == 1) {
+                                                                                                                        echo 'Nakubali sana.';
+                                                                                                                    } elseif ($kap['saratani_kutibika'] == 2) {
+                                                                                                                        echo 'Nakubali';
+                                                                                                                    } elseif ($kap['saratani_kutibika'] == 3) {
+                                                                                                                        echo 'Kawaida';
+                                                                                                                    } elseif ($kap['saratani_kutibika'] == 4) {
+                                                                                                                        echo 'Sikubali kabisa.';
+                                                                                                                    } elseif ($kap['saratani_kutibika'] == 5) {
+                                                                                                                        echo 'Sikubali';
                                                                                                                     }
                                                                                                                 } else {
                                                                                                                     echo 'Select';
                                                                                                                 } ?>
-                                                        </option>
-                                                        <option value="1">Yes</option>
-                                                        <option value="2">No</option>
-                                                    </select>
+                                                            </option>
+                                                            <option value="1">Nakubali sana.</option>
+                                                            <option value="2">Nakubali</option>
+                                                            <option value="3">Kawaida</option>
+                                                            <option value="4">Sikubali kabisa.</option>
+                                                            <option value="5">Sikubali</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                    <div id="ever_smoked2">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="mb-2">
-                                                    <label for="type_smoked" class="form-label">Amount smoked per day in cigarette sticks/packs?</label>
-                                                    <select name="type_smoked" id="type_smoked" class="form-control" required>
-                                                        <option value="<?= $history['type_smoked'] ?>"><?php if ($history) {
-                                                                                                            if ($history['type_smoked'] == 1) {
-                                                                                                                echo 'Packs';
-                                                                                                            } elseif ($history['type_smoked'] == 2) {
-                                                                                                                echo 'Cigarette';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                        </option>
-                                                        <option value="1">Packs</option>
-                                                        <option value="2">Cigarette</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-6" id="quit_smoking">
-                                                <div class="mb-3">
-                                                    <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
-                                                    <input type="number" value="<?php if ($history) {
-                                                                                    print_r($history['quit_smoking']);
-                                                                                } ?>" min="1970" min="2023" name="quit_smoking" class="form-control" placeholder="Enter Year" />
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <div id="ever_smoked3">
-                                        <div class="row">
-                                            <div class="col-4" id="packs_per_day3">
-                                                <div class="mb-3">
-                                                    <label for="packs_per_day" class="form-label">
-                                                        <label for="packs_per_day2" id="cigarette_per_day" class="form-label">
-                                                            Number of Cigarette per day
-                                                        </label>
-                                                        <label for="packs_per_day3" id="packs_per_day" class="form-label">
-                                                            Number of packs per day
-                                                        </label>
-                                                        <input type="number" value="<?php if ($history) {
-                                                                                        print_r($history['packs_per_day']);
-                                                                                    } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="saratani_wasiwasi" class="form-label">4. “Ningependelea kutokwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu nina wasiwasi juu ya kile kinachoweza kugundulika wakati wa uchunguzi wa saratani ya mapafu”. </label>
+                                                        <select name="saratani_wasiwasi" id="saratani_wasiwasi" class="form-control" required>
+                                                            <option value="<?= $kap['saratani_wasiwasi'] ?>"><?php if ($kap['saratani_wasiwasi']) {
+                                                                                                                    if ($kap['saratani_wasiwasi'] == 1) {
+                                                                                                                        echo 'Nakubali sana.';
+                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 2) {
+                                                                                                                        echo 'Nakubali';
+                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 3) {
+                                                                                                                        echo 'Kawaida';
+                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 4) {
+                                                                                                                        echo 'Sikubali kabisa.';
+                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 5) {
+                                                                                                                        echo 'Sikubali';
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    echo 'Select';
+                                                                                                                } ?>
+                                                            </option>
+                                                            <option value="1">Nakubali sana.</option>
+                                                            <option value="2">Nakubali</option>
+                                                            <option value="3">Kawaida</option>
+                                                            <option value="4">Sikubali kabisa.</option>
+                                                            <option value="5">Sikubali</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
 
-
-                                            <div class="col-4" id="packs_per_day2">
-                                                <div class="mb-3">
-                                                    <label for="packs_per_year" class="form-label">Number of Pack year</label>
-                                                    <input type="number" value="<?php if ($history) {
-                                                                                    print_r($history['packs_per_year']);
-                                                                                } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
-                                                </div>
-                                            </div>
-                                            <div class="col-4" id="packs_per_day3">
-                                                <div class="mb-3">
-                                                    <label for="packs_per_year" class="form-label">PATIENT ELIGIBLE ?</label>
-                                                    <input type="number" value="<?php if ($history) {
-                                                                                    if ($history['eligible'] == 1) {
-                                                                                        print('YES');
-                                                                                    } elseif ($history['eligible'] == 2) {
-                                                                                        echo $history['eligible'];
-                                                                                    }
-                                                                                } ?>" min="0" id="eligible" name="eligible" class="form-control" readonly />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                    <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                    <input type="submit" name="add_history" value="Submit" class="btn btn-primary">
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!--/.col (right) -->
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-<?php } elseif ($_GET['id'] == 7) { ?>
-    <?php
-            $results = $override->getNews('results', 'status', 1, 'patient_id', $_GET['cid'])[0];
-    ?>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <?php if ($results) { ?>
-                            <h1>Add New test results</h1>
-                        <?php } else { ?>
-                            <h1>Update test results</h1>
-                        <?php } ?>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item">
-                                <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                    < Back</a>
-                            </li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item">
-                                <a href="index1.php">Home</a>
-                            </li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item">
-                                <a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                    Go to screening list > </a>
-                            </li>&nbsp;&nbsp;
-                            <?php if ($results) { ?>
-                                <li class="breadcrumb-item active">Add New test results</li>
-                            <?php } else { ?>
-                                <li class="breadcrumb-item active">Update test results</li>
-                            <?php } ?>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- right column -->
-                    <div class="col-md-12">
-                        <!-- general form elements disabled -->
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">CRF2: Screeing test results using LDCT</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="results_date" class="form-label">Date</label>
-                                                <input type="date" value="<?php if ($results) {
-                                                                                print_r($results['results_date']);
-                                                                            } ?>" id="results_date" name="results_date" class="form-control" placeholder="Enter results date" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="ldct_results" class="form-label">LDCT RESULTS</label>
-                                                <input type="text" value="<?php if ($results) {
-                                                                                print_r($results['ldct_results']);
-                                                                            } ?>" id="ldct_results" name="ldct_results" class="form-control" placeholder="Enter LDCT results" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="rad_score" class="form-label">RAD SCORE</label>
-                                                <input type="text" value="<?php if ($results) {
-                                                                                print_r($results['rad_score']);
-                                                                            } ?>" id="rad_score" name="rad_score" class="form-control" placeholder="Enter RAD score" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="findings" class="form-label">FINDINGS:</label>
-                                                <textarea class="form-control" name="findings" id="findings" rows="5">
-                                                                                            <?php if ($results) {
-                                                                                                print_r($results['findings']);
-                                                                                            } ?>
-                                                                                            </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                    <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                    <input type="submit" name="add_results" value="Submit" class="btn btn-primary">
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!--/.col (right) -->
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-<?php } elseif ($_GET['id'] == 8) { ?>
-    <?php
-            $classification = $override->getNews('classification', 'status', 1, 'patient_id', $_GET['cid'])[0];
-    ?>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <?php if ($classification) { ?>
-                            <h1>Add New LUNG- RADS CLASSIFICATION</h1>
-                        <?php } else { ?>
-                            <h1>Update LUNG- RADS CLASSIFICATION</h1>
-                        <?php } ?>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                    < Back</a>
-                            </li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                    Go to screening list > </a>
-                            </li>&nbsp;&nbsp;
-                            <?php if ($classification) { ?>
-                                <li class="breadcrumb-item active">Add New LUNG- RADS CLASSIFICATION</li>
-                            <?php } else { ?>
-                                <li class="breadcrumb-item active">Update LUNG- RADS CLASSIFICATION</li>
-                            <?php } ?>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- right column -->
-                    <div class="col-md-12">
-                        <!-- general form elements disabled -->
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">LUNG- RADS CLASSIFICATION</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="mb-2">
-                                                <label for="classification_date" class="form-label">Date</label>
-                                                <input type="date" value="<?php if ($classification) {
-                                                                                print_r($classification['classification_date']);
-                                                                            } ?>" id="classification_date" name="classification_date" class="form-control" placeholder="Enter classification date" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="category[]" value="1" <?php if ($classification['category'] == 1) {
-                                                                                                        echo 'checked';
-                                                                                                    } ?>>
-                                                <label for="ldct_results" class="form-label">Category 1</label><br>
-                                                <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 1) as $cat) { ?>
-                                                    - <label><?= $cat['name'] ?></label> <br>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="category[]" value="2" <?php if ($classification['category'] == 2) {
-                                                                                                        echo 'checked';
-                                                                                                    } ?>>
-                                                <label for="ldct_results" class="form-label">Category 2</label><br>
-                                                <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 2) as $cat) { ?>
-                                                    - <label><?= $cat['name'] ?></label> <br>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="category[]" value="3" <?php if ($classification['category'] == 3) {
-                                                                                                        echo 'checked';
-                                                                                                    } ?>>
-                                                <label for="ldct_results" class="form-label">Category 3</label><br>
-                                                <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 3) as $cat) { ?>
-                                                    - <label><?= $cat['name'] ?></label> <br>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="category[]" value="4" <?php if ($classification['category'] == 4) {
-                                                                                                        echo 'checked';
-                                                                                                    } ?>>
-                                                <label for="ldct_results" class="form-label">Category 4A</label><br>
-                                                <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 4) as $cat) { ?>
-                                                    - <label><?= $cat['name'] ?></label> <br>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="category[]" value="5" <?php if ($classification['category'] == 5) {
-                                                                                                        echo 'checked';
-                                                                                                    } ?>>
-                                                <label for="ldct_results" class="form-label">Category 4B</label><br>
-                                                <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 5) as $cat) { ?>
-                                                    - <label><?= $cat['name'] ?></label> <br>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                    <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                    <input type="submit" name="add_classification" value="Submit" class="btn btn-primary">
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!--/.col (right) -->
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-<?php } elseif ($_GET['id'] == 9) { ?>
-    <?php
-            $economic = $override->getNews('economic', 'status', 1, 'patient_id', $_GET['cid'])[0];
-    ?>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <?php if ($history) { ?>
-                            <h1>Add New CRF3</h1>
-                        <?php } else { ?>
-                            <h1>Update CRF3</h1>
-                        <?php } ?>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                    < Back</a>
-                            </li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                    Go to screening list > </a>
-                            </li>&nbsp;&nbsp;
-                            <?php if ($history) { ?>
-                                <li class="breadcrumb-item active">Add New CRF3</li>
-                            <?php } else { ?>
-                                <li class="breadcrumb-item active">Update CRF3</li>
-                            <?php } ?>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- right column -->
-                    <div class="col-md-12">
-                        <!-- general form elements disabled -->
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">CRF3: Taarifa za kiuchumi (Wakati wa screening)</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="economic_date" class="form-label">Tarehe</label>
-                                                <input type="date" value="<?php if ($economic) {
-                                                                                print_r($economic['economic_date']);
-                                                                            } ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="income_household" class="form-label">Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
-                                                <select class="form-control" id="income_household_<?= $x; ?>" name="income_household" style="width: 100%;" required>
-                                                    <option value="<?= $economic['income_household'] ?>"><?php if ($economic) {
-                                                                                                                if ($economic['income_household'] == 1) {
-                                                                                                                    echo 'Msharaha kwa mwezi';
-                                                                                                                } elseif ($economic['income_household'] == 2) {
-                                                                                                                    echo 'Posho kwa siku';
-                                                                                                                } elseif ($economic['income_household'] == 3) {
-                                                                                                                    echo 'Pato kutokana na mauzo ya biashara';
-                                                                                                                } elseif ($economic['income_household'] == 4) {
-                                                                                                                    echo 'Pato kutokana na mauzo ya mazao au mifugo';
-                                                                                                                } elseif ($economic['income_household'] == 5) {
-                                                                                                                    echo 'Hana kipato';
-                                                                                                                } elseif ($economic['income_household'] == 6) {
-                                                                                                                    echo 'Mstaafu';
-                                                                                                                } elseif ($economic['income_household'] == 96) {
-                                                                                                                    echo 'Nyingine, taja ';
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="saratani_umuhimu" class="form-label">5. “Sidhani kama kuna umuhimu wowote wa kwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu haita athiri matokeo”. </label>
+                                                        <select name="saratani_umuhimu" id="saratani_umuhimu" class="form-control" required>
+                                                            <option value="<?= $kap['saratani_umuhimu'] ?>"><?php if ($kap['saratani_umuhimu']) {
+                                                                                                                if ($kap['saratani_umuhimu'] == 1) {
+                                                                                                                    echo 'Nakubali sana.';
+                                                                                                                } elseif ($kap['saratani_umuhimu'] == 2) {
+                                                                                                                    echo 'Nakubali';
+                                                                                                                } elseif ($kap['saratani_umuhimu'] == 3) {
+                                                                                                                    echo 'Kawaida';
+                                                                                                                } elseif ($kap['saratani_umuhimu'] == 4) {
+                                                                                                                    echo 'Sikubali kabisa.';
+                                                                                                                } elseif ($kap['saratani_umuhimu'] == 5) {
+                                                                                                                    echo 'Sikubali';
                                                                                                                 }
                                                                                                             } else {
                                                                                                                 echo 'Select';
                                                                                                             } ?>
-                                                    </option>
-                                                    <option value="1">Msharaha kwa mwezi</option>
-                                                    <option value="2">Posho kwa siku</option>
-                                                    <option value="3">Pato kutokana na mauzo ya biashara</option>
-                                                    <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
-                                                    <option value="5">Hana kipato</option>
-                                                    <option value="6">Mstaafu</option>
-                                                    <option value="96">Nyingine, taja </option>
-                                                </select>
-                                                <span id="income_household_other_<?= $x; ?>">
-                                                    <input type="text" value="<?php if ($economic) {
-                                                                                    print_r($economic['income_household_other']);
-                                                                                } ?>" name="income_household_other" class="form-control" placeholder="Enter household other source" />
-                                                </span>
+                                                            </option>
+                                                            <option value="1">Nakubali sana.</option>
+                                                            <option value="2">Nakubali</option>
+                                                            <option value="3">Kawaida</option>
+                                                            <option value="4">Sikubali kabisa.</option>
+                                                            <option value="5">Sikubali</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="saratani_kufa" class="form-label">6.“Kufanya uchunguzi wa saratani ya mapafu kunaweza kupunguza uwezekano wangu wa kufa kutokana na saratani ya mapafu.” </label>
+                                                        <select name="saratani_kufa" id="saratani_kufa" class="form-control" required>
+                                                            <option value="<?= $kap['saratani_kufa'] ?>"><?php if ($kap['saratani_kufa']) {
+                                                                                                                if ($kap['saratani_kufa'] == 1) {
+                                                                                                                    echo 'Nakubali sana.';
+                                                                                                                } elseif ($kap['saratani_kufa'] == 2) {
+                                                                                                                    echo 'Nakubali';
+                                                                                                                } elseif ($kap['saratani_kufa'] == 3) {
+                                                                                                                    echo 'Kawaida';
+                                                                                                                } elseif ($kap['saratani_kufa'] == 4) {
+                                                                                                                    echo 'Sikubali kabisa.';
+                                                                                                                } elseif ($kap['saratani_kufa'] == 5) {
+                                                                                                                    echo 'Sikubali';
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                echo 'Select';
+                                                                                                            } ?>
+                                                            </option>
+                                                            <option value="1">Nakubali sana.</option>
+                                                            <option value="2">Nakubali</option>
+                                                            <option value="3">Kawaida</option>
+                                                            <option value="4">Sikubali kabisa.</option>
+                                                            <option value="5">Sikubali</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="uchunguzi_haraka" class="form-label">7. “Endapo nitapata dalili zozote za awali za ugonjwa wa Saratani ya mapafu nitakwenda kwa ajili ya uchunguzi wa saratani ya mapafu haraka iwezekanavyo”. </label>
+                                                        <select name="uchunguzi_haraka" id="uchunguzi_haraka" class="form-control" required>
+                                                            <option value="<?= $kap['uchunguzi_haraka'] ?>"><?php if ($kap['uchunguzi_haraka']) {
+                                                                                                                if ($kap['uchunguzi_haraka'] == 1) {
+                                                                                                                    echo 'Nakubali sana.';
+                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 2) {
+                                                                                                                    echo 'Nakubali';
+                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 3) {
+                                                                                                                    echo 'Kawaida';
+                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 4) {
+                                                                                                                    echo 'Sikubali kabisa.';
+                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 5) {
+                                                                                                                    echo 'Sikubali';
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                echo 'Select';
+                                                                                                            } ?>
+                                                            </option>
+                                                            <option value="1">Nakubali sana.</option>
+                                                            <option value="2">Nakubali</option>
+                                                            <option value="3">Kawaida</option>
+                                                            <option value="4">Sikubali kabisa.</option>
+                                                            <option value="5">Sikubali</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Sehemu ya 5; Utaratibu(Practice) juu ya uchunguzi wa saratani ya mapafu</h3>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="wapi_matibabu" class="form-label">8. Je katika jamii yako, watu wakiumwa, huwa wanapendelea kwenda wapi kupata matibabu ?</label>
+                                                        <select name="wapi_matibabu" id="wapi_matibabu" class="form-control" required>
+                                                            <option value="<?= $kap['wapi_matibabu'] ?>"><?php if ($kap['wapi_matibabu']) {
+                                                                                                                if ($kap['wapi_matibabu'] == 1) {
+                                                                                                                    echo 'Kituo cha afya kilichopo karibu.';
+                                                                                                                } elseif ($kap['wapi_matibabu'] == 2) {
+                                                                                                                    echo 'Mganga wa jadi.';
+                                                                                                                } elseif ($kap['wapi_matibabu'] == 3) {
+                                                                                                                    echo 'Kanisani/msikitini.';
+                                                                                                                } elseif ($kap['wapi_matibabu'] == 4) {
+                                                                                                                    echo 'Duka la Dawa.';
+                                                                                                                } elseif ($kap['wapi_matibabu'] == 5) {
+                                                                                                                    echo 'Kituo cha tiba asili.';
+                                                                                                                } elseif ($kap['wapi_matibabu'] == 6) {
+                                                                                                                    echo 'Wanajitibu wenyewe.';
+                                                                                                                } elseif ($kap['wapi_matibabu'] == 99) {
+                                                                                                                    echo 'Sijui';
+                                                                                                                } elseif ($kap['wapi_matibabu'] == 96) {
+                                                                                                                    echo 'Nyinginezo, Taja; ________________';
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                echo 'Select';
+                                                                                                            } ?>
+                                                            </option>
+                                                            <option value="1">Kituo cha afya kilichopo karibu.</option>
+                                                            <option value="2">Mganga wa jadi.</option>
+                                                            <option value="3">Kanisani/msikitini.</option>
+                                                            <option value="4">Duka la Dawa.</option>
+                                                            <option value="5">Kituo cha tiba asili.</option>
+                                                            <option value="6">Wanajitibu wenyewe.</option>
+                                                            <option value="99">Sijui</option>
+                                                            <option value="96">Nyinginezo, Taja; ________________</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6" id="wapi_matibabu_other">
+                                                    <div class="mb-3">
+                                                        <label for="wapi_matibabu_other" class="form-label">8. Taja ?</label>
+                                                        <input type="text" value="<?php if ($kap['wapi_matibabu_other']) {
+                                                                                        print_r($kap['wapi_matibabu_other']);
+                                                                                    } ?>" name="wapi_matibabu_other" class="form-control" placeholder="Ingiza vitu hatarishi" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="saratani_ushauri" class="form-label">9. Je! Wewe/watu katika jamii huwa wanakwenda kwenye vituo vya kutolea huduma za Afya kwa ajili ya ushauri kuhusu uchunguzi wa ugonjwa wa Saratani ya Mapafu?</label>
+                                                        <select name="saratani_ushauri" id="saratani_ushauri" class="form-control" required>
+                                                            <option value="<?= $kap['saratani_ushauri'] ?>"><?php if ($kap['saratani_ushauri']) {
+                                                                                                                if ($kap['saratani_ushauri'] == 1) {
+                                                                                                                    echo 'Ndio';
+                                                                                                                } elseif ($kap['saratani_ushauri'] == 2) {
+                                                                                                                    echo 'Hapana';
+                                                                                                                } elseif ($kap['saratani_ushauri'] == 99) {
+                                                                                                                    echo 'Sijui';
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                echo 'Select';
+                                                                                                            } ?>
+                                                            </option>
+                                                            <option value="1">Ndio</option>
+                                                            <option value="2">Hapana</option>
+                                                            <option value="99">Sijui</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="saratani_ujumbe" class="form-label">10. Katika mwezi uliopita umesikia ujumbe wa afya kuhusu maswala ya uchunguzi wa awali wa Saratani ya mapafu?</label>
+                                                        <select name="saratani_ujumbe" id="saratani_ujumbe" class="form-control" required>
+                                                            <option value="<?= $kap['saratani_ujumbe'] ?>"><?php if ($kap['saratani_ujumbe']) {
+                                                                                                                if ($kap['saratani_ujumbe'] == 1) {
+                                                                                                                    echo 'Ndio';
+                                                                                                                } elseif ($kap['saratani_ujumbe'] == 2) {
+                                                                                                                    echo 'Hapana';
+                                                                                                                } elseif ($kap['saratani_ujumbe'] == 99) {
+                                                                                                                    echo 'Sijui';
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                echo 'Select';
+                                                                                                            } ?>
+                                                            </option>
+                                                            <option value="1">Ndio</option>
+                                                            <option value="2">Hapana</option>
+                                                            <option value="99">Sijui</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">ANY COMENT OR REMARKS</h3>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Remarks / Comments:</label>
+                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($kap['comments']) {
+                                                                                                                                                            print_r($kap['comments']);
+                                                                                                                                                        }  ?>
+                                                                </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="submit" name="add_kap" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+        <?php } elseif ($_GET['id'] == 6) { ?>
+            <?php
+            $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if (!$history) { ?>
+                                    <h1>Add New HISTORY</h1>
+                                <?php } else { ?>
+                                    <h1>Update HISTORY</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if (!$history) { ?>
+                                        <li class="breadcrumb-item active">Add New HISTORY</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update HISTORY</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Part B: Smoking history</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="screening_date" class="form-label">Screening date</label>
+                                                        <input type="date" value="<?php if ($history) {
+                                                                                        print_r($history['screening_date']);
+                                                                                    } ?>" id="screening_date" name="screening_date" class="form-control" placeholder="Enter screening date" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="ever_smoked" class="form-label">Have you ever smoked cigarette ?</label>
+                                                        <select name="ever_smoked" id="ever_smoked" class="form-control" required>
+                                                            <option value="<?= $history['ever_smoked'] ?>"><?php if ($history) {
+                                                                                                                if ($history['ever_smoked'] == 1) {
+                                                                                                                    echo 'Yes';
+                                                                                                                } elseif ($history['ever_smoked'] == 2) {
+                                                                                                                    echo 'No';
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                echo 'Select';
+                                                                                                            } ?>
+                                                            </option>
+                                                            <option value="1">Yes</option>
+                                                            <option value="2">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <hr>
+                                            <div id="ever_smoked1">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="mb-2">
+                                                            <label for="start_smoking" class="form-label">When did you start smoking?</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            print_r($history['start_smoking']);
+                                                                                        } ?>" min="1970" min="2024" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" />
+                                                        </div>
+                                                    </div>
+
+                                                    <hr>
+                                                    <div class="col-6">
+                                                        <div class="mb-3">
+                                                            <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
+                                                            <select name="currently_smoking" id="currently_smoking" class="form-control" required>
+                                                                <option value="<?= $history['currently_smoking'] ?>"><?php if ($history) {
+                                                                                                                            if ($history['currently_smoking'] == 1) {
+                                                                                                                                echo 'Yes';
+                                                                                                                            } elseif ($history['currently_smoking'] == 2) {
+                                                                                                                                echo 'No';
+                                                                                                                            }
+                                                                                                                        } else {
+                                                                                                                            echo 'Select';
+                                                                                                                        } ?>
+                                                                </option>
+                                                                <option value="1">Yes</option>
+                                                                <option value="2">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div id="ever_smoked2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="mb-2">
+                                                            <label for="type_smoked" class="form-label">Amount smoked per day in cigarette sticks/packs?</label>
+                                                            <select name="type_smoked" id="type_smoked" class="form-control" required>
+                                                                <option value="<?= $history['type_smoked'] ?>"><?php if ($history) {
+                                                                                                                    if ($history['type_smoked'] == 1) {
+                                                                                                                        echo 'Packs';
+                                                                                                                    } elseif ($history['type_smoked'] == 2) {
+                                                                                                                        echo 'Cigarette';
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    echo 'Select';
+                                                                                                                } ?>
+                                                                </option>
+                                                                <option value="1">Packs</option>
+                                                                <option value="2">Cigarette</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6" id="quit_smoking">
+                                                        <div class="mb-3">
+                                                            <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            print_r($history['quit_smoking']);
+                                                                                        } ?>" min="1970" min="2023" name="quit_smoking" class="form-control" placeholder="Enter Year" />
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div id="ever_smoked3">
+                                                <div class="row">
+                                                    <div class="col-4" id="packs_per_day3">
+                                                        <div class="mb-3">
+                                                            <label for="packs_per_day" class="form-label">
+                                                                <label for="packs_per_day2" id="cigarette_per_day" class="form-label">
+                                                                    Number of Cigarette per day
+                                                                </label>
+                                                                <label for="packs_per_day3" id="packs_per_day" class="form-label">
+                                                                    Number of packs per day
+                                                                </label>
+                                                                <input type="number" value="<?php if ($history) {
+                                                                                                print_r($history['packs_per_day']);
+                                                                                            } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-4" id="packs_per_day2">
+                                                        <div class="mb-3">
+                                                            <label for="packs_per_year" class="form-label">Number of Pack year</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            print_r($history['packs_per_year']);
+                                                                                        } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4" id="packs_per_day3">
+                                                        <div class="mb-3">
+                                                            <label for="packs_per_year" class="form-label">PATIENT ELIGIBLE ?</label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            if ($history['eligible'] == 1) {
+                                                                                                print('YES');
+                                                                                            } elseif ($history['eligible'] == 2) {
+                                                                                                echo $history['eligible'];
+                                                                                            }
+                                                                                        } ?>" min="0" id="eligible" name="eligible" class="form-control" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="income_patient" class="form-label">Chanzo kikuu cha mapato cha mgonjwa? </label>
-                                                <select class="form-control" id="income_patient_<?= $x; ?>" name="income_patient" style="width: 100%;" required>
-                                                    <option value="<?= $economic['income_patient'] ?>"><?php if ($economic) {
-                                                                                                            if ($economic['income_patient'] == 1) {
-                                                                                                                echo 'Msharaha kwa mwezi';
-                                                                                                            } elseif ($economic['income_patient'] == 2) {
-                                                                                                                echo 'Posho kwa siku';
-                                                                                                            } elseif ($economic['income_patient'] == 3) {
-                                                                                                                echo 'Pato kutokana na mauzo ya biashara';
-                                                                                                            } elseif ($economic['income_patient'] == 4) {
-                                                                                                                echo 'Pato kutokana na mauzo ya mazao au mifugo';
-                                                                                                            } elseif ($economic['income_patient'] == 5) {
-                                                                                                                echo 'Hana kipato';
-                                                                                                            } elseif ($economic['income_patient'] == 6) {
-                                                                                                                echo 'Mstaafu';
-                                                                                                            } elseif ($economic['income_patient'] == 96) {
-                                                                                                                echo 'Nyingine, taja ';
+
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                            <input type="submit" name="add_history" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+        <?php } elseif ($_GET['id'] == 7) { ?>
+            <?php
+            $results = $override->getNews('results', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if ($results) { ?>
+                                    <h1>Add New test results</h1>
+                                <?php } else { ?>
+                                    <h1>Update test results</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item">
+                                        <a href="index1.php">Home</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if ($results) { ?>
+                                        <li class="breadcrumb-item active">Add New test results</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update test results</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">CRF2: Screeing test results using LDCT</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="results_date" class="form-label">Date</label>
+                                                        <input type="date" value="<?php if ($results) {
+                                                                                        print_r($results['results_date']);
+                                                                                    } ?>" id="results_date" name="results_date" class="form-control" placeholder="Enter results date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="ldct_results" class="form-label">LDCT RESULTS</label>
+                                                        <input type="text" value="<?php if ($results) {
+                                                                                        print_r($results['ldct_results']);
+                                                                                    } ?>" id="ldct_results" name="ldct_results" class="form-control" placeholder="Enter LDCT results" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="rad_score" class="form-label">RAD SCORE</label>
+                                                        <input type="text" value="<?php if ($results) {
+                                                                                        print_r($results['rad_score']);
+                                                                                    } ?>" id="rad_score" name="rad_score" class="form-control" placeholder="Enter RAD score" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="findings" class="form-label">FINDINGS:</label>
+                                                        <textarea class="form-control" name="findings" id="findings" rows="5">
+                                                                                            <?php if ($results) {
+                                                                                                print_r($results['findings']);
+                                                                                            } ?>
+                                                                                            </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                            <input type="submit" name="add_results" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+        <?php } elseif ($_GET['id'] == 8) { ?>
+            <?php
+            $classification = $override->getNews('classification', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if ($classification) { ?>
+                                    <h1>Add New LUNG- RADS CLASSIFICATION</h1>
+                                <?php } else { ?>
+                                    <h1>Update LUNG- RADS CLASSIFICATION</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if ($classification) { ?>
+                                        <li class="breadcrumb-item active">Add New LUNG- RADS CLASSIFICATION</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update LUNG- RADS CLASSIFICATION</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">LUNG- RADS CLASSIFICATION</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <label for="classification_date" class="form-label">Date</label>
+                                                        <input type="date" value="<?php if ($classification) {
+                                                                                        print_r($classification['classification_date']);
+                                                                                    } ?>" id="classification_date" name="classification_date" class="form-control" placeholder="Enter classification date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <input type="checkbox" name="category[]" value="1" <?php if ($classification['category'] == 1) {
+                                                                                                                echo 'checked';
+                                                                                                            } ?>>
+                                                        <label for="ldct_results" class="form-label">Category 1</label><br>
+                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 1) as $cat) { ?>
+                                                            - <label><?= $cat['name'] ?></label> <br>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <input type="checkbox" name="category[]" value="2" <?php if ($classification['category'] == 2) {
+                                                                                                                echo 'checked';
+                                                                                                            } ?>>
+                                                        <label for="ldct_results" class="form-label">Category 2</label><br>
+                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 2) as $cat) { ?>
+                                                            - <label><?= $cat['name'] ?></label> <br>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <input type="checkbox" name="category[]" value="3" <?php if ($classification['category'] == 3) {
+                                                                                                                echo 'checked';
+                                                                                                            } ?>>
+                                                        <label for="ldct_results" class="form-label">Category 3</label><br>
+                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 3) as $cat) { ?>
+                                                            - <label><?= $cat['name'] ?></label> <br>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <input type="checkbox" name="category[]" value="4" <?php if ($classification['category'] == 4) {
+                                                                                                                echo 'checked';
+                                                                                                            } ?>>
+                                                        <label for="ldct_results" class="form-label">Category 4A</label><br>
+                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 4) as $cat) { ?>
+                                                            - <label><?= $cat['name'] ?></label> <br>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <input type="checkbox" name="category[]" value="5" <?php if ($classification['category'] == 5) {
+                                                                                                                echo 'checked';
+                                                                                                            } ?>>
+                                                        <label for="ldct_results" class="form-label">Category 4B</label><br>
+                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 5) as $cat) { ?>
+                                                            - <label><?= $cat['name'] ?></label> <br>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                            <input type="submit" name="add_classification" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+        <?php } elseif ($_GET['id'] == 9) { ?>
+            <?php
+            $economic = $override->getNews('economic', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if ($history) { ?>
+                                    <h1>Add New CRF3</h1>
+                                <?php } else { ?>
+                                    <h1>Update CRF3</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if ($history) { ?>
+                                        <li class="breadcrumb-item active">Add New CRF3</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update CRF3</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">CRF3: Taarifa za kiuchumi (Wakati wa screening)</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="economic_date" class="form-label">Tarehe</label>
+                                                        <input type="date" value="<?php if ($economic) {
+                                                                                        print_r($economic['economic_date']);
+                                                                                    } ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="income_household" class="form-label">Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
+                                                        <select class="form-control" id="income_household_<?= $x; ?>" name="income_household" style="width: 100%;" required>
+                                                            <option value="<?= $economic['income_household'] ?>"><?php if ($economic) {
+                                                                                                                        if ($economic['income_household'] == 1) {
+                                                                                                                            echo 'Msharaha kwa mwezi';
+                                                                                                                        } elseif ($economic['income_household'] == 2) {
+                                                                                                                            echo 'Posho kwa siku';
+                                                                                                                        } elseif ($economic['income_household'] == 3) {
+                                                                                                                            echo 'Pato kutokana na mauzo ya biashara';
+                                                                                                                        } elseif ($economic['income_household'] == 4) {
+                                                                                                                            echo 'Pato kutokana na mauzo ya mazao au mifugo';
+                                                                                                                        } elseif ($economic['income_household'] == 5) {
+                                                                                                                            echo 'Hana kipato';
+                                                                                                                        } elseif ($economic['income_household'] == 6) {
+                                                                                                                            echo 'Mstaafu';
+                                                                                                                        } elseif ($economic['income_household'] == 96) {
+                                                                                                                            echo 'Nyingine, taja ';
+                                                                                                                        }
+                                                                                                                    } else {
+                                                                                                                        echo 'Select';
+                                                                                                                    } ?>
+                                                            </option>
+                                                            <option value="1">Msharaha kwa mwezi</option>
+                                                            <option value="2">Posho kwa siku</option>
+                                                            <option value="3">Pato kutokana na mauzo ya biashara</option>
+                                                            <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
+                                                            <option value="5">Hana kipato</option>
+                                                            <option value="6">Mstaafu</option>
+                                                            <option value="96">Nyingine, taja </option>
+                                                        </select>
+                                                        <span id="income_household_other_<?= $x; ?>">
+                                                            <input type="text" value="<?php if ($economic) {
+                                                                                            print_r($economic['income_household_other']);
+                                                                                        } ?>" name="income_household_other" class="form-control" placeholder="Enter household other source" />
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="income_patient" class="form-label">Chanzo kikuu cha mapato cha mgonjwa? </label>
+                                                        <select class="form-control" id="income_patient_<?= $x; ?>" name="income_patient" style="width: 100%;" required>
+                                                            <option value="<?= $economic['income_patient'] ?>"><?php if ($economic) {
+                                                                                                                    if ($economic['income_patient'] == 1) {
+                                                                                                                        echo 'Msharaha kwa mwezi';
+                                                                                                                    } elseif ($economic['income_patient'] == 2) {
+                                                                                                                        echo 'Posho kwa siku';
+                                                                                                                    } elseif ($economic['income_patient'] == 3) {
+                                                                                                                        echo 'Pato kutokana na mauzo ya biashara';
+                                                                                                                    } elseif ($economic['income_patient'] == 4) {
+                                                                                                                        echo 'Pato kutokana na mauzo ya mazao au mifugo';
+                                                                                                                    } elseif ($economic['income_patient'] == 5) {
+                                                                                                                        echo 'Hana kipato';
+                                                                                                                    } elseif ($economic['income_patient'] == 6) {
+                                                                                                                        echo 'Mstaafu';
+                                                                                                                    } elseif ($economic['income_patient'] == 96) {
+                                                                                                                        echo 'Nyingine, taja ';
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    echo 'Select';
+                                                                                                                } ?>
+                                                            </option>
+                                                            <option value="1">Msharaha kwa mwezi</option>
+                                                            <option value="2">Posho kwa siku</option>
+                                                            <option value="3">Pato kutokana na mauzo ya biashara</option>
+                                                            <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
+                                                            <option value="5">Hana kipato</option>
+                                                            <option value="6">Mstaafu</option>
+                                                            <option value="96">Nyingine, taja </option>
+                                                        </select>
+                                                        <span id="income_patient_other">
+                                                            <input type=" text" value="<?php if ($economic) {
+                                                                                            print_r($economic['income_patient_other']);
+                                                                                        } ?>" name="income_patient_other" class="form-control" placeholder="Enter other patient source" />
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- <span id="monthly_earn_<?= $x; ?>"> -->
+                                                <div class="col-6" id="monthly_earn">
+                                                    <div class="mb-3">
+                                                        <label for="monthly_earn" class="form-label">Je, unaingiza shilingi ngapi kwa mwezi kutoka kwenye vyanzo vyako vyote vya fedha? ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['monthly_earn']);
+                                                                                    } ?>" min="0" max="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <!-- </span> -->
+                                                <hr>
+
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="member_earn" class="form-label">Kwa mwezi, ni kiasi gani wanakaya wenzako wanaingiza kutoka kwenye vyanzo vyote vya fedha? (kwa ujumla)? </label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['member_earn']);
+                                                                                    } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="transport" class="form-label">Ulilipa kiasi gani kwa ajili ya usafiri ulipoenda hospitali kwa ajili ya kufanyiwa uchunguzi wa saratani ya mapafu? </label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['transport']);
+                                                                                    } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <hr>
+
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="support_earn" class="form-label">Kama ulisindikizwa, alilipa fedha kiasi gani kwa ajili ya usafiri? </label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['support_earn']);
+                                                                                    } ?>" min="0" max="100000000" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="food_drinks" class="form-label">Ulilipa fedha kiasi gani kwa ajili ya chakula na vinywaji? </label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['food_drinks']);
+                                                                                    } ?>" min="0" max="100000000" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="other_cost" class="form-label">Je, kuna gharama yoyote ambayo ulilipa tofauti na hizo ulizotaja hapo, kama ndio, ni shilingi ngapi? </label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['other_cost']);
+                                                                                    } ?>" min="0" max="100000000" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <hr>
+
+                                                <div class="col-12">
+                                                    Je, kwa mwezi, unapoteza muda kiasi gani unapotembelea kliniki?
+                                                </div>
+                                                <hr>
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="days" class="form-label">Siku</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['days']);
+                                                                                    } ?>" min="0" max="100" id="days" name="days" class="form-control" placeholder="Enter days" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="hours" class="form-label">Masaa</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['hours']);
+                                                                                    } ?>" min="0" max="100" id="hours" name="hours" class="form-control" placeholder="Enter hours" required />
+                                                    </div>
+                                                </div>
+                                                <hr>
+
+                                                <div class="col-12">
+                                                    Je, ulilipa gharama kiasi gani kwa huduma zifuatazo?
+                                                </div>
+                                                <hr>
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="registration" class="form-label">Usajili ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['registration']);
+                                                                                    } ?>" min="0" max="100000000" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="consultation" class="form-label">Kumuona daktari (Consultation)_ ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['consultation']);
+                                                                                    } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <hr>
+
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['diagnostic']);
+                                                                                    } ?>" min="0" max="100000000" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="medications" class="form-label">Dawa (Medications) ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['medications']);
+                                                                                    } ?>" min="0" max="100000000" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <hr>
+
+                                                <div class="col-12">
+                                                    <div class="mb-3">
+                                                        <label for="other_medical_cost" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($economic) {
+                                                                                        print_r($economic['other_medical_cost']);
+                                                                                    } ?>" min="0" max="100000000" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                            <input type="submit" name="add_economic" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+        <?php } elseif ($_GET['id'] == 10) { ?>
+            <?php
+            $outcome = $override->getNews('outcome', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if ($outcome) { ?>
+                                    <h1>Add New outcome results</h1>
+                                <?php } else { ?>
+                                    <h1>Update outcome results</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if ($results) { ?>
+                                        <li class="breadcrumb-item active">Add New outcome results</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update outcome results</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">CRF 3: FOLLOW UP ( PATIENT OUTCOME AFTER SCREENING )</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="outcome_date" class="form-label">Date</label>
+                                                        <input type="date" value="<?php if ($outcome) {
+                                                                                        print_r($outcome['outcome_date']);
+                                                                                    } ?>" id="outcome_date" name="outcome_date" class="form-control" placeholder="Enter outcome date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="diagnosis" class="form-label">Patient Diagnosis if was scored Lung- RAD 4B</label>
+                                                        <input type="text" value="<?php if ($outcome) {
+                                                                                        print_r($outcome['diagnosis']);
+                                                                                    } ?>" id="diagnosis" name="diagnosis" class="form-control" placeholder="Enter diagnosis results" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="outcome" class="form-label">Outcome</label>
+                                                        <select class="form-control" id="outcome" name="outcome" style="width: 100%;" required>
+                                                            <option value="<?= $outcome['outcome'] ?>"><?php if ($outcome) {
+                                                                                                            if ($outcome['outcome'] == 1) {
+                                                                                                                echo 'Await another screening';
+                                                                                                            } elseif ($outcome['outcome'] == 2) {
+                                                                                                                echo 'On treatment';
+                                                                                                            } elseif ($outcome['outcome'] == 3) {
+                                                                                                                echo 'Recovered';
+                                                                                                            } elseif ($outcome['outcome'] == 4) {
+                                                                                                                echo 'Died';
+                                                                                                            } elseif ($outcome['outcome'] == 5) {
+                                                                                                                echo 'Unknown/Loss to follow up1';
                                                                                                             }
                                                                                                         } else {
                                                                                                             echo 'Select';
                                                                                                         } ?>
-                                                    </option>
-                                                    <option value="1">Msharaha kwa mwezi</option>
-                                                    <option value="2">Posho kwa siku</option>
-                                                    <option value="3">Pato kutokana na mauzo ya biashara</option>
-                                                    <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
-                                                    <option value="5">Hana kipato</option>
-                                                    <option value="6">Mstaafu</option>
-                                                    <option value="96">Nyingine, taja </option>
-                                                </select>
-                                                <span id="income_patient_other">
-                                                    <input type=" text" value="<?php if ($economic) {
-                                                                                    print_r($economic['income_patient_other']);
-                                                                                } ?>" name="income_patient_other" class="form-control" placeholder="Enter other patient source" />
-                                                </span>
+                                                            </option>
+                                                            <option value="1">Await another screening</option>
+                                                            <option value="2">On treatment</option>
+                                                            <option value="3">Recovered</option>
+                                                            <option value="4">Died</option>
+                                                            <option value="5">Unknown/Loss to follow up</option>
+                                                        </select>
 
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <!-- <span id="monthly_earn_<?= $x; ?>"> -->
-                                        <div class="col-6" id="monthly_earn">
-                                            <div class="mb-3">
-                                                <label for="monthly_earn" class="form-label">Je, unaingiza shilingi ngapi kwa mwezi kutoka kwenye vyanzo vyako vyote vya fedha? ( TSHS )</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['monthly_earn']);
-                                                                            } ?>" min="0" max="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                            <input type="submit" name="add_outcome" value="Submit" class="btn btn-primary">
                                         </div>
-                                        <!-- </span> -->
-                                        <hr>
-
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="member_earn" class="form-label">Kwa mwezi, ni kiasi gani wanakaya wenzako wanaingiza kutoka kwenye vyanzo vyote vya fedha? (kwa ujumla)? </label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['member_earn']);
-                                                                            } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="transport" class="form-label">Ulilipa kiasi gani kwa ajili ya usafiri ulipoenda hospitali kwa ajili ya kufanyiwa uchunguzi wa saratani ya mapafu? </label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['transport']);
-                                                                            } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-                                        <hr>
-
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="support_earn" class="form-label">Kama ulisindikizwa, alilipa fedha kiasi gani kwa ajili ya usafiri? </label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['support_earn']);
-                                                                            } ?>" min="0" max="100000000" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="food_drinks" class="form-label">Ulilipa fedha kiasi gani kwa ajili ya chakula na vinywaji? </label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['food_drinks']);
-                                                                            } ?>" min="0" max="100000000" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="other_cost" class="form-label">Je, kuna gharama yoyote ambayo ulilipa tofauti na hizo ulizotaja hapo, kama ndio, ni shilingi ngapi? </label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['other_cost']);
-                                                                            } ?>" min="0" max="100000000" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-                                        <hr>
-
-                                        <div class="col-12">
-                                            Je, kwa mwezi, unapoteza muda kiasi gani unapotembelea kliniki?
-                                        </div>
-                                        <hr>
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="days" class="form-label">Siku</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['days']);
-                                                                            } ?>" min="0" max="100" id="days" name="days" class="form-control" placeholder="Enter days" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="hours" class="form-label">Masaa</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['hours']);
-                                                                            } ?>" min="0" max="100" id="hours" name="hours" class="form-control" placeholder="Enter hours" required />
-                                            </div>
-                                        </div>
-                                        <hr>
-
-                                        <div class="col-12">
-                                            Je, ulilipa gharama kiasi gani kwa huduma zifuatazo?
-                                        </div>
-                                        <hr>
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="registration" class="form-label">Usajili ( TSHS )</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['registration']);
-                                                                            } ?>" min="0" max="100000000" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="consultation" class="form-label">Kumuona daktari (Consultation)_ ( TSHS )</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['consultation']);
-                                                                            } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-                                        <hr>
-
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['diagnostic']);
-                                                                            } ?>" min="0" max="100000000" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label for="medications" class="form-label">Dawa (Medications) ( TSHS )</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['medications']);
-                                                                            } ?>" min="0" max="100000000" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-                                        <hr>
-
-                                        <div class="col-12">
-                                            <div class="mb-3">
-                                                <label for="other_medical_cost" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
-                                                <input type="number" value="<?php if ($economic) {
-                                                                                print_r($economic['other_medical_cost']);
-                                                                            } ?>" min="0" max="100000000" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" required />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                    <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                    <input type="submit" name="add_economic" value="Submit" class="btn btn-primary">
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!--/.col (right) -->
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-<?php } elseif ($_GET['id'] == 10) { ?>
-    <?php
-            $outcome = $override->getNews('outcome', 'status', 1, 'patient_id', $_GET['cid'])[0];
-    ?>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <?php if ($outcome) { ?>
-                            <h1>Add New outcome results</h1>
-                        <?php } else { ?>
-                            <h1>Update outcome results</h1>
-                        <?php } ?>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                    < Back</a>
-                            </li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                            <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                    Go to screening list > </a>
-                            </li>&nbsp;&nbsp;
-                            <?php if ($results) { ?>
-                                <li class="breadcrumb-item active">Add New outcome results</li>
-                            <?php } else { ?>
-                                <li class="breadcrumb-item active">Update outcome results</li>
-                            <?php } ?>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- right column -->
-                    <div class="col-md-12">
-                        <!-- general form elements disabled -->
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">CRF 3: FOLLOW UP ( PATIENT OUTCOME AFTER SCREENING )</h3>
+                                <!-- /.card -->
                             </div>
-                            <!-- /.card-header -->
-                            <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="outcome_date" class="form-label">Date</label>
-                                                <input type="date" value="<?php if ($outcome) {
-                                                                                print_r($outcome['outcome_date']);
-                                                                            } ?>" id="outcome_date" name="outcome_date" class="form-control" placeholder="Enter outcome date" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="diagnosis" class="form-label">Patient Diagnosis if was scored Lung- RAD 4B</label>
-                                                <input type="text" value="<?php if ($outcome) {
-                                                                                print_r($outcome['diagnosis']);
-                                                                            } ?>" id="diagnosis" name="diagnosis" class="form-control" placeholder="Enter diagnosis results" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <label for="outcome" class="form-label">Outcome</label>
-                                                <select class="form-control" id="outcome" name="outcome" style="width: 100%;" required>
-                                                    <option value="<?= $outcome['outcome'] ?>"><?php if ($outcome) {
-                                                                                                    if ($outcome['outcome'] == 1) {
-                                                                                                        echo 'Await another screening';
-                                                                                                    } elseif ($outcome['outcome'] == 2) {
-                                                                                                        echo 'On treatment';
-                                                                                                    } elseif ($outcome['outcome'] == 3) {
-                                                                                                        echo 'Recovered';
-                                                                                                    } elseif ($outcome['outcome'] == 4) {
-                                                                                                        echo 'Died';
-                                                                                                    } elseif ($outcome['outcome'] == 5) {
-                                                                                                        echo 'Unknown/Loss to follow up1';
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    echo 'Select';
-                                                                                                } ?>
-                                                    </option>
-                                                    <option value="1">Await another screening</option>
-                                                    <option value="2">On treatment</option>
-                                                    <option value="3">Recovered</option>
-                                                    <option value="4">Died</option>
-                                                    <option value="5">Unknown/Loss to follow up</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                    <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                    <input type="submit" name="add_outcome" value="Submit" class="btn btn-primary">
-                                </div>
-                            </form>
+                            <!--/.col (right) -->
                         </div>
-                        <!-- /.card -->
-                    </div>
-                    <!--/.col (right) -->
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+        <?php } elseif ($_GET['id'] == 11) { ?>
+
+        <?php } elseif ($_GET['id'] == 12) { ?>
+
+        <?php } elseif ($_GET['id'] == 13) { ?>
+
+        <?php } elseif ($_GET['id'] == 14) { ?>
+
+
+        <?php } elseif ($_GET['id'] == 15) { ?>
+
+        <?php } elseif ($_GET['id'] == 16) { ?>
+
+
+        <?php } elseif ($_GET['id'] == 17) { ?>
+
+        <?php } elseif ($_GET['id'] == 18) { ?>
+
+        <?php } elseif ($_GET['id'] == 19) { ?>
+
+        <?php } elseif ($_GET['id'] == 20) { ?>
+
+        <?php } elseif ($_GET['id'] == 21) { ?>
+
+        <?php } elseif ($_GET['id'] == 22) { ?>
+
+        <?php } elseif ($_GET['id'] == 23) { ?>
+        <?php } elseif ($_GET['id'] == 24) { ?>
+        <?php } elseif ($_GET['id'] == 25) { ?>
+        <?php } elseif ($_GET['id'] == 26) { ?>
+        <?php } elseif ($_GET['id'] == 27) { ?>
+        <?php } elseif ($_GET['id'] == 28) { ?>
+
+        <?php } ?>
+
+        <?php include 'footer.php'; ?>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
     </div>
-    <!-- /.content-wrapper -->
+    <!-- ./wrapper -->
 
-<?php } elseif ($_GET['id'] == 11) { ?>
-
-<?php } elseif ($_GET['id'] == 12) { ?>
-
-<?php } elseif ($_GET['id'] == 13) { ?>
-
-<?php } elseif ($_GET['id'] == 14) { ?>
-
-
-<?php } elseif ($_GET['id'] == 15) { ?>
-
-<?php } elseif ($_GET['id'] == 16) { ?>
-
-
-<?php } elseif ($_GET['id'] == 17) { ?>
-
-<?php } elseif ($_GET['id'] == 18) { ?>
-
-<?php } elseif ($_GET['id'] == 19) { ?>
-
-<?php } elseif ($_GET['id'] == 20) { ?>
-
-<?php } elseif ($_GET['id'] == 21) { ?>
-
-<?php } elseif ($_GET['id'] == 22) { ?>
-
-<?php } elseif ($_GET['id'] == 23) { ?>
-<?php } elseif ($_GET['id'] == 24) { ?>
-<?php } elseif ($_GET['id'] == 25) { ?>
-<?php } elseif ($_GET['id'] == 26) { ?>
-<?php } elseif ($_GET['id'] == 27) { ?>
-<?php } elseif ($_GET['id'] == 28) { ?>
-
-<?php } ?>
-
-<?php include 'footer.php'; ?>
-
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Select2 -->
-<script src="plugins/select2/js/select2.full.min.js"></script>
-<!-- Bootstrap4 Duallistbox -->
-<script src="plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-<!-- InputMask -->
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/inputmask/jquery.inputmask.min.js"></script>
-<!-- date-range-picker -->
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap color picker -->
-<script src="plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Bootstrap Switch -->
-<script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<!-- BS-Stepper -->
-<script src="plugins/bs-stepper/js/bs-stepper.min.js"></script>
-<!-- dropzonejs -->
-<script src="plugins/dropzone/min/dropzone.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="../../dist/js/demo.js"></script> -->
-<!-- Page specific script -->
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Select2 -->
+    <script src="plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+    <!-- InputMask -->
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/inputmask/jquery.inputmask.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap color picker -->
+    <script src="plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- BS-Stepper -->
+    <script src="plugins/bs-stepper/js/bs-stepper.min.js"></script>
+    <!-- dropzonejs -->
+    <script src="plugins/dropzone/min/dropzone.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <!-- <script src="../../dist/js/demo.js"></script> -->
+    <!-- Page specific script -->
 
 
-<!-- demographic Js -->
-<script src="myjs/add/clients/insurance.js"></script>
-<script src="myjs/add/clients/insurance_name.js"></script>
-<script src="myjs/add/clients/relation_patient.js"></script>
+    <!-- demographic Js -->
+    <script src="myjs/add/clients/insurance.js"></script>
+    <script src="myjs/add/clients/insurance_name.js"></script>
+    <script src="myjs/add/clients/relation_patient.js"></script>
 
-<!-- KAP Js -->
-<script src="myjs/add/kap/dalili_saratani.js"></script>
-<script src="myjs/add/kap/kundi.js"></script>
-<script src="myjs/add/kap/matibabu.js"></script>
-<script src="myjs/add/kap/matibabu_saratani.js"></script>
-<script src="myjs/add/kap/saratani_hatari.js"></script>
-<script src="myjs/add/kap/saratani_inatibika.js"></script>
-<script src="myjs/add/kap/saratani_vipimo.js"></script>
-<script src="myjs/add/kap/uchunguzi_faida.js"></script>
-<script src="myjs/add/kap/uchunguzi_hatari.js"></script>
-<script src="myjs/add/kap/uchunguzi_maana.js"></script>
-<script src="myjs/add/kap/ushawishi.js"></script>
-<script src="myjs/add/kap/vitu_hatarishi.js"></script>
-<script src="myjs/add/kap/wapi_matibabu.js"></script>
+    <!-- KAP Js -->
+    <script src="myjs/add/kap/dalili_saratani.js"></script>
+    <script src="myjs/add/kap/kundi.js"></script>
+    <script src="myjs/add/kap/matibabu.js"></script>
+    <script src="myjs/add/kap/matibabu_saratani.js"></script>
+    <script src="myjs/add/kap/saratani_hatari.js"></script>
+    <script src="myjs/add/kap/saratani_inatibika.js"></script>
+    <script src="myjs/add/kap/saratani_vipimo.js"></script>
+    <script src="myjs/add/kap/uchunguzi_faida.js"></script>
+    <script src="myjs/add/kap/uchunguzi_hatari.js"></script>
+    <script src="myjs/add/kap/uchunguzi_maana.js"></script>
+    <script src="myjs/add/kap/ushawishi.js"></script>
+    <script src="myjs/add/kap/vitu_hatarishi.js"></script>
+    <script src="myjs/add/kap/wapi_matibabu.js"></script>
 
 
 
 
 
 
-<!-- HISTORY Js -->
-<script src="myjs/add/history/currently_smoking.js"></script>
-<script src="myjs/add/history/ever_smoked.js"></script>
-<script src="myjs/add/history/type_smoked.js"></script>
+    <!-- HISTORY Js -->
+    <script src="myjs/add/history/currently_smoking.js"></script>
+    <script src="myjs/add/history/ever_smoked.js"></script>
+    <script src="myjs/add/history/type_smoked.js"></script>
 
 
 
 
-<script>
-    $(function() {
-        //Initialize Select2 Elements
-        $('.select2').select2()
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
 
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        })
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
 
-        //Datemask dd/mm/yyyy
-        $('#datemask').inputmask('dd/mm/yyyy', {
-            'placeholder': 'dd/mm/yyyy'
-        })
-        //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', {
-            'placeholder': 'mm/dd/yyyy'
-        })
-        //Money Euro
-        $('[data-mask]').inputmask()
+            //Datemask dd/mm/yyyy
+            $('#datemask').inputmask('dd/mm/yyyy', {
+                'placeholder': 'dd/mm/yyyy'
+            })
+            //Datemask2 mm/dd/yyyy
+            $('#datemask2').inputmask('mm/dd/yyyy', {
+                'placeholder': 'mm/dd/yyyy'
+            })
+            //Money Euro
+            $('[data-mask]').inputmask()
 
-        //Date picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
+            //Date picker
+            $('#reservationdate').datetimepicker({
+                format: 'L'
+            });
 
-        //Date and time picker
-        $('#reservationdatetime').datetimepicker({
-            icons: {
-                time: 'far fa-clock'
-            }
-        });
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
 
-        //Date range picker
-        $('#reservation').daterangepicker()
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 30,
-            locale: {
-                format: 'MM/DD/YYYY hh:mm A'
-            }
-        })
-        //Date range as a button
-        $('#daterange-btn').daterangepicker({
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            //Date range picker
+            $('#reservation').daterangepicker()
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                }
+            })
+            //Date range as a button
+            $('#daterange-btn').daterangepicker({
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
                 },
-                startDate: moment().subtract(29, 'days'),
-                endDate: moment()
-            },
-            function(start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                function(start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+            )
+
+            //Timepicker
+            $('#timepicker').datetimepicker({
+                format: 'LT'
+            })
+
+            //Bootstrap Duallistbox
+            $('.duallistbox').bootstrapDualListbox()
+
+            //Colorpicker
+            $('.my-colorpicker1').colorpicker()
+            //color picker with addon
+            $('.my-colorpicker2').colorpicker()
+
+            $('.my-colorpicker2').on('colorpickerChange', function(event) {
+                $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+            })
+
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
+
+        })
+
+        // BS-Stepper Init
+        document.addEventListener('DOMContentLoaded', function() {
+            window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        })
+
+        // DropzoneJS Demo Code Start
+        Dropzone.autoDiscover = false
+
+        // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        var previewNode = document.querySelector("#template")
+        previewNode.id = ""
+        var previewTemplate = previewNode.parentNode.innerHTML
+        previewNode.parentNode.removeChild(previewNode)
+
+        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+            url: "/target-url", // Set the url
+            thumbnailWidth: 80,
+            thumbnailHeight: 80,
+            parallelUploads: 20,
+            previewTemplate: previewTemplate,
+            autoQueue: false, // Make sure the files aren't queued until manually added
+            previewsContainer: "#previews", // Define the container to display the previews
+            clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+        })
+
+        myDropzone.on("addedfile", function(file) {
+            // Hookup the start button
+            file.previewElement.querySelector(".start").onclick = function() {
+                myDropzone.enqueueFile(file)
             }
-        )
-
-        //Timepicker
-        $('#timepicker').datetimepicker({
-            format: 'LT'
         })
 
-        //Bootstrap Duallistbox
-        $('.duallistbox').bootstrapDualListbox()
-
-        //Colorpicker
-        $('.my-colorpicker1').colorpicker()
-        //color picker with addon
-        $('.my-colorpicker2').colorpicker()
-
-        $('.my-colorpicker2').on('colorpickerChange', function(event) {
-            $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function(progress) {
+            document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
         })
 
-        $("input[data-bootstrap-switch]").each(function() {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        myDropzone.on("sending", function(file) {
+            // Show the total progress bar when upload starts
+            document.querySelector("#total-progress").style.opacity = "1"
+            // And disable the start button
+            file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
         })
 
-    })
+        // Hide the total progress bar when nothing's uploading anymore
+        myDropzone.on("queuecomplete", function(progress) {
+            document.querySelector("#total-progress").style.opacity = "0"
+        })
 
-    // BS-Stepper Init
-    document.addEventListener('DOMContentLoaded', function() {
-        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-    })
-
-    // DropzoneJS Demo Code Start
-    Dropzone.autoDiscover = false
-
-    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    var previewNode = document.querySelector("#template")
-    previewNode.id = ""
-    var previewTemplate = previewNode.parentNode.innerHTML
-    previewNode.parentNode.removeChild(previewNode)
-
-    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-        url: "/target-url", // Set the url
-        thumbnailWidth: 80,
-        thumbnailHeight: 80,
-        parallelUploads: 20,
-        previewTemplate: previewTemplate,
-        autoQueue: false, // Make sure the files aren't queued until manually added
-        previewsContainer: "#previews", // Define the container to display the previews
-        clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    })
-
-    myDropzone.on("addedfile", function(file) {
-        // Hookup the start button
-        file.previewElement.querySelector(".start").onclick = function() {
-            myDropzone.enqueueFile(file)
+        // Setup the buttons for all transfers
+        // The "add files" button doesn't need to be setup because the config
+        // `clickable` has already been specified.
+        document.querySelector("#actions .start").onclick = function() {
+            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
         }
-    })
-
-    // Update the total progress bar
-    myDropzone.on("totaluploadprogress", function(progress) {
-        document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-    })
-
-    myDropzone.on("sending", function(file) {
-        // Show the total progress bar when upload starts
-        document.querySelector("#total-progress").style.opacity = "1"
-        // And disable the start button
-        file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-    })
-
-    // Hide the total progress bar when nothing's uploading anymore
-    myDropzone.on("queuecomplete", function(progress) {
-        document.querySelector("#total-progress").style.opacity = "0"
-    })
-
-    // Setup the buttons for all transfers
-    // The "add files" button doesn't need to be setup because the config
-    // `clickable` has already been specified.
-    document.querySelector("#actions .start").onclick = function() {
-        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-    }
-    document.querySelector("#actions .cancel").onclick = function() {
-        myDropzone.removeAllFiles(true)
-    }
-    // DropzoneJS Demo Code End
+        document.querySelector("#actions .cancel").onclick = function() {
+            myDropzone.removeAllFiles(true)
+        }
+        // DropzoneJS Demo Code End
 
 
-    // $("#packs_per_day, #packs_per_day").on("input", function() {
-    //     setTimeout(function() {
-    //         var weight = $("#packs_per_day").val();
-    //         var height = $("#packs_per_day").val() / 100; // Convert cm to m
-    //         var bmi = weight / (height * height);
-    //         $("#packs_per_year").text(bmi.toFixed(2));
-    //     }, 1);
-    // });
-</script>
+        // $("#packs_per_day, #packs_per_day").on("input", function() {
+        //     setTimeout(function() {
+        //         var weight = $("#packs_per_day").val();
+        //         var height = $("#packs_per_day").val() / 100; // Convert cm to m
+        //         var bmi = weight / (height * height);
+        //         $("#packs_per_year").text(bmi.toFixed(2));
+        //     }, 1);
+        // });
+    </script>
 
 </body>
 
