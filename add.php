@@ -670,7 +670,6 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                print_r($_POST);
                 $economic = $override->get3('economic', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
@@ -3751,6 +3750,12 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/history/currently_smoking.js"></script>
     <script src="myjs/add/history/ever_smoked.js"></script>
     <script src="myjs/add/history/type_smoked.js"></script>
+
+    <!-- economics Js -->
+    <script src="myjs/add/economics/household.js"></script>
+    <script src="myjs/add/economics/patient.js"></script>
+
+
 
 
 
