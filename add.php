@@ -1480,7 +1480,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 5) { ?>
             <?php
-            $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $kap = $override->get3('kap', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">

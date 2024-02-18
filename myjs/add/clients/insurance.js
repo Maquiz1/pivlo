@@ -19,10 +19,10 @@ function showElement() {
 }
 
 // Check if there's a previously selected value in localStorage
-const health_insuranceValue = localStorage.getItem("selectedValue");
+const health_insurance1Value = localStorage.getItem("selectedValue");
 
-if (health_insuranceValue) {
-  health_insurance.value = health_insuranceValue;
+if (health_insurance1Value) {
+  health_insurance.value = health_insurance1Value;
 }
 
 // Show element if Option 2 is selected
