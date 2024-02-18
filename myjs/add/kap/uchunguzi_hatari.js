@@ -4,10 +4,10 @@ const saratani_hatari1 = document.getElementById("saratani_hatari1");
 // console.log(type_smoked);
 
 function showElement() {
-  if (uchunguzi_hatari.value === "96") {
-    uchunguzi_faida_other.style.display = "block";
+  if (uchunguzi_hatari.value === "1") {
+    saratani_hatari1.style.display = "block";
   } else {
-    uchunguzi_faida_other.style.display = "none";
+    saratani_hatari1.style.display = "none";
   }
 
   // Save the selected value in localStorage
