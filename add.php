@@ -3603,8 +3603,6 @@ if ($user->isLoggedIn()) {
 <script src="myjs/add/kap/saratani_vipimo.js"></script>
 <script src="myjs/add/kap/uchunguzi_faida.js"></script>
 <script src="myjs/add/kap/uchunguzi_hatari.js"></script>
-<script src="myjs/add/kap/uchunguzi_hatari.js"></script>
-<script src="myjs/add/kap/uchunguzi_hatari.js"></script>
 <script src="myjs/add/kap/uchunguzi_maana.js"></script>
 <script src="myjs/add/kap/ushawishi.js"></script>
 <script src="myjs/add/kap/vitu_hatarishi.js"></script>
