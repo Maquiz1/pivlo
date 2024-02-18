@@ -2649,7 +2649,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 6) { ?>
             <?php
-            $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $history = $override->get3('history', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -2865,7 +2865,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 7) { ?>
             <?php
-            $results = $override->getNews('results', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $results = $override->get3('results', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -2976,7 +2976,7 @@ if ($user->isLoggedIn()) {
 
         <?php } elseif ($_GET['id'] == 8) { ?>
             <?php
-            $classification = $override->getNews('classification', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $classification = $override->get3('classification', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -3112,7 +3112,7 @@ if ($user->isLoggedIn()) {
 
         <?php } elseif ($_GET['id'] == 9) { ?>
             <?php
-            $economic = $override->getNews('economic', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $economic = $override->get3('economic', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -3410,7 +3410,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 10) { ?>
             <?php
-            $outcome = $override->getNews('outcome', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $outcome = $override->get3('outcome', 'status', 1,'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">

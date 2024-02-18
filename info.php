@@ -340,13 +340,16 @@ if ($user->isLoggedIn()) {
                                                         <?php } ?>
                                                         <td class="text-center">
                                                             <?php if ($_GET['status'] == 7) { ?>
-                                                                <a href="add.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>&nbsp;&nbsp;
+                                                                <a href="add.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                             <?php } ?>
+                                                            <br>
                                                             <?php if ($value['interview_type'] == 1) { ?>
                                                                 <?php if ($value['age'] >= 18) { ?>
-                                                                    <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>&nbsp;&nbsp;
+                                                                    <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                 <?php   } ?>
                                                             <?php   } ?>
+                                                            <br>
+
                                                             <?php if ($value['interview_type'] == 2) { ?>
                                                                 <?php if ($value['age'] >= 18) { ?>
                                                                     <a href="add.php?id=11&cid=<?= $value['id'] ?>&sequence=0&visit_code=RS&study_id=<?= $_GET['study_id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add Health Care Kap</a>&nbsp;&nbsp;
@@ -504,16 +507,20 @@ if ($user->isLoggedIn()) {
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($visit['sequence'] == 0) { ?>
                                                                     <?php if ($kap) { ?>
-                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update KAP </a>&nbsp;&nbsp;
+                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update KAP </a>&nbsp;&nbsp; <br>
+
                                                                     <?php } else { ?>
-                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add KAP </a>&nbsp;&nbsp;
+                                                                        <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add KAP </a>&nbsp;&nbsp; <br>
+
                                                                     <?php } ?>
 
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history) { ?>
-                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update History </a>&nbsp;&nbsp;
+                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update History </a>&nbsp;&nbsp; <br>
+
                                                                         <?php } else { ?>
-                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add History </a>&nbsp;&nbsp;
+                                                                            <a href="add.php?id=6&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add History </a>&nbsp;&nbsp; <br>
+
                                                                         <?php } ?>
                                                                     <?php } ?>
                                                                 <?php } ?>
@@ -524,27 +531,35 @@ if ($user->isLoggedIn()) {
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history[0]['eligible'] == 1) { ?>
                                                                             <?php if ($results) { ?>
-                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Results </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Results </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
 
                                                                             <?php if ($classification) { ?>
-                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Classification </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Classification </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
 
                                                                             <?php if ($outcome) { ?>
-                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Outcome </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Outcome </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
 
                                                                             <?php if ($economic) { ?>
-                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Economic </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Economic </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
                                                                         <?php } ?>
                                                                     <?php } ?>
@@ -556,28 +571,36 @@ if ($user->isLoggedIn()) {
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history[0]['eligible'] == 1) { ?>
                                                                             <?php if ($results) { ?>
-                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Results </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Results </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
 
 
                                                                             <?php if ($classification) { ?>
-                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Classification </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Classification </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
 
                                                                             <?php if ($outcome) { ?>
-                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Outcome </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Outcome </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
 
                                                                             <?php if ($economic) { ?>
-                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } else { ?>
-                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Economic </a>&nbsp;&nbsp;
+                                                                                <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Economic </a>&nbsp;&nbsp; <br>
+
                                                                             <?php } ?>
                                                                         <?php } ?>
                                                                     <?php } ?>
