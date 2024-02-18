@@ -348,7 +348,7 @@ if ($user->isLoggedIn()) {
                         'site_id' => $user->data()->site_id,
                     ));
 
-                    if ($eligible1) {
+                    if ($eligible) {
                         $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 1);
                     } else {
                         $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 0);
@@ -379,7 +379,7 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                     ), $history[0]['id']);
 
-                    if ($eligible1) {
+                    if ($eligible) {
                         $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 1);
                     } else {
                         $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 0);
