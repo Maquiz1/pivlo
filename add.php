@@ -3266,7 +3266,7 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6" id="monthly_earn">
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="monthly_earn" class="form-label">Je, unaingiza shilingi ngapi kwa mwezi kutoka kwenye vyanzo vyako vyote vya fedha? ( TSHS )</label>
                                                         <input type="number" value="<?php if ($economic['monthly_earn']) {
@@ -3275,7 +3275,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="member_earn" class="form-label">Kwa mwezi, ni kiasi gani wanakaya wenzako wanaingiza kutoka kwenye vyanzo vyote vya fedha? (kwa ujumla)? </label>
                                                         <input type="number" value="<?php if ($economic['member_earn']) {
@@ -3283,11 +3283,8 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="transport" class="form-label">Ulilipa kiasi gani kwa ajili ya usafiri ulipoenda hospitali kwa ajili ya kufanyiwa uchunguzi wa saratani ya mapafu? </label>
                                                         <input type="number" value="<?php if ($economic['transport']) {
@@ -3295,8 +3292,12 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="col-6">
+                                            <hr>
+                                            <div class="row">
+
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="support_earn" class="form-label">Kama ulisindikizwa, alilipa fedha kiasi gani kwa ajili ya usafiri? </label>
                                                         <input type="number" value="<?php if ($economic['support_earn']) {
@@ -3305,12 +3306,8 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                            </div>
 
-                                            <hr>
-                                            <div class="row">
-
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="food_drinks" class="form-label">Ulilipa fedha kiasi gani kwa ajili ya chakula na vinywaji? </label>
                                                         <input type="number" value="<?php if ($economic['food_drinks']) {
@@ -3320,7 +3317,7 @@ if ($user->isLoggedIn()) {
                                                 </div>
 
 
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="other_cost" class="form-label">Je, kuna gharama yoyote ambayo ulilipa tofauti na hizo ulizotaja hapo, kama ndio, ni shilingi ngapi? </label>
                                                         <input type="number" value="<?php if ($economic['other_cost']) {
@@ -3369,7 +3366,7 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="registration" class="form-label">Usajili ( TSHS )</label>
                                                         <input type="number" value="<?php if ($economic['registration']) {
@@ -3377,7 +3374,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="consultation" class="form-label">Kumuona daktari (Consultation)_ ( TSHS )</label>
                                                         <input type="number" value="<?php if ($economic['consultation']) {
@@ -3385,11 +3382,8 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
                                                         <input type="number" value="<?php if ($economic['diagnostic']) {
@@ -3397,7 +3391,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" min="0" max="100000000" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="medications" class="form-label">Dawa (Medications) ( TSHS )</label>
                                                         <input type="number" value="<?php if ($economic['medications']) {
