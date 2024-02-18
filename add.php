@@ -301,21 +301,22 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 $history = $override->get3('history', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-                $eligible = '';
-                $years = '';
-                $packs = '';
-                $packs_year = '';
+                // $eligible = '';
+                // $years = '';
+                // $packs = '';
+                // $packs_year = '';
 
                 // $date1 = date('Y-m-d', strtotime(Input::get('start_smoking')));
                 // $years = $user->dateDiffYears($date2, $date1);
+                $date1 = Input::get('start_smoking');
+                $packs = Input::get('packs_per_day');
+
 
 
                 if (Input::get('ever_smoked') == 1) {
                     if (Input::get('currently_smoking') == 1) {
-                        $date1 = Input::get('start_smoking');
                         $date2 = date('Y', strtotime(Input::get('screening_date')));
                         if (Input::get('type_smoked') == 1) {
-                            $packs = Input::get('packs_per_day');
                             $years = $date2 - $date1;
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
@@ -324,7 +325,6 @@ if ($user->isLoggedIn()) {
                                 $eligible = 0;
                             }
                         } elseif (Input::get('type_smoked') == 2) {
-                            $packs = Input::get('packs_per_day');
                             $years = $date2 - $date1;
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
@@ -334,10 +334,8 @@ if ($user->isLoggedIn()) {
                             }
                         }
                     } elseif (Input::get('currently_smoking') == 2) {
-                        $date1 = Input::get('start_smoking');
                         $date2 = Input::get('quit_smoking');
                         if (Input::get('type_smoked') == 1) {
-                            $packs = Input::get('packs_per_day');
                             $years = $date2 - $date1;
                             $packs_year = $packs * $years;
                             if ($packs_year >= 20) {
@@ -346,7 +344,6 @@ if ($user->isLoggedIn()) {
                                 $eligible = 0;
                             }
                         } elseif (Input::get('type_smoked') == 2) {
-                            $packs = Input::get('packs_per_day');
                             $years = $date2 - $date1;
                             $packs_year = ($packs / 20) * $years;
                             if ($packs_year >= 20) {
@@ -359,6 +356,8 @@ if ($user->isLoggedIn()) {
                 } else {
                     $eligible = 0;
                 }
+
+                // print_r($packs_year);
 
 
                 if (!$history) {
