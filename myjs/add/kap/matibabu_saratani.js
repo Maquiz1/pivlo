@@ -1,4 +1,4 @@
-const matibabu_saratani = document.getElementById("matibabu_saratani");
+const matibabu_saratani = document.getElementById("matibabu_saratani1");
 const matibabu1 = document.getElementById("matibabu1");
 
 // console.log(type_smoked);

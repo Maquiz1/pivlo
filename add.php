@@ -1860,7 +1860,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="saratani_inatibika" class="form-label">7. Je, ugonjwa wa saratani ya mapafu unatibika?</label>
-                                                        <select name="saratani_inatibika" id="saratani_inatibika" class="form-control" onchange="updateText4(this.value)" required>
+                                                        <select name="saratani_inatibika" id="saratani_inatibika2" class="form-control" required>
                                                             <option value="<?= $kap['saratani_inatibika'] ?>"><?php if ($kap['saratani_inatibika']) {
                                                                                                                     if ($kap['saratani_inatibika'] == 1) {
                                                                                                                         echo 'Ndio';
@@ -1880,10 +1880,10 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-8" id="matibabu_saratani1">
+                                                <div class="col-8" id="matibabu_saratani2">
                                                     <div class="mb-3">
                                                         <label for="matibabu_saratani" class="form-label">8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
-                                                        <select name="matibabu_saratani" id="matibabu_saratani" class="form-control">
+                                                        <select name="matibabu_saratani" id="matibabu_saratani1" class="form-control">
                                                             <option value="<?= $kap['matibabu_saratani'] ?>"><?php if ($kap['matibabu_saratani']) {
                                                                                                                     if ($kap['matibabu_saratani'] == 1) {
                                                                                                                         echo 'Ndio';
@@ -1909,7 +1909,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6" id="matibabu1">
                                                     <div class="mb-3">
                                                         <label for="matibabu" class="form-label">9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
-                                                        <select name="matibabu" id="matibabu" class="form-control">
+                                                        <select name="matibabu" id="matibabu2" class="form-control">
                                                             <option value="<?= $kap['matibabu'] ?>"><?php if ($kap['matibabu']) {
                                                                                                         if ($kap['matibabu'] == 1) {
                                                                                                             echo 'Upasuaji';

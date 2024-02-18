@@ -1,5 +1,5 @@
-const saratani_inatibika = document.getElementById("saratani_inatibika");
-const matibabu_saratani1 = document.getElementById("matibabu_saratani1");
+const saratani_inatibika = document.getElementById("saratani_inatibika2");
+const matibabu_saratani1 = document.getElementById("matibabu_saratani2");
 
 // console.log(type_smoked);
 
