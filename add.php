@@ -73,14 +73,13 @@ if ($user->isLoggedIn()) {
 
                         $successMessage = 'Client Updated Successful';
 
-                       
                     } else {
+
+                        $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
+
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
-                            'visit_code' => 'RS',
-                            'visit_name' => 'Registration & Screening',
-                            'study_id' => '',
-                            'sequence' => 0,
+                            'study_id' => $std_id,
                             'firstname' => Input::get('firstname'),
                             'middlename' => Input::get('middlename'),
                             'lastname' => Input::get('lastname'),
@@ -105,8 +104,6 @@ if ($user->isLoggedIn()) {
                             'pay_services' => Input::get('pay_services'),
                             'comments' => Input::get('comments'),
                             'interview_type' => Input::get('interview_type'),
-                            'complete_on' => date('Y-m-d H:i:s'),
-                            'complete_id' => $user->data()->id,
                             'status' => 1,
                             'screened' => 0,
                             'eligible' => 0,
@@ -121,27 +118,15 @@ if ($user->isLoggedIn()) {
 
                         $last_row = $override->lastRow('clients', 'id')[0];
 
-                        $client_study = $override->getNews('clients', 'id', $last_row['id'], 'status', 1)[0];
-                        $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
-
-                        if (!$client_study['study_id']) {
-                            $study_id = $std_id['study_id'];
-                        } else {
-                            $study_id = $client_study['study_id'];
-                        }
-
-                        $user->updateRecord('clients', array(
-                            'study_id' => $study_id,
-                        ), $last_row['id']);
-
                         $user->createRecord('visit', array(
+                            'sequence' => 0,
+                            'study_id' => $std_id,
                             'visit_code' => 'RS',
                             'visit_name' => 'Registration & Screening',
-                            'study_id' => $study_id,
-                            'sequence' => 0,
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => '',
                             'visit_status' => 0,
+                            'comments' => Input::get('comments'),
                             'status' => 1,
                             'patient_id' => $last_row['id'],
                             'create_on' => date('Y-m-d H:i:s'),
@@ -152,7 +137,6 @@ if ($user->isLoggedIn()) {
                         ));
 
                         $successMessage = 'Client  Added Successful';
-                        
                     }
                     Redirect::to('info.php?id=3&status=7');
                 } catch (Exception $e) {
