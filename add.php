@@ -2740,7 +2740,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="col-6">
                                                         <div class="mb-2">
                                                             <label for="start_smoking" class="form-label">When did you start smoking?</label>
-                                                            <input type="number" value="<?php if ($history) {
+                                                            <input type="number" value="<?php if ($history['start_smoking']) {
                                                                                             print_r($history['start_smoking']);
                                                                                         } ?>" min="1970" min="2024" id="start_smoking" name="start_smoking" class="form-control" placeholder="Enter Year" />
                                                         </div>
@@ -2751,7 +2751,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="mb-3">
                                                             <label for="currently_smoking" class="form-label">Are you Currently Smoking ?</label>
                                                             <select name="currently_smoking" id="currently_smoking" class="form-control" required>
-                                                                <option value="<?= $history['currently_smoking'] ?>"><?php if ($history) {
+                                                                <option value="<?= $history['currently_smoking'] ?>"><?php if ($history['currently_smoking']) {
                                                                                                                             if ($history['currently_smoking'] == 1) {
                                                                                                                                 echo 'Yes';
                                                                                                                             } elseif ($history['currently_smoking'] == 2) {
@@ -2777,7 +2777,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="mb-2">
                                                             <label for="type_smoked" class="form-label">Amount smoked per day in cigarette sticks/packs?</label>
                                                             <select name="type_smoked" id="type_smoked" class="form-control" required>
-                                                                <option value="<?= $history['type_smoked'] ?>"><?php if ($history) {
+                                                                <option value="<?= $history['type_smoked'] ?>"><?php if ($history['type_smoked']) {
                                                                                                                     if ($history['type_smoked'] == 1) {
                                                                                                                         echo 'Packs';
                                                                                                                     } elseif ($history['type_smoked'] == 2) {
@@ -2809,23 +2809,22 @@ if ($user->isLoggedIn()) {
 
                                             <div id="ever_smoked3">
                                                 <div class="row">
-                                                    <div class="col-4" id="packs_per_day3">
+                                                    <div class="col-4">
                                                         <div class="mb-3">
-                                                            <label for="packs_per_day" class="form-label">
-                                                                <label for="packs_per_day2" id="cigarette_per_day" class="form-label">
-                                                                    Number of Cigarette per day
-                                                                </label>
-                                                                <label for="packs_per_day3" id="packs_per_day" class="form-label">
-                                                                    Number of packs per day
-                                                                </label>
-                                                                <input type="number" value="<?php if ($history) {
-                                                                                                print_r($history['packs_per_day']);
-                                                                                            } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
+                                                            <label for="packs_per_day" id="packs_per_day" class="form-label">
+                                                                Number of packs per day
+                                                            </label>
+                                                            <label for="cigarette_per_day" id="cigarette_per_day" class="form-label">
+                                                                Number of Cigarette per day
+                                                            </label>
+                                                            <input type="number" value="<?php if ($history) {
+                                                                                            print_r($history['packs_per_day']);
+                                                                                        } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
                                                         </div>
                                                     </div>
 
 
-                                                    <div class="col-4" id="packs_per_day2">
+                                                    <div class="col-4" id="packs_per_year">
                                                         <div class="mb-3">
                                                             <label for="packs_per_year" class="form-label">Number of Pack year</label>
                                                             <input type="number" value="<?php if ($history) {
@@ -2833,14 +2832,14 @@ if ($user->isLoggedIn()) {
                                                                                         } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
                                                         </div>
                                                     </div>
-                                                    <div class="col-4" id="packs_per_day3">
+                                                    <div class="col-4" id="eligible">
                                                         <div class="mb-3">
-                                                            <label for="packs_per_year" class="form-label">PATIENT ELIGIBLE ?</label>
-                                                            <input type="number" value="<?php if ($history) {
+                                                            <label for="eligible" class="form-label">PATIENT ELIGIBLE ?</label>
+                                                            <input type="number" value="<?php if ($history['eligible']) {
                                                                                             if ($history['eligible'] == 1) {
                                                                                                 print('YES');
                                                                                             } elseif ($history['eligible'] == 2) {
-                                                                                                echo $history['eligible'];
+                                                                                                print('No');
                                                                                             }
                                                                                         } ?>" min="0" id="eligible" name="eligible" class="form-control" readonly />
                                                         </div>

@@ -1,20 +1,17 @@
 const type_smoked = document.getElementById("type_smoked");
-const cigarette_per_day = document.getElementById("cigarette_per_day");
 const packs_per_day = document.getElementById("packs_per_day");
-
-
-// console.log(type_smoked);
+const cigarette_per_day = document.getElementById("cigarette_per_day");
 
 function showElement() {
   if (type_smoked.value === "1") {
-    cigarette_per_day.style.display = "block";
-    packs_per_day.style.display = "none";
-  } else if (type_smoked.value === "2") {
-    cigarette_per_day.style.display = "block";
-    packs_per_day.style.display = "none";
-  } else {
+    packs_per_day.style.display = "block";
     cigarette_per_day.style.display = "none";
+  } else if (type_smoked.value === "2") {
+    packs_per_day.style.display = "block";
+    cigarette_per_day.style.display = "none";
+  } else {
     packs_per_day.style.display = "none";
+    cigarette_per_day.style.display = "none";
   }
 
   // Save the selected value in localStorage
