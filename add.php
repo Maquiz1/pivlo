@@ -33,13 +33,48 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                print_r($_POST);
-                $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
-                $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
-
+                // $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
+
+                    $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
+
                     $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
-                    if (!$clients) {
+                    
+                    if ($clients) {
+                        $user->updateRecord('clients', array(
+                            'date_registered' => Input::get('date_registered'),
+                            'firstname' => Input::get('firstname'),
+                            'middlename' => Input::get('middlename'),
+                            'lastname' => Input::get('lastname'),
+                            'sex' => Input::get('sex'),
+                            'dob' => Input::get('dob'),
+                            'age' => $age,
+                            'hospital_id' => Input::get('hospital_id'),
+                            'patient_phone' => Input::get('patient_phone'),
+                            'supporter_name' => Input::get('supporter_name'),
+                            'supporter_phone' => Input::get('supporter_phone'),
+                            'relation_patient' => Input::get('relation_patient'),
+                            'relation_patient_other' => Input::get('relation_patient_other'),
+                            'district' => Input::get('district'),
+                            'street' => Input::get('street'),
+                            'house_number' => Input::get('house_number'),
+                            'head_household' => Input::get('head_household'),
+                            'education' => Input::get('education'),
+                            'occupation' => Input::get('occupation'),
+                            'health_insurance' => Input::get('health_insurance'),
+                            'insurance_name' => Input::get('insurance_name'),
+                            'pay_services' => Input::get('pay_services'),
+                            'insurance_name_other' => Input::get('insurance_name_other'),
+                            'interview_type' => Input::get('interview_type'),
+                            'comments' => Input::get('comments'),
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), $_GET['cid']);
+
+                        $successMessage = 'Client Updated Successful';
+
+                       
+                    } else {
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
                             'visit_code' => 'RS',
@@ -121,38 +156,7 @@ if ($user->isLoggedIn()) {
                         ));
 
                         $successMessage = 'Client  Added Successful';
-                    } else {
-                        $user->updateRecord('clients', array(
-                            'date_registered' => Input::get('date_registered'),
-                            'firstname' => Input::get('firstname'),
-                            'middlename' => Input::get('middlename'),
-                            'lastname' => Input::get('lastname'),
-                            'sex' => Input::get('sex'),
-                            'dob' => Input::get('dob'),
-                            'age' => $age,
-                            'hospital_id' => Input::get('hospital_id'),
-                            'patient_phone' => Input::get('patient_phone'),
-                            'supporter_name' => Input::get('supporter_name'),
-                            'supporter_phone' => Input::get('supporter_phone'),
-                            'relation_patient' => Input::get('relation_patient'),
-                            'relation_patient_other' => Input::get('relation_patient_other'),
-                            'district' => Input::get('district'),
-                            'street' => Input::get('street'),
-                            'house_number' => Input::get('house_number'),
-                            'head_household' => Input::get('head_household'),
-                            'education' => Input::get('education'),
-                            'occupation' => Input::get('occupation'),
-                            'health_insurance' => Input::get('health_insurance'),
-                            'insurance_name' => Input::get('insurance_name'),
-                            'pay_services' => Input::get('pay_services'),
-                            'insurance_name_other' => Input::get('insurance_name_other'),
-                            'interview_type' => Input::get('interview_type'),
-                            'comments' => Input::get('comments'),
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                        ), $_GET['cid']);
-
-                        $successMessage = 'Client Updated Successful';
+                        
                     }
                     Redirect::to('info.php?id=3&status=7');
                 } catch (Exception $e) {
