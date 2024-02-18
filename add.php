@@ -357,7 +357,7 @@ if ($user->isLoggedIn()) {
                     $eligible = 0;
                 }
 
-                // print_r($packs_year);
+                print_r($clients['study_id']);
 
 
                 if (!$history) {
