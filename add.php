@@ -816,7 +816,7 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
-        }        
+        }
     }
 } else {
     Redirect::to('index.php');
@@ -1639,12 +1639,12 @@ if ($user->isLoggedIn()) {
                                             <hr>
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <!-- <label class="custom-control-label">4. Je, vitu gani hatarishi vinaweza kusababisha mtu kupata saratani ya mapafu? (Multiple answer)</label> -->
+                                                    <label>4. Je, vitu gani hatarishi vinaweza kusababisha mtu kupata saratani ya mapafu? (Multiple answer)</label>
 
                                                     <!-- checkbox -->
-                                                    <!-- <div class="form-group">
+                                                    <div class="form-group">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="1" <?php if ($kap) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="1" <?php if ($kap['vitu_hatarishi']) {
                                                                                                                                                                             if ($kap['vitu_hatarishi'] == 1) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
@@ -1652,107 +1652,73 @@ if ($user->isLoggedIn()) {
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Uvutaji sigara.</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="2" <?php if ($kap) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="2" <?php
+                                                                                                                                                                        if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 2) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Kufanya kazi kwenye migodi.</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="3" <?php if ($kap) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="3" <?php
+                                                                                                                                                                        if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 3) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali).</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="4" <?php if ($kap) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="4" <?php if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 4) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas).</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="5" <?php if ($kap) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="5" <?php if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 5) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Mtu akiwa na saratani nyingine yeyote mwilini .</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="6" <?php if ($kap) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="6" <?php if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 6) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu.</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="7" <?php if ($kap) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="7" <?php
+                                                                                                                                                                        if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 7) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Kuwa na historia ya kupigwa mionzi ya kifua.</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="8" <?php if ($kap) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="8" <?php if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 8) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Kutumia uzazi wa mpango (vidonge vya majira).</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="96" <?php if ($kap) {
-                                                                                                                                                                                if ($kap['vitu_hatarishi'] == 1) {
+                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi" value="96" <?php
+                                                                                                                                                                            if ($kap['vitu_hatarishi']) {
+                                                                                                                                                                                if ($kap['vitu_hatarishi'] == 96) {
                                                                                                                                                                                     echo 'checked';
                                                                                                                                                                                 }
                                                                                                                                                                             } ?>>
                                                             <label for="vitu_hatarishi[]" class="custom-control-label">Other</label>
                                                         </div>
-                                                    </div> -->
-                                                    <div class="mb-3">
-                                                        <label for="vitu_hatarishi" class="form-label">4. Je, vitu gani hatarishi vinaweza kusababisha mtu kupata saratani ya mapafu? (Multiple answer)</label>
-                                                        <select name="vitu_hatarishi" id="vitu_hatarishi" class="form-control" required>
-                                                            <option value="<?= $kap['vitu_hatarishi'] ?>"><?php if ($kap['vitu_hatarishi']) {
-                                                                                                                if ($kap['vitu_hatarishi'] == 1) {
-                                                                                                                    echo 'Uvutaji sigara.';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 2) {
-                                                                                                                    echo 'Kufanya kazi kwenye migodi.';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 3) {
-                                                                                                                    echo 'Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali).';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 4) {
-                                                                                                                    echo 'Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas).';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 5) {
-                                                                                                                    echo 'Mtu akiwa na saratani nyingine yeyote mwilini .';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 6) {
-                                                                                                                    echo 'Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu.';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 7) {
-                                                                                                                    echo 'Kuwa na historia ya kupigwa mionzi ya kifua.';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 8) {
-                                                                                                                    echo 'Kutumia uzazi wa mpango (vidonge vya majira).';
-                                                                                                                } elseif ($kap['vitu_hatarishi'] == 96) {
-                                                                                                                    echo 'Nyinginezo';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Uvutaji sigara</option>
-                                                            <option value="2">Kufanya kazi kwenye migodi</option>
-                                                            <option value="3">Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali).</option>
-                                                            <option value="4">Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas)..</option>
-                                                            <option value="5">Mtu akiwa na saratani nyingine yeyote mwilini ..</option>
-                                                            <option value="6">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu..</option>
-                                                            <option value="7">Kuwa na historia ya kupigwa mionzi ya kifua..</option>
-                                                            <option value="8">Kutumia uzazi wa mpango (vidonge vya majira)..</option>
-                                                            <option value="96">Nyinginezo</option>
-                                                        </select>
                                                     </div>
                                                 </div>
 
