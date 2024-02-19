@@ -171,6 +171,9 @@ if ($user->isLoggedIn()) {
                 'hospital_id' => array(
                     'required' => true,
                 ),
+                // 'location' => array(
+                //     'required' => true,
+                // ),
             ));
             if ($validate->passed()) {
                 // $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
@@ -197,6 +200,7 @@ if ($user->isLoggedIn()) {
                             'relation_patient_other' => Input::get('relation_patient_other'),
                             'district' => Input::get('district'),
                             'street' => Input::get('street'),
+                            'location' => Input::get('location'),
                             'house_number' => Input::get('house_number'),
                             'head_household' => Input::get('head_household'),
                             'education' => Input::get('education'),
@@ -233,6 +237,7 @@ if ($user->isLoggedIn()) {
                             'relation_patient_other' => Input::get('relation_patient_other'),
                             'district' => Input::get('district'),
                             'street' => Input::get('street'),
+                            'location' => Input::get('location'),
                             'house_number' => Input::get('house_number'),
                             'head_household' => Input::get('head_household'),
                             'education' => Input::get('education'),
@@ -1149,13 +1154,12 @@ if ($user->isLoggedIn()) {
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item">
                                         <a href="info.php?id=1">
-                                            < Back
-                                        </a>
+                                            < Back </a>
                                     </li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item">
                                         <a href="info.php?id=1">
-                                                Go to staff list >
+                                            Go to staff list >
                                         </a>
                                     </li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item active">Add New Staff</li>
@@ -1276,14 +1280,14 @@ if ($user->isLoggedIn()) {
                                                             <label>SEX</label>
                                                             <select class="form-control" name="sex" style="width: 100%;" required>
                                                                 <option value="<?= $staff['sex'] ?>"><?php if ($staff['sex']) {
-                                                                                                        if ($staff['sex'] == 1) {
-                                                                                                            echo 'Male';
-                                                                                                        } elseif ($staff['sex'] == 2) {
-                                                                                                            echo 'Female';
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        echo 'Select';
-                                                                                                    } ?></option>
+                                                                                                            if ($staff['sex'] == 1) {
+                                                                                                                echo 'Male';
+                                                                                                            } elseif ($staff['sex'] == 2) {
+                                                                                                                echo 'Female';
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            echo 'Select';
+                                                                                                        } ?></option>
                                                                 <option value="1">Male</option>
                                                                 <option value="2">Female</option>
                                                             </select>
@@ -1616,7 +1620,7 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>District</label>
@@ -1635,7 +1639,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1646,8 +1650,21 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Location:</label>
+                                                            <textarea class="form-control" name="location" rows="3" placeholder="Type location here..." required>
+                                                                <?php if ($clients['location']) {
+                                                                    print_r($clients['location']);
+                                                                }  ?>
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
