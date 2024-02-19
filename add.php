@@ -168,10 +168,16 @@ if ($user->isLoggedIn()) {
                 $kundi = implode(',', Input::get('kundi'));
                 $ushawishi = implode(',', Input::get('ushawishi'));
 
-                print_r(Input::get('dalili_saratani'));
+                // print_r(Input::get('dalili_saratani'));
 
 
-                print_r($dalili_saratani);
+                // print_r($dalili_saratani);
+
+                // foreach(Input::get('dalili_saratani') as $value){
+                //     $dalili_saratani1[] = $value;
+                // }
+                print_r($matibabu);
+
 
                 if ($kap) {
                     $user->updateRecord('kap', array(
