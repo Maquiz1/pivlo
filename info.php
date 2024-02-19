@@ -286,11 +286,21 @@ if ($user->isLoggedIn()) {
                                                 $x = 1;
                                                 foreach ($clients as $value) {
                                                     $yes_no = $override->get('yes_no', 'status', 1)[0];
-                                                    $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $results = $override->getNews('results', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $classification = $override->getNews('classification', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $economic = $override->getNews('economic', 'status', 1, 'patient_id', $value['id'])[0];
+                                                    $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id']);
+                                                    $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id']);
+
+                                                    $results1 = $override->get3('results', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    $results2 = $override->get3('results', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+
+                                                    $classification1 = $override->get3('classification', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    $classification2 = $override->get3('classification', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+
+                                                    $economic1 = $override->get3('economic', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    $economic2 = $override->get3('economic', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+
+                                                    $outcome1 = $override->get3('outcome', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    $outcome2 = $override->get3('outcome', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+
                                                     $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
                                                 ?>
                                                     <tr>
@@ -348,14 +358,22 @@ if ($user->isLoggedIn()) {
                                                             <br>
                                                             <?php if ($value['interview_type'] == 1) { ?>
                                                                 <?php if ($value['age'] >= 18) { ?>
-                                                                    <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>&nbsp;&nbsp;<br>
+                                                                    <?php if ($kap && $history && $results1 && $results2 && $classification1 && $classification2 && $economic1 && $economic2 && $outcome1 && $outcome2) { ?>
+                                                                        <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-success"> <i class="ri-edit-box-line"></i>Update CRF's</a>&nbsp;&nbsp;<br>
+                                                                    <?php   } else { ?>
+                                                                        <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>&nbsp;&nbsp;<br>
+                                                                    <?php   } ?>
                                                                 <?php   } ?>
                                                             <?php   } ?>
                                                             <br>
 
                                                             <?php if ($value['interview_type'] == 2) { ?>
                                                                 <?php if ($value['age'] >= 18) { ?>
-                                                                    <a href="add.php?id=11&cid=<?= $value['id'] ?>&sequence=0&visit_code=RS&study_id=<?= $_GET['study_id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add Health Care Kap</a>&nbsp;&nbsp;<br>
+                                                                    <?php if ($health_care_kap) { ?>
+                                                                        <a href="add.php?id=11&cid=<?= $value['id'] ?>&study_id=<?= $_GET['study_id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-success"> <i class="ri-edit-box-line"></i>Update Health Care Kap</a>&nbsp;&nbsp;<br>
+                                                                    <?php   } else { ?>
+                                                                        <a href="add.php?id=11&cid=<?= $value['id'] ?>&study_id=<?= $_GET['study_id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add Health Care Kap</a>&nbsp;&nbsp;<br>
+                                                                    <?php   } ?>
                                                                 <?php   } ?>
                                                             <?php   } ?>
 
