@@ -236,7 +236,9 @@ if ($user->isLoggedIn()) {
                                                         } elseif ($_GET['status'] == 5) { ?>
                                                             <h3 class="card-title">List of Registered Clients</h3>
                                                         <?php
-                                                        } ?>
+                                                        } elseif ($_GET['status'] == 7) { ?>
+                                                            <h3 class="card-title">List of Registered Clients</h3>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -253,6 +255,7 @@ if ($user->isLoggedIn()) {
                                                     </ol>
                                                 </div>
                                             </div>
+                                            <hr>
                                         </div><!-- /.container-fluid -->
                                     </section>
                                     <!-- /.card-header -->
