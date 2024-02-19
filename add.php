@@ -696,7 +696,127 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
-        }
+        } elseif (Input::get('add_health_care_kap')) {
+            $validate = $validate->check($_POST, array(
+                'interview_date' => array(
+                    'required' => true,
+                ),
+                'saratani_mapafu' => array(
+                    'required' => true,
+                ),
+                'uhusiano_saratani' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                $history = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
+                if (!$kap) {
+                    $user->createRecord('kap', array(
+                        'study_id' => $_GET['study_id'],
+                        'interview_date' => Input::get('interview_date'),
+                        'saratani_mapafu' => Input::get('saratani_mapafu'),
+                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
+                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
+                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
+                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
+                        'dalili_saratani' => Input::get('dalili_saratani'),
+                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
+                        'saratani_vipimo' => Input::get('saratani_vipimo'),
+                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
+                        'saratani_inatibika' => Input::get('saratani_inatibika'),
+                        'matibabu_saratani' => Input::get('matibabu_saratani'),
+                        'matibabu' => Input::get('matibabu'),
+                        'matibabu_other' => Input::get('matibabu_other'),
+                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
+                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
+                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
+                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
+                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
+                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
+                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
+                        'saratani_hatari' => Input::get('saratani_hatari'),
+                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
+                        'kundi' => Input::get('kundi'),
+                        'kundi_other' => Input::get('kundi_other'),
+                        'ushawishi' => Input::get('ushawishi'),
+                        'ushawishi_other' => Input::get('ushawishi_other'),
+                        'hitaji_elimu' => Input::get('hitaji_elimu'),
+                        'vifo' => Input::get('vifo'),
+                        'tayari_dalili' => Input::get('tayari_dalili'),
+                        'saratani_kutibika' => Input::get('saratani_kutibika'),
+                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
+                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
+                        'saratani_kufa' => Input::get('saratani_kufa'),
+                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
+                        'wapi_matibabu' => Input::get('wapi_matibabu'),
+                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
+                        'saratani_ushauri' => Input::get('saratani_ushauri'),
+                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
+                        'comments' => Input::get('comments'),
+                        'status' => 1,
+                        'patient_id' => $_GET['cid'],
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $user->data()->site_id,
+                    ));
+
+                    $successMessage = 'Kap  Successful Added';
+                } else {
+                    $user->updateRecord('kap', array(
+                        'interview_date' => Input::get('interview_date'),
+                        'study_id' => $_GET['study_id'],
+                        'saratani_mapafu' => Input::get('saratani_mapafu'),
+                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
+                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
+                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
+                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
+                        'dalili_saratani' => Input::get('dalili_saratani'),
+                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
+                        'saratani_vipimo' => Input::get('saratani_vipimo'),
+                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
+                        'saratani_inatibika' => Input::get('saratani_inatibika'),
+                        'matibabu_saratani' => Input::get('matibabu_saratani'),
+                        'matibabu' => Input::get('matibabu'),
+                        'matibabu_other' => Input::get('matibabu_other'),
+                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
+                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
+                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
+                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
+                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
+                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
+                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
+                        'saratani_hatari' => Input::get('saratani_hatari'),
+                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
+                        'kundi' => Input::get('kundi'),
+                        'kundi_other' => Input::get('kundi_other'),
+                        'ushawishi' => Input::get('ushawishi'),
+                        'ushawishi_other' => Input::get('ushawishi_other'),
+                        'hitaji_elimu' => Input::get('hitaji_elimu'),
+                        'vifo' => Input::get('vifo'),
+                        'tayari_dalili' => Input::get('tayari_dalili'),
+                        'saratani_kutibika' => Input::get('saratani_kutibika'),
+                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
+                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
+                        'saratani_kufa' => Input::get('saratani_kufa'),
+                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
+                        'wapi_matibabu' => Input::get('wapi_matibabu'),
+                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
+                        'saratani_ushauri' => Input::get('saratani_ushauri'),
+                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
+                        'comments' => Input::get('comments'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), $kap[0]['id']);
+                    $successMessage = 'Kap  Successful Updated';
+                }
+
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
+            } else {
+                $pageError = $validate->errors();
+            }
+        }        
     }
 } else {
     Redirect::to('index.php');
@@ -2926,16 +3046,18 @@ if ($user->isLoggedIn()) {
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
+                                            <hr>
                                             <div class="row">
-                                                <div class="col-12">
+                                                <div class="col-4">
                                                     <div class="mb-2">
-                                                        <label for="classification_date" class="form-label">Date</label>
+                                                        <label for="classification_date" class="form-label">Clasification Date</label>
                                                         <input type="date" value="<?php if ($classification) {
                                                                                         print_r($classification['classification_date']);
                                                                                     } ?>" id="classification_date" name="classification_date" class="form-control" placeholder="Enter classification date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <input type="checkbox" name="category[]" value="1" <?php if ($classification['category'] == 1) {
                                                                                                                 echo 'checked';
@@ -2946,7 +3068,7 @@ if ($user->isLoggedIn()) {
                                                         <?php } ?>
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <input type="checkbox" name="category[]" value="2" <?php if ($classification['category'] == 2) {
                                                                                                                 echo 'checked';
@@ -2957,7 +3079,10 @@ if ($user->isLoggedIn()) {
                                                         <?php } ?>
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <input type="checkbox" name="category[]" value="3" <?php if ($classification['category'] == 3) {
                                                                                                                 echo 'checked';
@@ -2968,7 +3093,8 @@ if ($user->isLoggedIn()) {
                                                         <?php } ?>
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <input type="checkbox" name="category[]" value="4" <?php if ($classification['category'] == 4) {
                                                                                                                 echo 'checked';
@@ -2979,7 +3105,7 @@ if ($user->isLoggedIn()) {
                                                         <?php } ?>
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <input type="checkbox" name="category[]" value="5" <?php if ($classification['category'] == 5) {
                                                                                                                 echo 'checked';
@@ -2991,6 +3117,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr>
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
@@ -3460,7 +3587,7 @@ if ($user->isLoggedIn()) {
 
         <?php } elseif ($_GET['id'] == 11) { ?>
             <?php
-            $kap = $override->get3('kap', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
+            $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -3535,8 +3662,8 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                            <input type="submit" name="add_kap2" value="Submit" class="btn btn-primary">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&study_id=<?= $_GET['study_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="submit" name="add_health_care_kap" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
                                 </div>
