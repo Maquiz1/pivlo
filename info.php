@@ -480,10 +480,6 @@ if ($user->isLoggedIn()) {
                                                     $site = $override->get('sites', 'id', $visit['site_id'])[0];
                                                     $kap = $override->get('kap', 'patient_id', $_GET['cid']);
                                                     $history = $override->get('history', 'patient_id', $_GET['cid']);
-                                                    $results = $override->get('results', 'patient_id', $_GET['cid']);
-                                                    $classification = $override->get('classification', 'patient_id', $_GET['cid']);
-                                                    $economic = $override->get('economic', 'patient_id', $_GET['cid']);
-                                                    $outcome = $override->get('outcome', 'patient_id', $_GET['cid']);
                                                 ?>
                                                     <tr>
                                                         <td><?= $clients['study_id'] ?></td>
@@ -530,7 +526,7 @@ if ($user->isLoggedIn()) {
                                                                 <?php if ($visit['sequence'] == 1) { ?>
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history[0]['eligible'] == 1) { ?>
-                                                                            <?php if ($results) { ?>
+                                                                            <?php if ($override->getNews('results', 'patient_id', $_GET['cid'], 'sequence', 1)) { ?>
                                                                                 <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
@@ -538,7 +534,7 @@ if ($user->isLoggedIn()) {
 
                                                                             <?php } ?>
 
-                                                                            <?php if ($classification) { ?>
+                                                                            <?php if ($override->getNews('classification', 'patient_id', $_GET['cid'], 'sequence', 1)) { ?>
                                                                                 <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
@@ -546,7 +542,7 @@ if ($user->isLoggedIn()) {
 
                                                                             <?php } ?>
 
-                                                                            <?php if ($outcome) { ?>
+                                                                            <?php if ($override->getNews('outcome', 'patient_id', $_GET['cid'], 'sequence', 1)) { ?>
                                                                                 <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
@@ -554,7 +550,7 @@ if ($user->isLoggedIn()) {
 
                                                                             <?php } ?>
 
-                                                                            <?php if ($economic) { ?>
+                                                                            <?php if ($override->getNews('economic', 'patient_id', $_GET['cid'], 'sequence', 1)) { ?>
                                                                                 <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
@@ -570,7 +566,7 @@ if ($user->isLoggedIn()) {
                                                                 <?php if ($visit['sequence'] == 2) { ?>
                                                                     <?php if ($clients['age'] >= 45 && $clients['age'] <= 80) { ?>
                                                                         <?php if ($history[0]['eligible'] == 1) { ?>
-                                                                            <?php if ($results) { ?>
+                                                                            <?php if ($override->getNews('results', 'patient_id', $_GET['cid'], 'sequence', 2)) { ?>
                                                                                 <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Results </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
@@ -579,7 +575,7 @@ if ($user->isLoggedIn()) {
                                                                             <?php } ?>
 
 
-                                                                            <?php if ($classification) { ?>
+                                                                            <?php if ($override->getNews('classification', 'patient_id', $_GET['cid'], 'sequence', 2)) { ?>
                                                                                 <a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Classification </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
@@ -587,7 +583,7 @@ if ($user->isLoggedIn()) {
 
                                                                             <?php } ?>
 
-                                                                            <?php if ($outcome) { ?>
+                                                                            <?php if ($override->getNews('outcome', 'patient_id', $_GET['cid'], 'sequence', 2)) { ?>
                                                                                 <a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Outcome </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
@@ -595,7 +591,7 @@ if ($user->isLoggedIn()) {
 
                                                                             <?php } ?>
 
-                                                                            <?php if ($economic) { ?>
+                                                                            <?php if ($override->getNews('economic', 'patient_id', $_GET['cid'], 'sequence', 2)) { ?>
                                                                                 <a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Economic </a>&nbsp;&nbsp; <br><br>
 
                                                                             <?php } else { ?>
