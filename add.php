@@ -2243,40 +2243,74 @@ if ($user->isLoggedIn()) {
                                             <hr>
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="kundi" class="form-label">6. Je, ni kundi gani la watu linalofaa kufanyiwa uchunguzi wa saratani ya mapafu? (Multiple answer)</label>
-                                                        <select name="kundi" id="kundi" class="form-control" required>
-                                                            <option value="<?= $kap['kundi'] ?>"><?php if ($kap['kundi']) {
-                                                                                                        if ($kap['kundi'] == 1) {
-                                                                                                            echo 'Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani.';
-                                                                                                        } elseif ($kap['kundi'] == 2) {
-                                                                                                            echo 'Vijana (chini ya miaka 45) ambao wamevuta sigara kwa miaka mingi.';
-                                                                                                        } elseif ($kap['kundi'] == 3) {
-                                                                                                            echo 'Vijana (chini ya miaka 45)  waliowahi kuvuta sana sigara lakini wakaacha.';
-                                                                                                        } elseif ($kap['kundi'] == 4) {
-                                                                                                            echo 'Watu ambao wana historia ya kuugua saratani kwenye familia zao.';
-                                                                                                        } elseif ($kap['kundi'] == 5) {
-                                                                                                            echo 'Watu wenye viashiria vya saratani ya mapafu';
-                                                                                                        } elseif ($kap['kundi'] == 6) {
-                                                                                                            echo 'Watu wenye afya njema.';
-                                                                                                        } elseif ($kap['kundi'] == 99) {
-                                                                                                            echo 'Sijui';
-                                                                                                        } elseif ($kap['kundi'] == 96) {
-                                                                                                            echo 'Zinginezo';
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        echo 'Select';
-                                                                                                    } ?>
-                                                            </option>
-                                                            <option value="1">Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani.</option>
-                                                            <option value="2">Vijana (chini ya miaka 45) ambao wamevuta sigara kwa miaka mingi.</option>
-                                                            <option value="3">Vijana (chini ya miaka 45) waliowahi kuvuta sana sigara lakini wakaacha.</option>
-                                                            <option value="4">Watu ambao wana historia ya kuugua saratani kwenye familia zao.</option>
-                                                            <option value="5">Watu wenye viashiria vya saratani ya mapafu</option>
-                                                            <option value="6">Watu wenye afya njema.</option>
-                                                            <option value="99">Sijui</option>
-                                                            <option value="96">Zinginezo</option>
-                                                        </select>
+                                                    <label>6. Je, ni kundi gani la watu linalofaa kufanyiwa uchunguzi wa saratani ya mapafu? (Multiple answer)</label>
+                                                    <!-- checkbox -->
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi[]" value="1" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 1) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi[]" value="2" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 2) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Vijana (chini ya miaka 45) ambao wamevuta sigara kwa miaka mingi</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi[]" value="3" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 3) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">TVijana (chini ya miaka 45) waliowahi kuvuta sana sigara lakini wakaacha</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi[]" value="4" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 4) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Watu ambao wana historia ya kuugua saratani kwenye familia zao</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi[]" value="5" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 4) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Watu wenye viashiria vya saratani ya mapafu</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi[]" value="6" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 4) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Watu wenye afya njema</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi[]" value="99" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 99) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Sijui</label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi" value="96" <?php foreach (explode(',', $kap['kundi']) as $value) {
+                                                                                                                                                        if ($value == 96) {
+                                                                                                                                                            echo 'checked';
+                                                                                                                                                        }
+                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Other</label>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -2293,41 +2327,76 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
+
                                                 <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="ushawishi" class="form-label">7. Je! Unazani nani ana ushawishi mkubwa katika kutoa elimu ya ugonjwa wa Saratani ya Mapafu? (Multiple answer)</label>
-                                                        <select name="ushawishi" id="ushawishi" class="form-control" required>
-                                                            <option value="<?= $kap['ushawishi'] ?>"><?php if ($kap['ushawishi']) {
-                                                                                                            if ($kap['ushawishi'] == 1) {
-                                                                                                                echo 'Watoa huduma ya Afya ngazi ya jamii (CHWs).';
-                                                                                                            } elseif ($kap['ushawishi'] == 2) {
-                                                                                                                echo 'Wataalamu wa Afya.';
-                                                                                                            } elseif ($kap['ushawishi'] == 3) {
-                                                                                                                echo 'Watu waliopona ugonjwa wa saratani ya mapafu.';
-                                                                                                            } elseif ($kap['ushawishi'] == 4) {
-                                                                                                                echo 'Viongozi wa Dini.';
-                                                                                                            } elseif ($kap['ushawishi'] == 5) {
-                                                                                                                echo 'Waganga wa jadi/jamii/Ukoo';
-                                                                                                            } elseif ($kap['ushawishi'] == 6) {
-                                                                                                                echo 'Viongozi wa jamii/mtaa/kijiji.';
-                                                                                                            } elseif ($kap['ushawishi'] == 7) {
-                                                                                                                echo 'Serikali';
-                                                                                                            } elseif ($kap['ushawishi'] == 96) {
-                                                                                                                echo 'Zinginezo';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                            </option>
-                                                            <option value="1">Watoa huduma ya Afya ngazi ya jamii (CHWs).</option>
-                                                            <option value="2">Wataalamu wa Afya.</option>
-                                                            <option value="3">Watu waliopona ugonjwa wa saratani ya mapafu.</option>
-                                                            <option value="4">Viongozi wa Dini.</option>
-                                                            <option value="5">Waganga wa jadi/jamii/Ukoo</option>
-                                                            <option value="6">Viongozi wa jamii/mtaa/kijiji.</option>
-                                                            <option value="7">Serikali</option>
-                                                            <option value="96">Zinginezo</option>
-                                                        </select>
+                                                    <label>7. Je! Unazani nani ana ushawishi mkubwa katika kutoa elimu ya ugonjwa wa Saratani ya Mapafu? (Multiple answer)</label>
+                                                    <!-- checkbox -->
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi[]" value="1" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 1) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Watoa huduma ya Afya ngazi ya jamii (CHWs)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi[]" value="2" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 2) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Wataalamu wa Afya</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi[]" value="3" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 3) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Watu waliopona ugonjwa wa saratani ya mapafu</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi[]" value="4" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 4) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Viongozi wa Dini</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi[]" value="5" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 4) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Waganga wa jadi/jamii/Ukoo</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi[]" value="6" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 4) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Viongozi wa jamii/mtaa/kijiji</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi[]" value="7" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 99) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Serikali</label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi" value="96" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                                if ($value == 96) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Other</label>
+                                                        </div>
                                                     </div>
                                                 </div>
 
