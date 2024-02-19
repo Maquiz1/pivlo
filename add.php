@@ -162,23 +162,27 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
                 $vitu_hatarishi = implode(',', Input::get('vitu_hatarishi'));
-                if ($kap) {
+                $dalili_saratani = implode(',', Input::get('dalili_saratani'));
+                $saratani_vipimo = implode(',', Input::get('saratani_vipimo'));
+                $matibabu = implode(',', Input::get('matibabu'));
+                $kundi = implode(',', Input::get('kundi'));
+                $ushawishi = implode(',', Input::get('ushawishi'));
 
+                if ($kap) {
                     $user->updateRecord('kap', array(
                         'interview_date' => Input::get('interview_date'),
-                        'study_id' => $_GET['study_id'],
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
                         'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
                         'vitu_hatarishi' => $vitu_hatarishi,
                         'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => Input::get('dalili_saratani'),
+                        'dalili_saratani' => $dalili_saratani,
                         'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => Input::get('saratani_vipimo'),
+                        'saratani_vipimo' => $saratani_vipimo,
                         'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
                         'saratani_inatibika' => Input::get('saratani_inatibika'),
                         'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => Input::get('matibabu'),
+                        'matibabu' => $matibabu,
                         'matibabu_other' => Input::get('matibabu_other'),
                         'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
                         'uchunguzi_maana' => Input::get('uchunguzi_maana'),
@@ -189,9 +193,9 @@ if ($user->isLoggedIn()) {
                         'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
                         'saratani_hatari' => Input::get('saratani_hatari'),
                         'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => Input::get('kundi'),
+                        'kundi' => $kundi,
                         'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => Input::get('ushawishi'),
+                        'ushawishi' => $ushawishi,
                         'ushawishi_other' => Input::get('ushawishi_other'),
                         'hitaji_elimu' => Input::get('hitaji_elimu'),
                         'vifo' => Input::get('vifo'),
@@ -213,20 +217,20 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Kap  Successful Updated';
                 } else {
                     $user->createRecord('kap', array(
-                        'study_id' => $_GET['study_id'],
                         'interview_date' => Input::get('interview_date'),
+                        'study_id' => $_GET['study_id'],
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
                         'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
                         'vitu_hatarishi' => $vitu_hatarishi,
                         'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => Input::get('dalili_saratani'),
+                        'dalili_saratani' => $dalili_saratani,
                         'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => Input::get('saratani_vipimo'),
+                        'saratani_vipimo' => $saratani_vipimo,
                         'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
                         'saratani_inatibika' => Input::get('saratani_inatibika'),
                         'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => Input::get('matibabu'),
+                        'matibabu' => $matibabu,
                         'matibabu_other' => Input::get('matibabu_other'),
                         'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
                         'uchunguzi_maana' => Input::get('uchunguzi_maana'),
@@ -237,9 +241,9 @@ if ($user->isLoggedIn()) {
                         'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
                         'saratani_hatari' => Input::get('saratani_hatari'),
                         'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => Input::get('kundi'),
+                        'kundi' => $kundi,
                         'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => Input::get('ushawishi'),
+                        'ushawishi' => $ushawishi,
                         'ushawishi_other' => Input::get('ushawishi_other'),
                         'hitaji_elimu' => Input::get('hitaji_elimu'),
                         'vifo' => Input::get('vifo'),
