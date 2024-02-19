@@ -3392,7 +3392,7 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="outcome_date" class="form-label">Date</label>
                                                         <input type="date" value="<?php if ($outcome) {
@@ -3402,13 +3402,20 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mb-2">
-                                                        <label for="diagnosis" class="form-label">Patient Diagnosis if was scored Lung- RAD 4B</label>
-                                                        <input type="text" value="<?php if ($outcome) {
-                                                                                        print_r($outcome['diagnosis']);
-                                                                                    } ?>" id="diagnosis" name="diagnosis" class="form-control" placeholder="Enter diagnosis results" required />
+                                                        <div class="row-form clearfix">
+                                                            <!-- select -->
+                                                            <div class="form-group">
+                                                                <label>Patient Diagnosis if was scored Lung- RAD 4B</label>
+                                                                <textarea class="form-control" name="diagnosis" rows="3" placeholder="Type diagnosis here...">
+                                                                        <?php if ($outcome['diagnosis']) {
+                                                                            print_r($outcome['diagnosis']);
+                                                                        }  ?>
+                                                                </textarea>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="outcome" class="form-label">Outcome</label>
                                                         <select class="form-control" id="outcome" name="outcome" style="width: 100%;" required>
