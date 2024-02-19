@@ -160,15 +160,65 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $history = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
-                if (!$kap) {
+                $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
+                $vitu_hatarishi = implode(',', Input::get('vitu_hatarishi'));
+                if ($kap) {
+
+                    $user->updateRecord('kap', array(
+                        'interview_date' => Input::get('interview_date'),
+                        'study_id' => $_GET['study_id'],
+                        'saratani_mapafu' => Input::get('saratani_mapafu'),
+                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
+                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
+                        'vitu_hatarishi' => $vitu_hatarishi,
+                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
+                        'dalili_saratani' => Input::get('dalili_saratani'),
+                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
+                        'saratani_vipimo' => Input::get('saratani_vipimo'),
+                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
+                        'saratani_inatibika' => Input::get('saratani_inatibika'),
+                        'matibabu_saratani' => Input::get('matibabu_saratani'),
+                        'matibabu' => Input::get('matibabu'),
+                        'matibabu_other' => Input::get('matibabu_other'),
+                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
+                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
+                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
+                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
+                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
+                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
+                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
+                        'saratani_hatari' => Input::get('saratani_hatari'),
+                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
+                        'kundi' => Input::get('kundi'),
+                        'kundi_other' => Input::get('kundi_other'),
+                        'ushawishi' => Input::get('ushawishi'),
+                        'ushawishi_other' => Input::get('ushawishi_other'),
+                        'hitaji_elimu' => Input::get('hitaji_elimu'),
+                        'vifo' => Input::get('vifo'),
+                        'tayari_dalili' => Input::get('tayari_dalili'),
+                        'saratani_kutibika' => Input::get('saratani_kutibika'),
+                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
+                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
+                        'saratani_kufa' => Input::get('saratani_kufa'),
+                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
+                        'wapi_matibabu' => Input::get('wapi_matibabu'),
+                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
+                        'saratani_ushauri' => Input::get('saratani_ushauri'),
+                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
+                        'comments' => Input::get('comments'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), $kap[0]['id']);
+
+                    $successMessage = 'Kap  Successful Updated';
+                } else {
                     $user->createRecord('kap', array(
                         'study_id' => $_GET['study_id'],
                         'interview_date' => Input::get('interview_date'),
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
                         'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
+                        'vitu_hatarishi' => $vitu_hatarishi,
                         'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
                         'dalili_saratani' => Input::get('dalili_saratani'),
                         'dalili_saratani_other' => Input::get('dalili_saratani_other'),
@@ -214,56 +264,9 @@ if ($user->isLoggedIn()) {
                     ));
 
                     $successMessage = 'Kap  Successful Added';
-                } else {
-                    $user->updateRecord('kap', array(
-                        'interview_date' => Input::get('interview_date'),
-                        'study_id' => $_GET['study_id'],
-                        'saratani_mapafu' => Input::get('saratani_mapafu'),
-                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
-                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
-                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => Input::get('dalili_saratani'),
-                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => Input::get('saratani_vipimo'),
-                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
-                        'saratani_inatibika' => Input::get('saratani_inatibika'),
-                        'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => Input::get('matibabu'),
-                        'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
-                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
-                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
-                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
-                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
-                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
-                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => Input::get('saratani_hatari'),
-                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => Input::get('kundi'),
-                        'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => Input::get('ushawishi'),
-                        'ushawishi_other' => Input::get('ushawishi_other'),
-                        'hitaji_elimu' => Input::get('hitaji_elimu'),
-                        'vifo' => Input::get('vifo'),
-                        'tayari_dalili' => Input::get('tayari_dalili'),
-                        'saratani_kutibika' => Input::get('saratani_kutibika'),
-                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
-                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
-                        'saratani_kufa' => Input::get('saratani_kufa'),
-                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
-                        'wapi_matibabu' => Input::get('wapi_matibabu'),
-                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
-                        'saratani_ushauri' => Input::get('saratani_ushauri'),
-                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
-                        'comments' => Input::get('comments'),
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), $kap[0]['id']);
-                    $successMessage = 'Kap  Successful Updated';
                 }
 
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
+                // Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -1640,84 +1643,79 @@ if ($user->isLoggedIn()) {
                                             <div class="row">
                                                 <div class="col-6">
                                                     <label>4. Je, vitu gani hatarishi vinaweza kusababisha mtu kupata saratani ya mapafu? (Multiple answer)</label>
-
                                                     <!-- checkbox -->
                                                     <div class="form-group">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="1" <?php if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 1) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Uvutaji sigara.</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="1" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Uvutaji sigara</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="2" <?php
-                                                                                                                                                                        if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 2) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Kufanya kazi kwenye migodi.</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="2" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Kufanya kazi kwenye migodi</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="3" <?php
-                                                                                                                                                                        if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 3) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali).</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="3" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 3) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali)</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="4" <?php if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 4) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas).</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="4" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 4) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas)</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="5" <?php if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 5) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Mtu akiwa na saratani nyingine yeyote mwilini .</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="5" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 5) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Mtu akiwa na saratani nyingine yeyote mwilini</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="6" <?php if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 6) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu.</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="6" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 6) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="7" <?php
-                                                                                                                                                                        if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 7) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Kuwa na historia ya kupigwa mionzi ya kifua.</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="7" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 7) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Kuwa na historia ya kupigwa mionzi ya kifua</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="8" <?php if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                            if ($kap['vitu_hatarishi'] == 8) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Kutumia uzazi wa mpango (vidonge vya majira).</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="8" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 8) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Kutumia uzazi wa mpango (vidonge vya majira).</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi" value="96" <?php
-                                                                                                                                                                            if ($kap['vitu_hatarishi']) {
-                                                                                                                                                                                if ($kap['vitu_hatarishi'] == 96) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                            <label for="vitu_hatarishi[]" class="custom-control-label">Other</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi" value="96" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
+                                                                                                                                                                        if ($value == 96) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        }
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Other</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1735,51 +1733,100 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <hr>
+
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="dalili_saratani" class="form-label">5. Je, mtu mwenye Saratani ya mapafu anakua na dalili zipi? (Multiple answer) </label>
-                                                        <select name="dalili_saratani" id="dalili_saratani" class="form-control" required>
-                                                            <option value="<?= $kap['dalili_saratani'] ?>"><?php if ($kap['dalili_saratani']) {
-                                                                                                                if ($kap['dalili_saratani'] == 1) {
-                                                                                                                    echo 'Kikohozi cha Zaidi ya  wiki 2 au 3.';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 2) {
-                                                                                                                    echo 'Kikohozi cha muda mrefu kinachozidi kuwa kibaya.';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 3) {
-                                                                                                                    echo 'Kukohoa damu au makohozi yenye rangi ya kutu (spit or phlegm).';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 4) {
-                                                                                                                    echo 'Magonjwa ya mara kwa mara ya kifua kama bronchitis, pneumonia etc.';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 5) {
-                                                                                                                    echo 'Maumivu ya kifua yanayoongezeka wakati wa kupumua au kukohoa.';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 6) {
-                                                                                                                    echo 'Kupumua kwa shida (Persistent breathlessness).';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 7) {
-                                                                                                                    echo 'Uchovu wa mara kwa mara au r lack of energy.';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 8) {
-                                                                                                                    echo 'Kutoa kisauti wakati wa kupumua (Wheezing).';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 9) {
-                                                                                                                    echo 'Kukosa pumzi (Shortness of breath).';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 10) {
-                                                                                                                    echo 'Kupungua uzito kusiko na sababu.';
-                                                                                                                } elseif ($kap['dalili_saratani'] == 96) {
-                                                                                                                    echo 'Nyingine';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Kikohozi cha Zaidi ya wiki 2 au 3.</option>
-                                                            <option value="2">Kikohozi cha muda mrefu kinachozidi kuwa kibaya.</option>
-                                                            <option value="3">Kukohoa damu au makohozi yenye rangi ya kutu (spit or phlegm).</option>
-                                                            <option value="4">Magonjwa ya mara kwa mara ya kifua kama bronchitis, pneumonia etc.</option>
-                                                            <option value="5">Maumivu ya kifua yanayoongezeka wakati wa kupumua au kukohoa.</option>
-                                                            <option value="6">Kupumua kwa shida (Persistent breathlessness).</option>
-                                                            <option value="7">Uchovu wa mara kwa mara au r lack of energy.</option>
-                                                            <option value="8">Kutoa kisauti wakati wa kupumua (Wheezing).</option>
-                                                            <option value="9">Kukosa pumzi (Shortness of breath).</option>
-                                                            <option value="10">Kupungua uzito kusiko na sababu.</option>
-                                                            <option value="96">Nyingine</option>
-                                                        </select>
+                                                    <label>5. Je, mtu mwenye Saratani ya mapafu anakua na dalili zipi? ( Multiple answer )</label>
+                                                    <!-- checkbox -->
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="1" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 1) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kikohozi cha Zaidi ya wiki 2 au 3</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="2" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 2) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kikohozi cha muda mrefu kinachozidi kuwa kibaya</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="3" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 3) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kukohoa damu au makohozi yenye rangi ya kutu (spit or phlegm)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="4" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 4) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Magonjwa ya mara kwa mara ya kifua kama bronchitis, pneumonia etc</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="5" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 5) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Maumivu ya kifua yanayoongezeka wakati wa kupumua au kukohoa</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="6" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 6) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kupumua kwa shida (Persistent breathlessness)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="7" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 7) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Uchovu wa mara kwa mara au r lack of energy</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="8" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 8) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kutoa kisauti wakati wa kupumua (Wheezing)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="9" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 8) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kukosa pumzi (Shortness of breath)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="10" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 8) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kupungua uzito kusiko na sababu</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani" value="96" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
+                                                                                                                                                                            if ($value == 96) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Other</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6" id="dalili_saratani_other">
@@ -1797,34 +1844,58 @@ if ($user->isLoggedIn()) {
                                             <hr>
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="saratani_vipimo" class="form-label">6. Kama mtu akigundulika ana saratani ya mapafu ,ni vipimo gani vinatakiwa kufanyika? (Multiple answer)</label>
-                                                        <select name="saratani_vipimo" id="saratani_vipimo" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_vipimo'] ?>"><?php if ($kap['saratani_vipimo']) {
-                                                                                                                if ($kap['saratani_vipimo'] == 1) {
-                                                                                                                    echo 'Vipimo vya damu.';
-                                                                                                                } elseif ($kap['saratani_vipimo'] == 2) {
-                                                                                                                    echo 'Picha ya kifua (Chest X-ray).';
-                                                                                                                } elseif ($kap['saratani_vipimo'] == 3) {
-                                                                                                                    echo 'CT scan ya kifua';
-                                                                                                                } elseif ($kap['saratani_vipimo'] == 4) {
-                                                                                                                    echo 'Kutoa kinyama kwenye mapafu (Lung Biopsy).';
-                                                                                                                } elseif ($kap['saratani_vipimo'] == 99) {
-                                                                                                                    echo 'Sijui';
-                                                                                                                } elseif ($kap['saratani_vipimo'] == 96) {
-                                                                                                                    echo 'Zinginezo';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Vipimo vya damu</option>
-                                                            <option value="2">Picha ya kifua (Chest X-ray)</option>
-                                                            <option value="3">CT scan ya kifua</option>
-                                                            <option value="4">Kutoa kinyama kwenye mapafu (Lung Biopsy)</option>
-                                                            <option value="99">Sijui</option>
-                                                            <option value="96">Zinginezo</option>
-                                                        </select>
+                                                    <label>6. Kama mtu akigundulika ana saratani ya mapafu ,ni vipimo gani vinatakiwa kufanyika? (Multiple answer)</label>
+                                                    <!-- checkbox -->
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="1" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
+                                                                                                                                                                            if ($value == 1) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Vipimo vya damu</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="2" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
+                                                                                                                                                                            if ($value == 2) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Picha ya kifua (Chest X-ray)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="3" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
+                                                                                                                                                                            if ($value == 3) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">CT scan ya kifua</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="4" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
+                                                                                                                                                                            if ($value == 4) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kutoa kinyama kwenye mapafu (Lung Biopsy)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="99" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
+                                                                                                                                                                            if ($value == 99) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Sijui</label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo" value="96" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
+                                                                                                                                                                            if ($value == 96) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            }
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Other</label>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -1891,40 +1962,74 @@ if ($user->isLoggedIn()) {
                                             <hr>
                                             <div class="row">
                                                 <div class="col-6" id="matibabu1">
-                                                    <div class="mb-3">
-                                                        <label for="matibabu" class="form-label">9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
-                                                        <select name="matibabu" id="matibabu2" class="form-control">
-                                                            <option value="<?= $kap['matibabu'] ?>"><?php if ($kap['matibabu']) {
-                                                                                                        if ($kap['matibabu'] == 1) {
-                                                                                                            echo 'Upasuaji';
-                                                                                                        } elseif ($kap['matibabu'] == 2) {
-                                                                                                            echo 'Tiba kemikali (Chemotherapy).';
-                                                                                                        } elseif ($kap['matibabu'] == 3) {
-                                                                                                            echo 'Tiba ya mionzi (Radiotherapy).';
-                                                                                                        } elseif ($kap['matibabu'] == 4) {
-                                                                                                            echo 'Tiba ya kinga (Immunotherapy).';
-                                                                                                        } elseif ($kap['matibabu'] == 5) {
-                                                                                                            echo 'Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor).';
-                                                                                                        } elseif ($kap['matibabu'] == 6) {
-                                                                                                            echo 'Tiba inayolengwa na kinga. (Immune target therapy).';
-                                                                                                        } elseif ($kap['matibabu'] == 99) {
-                                                                                                            echo 'Sijui';
-                                                                                                        } elseif ($kap['matibabu'] == 96) {
-                                                                                                            echo 'Zinginezo';
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        echo 'Select';
-                                                                                                    } ?>
-                                                            </option>
-                                                            <option value="1">Upasuaji</option>
-                                                            <option value="2">Tiba kemikali (Chemotherapy)</option>
-                                                            <option value="3">Tiba ya mionzi (Radiotherapy).</option>
-                                                            <option value="4">Tiba ya kinga (Immunotherapy).</option>
-                                                            <option value="5">Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor).</option>
-                                                            <option value="6">Tiba inayolengwa na kinga. (Immune target therapy).</option>
-                                                            <option value="99">Sijui</option>
-                                                            <option value="96">Zinginezo</option>
-                                                        </select>
+                                                    <label>9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
+                                                    <!-- checkbox -->
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="1" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                            if ($value == 1) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            }
+                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Upasuaji</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="2" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                            if ($value == 2) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            }
+                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Tiba kemikali (Chemotherapy)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="3" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                            if ($value == 3) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            }
+                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Tiba ya mionzi (Radiotherapy)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="4" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                            if ($value == 4) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            }
+                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Tiba ya kinga (Immunotherapy)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="5" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                            if ($value == 4) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            }
+                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="6" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                            if ($value == 4) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            }
+                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Tiba inayolengwa na kinga. (Immune target therapy)</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="99" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                                if ($value == 99) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                }
+                                                                                                                                                            } ?>>
+                                                            <label class="form-check-label">Sijui</label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu" value="96" <?php foreach (explode(',', $kap['matibabu']) as $value) {
+                                                                                                                                                            if ($value == 96) {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            }
+                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Other</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6" id="matibabu_other">
