@@ -8,3 +8,15 @@ saratani_vipimo.addEventListener("change", function () {
     saratani_vipimo_other.style.display = "none";
   }
 });
+
+// Initial check
+if (saratani_vipimo.checked) {
+  saratani_vipimo_other.style.display = "block";
+} else {
+  saratani_vipimo_other.style.display = "none";
+}
+
+
+
+
+

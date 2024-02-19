@@ -5,10 +5,8 @@ const relation_patient_other = document.getElementById(
 
 function showElement() {
   if (relation_patient.value === "96") {
-    relation_patient_other.attr("required", "");
     relation_patient_other.style.display = "block";
   } else {
-    relation_patient_other.removeAttr("required");
     relation_patient_other.style.display = "none";
   }
 
@@ -35,3 +33,21 @@ showElement();
 
 // Listen for changes in the dropdown
 relation_patient.addEventListener("change", showElement);
+
+// // Sample options data
+// const optionsData = [
+//   { value: "1", text: "Option 1" },
+//   { value: "2", text: "Option 2" },
+//   { value: "3", text: "Option 3" },
+// ];
+
+// // Get select element
+// const selectElement = document.getElementById("relation_patient");
+
+// // Populate select options
+// optionsData.forEach((option) => {
+//   const optionElement = document.createElement("option");
+//   optionElement.value = option.value;
+//   optionElement.textContent = option.text;
+//   selectElement.appendChild(optionElement);
+// });

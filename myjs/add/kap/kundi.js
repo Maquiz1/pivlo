@@ -9,3 +9,11 @@ kundi.addEventListener("change", function () {
   }
 });
 
+// Initial check
+if (kundi.checked) {
+  kundi_other.style.display = "block";
+} else {
+  kundi_other.style.display = "none";
+}
+
+

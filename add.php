@@ -1213,16 +1213,15 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Relation to patient</label>
-                                                            <select name="relation_patient" id="relation_patient" class="form-control" required>
+                                                            <select name="relation_patient" id="relation_patient" class="form-control" autocomplete="off" required>
                                                                 <option value="<?= $relation['id'] ?>"><?php if ($relation['name']) {
-                                                                                                            print_r($relation['name']);
+                                                                                                            echo $relation['name'];
                                                                                                         } else {
-                                                                                                            echo 'Select pay';
+                                                                                                            echo 'Select';
                                                                                                         } ?>
                                                                 </option>
                                                                 <?php foreach ($override->get('relation', 'status', 1) as $relation) { ?>
-                                                                    <option value="<?= $relation['id'] ?>"><?= $relation['name'] ?>
-                                                                    </option>
+                                                                    <option value="<?= $relation['id'] ?>"><?= $relation['name'] ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
@@ -2263,58 +2262,58 @@ if ($user->isLoggedIn()) {
                                                     <div class="form-group">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="kundi[]" value="1" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 1) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
+                                                                                                                                            if ($value == 1) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            }
+                                                                                                                                        } ?>>
                                                             <label class="form-check-label">Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="kundi[]" value="2" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 2) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
+                                                                                                                                            if ($value == 2) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            }
+                                                                                                                                        } ?>>
                                                             <label class="form-check-label">Vijana (chini ya miaka 45) ambao wamevuta sigara kwa miaka mingi</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="kundi[]" value="3" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 3) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
+                                                                                                                                            if ($value == 3) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            }
+                                                                                                                                        } ?>>
                                                             <label class="form-check-label">TVijana (chini ya miaka 45) waliowahi kuvuta sana sigara lakini wakaacha</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="kundi[]" value="4" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 4) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
+                                                                                                                                            if ($value == 4) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            }
+                                                                                                                                        } ?>>
                                                             <label class="form-check-label">Watu ambao wana historia ya kuugua saratani kwenye familia zao</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="kundi[]" value="5" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 5) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
+                                                                                                                                            if ($value == 5) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            }
+                                                                                                                                        } ?>>
                                                             <label class="form-check-label">Watu wenye viashiria vya saratani ya mapafu</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="kundi[]" value="6" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 6) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
+                                                                                                                                            if ($value == 6) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            }
+                                                                                                                                        } ?>>
                                                             <label class="form-check-label">Watu wenye afya njema</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="kundi[]" value="99" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 99) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
+                                                                                                                                            if ($value == 99) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            }
+                                                                                                                                        } ?>>
                                                             <label class="form-check-label">Sijui</label>
                                                         </div>
 
@@ -2349,58 +2348,58 @@ if ($user->isLoggedIn()) {
                                                     <div class="form-group">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="ushawishi[]" value="1" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 1) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
+                                                                                                                                                if ($value == 1) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                }
+                                                                                                                                            } ?>>
                                                             <label class="form-check-label">Watoa huduma ya Afya ngazi ya jamii (CHWs)</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="ushawishi[]" value="2" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 2) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
+                                                                                                                                                if ($value == 2) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                }
+                                                                                                                                            } ?>>
                                                             <label class="form-check-label">Wataalamu wa Afya</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="ushawishi[]" value="3" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 3) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
+                                                                                                                                                if ($value == 3) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                }
+                                                                                                                                            } ?>>
                                                             <label class="form-check-label">Watu waliopona ugonjwa wa saratani ya mapafu</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]"  value="4" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 4) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="4" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                if ($value == 4) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                }
+                                                                                                                                            } ?>>
                                                             <label class="form-check-label">Viongozi wa Dini</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]"  value="5" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 5) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
+                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="5" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
+                                                                                                                                                if ($value == 5) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                }
+                                                                                                                                            } ?>>
                                                             <label class="form-check-label">Waganga wa jadi/jamii/Ukoo</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="ushawishi[]" value="6" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 6) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
+                                                                                                                                                if ($value == 6) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                }
+                                                                                                                                            } ?>>
                                                             <label class="form-check-label">Viongozi wa jamii/mtaa/kijiji</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="ushawishi[]" value="7" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 7) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
+                                                                                                                                                if ($value == 7) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                }
+                                                                                                                                            } ?>>
                                                             <label class="form-check-label">Serikali</label>
                                                         </div>
 

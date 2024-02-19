@@ -9,6 +9,15 @@ ushawishi.addEventListener("change", function () {
   }
 });
 
+// Initial check
+if (ushawishi.checked) {
+  ushawishi_other.style.display = "block";
+} else {
+  ushawishi_other.style.display = "none";
+}
+
+
+
 
 
 

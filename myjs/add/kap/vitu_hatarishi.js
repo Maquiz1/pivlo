@@ -11,7 +11,7 @@ vitu_hatarishi.addEventListener("change", function () {
 
 // Initial check
 if (vitu_hatarishi.checked) {
-    vitu_hatarishi_other.style.display = "block";
+  vitu_hatarishi_other.style.display = "block";
 } else {
-      vitu_hatarishi_other.style.display = "none";
+  vitu_hatarishi_other.style.display = "none";
 }
