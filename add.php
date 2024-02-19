@@ -160,14 +160,10 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $kap = $override->get3('kap', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
-                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+                $history = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
                 if (!$kap) {
                     $user->createRecord('kap', array(
-                        'visit_code' => 'RS',
-                        'visit_name' => 'Registration & Screening',
-                        'study_id' => $clients['study_id'],
-                        'sequence' => 0,
+                        'study_id' => $_GET['study_id'],
                         'interview_date' => Input::get('interview_date'),
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
@@ -221,10 +217,7 @@ if ($user->isLoggedIn()) {
                 } else {
                     $user->updateRecord('kap', array(
                         'interview_date' => Input::get('interview_date'),
-                        'visit_code' => 'RS',
-                        'visit_name' => 'Registration & Screening',
-                        'study_id' => $clients['study_id'],
-                        'sequence' => 0,
+                        'study_id' => $_GET['study_id'],
                         'saratani_mapafu' => Input::get('saratani_mapafu'),
                         'uhusiano_saratani' => Input::get('uhusiano_saratani'),
                         'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
@@ -270,7 +263,7 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Kap  Successful Updated';
                 }
 
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&status=' . $_GET['status']);
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -1385,7 +1378,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 5) { ?>
             <?php
-            $kap = $override->get3('kap', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
+            $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -2541,7 +2534,7 @@ if ($user->isLoggedIn()) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&study_id=<?= $_GET['study_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="submit" name="add_kap" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
@@ -2755,7 +2748,7 @@ if ($user->isLoggedIn()) {
 
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&study_id=<?= $_GET['study_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
                                             <input type="submit" name="add_history" value="Submit" class="btn btn-primary">
                                         </div>
