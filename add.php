@@ -194,8 +194,12 @@ if ($user->isLoggedIn()) {
                             'age' => $age,
                             'hospital_id' => Input::get('hospital_id'),
                             'patient_phone' => Input::get('patient_phone'),
-                            'supporter_name' => Input::get('supporter_name'),
+                            'patient_phone2' => Input::get('patient_phone2'),
+                            'supporter_fname' => Input::get('supporter_fname'),
+                            'supporter_mname' => Input::get('supporter_mname'),
+                            'supporter_lname' => Input::get('supporter_lname'),
                             'supporter_phone' => Input::get('supporter_phone'),
+                            'supporter_phone2' => Input::get('supporter_phone2'),
                             'relation_patient' => Input::get('relation_patient'),
                             'relation_patient_other' => Input::get('relation_patient_other'),
                             'district' => Input::get('district'),
@@ -231,8 +235,12 @@ if ($user->isLoggedIn()) {
                             'age' => $age,
                             'hospital_id' => Input::get('hospital_id'),
                             'patient_phone' => Input::get('patient_phone'),
-                            'supporter_name' => Input::get('supporter_name'),
+                            'patient_phone2' => Input::get('patient_phone2'),
+                            'supporter_fname' => Input::get('supporter_fname'),
+                            'supporter_mname' => Input::get('supporter_mname'),
+                            'supporter_lname' => Input::get('supporter_lname'),
                             'supporter_phone' => Input::get('supporter_phone'),
+                            'supporter_phone2' => Input::get('supporter_phone2'),
                             'relation_patient' => Input::get('relation_patient'),
                             'relation_patient_other' => Input::get('relation_patient_other'),
                             'district' => Input::get('district'),
@@ -1471,7 +1479,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1482,7 +1490,18 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Patient Phone Number</label>
+                                                            <input class="form-control" type="tel" pattern=[0]{1}[0-9]{9} minlength="10" maxlength="10" name="patient_phone2" id="patient_phone2" value="<?php if ($clients['patient_phone2']) {
+                                                                                                                                                                                                                print_r($clients['patient_phone2']);
+                                                                                                                                                                                                            }  ?>" /> <span>Example: 0700 000 111</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>SEX</label>
@@ -1551,7 +1570,43 @@ if ($user->isLoggedIn()) {
 
                                             <div class="card card-warning">
                                                 <div class="card-header">
-                                                    <h3 class="card-title">treatment supporter or next of kin</h3>
+                                                    <h3 class="card-title">treatment supporter or next of kin details</h3>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>First Name(Supporter):</label>
+                                                            <input class="form-control" type="text" name="supporter_fname" id="supporter_fname" value="<?php if ($clients['supporter_fname']) {
+                                                                                                                                                            print_r($clients['supporter_fname']);
+                                                                                                                                                        }  ?>" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Middle Name(Supporter):</label>
+                                                            <input class="form-control" type="text" name="supporter_mname" id="supporter_mname" value="<?php if ($clients['supporter_mname']) {
+                                                                                                                                                            print_r($clients['supporter_mname']);
+                                                                                                                                                        }  ?>" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Last Name (Supporter):</label>
+                                                            <input class="form-control" type="text" name="supporter_lname" id="supporter_lname" value="<?php if ($clients['supporter_lname']) {
+                                                                                                                                                            print_r($clients['supporter_lname']);
+                                                                                                                                                        }  ?>" required />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -1560,19 +1615,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Name:</label>
-                                                            <input class="form-control" type="text" name="supporter_name" id="supporter_name" value="<?php if ($clients['supporter_name']) {
-                                                                                                                                                            print_r($clients['supporter_name']);
-                                                                                                                                                        }  ?>" required />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <div class="row-form clearfix">
-                                                        <!-- select -->
-                                                        <div class="form-group">
-                                                            <label>Mobile number</label>
+                                                            <label>Mobile number(Supporter)</label>
                                                             <input class="form-control" type="tel" pattern=[0]{1}[0-9]{9} minlength="10" maxlength="10" name="supporter_phone" id="supporter_phone" value="<?php if ($clients['supporter_phone']) {
                                                                                                                                                                                                                 print_r($clients['supporter_phone']);
                                                                                                                                                                                                             }  ?>" required />
@@ -1580,11 +1623,25 @@ if ($user->isLoggedIn()) {
                                                         <span>Example: 0700 000 111</span>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Relation to patient</label>
+                                                            <label>Mobile number 2 (Supporter)</label>
+                                                            <input class="form-control" type="tel" pattern=[0]{1}[0-9]{9} minlength="10" maxlength="10" name="supporter_phone2" id="supporter_phone2" value="<?php if ($clients['supporter_phone2']) {
+                                                                                                                                                                                                                    print_r($clients['supporter_phone2']);
+                                                                                                                                                                                                                }  ?>" />
+                                                        </div>
+                                                        <span>Example: 0700 000 111</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
+                                                            <label>Relation to patient(Supporter)</label>
                                                             <select name="relation_patient" id="relation_patient" class="form-control" autocomplete="off" required>
                                                                 <option value="<?= $relation['id'] ?>"><?php if ($relation['name']) {
                                                                                                             echo $relation['name'];
