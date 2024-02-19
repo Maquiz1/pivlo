@@ -92,9 +92,27 @@ if ($user->isLoggedIn()) {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=1" class="nav-link">
+                                <a href="info.php?id=1&status=1" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of Staff</p>
+                                    <p>List of Active Staff</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=1&status=2" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Inactive Staff</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=1&status=3" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Locked And Active Staff</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=1&status=4" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Locked And Inactive Staff</p>
                                 </a>
                             </li>
                         </ul>

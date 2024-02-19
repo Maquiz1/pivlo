@@ -120,7 +120,7 @@ if ($user->isLoggedIn()) {
         <?php } ?>
 
 
-        <?php if ($_GET['id'] == 1 && ($user->data()->position == 1 || $user->data()->position == 2)) { ?>
+        <?php if ($_GET['id'] == 1 && ($user->data()->position == 1 || $user->data()->position == 2 || $user->data()->position == 3)) { ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -130,11 +130,20 @@ if ($user->isLoggedIn()) {
                             <div class="col-sm-6">
                                 <h1>
                                     <?php
-                                    if ($user->data()->power == 1) {
-                                        $data = $override->getData('user');
-                                    } else {
-                                        $data = $override->getNews('user', 'status', 1, 'power', 0);
-                                    } ?>
+                                    if ($_GET['status'] == 1) {
+                                        if ($user->data()->power == 1) {
+                                            $data = $override->getData('user');
+                                        } else {
+                                            $data = $override->getDataStaff('user', 'status', 1, 'power', 0, 'count', 4, 'id');
+                                        }
+                                    } elseif ($_GET['status'] == 2) {
+                                        $data = $override->getDataStaff('user', 'status', 0, 'power', 0, 'count', 4, 'id');
+                                    } elseif ($_GET['status'] == 3) {
+                                        $data = $override->getDataStaff1('user', 'status', 1, 'power', 0, 'count', 4, 'id');
+                                    } elseif ($_GET['status'] == 4) {
+                                        $data = $override->getDataStaff1('user', 'status', 0, 'power', 0, 'count', 4, 'id');
+                                    }
+                                    ?>
                                     List of Staff
                                 </h1>
                             </div>
