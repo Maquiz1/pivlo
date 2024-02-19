@@ -168,6 +168,8 @@ if ($user->isLoggedIn()) {
                 $kundi = implode(',', Input::get('kundi'));
                 $ushawishi = implode(',', Input::get('ushawishi'));
 
+                print_r($dalili_saratani);
+
                 if ($kap) {
                     $user->updateRecord('kap', array(
                         'interview_date' => Input::get('interview_date'),
@@ -1809,7 +1811,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="9" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 8) {
+                                                                                                                                                                            if ($value == 9) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
@@ -1817,7 +1819,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="10" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 8) {
+                                                                                                                                                                            if ($value == 10) {
                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                             }
                                                                                                                                                                         } ?>>
