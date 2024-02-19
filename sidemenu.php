@@ -75,6 +75,32 @@ if ($user->isLoggedIn()) {
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
+                            Staff <i class="fas fa-angle-left right"></i>
+
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="add.php?id=1" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Register
+                                    <span class="right badge badge-danger">New Staff</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="info.php?id=1" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List of Staff</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
                             Registration <i class="fas fa-angle-left right"></i>
 
                         </p>
