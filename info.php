@@ -11,18 +11,34 @@ $pageError = null;
 $errorMessage = null;
 if ($user->isLoggedIn()) {
     if (Input::exists('post')) {
-        if (Input::get('delete_generic')) {
-            $validate = $validate->check($_POST, array());
-            if ($validate->passed()) {
-                try {
-                    $user->updateRecord('generic', array(
-                        'status' => 0,
-                    ), Input::get('id'));
-                    $successMessage = 'Name Deleted Successful';
-                } catch (Exception $e) {
-                    die($e->getMessage());
-                }
-            }
+        if (Input::get('reset_pass')) {
+            $salt = $random->get_rand_alphanumeric(32);
+            $password = '12345678';
+            $user->updateRecord('user', array(
+                'password' => Hash::make($password, $salt),
+                'salt' => $salt,
+            ), Input::get('id'));
+            $successMessage = 'Password Reset Successful';
+        } elseif (Input::get('lock_account')) {
+            $user->updateRecord('user', array(
+                'count' => 4,
+            ), Input::get('id'));
+            $successMessage = 'Account locked Successful';
+        } elseif (Input::get('unlock_account')) {
+            $user->updateRecord('user', array(
+                'count' => 0,
+            ), Input::get('id'));
+            $successMessage = 'Account Unlock Successful';
+        } elseif (Input::get('delete_staff')) {
+            $user->updateRecord('user', array(
+                'status' => 0,
+            ), Input::get('id'));
+            $successMessage = 'User Restored Successful';
+        } elseif (Input::get('restore_staff')) {
+            $user->updateRecord('user', array(
+                'status' => 1,
+            ), Input::get('id'));
+            $successMessage = 'User Deleted Successful';
         } elseif (Input::get('add_visit')) {
             $validate = $validate->check($_POST, array(
                 'visit_date' => array(
@@ -105,6 +121,280 @@ if ($user->isLoggedIn()) {
 
 
         <?php if ($_GET['id'] == 1 && ($user->data()->position == 1 || $user->data()->position == 2)) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1) {
+                                        $data = $override->getData('user');
+                                    } else {
+                                        $data = $override->getNews('user', 'status', 1, 'power', 0);
+                                    } ?>
+                                    List of Staff
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">List of Staff</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6">
+                                                    <div class="card-header">
+                                                        List of Staff
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>username</th>
+                                                    <th>Position</th>
+                                                    <th>Sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($data as $staff) {
+
+                                                    $position = $override->getNews('position', 'status', 1, 'id', $staff['position'])[0];
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $staff['site_id'])[0];
+
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $staff['firstname'] . '  ' . $staff['middlename'] . ' ' . $staff['lastname']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $staff['username']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $position['name']; ?>
+                                                        </td>
+                                                        <?php if ($staff['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($staff['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                Not Available
+                                                            </td>
+                                                        <?php } ?>
+
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <?php if ($staff['count'] < 4) { ?>
+                                                            <?php if ($staff['status'] == 1) { ?>
+                                                                <td class="text-center">
+                                                                    <a href="#" class="btn btn-success">
+                                                                        <i class="ri-edit-box-line">
+                                                                        </i>Active
+                                                                    </a>
+                                                                </td>
+                                                            <?php  } else { ?>
+                                                                <td class="text-center">
+                                                                    <a href="#" class="btn btn-danger">
+                                                                        <i class="ri-edit-box-line">
+                                                                        </i>Not Active
+                                                                    </a>
+                                                                </td>
+                                                            <?php } ?>
+
+                                                        <?php  } else { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Locked</a>
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td>
+                                                            <a href="add.php?id=1&staff_id=<?= $staff['id'] ?>" class="btn btn-info">Update</a>
+                                                            <a href="#reset<?= $staff['id'] ?>" role="button" class="btn btn-default" data-toggle="modal">Reset</a>
+                                                            <a href="#lock<?= $staff['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Lock</a>
+                                                            <a href="#unlock<?= $staff['id'] ?>" role="button" class="btn btn-primary" data-toggle="modal">Unlock</a>
+                                                            <a href="#delete<?= $staff['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+                                                            <a href="#restore<?= $staff['id'] ?>" role="button" class="btn btn-secondary" data-toggle="modal">Restore</a>
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade" id="reset<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Reset Password</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Are you sure you want to reset password to default (12345678)</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="reset_pass" value="Reset" class="btn btn-warning">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="lock<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Lock Account</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Are you sure you want to lock this account </p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="lock_account" value="Lock" class="btn btn-warning">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="unlock<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Unlock Account</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: red">
+                                                                            <p>Are you sure you want to unlock this account </p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="unlock_account" value="Unlock" class="btn btn-success">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="delete<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Delete User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: red">
+                                                                            <p>Are you sure you want to delete this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="delete_staff" value="Delete" class="btn btn-danger">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="restore<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Restore User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: green">
+                                                                            <p>Are you sure you want to restore this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="restore_staff" value="Restore" class="btn btn-success">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>username</th>
+                                                    <th>Position</th>
+                                                    <th>Sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 3) { ?>
             <!-- Content Wrapper. Contains page content -->

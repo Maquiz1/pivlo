@@ -26,19 +26,20 @@ if ($user->isLoggedIn()) {
                 'site_id' => array(
                     'required' => true,
                 ),
-                'username' => array(
-                    'required' => true,
-                    'unique' => 'user'
-                ),
-                'phone_number' => array(
-                    'required' => true,
-                    'unique' => 'user'
-                ),
-                'email_address' => array(
-                    'unique' => 'user'
-                ),
+                // 'username' => array(
+                //     'required' => true,
+                //     'unique' => 'user'
+                // ),
+                // 'phone_number' => array(
+                //     'required' => true,
+                //     'unique' => 'user'
+                // ),
+                // 'email_address' => array(
+                //     'unique' => 'user'
+                // ),
             ));
             if ($validate->passed()) {
+                print_r($_POST);
                 $salt = $random->get_rand_alphanumeric(32);
                 $password = '12345678';
                 switch (Input::get('position')) {
@@ -51,28 +52,63 @@ if ($user->isLoggedIn()) {
                     case 3:
                         $accessLevel = 3;
                         break;
+                    case 4:
+                        $accessLevel = 3;
+                        break;
+                    case 5:
+                        $accessLevel = 3;
+                        break;
                 }
                 try {
-                    $user->createRecord('user', array(
-                        'firstname' => Input::get('firstname'),
-                        'lastname' => Input::get('lastname'),
-                        'username' => Input::get('username'),
-                        'position' => Input::get('position'),
-                        'phone_number' => Input::get('phone_number'),
-                        'password' => Hash::make($password, $salt),
-                        'salt' => $salt,
-                        'create_on' => date('Y-m-d'),
-                        'last_login' => '',
-                        'status' => 1,
-                        'power' => 0,
-                        'email_address' => Input::get('email_address'),
-                        'accessLevel' => $accessLevel,
-                        'user_id' => $user->data()->id,
-                        'site_id' => Input::get('site_id'),
-                        'count' => 0,
-                        'pswd' => 0,
-                    ));
-                    $successMessage = 'Account Created Successful';
+
+                    $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id']);
+
+                    if ($staff) {
+                        $user->updateRecord('user', array(
+                            'firstname' => Input::get('firstname'),
+                            'middlename' => Input::get('middlename'),
+                            'lastname' => Input::get('lastname'),
+                            'username' => Input::get('username'),
+                            'phone_number' => Input::get('phone_number'),
+                            'phone_number2' => Input::get('phone_number2'),
+                            'email_address' => Input::get('email_address'),
+                            'sex' => Input::get('sex'),
+                            'position' => Input::get('position'),
+                            'accessLevel' => $accessLevel,
+                            'power' => Input::get('power'),
+                            'password' => Hash::make($password, $salt),
+                            'salt' => $salt,
+                            'site_id' => Input::get('site_id'),
+                        ), $_GET['staff_id']);
+
+                        $successMessage = 'Account Updated Successful';
+                    } else {
+                        $user->createRecord('user', array(
+                            'firstname' => Input::get('firstname'),
+                            'middlename' => Input::get('middlename'),
+                            'lastname' => Input::get('lastname'),
+                            'username' => Input::get('username'),
+                            'phone_number' => Input::get('phone_number'),
+                            'phone_number2' => Input::get('phone_number2'),
+                            'email_address' => Input::get('email_address'),
+                            'sex' => Input::get('sex'),
+                            'position' => Input::get('position'),
+                            'accessLevel' => $accessLevel,
+                            'power' => Input::get('power'),
+                            'password' => Hash::make($password, $salt),
+                            'salt' => $salt,
+                            'create_on' => date('Y-m-d'),
+                            'last_login' => '',
+                            'status' => 1,
+                            'user_id' => $user->data()->id,
+                            'site_id' => Input::get('site_id'),
+                            'count' => 0,
+                            'pswd' => 0,
+                        ));
+                        $successMessage = 'Account Created Successful';
+                    }
+
+                    Redirect::to('info.php?id=1');
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -1107,34 +1143,22 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Add New Client</h1>
+                                <h1>Add New Staff</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&&status=<?= $_GET['status']; ?>">
-                                            < Back</a>
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=1">
+                                            < Back
+                                        </a>
                                     </li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item">
-                                        <a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                            <?php if ($_GET['status'] == 1) { ?>
-                                                Go to screening list >
-                                            <?php } elseif ($_GET['status'] == 2) { ?>
-                                                Go to eligible list >
-                                            <?php } elseif ($_GET['status'] == 3) { ?>
-                                                Go to enrollment list >
-                                            <?php } elseif ($_GET['status'] == 4) { ?>
-                                                Go to terminated / end study list >
-                                            <?php } elseif ($_GET['status'] == 5) { ?>
-                                                Go to registered list >
-                                            <?php } elseif ($_GET['status'] == 6) { ?>
-                                                Go to registered list >
-                                            <?php } elseif ($_GET['status'] == 7) { ?>
-                                                Go to registered list >
-                                            <?php } ?>
+                                        <a href="info.php?id=1">
+                                                Go to staff list >
                                         </a>
                                     </li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item active">Add New Client</li>
+                                    <li class="breadcrumb-item active">Add New Staff</li>
                                 </ol>
                             </div>
                         </div>
@@ -1146,15 +1170,9 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row">
                             <?php
-                            $user = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id'])[0];
-                            // $relation = $override->get('relation', 'id', $clients['relation_patient'])[0];
-                            // $sex = $override->get('sex', 'id', $clients['sex'])[0];
-                            // $district = $override->get('district', 'id', $clients['district'])[0];
-                            // $education = $override->get('education', 'id', $clients['education'])[0];
-                            // $occupation = $override->get('occupation', 'id', $clients['occupation'])[0];
-                            // $insurance = $override->get('insurance', 'id', $clients['health_insurance'])[0];
-                            // $payments = $override->get('payments', 'id', $clients['pay_services'])[0];
-                            // $household = $override->get('household', 'id', $clients['head_household'])[0];
+                            $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id'])[0];
+                            $site = $override->get('sites', 'id', $staff['site_id'])[0];
+                            $position = $override->get('position', 'id', $staff['position'])[0];
                             ?>
                             <!-- right column -->
                             <div class="col-md-12">
@@ -1171,8 +1189,8 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>First Name</label>
-                                                            <input class="form-control" type="text" name="firstname" id="firstname" value="<?php if ($user['firstname']) {
-                                                                                                                                                print_r($user['firstname']);
+                                                            <input class="form-control" type="text" name="firstname" id="firstname" value="<?php if ($staff['firstname']) {
+                                                                                                                                                print_r($staff['firstname']);
                                                                                                                                             }  ?>" required />
                                                         </div>
                                                     </div>
@@ -1181,8 +1199,8 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Middle Name</label>
-                                                            <input class="form-control" type="text" name="middlename" id="middlename" value="<?php if ($user['middlename']) {
-                                                                                                                                                    print_r($user['middlename']);
+                                                            <input class="form-control" type="text" name="middlename" id="middlename" value="<?php if ($staff['middlename']) {
+                                                                                                                                                    print_r($staff['middlename']);
                                                                                                                                                 }  ?>" required />
                                                         </div>
                                                     </div>
@@ -1191,8 +1209,8 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Last Name</label>
-                                                            <input class="form-control" type="text" name="lastname" id="lastname" value="<?php if ($user['lastname']) {
-                                                                                                                                                print_r($user['lastname']);
+                                                            <input class="form-control" type="text" name="lastname" id="lastname" value="<?php if ($staff['lastname']) {
+                                                                                                                                                print_r($staff['lastname']);
                                                                                                                                             }  ?>" required />
                                                         </div>
                                                     </div>
@@ -1201,11 +1219,17 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>User Name</label>
-                                                            <input class="form-control" type="text" name="username" id="username" value="<?php if ($user['username']) {
-                                                                                                                                                print_r($user['username']);
+                                                            <input class="form-control" type="text" name="username" id="username" value="<?php if ($staff['username']) {
+                                                                                                                                                print_r($staff['username']);
                                                                                                                                             }  ?>" required />
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Staff Contacts</h3>
                                                 </div>
                                             </div>
 
@@ -1215,8 +1239,8 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Phone Number</label>
-                                                            <input class="form-control" type="tel" pattern=[0]{1}[0-9]{9} minlength="10" maxlength="10" name="phone_number" id="phone_number" value="<?php if ($user['phone_number']) {
-                                                                                                                                                                                                            print_r($user['phone_number']);
+                                                            <input class="form-control" type="tel" pattern=[0]{1}[0-9]{9} minlength="10" maxlength="10" name="phone_number" id="phone_number" value="<?php if ($staff['phone_number']) {
+                                                                                                                                                                                                            print_r($staff['phone_number']);
                                                                                                                                                                                                         }  ?>" required /> <span>Example: 0700 000 111</span>
                                                         </div>
                                                     </div>
@@ -1226,10 +1250,22 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
+                                                            <label>Phone Number 2</label>
+                                                            <input class="form-control" type="tel" pattern=[0]{1}[0-9]{9} minlength="10" maxlength="10" name="phone_number2" id="phone_number2" value="<?php if ($staff['phone_number2']) {
+                                                                                                                                                                                                            print_r($staff['phone_number2']);
+                                                                                                                                                                                                        }  ?>" /> <span>Example: 0700 000 111</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="row-form clearfix">
+                                                        <!-- select -->
+                                                        <div class="form-group">
                                                             <label>E-mail Address</label>
-                                                            <input class="form-control" type="tel" name="email_address" id="email_address" value="<?php if ($user['email_address']) {
-                                                                                                                                                        print_r($user['email_address']);
-                                                                                                                                                    }  ?>" required /> >
+                                                            <input class="form-control" type="email" name="email_address" id="email_address" value="<?php if ($staff['email_address']) {
+                                                                                                                                                        print_r($staff['email_address']);
+                                                                                                                                                    }  ?>" required />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1239,10 +1275,10 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>SEX</label>
                                                             <select class="form-control" name="sex" style="width: 100%;" required>
-                                                                <option value="<?= $user['sex'] ?>"><?php if ($user['sex']) {
-                                                                                                        if ($user['sex'] == 1) {
+                                                                <option value="<?= $staff['sex'] ?>"><?php if ($staff['sex']) {
+                                                                                                        if ($staff['sex'] == 1) {
                                                                                                             echo 'Male';
-                                                                                                        } elseif ($user['sex'] == 2) {
+                                                                                                        } elseif ($staff['sex'] == 2) {
                                                                                                             echo 'Female';
                                                                                                         }
                                                                                                     } else {
@@ -1254,21 +1290,28 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Staff Location And Access Levels</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
                                                 <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Site</label>
                                                             <select class="form-control" name="site_id" style="width: 100%;" required>
-                                                                <option value="<?= $user['site_id'] ?>"><?php if ($user['site_id']) {
-                                                                                                            if ($user['site_id'] == 1) {
-                                                                                                                echo 'Male';
-                                                                                                            } elseif ($user['sex'] == 2) {
-                                                                                                                echo 'Female';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?></option>
-                                                                <?php foreach ($override->getData('site') as $site) { ?>
+                                                                <option value="<?= $site['id'] ?>"><?php if ($staff['site_id']) {
+                                                                                                        print_r($site['name']);
+                                                                                                    } else {
+                                                                                                        echo 'Select';
+                                                                                                    } ?>
+                                                                </option>
+                                                                <?php foreach ($override->getData('sites') as $site) { ?>
                                                                     <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
                                                                 <?php } ?>
                                                             </select>
@@ -1280,33 +1323,44 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <label>Position</label>
                                                             <select class="form-control" name="position" style="width: 100%;" required>
-                                                                <option value="<?= $user['sex'] ?>"><?php if ($user['position']) {
-                                                                                                        if ($user['position'] == 1) {
-                                                                                                            echo 'Male';
-                                                                                                        } elseif ($user['position'] == 2) {
-                                                                                                            echo 'Female';
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        echo 'Select';
-                                                                                                    } ?></option>
-                                                                <?php foreach ($override->getData('position') as $position) { ?>
+                                                                <option value="<?= $position['id'] ?>"><?php if ($staff['position']) {
+                                                                                                            print_r($position['name']);
+                                                                                                        } else {
+                                                                                                            echo 'Select';
+                                                                                                        } ?>
+                                                                </option>
+                                                                <?php foreach ($override->get('position', 'status', 1) as $position) { ?>
                                                                     <option value="<?= $position['id'] ?>"><?= $position['name'] ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Patient Adress</h3>
+                                                <div class="col-sm-3">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Access Level</label>
+                                                            <input class="form-control" type="number" min="0" max="3" name="accessLevel" id="accessLevel" value="<?php if ($staff['accessLevel']) {
+                                                                                                                                                                        print_r($staff['accessLevel']);
+                                                                                                                                                                    }  ?>" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Power</label>
+                                                            <input class="form-control" type="number" min="0" max="2" name="power" id="power" value="<?php if ($staff['power']) {
+                                                                                                                                                            print_r($staff['power']);
+                                                                                                                                                        }  ?>" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=1&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <a href="info.php?id=1" class="btn btn-default">Back</a>
                                             <input type="submit" name="add_user" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
