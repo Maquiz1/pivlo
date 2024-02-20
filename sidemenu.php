@@ -154,59 +154,69 @@ if ($user->isLoggedIn()) {
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Data <i class="fas fa-angle-left right"></i>
+                <?php
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                ?>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Data <i class="fas fa-angle-left right"></i>
 
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="info.php?id=9&status=2" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of KAP</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="info.php?id=9&status=2" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of History</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="info.php?id=9&status=2" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of Results</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="info.php?id=9&status=2" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of Classification</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="info.php?id=9&status=2" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of Outcome</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="info.php?id=9&status=2" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of Economics</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="info.php?id=9&status=2" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>List of History</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="info.php?id=5" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of CLients</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=6" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of KAP</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=7" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of History</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=8" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Results</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=9" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Classification</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=10" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Outcome</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=11" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Economics</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info.php?id=12" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List of Visits</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } ?>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

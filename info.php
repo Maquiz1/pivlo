@@ -1091,455 +1091,6 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 5) { ?>
-        <?php } elseif ($_GET['id'] == 6) { ?>
-        <?php } elseif ($_GET['id'] == 7) { ?>
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1>Participants Study CRF's</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Participants Study CRF's</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div><!-- /.container-fluid -->
-                </section>
-
-                <!-- Main content -->
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <?php
-                                        $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $visits_status = $override->firstRow1('visit', 'status', 'id', 'client_id', $_GET['cid'], 'visit_code', 'EV')[0]['status'];
-
-                                        // $patient = $override->get('clients', 'id', $_GET['cid'])[0];
-                                        $category = $override->get('main_diagnosis', 'patient_id', $_GET['cid'])[0];
-                                        $cat = '';
-
-                                        if ($category['cardiac'] == 1) {
-                                            $cat = 'Cardiac';
-                                        } elseif ($category['diabetes'] == 1) {
-                                            $cat = 'Diabetes';
-                                        } elseif ($category['sickle_cell'] == 1) {
-                                            $cat = 'Sickle cell';
-                                        } else {
-                                            $cat = 'Not Diagnosed';
-                                        }
-
-
-                                        if ($patient['gender'] == 1) {
-                                            $gender = 'Male';
-                                        } elseif ($patient['gender'] == 2) {
-                                            $gender = 'Female';
-                                        }
-
-                                        $name = 'Name: ' . $patient['firstname'] . ' ' . $patient['lastname'] . ' Age: ' . $patient['age'] . ' Gender: ' . $gender . ' Type: ' . $cat;
-
-                                        ?>
-
-                                        <div class="row mb-2">
-                                            <div class="col-sm-6">
-                                                <h1>Study ID: <?= $patient['study_id'] ?><h4><?= $name ?></h4>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <ol class="breadcrumb float-sm-right">
-                                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid'] ?>&status=<?= $_GET['status'] ?>">
-                                                            < Back</a>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <table id="example1" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>CRF</th>
-                                                    <th>Records</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <?php if ($_GET['seq'] == 1) { ?>
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Demographic</td>
-                                                    <td>
-                                                        <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                        <span class="badge badge-info right">
-                                                            <?= $override->countData('demographic', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                        </span>
-                                                    </td>
-                                                    <?php if ($override->get3('demographic', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-                                                        <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                    <?php } else { ?>
-                                                        <td><a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                    <?php } ?>
-                                                </tr>
-
-                                            <?php }  ?>
-
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Vitals</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('vital', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('vital', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-                                                    <td><a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=8&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-                                            </tr>
-
-                                            <?php if ($_GET['seq'] == 1) { ?>
-
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Pateint Category</td>
-                                                    <td>
-                                                        <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                        <span class="badge badge-info right">
-                                                            <?= $override->countData('main_diagnosis', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                        </span>
-                                                    </td>
-                                                    <?php if ($override->get3('main_diagnosis', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-                                                        <td><a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                    <?php } else { ?>
-                                                        <td><a href="add.php?id=9&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                    <?php } ?>
-                                                </tr>
-
-                                            <?php }  ?>
-
-
-                                            <?php if ($_GET['seq'] == 1) { ?>
-
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Patient Hitory & Family History & Complication</td>
-                                                    <td>
-                                                        <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                        <span class="badge badge-info right">
-                                                            <?= $override->countData('history', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                        </span>
-                                                    </td>
-                                                    <?php if ($override->get3('history', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                        <td><a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                    <?php } else { ?>
-                                                        <td><a href="add.php?id=10&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                    <?php } ?>
-                                                </tr>
-
-                                            <?php }  ?>
-
-
-                                            <tr>
-                                                <td>4</td>
-                                                <td>History, Symtom & Exam</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('symptoms', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('symptoms', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=11&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=11&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-                                            </tr>
-
-
-                                            <?php if ($_GET['seq'] == 1) { ?>
-
-                                                <?php if ($override->get2('main_diagnosis', 'patient_id', $_GET['cid'], 'cardiac', 1)) { ?>
-
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Main diagnosis 1 ( Cardiac )</td>
-                                                        <td>
-                                                            <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                            <span class="badge badge-info right">
-                                                                <?= $override->countData('cardiac', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                            </span>
-                                                        </td>
-                                                        <?php if ($override->get3('cardiac', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                            <td><a href="add.php?id=12&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                        <?php } else { ?>
-                                                            <td><a href="add.php?id=12&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                        <?php } ?>
-                                                    </tr>
-                                                <?php } ?>
-
-
-                                                <?php if ($override->get2('main_diagnosis', 'patient_id', $_GET['cid'], 'diabetes', 1)) { ?>
-
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Main diagnosis 2 ( Diabetes )</td>
-                                                        <td>
-                                                            <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                            <span class="badge badge-info right">
-                                                                <?= $override->countData('diabetic', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                            </span>
-                                                        </td>
-                                                        <?php if ($override->get3('diabetic', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                            <td><a href="add.php?id=13&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                        <?php } else { ?>
-                                                            <td><a href="add.php?id=13&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                        <?php } ?>
-                                                    </tr>
-                                                <?php } ?>
-
-
-                                                <?php if ($override->get2('main_diagnosis', 'patient_id', $_GET['cid'], 'sickle_cell', 1)) { ?>
-
-
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Main diagnosis 3 ( Sickle Cell )</td>
-                                                        <td>
-                                                            <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                            <span class="badge badge-info right">
-                                                                <?= $override->countData('sickle_cell', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                            </span>
-                                                        </td>
-                                                        <?php if ($override->get3('sickle_cell', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                            <td><a href="add.php?id=14&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                        <?php } else { ?>
-                                                            <td><a href="add.php?id=14&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                        <?php } ?>
-                                                    </tr>
-
-                                                <?php } ?>
-
-                                            <?php }  ?>
-
-
-                                            <?php
-                                            //  if ($override->get2('main_diagnosis', 'patient_id', $_GET['cid'], 'cardiac', 1) || $override->get2('main_diagnosis', 'patient_id', $_GET['cid'], 'sickle_cell', 1)) { 
-                                            ?>
-                                            <tr>
-                                                <td>6</td>
-                                                <?php if ($_GET['seq'] == 1) { ?>
-                                                    <td>Results at enrollment</td>
-                                                <?php } else { ?>
-                                                    <td>Results at Follow Up</td>
-                                                <?php } ?>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('results', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-
-                                                <?php if ($override->get3('results', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=15&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=15&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-
-                                            <?php
-                                            //  }
-                                            ?>
-
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Hospitalization</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('hospitalization', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('hospitalization', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=16&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=16&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>Hospitalization Details</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('hospitalization_details', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('hospitalization_details', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=17&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=17&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>9</td>
-                                                <td>Treatment Plan</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('treatment_plan', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('treatment_plan', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=18&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=18&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Diagnosis, Complications, & Comorbidities</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('dgns_complctns_comorbdts', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('dgns_complctns_comorbdts', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=19&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=19&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>11</td>
-                                                <td>RISK</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('risks', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('risks', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=20&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=20&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-
-
-
-                                            <tr>
-                                                <td>12</td>
-                                                <td>Lab Details</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('lab_details', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('lab_details', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=21&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=21&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-                                            <?php if ($_GET['seq'] == 1) { ?>
-
-                                                <tr>
-                                                    <td>13</td>
-                                                    <td>Socioeconomic Status</td>
-                                                    <td>
-                                                        <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                        <span class="badge badge-info right">
-                                                            <?= $override->countData('social_economic', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                        </span>
-                                                    </td>
-                                                    <?php if ($override->get3('social_economic', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                        <td><a href="add.php?id=22&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                    <?php } else { ?>
-                                                        <td><a href="add.php?id=22&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                    <?php } ?>
-
-                                                </tr>
-                                            <?php } ?>
-                                            <tr>
-                                                <td>14</td>
-                                                <td>Next Visit Summary</td>
-                                                <td>
-                                                    <!-- <i class="nav-icon fas fa-th"></i> -->
-                                                    <span class="badge badge-info right">
-                                                        <?= $override->countData('lab_details', 'status', 1, 'site_id', $user->data()->site_id) ?>
-                                                    </span>
-                                                </td>
-                                                <?php if ($override->get3('lab_details', 'patient_id', $_GET['cid'], 'seq_no', $_GET['seq'], 'visit_code', $_GET['vcode'])) { ?>
-
-                                                    <td><a href="add.php?id=22&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-success"> Change </a> </td>
-                                                <?php } else { ?>
-                                                    <td><a href="add.php?id=22&cid=<?= $_GET['cid'] ?>&vid=<?= $_GET['vid'] ?>&vcode=<?= $_GET['vcode'] ?>&seq=<?= $_GET['seq'] ?>&sid=<?= $_GET['sid'] ?>&vday=<?= $_GET['vday'] ?>" class="btn btn-warning"> Add </a> </td>
-                                                <?php } ?>
-
-                                            </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <th>#</th>
-                                                <th>CRF</th>
-                                                <th>Records</th>
-                                                <th>Action</th>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!--/.col (right) -->
-                        </div>
-                        <!-- /.row -->
-                    </div><!-- /.container-fluid -->
-                </section>
-                <!-- /.content -->
-            </div>
-            <!-- /.content-wrapper -->
-        <?php } elseif ($_GET['id'] == 8) { ?>
-
-        <?php } elseif ($_GET['id'] == 9) { ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -1549,43 +1100,22 @@ if ($user->isLoggedIn()) {
                             <div class="col-sm-6">
                                 <h1>
                                     <?php
-                                    if ($_GET['status'] == 1) {
-                                        echo $title = 'Screening';
-                                        $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
-                                    ?>
-                                    <?php
-                                    } elseif ($_GET['status'] == 2) {
-                                        echo $title = 'Eligibility';
-                                        $data = $override->getNews('history', 'status', 1, 'site_id', $user->data()->site_id);
-                                    ?>
-                                    <?php
-                                    } elseif ($_GET['status'] == 3) {
-                                        echo  $title = 'Enrollment';
-                                        $data = $override->getNews('results', 'status', 1, 'site_id', $user->data()->site_id);
-                                    ?>
-                                    <?php
-                                    } elseif ($_GET['status'] == 4) {
-                                        echo $title = 'Termination';
-                                        $data = $override->getNews('classification', 'status', 1, 'site_id', $user->data()->site_id);
-                                    ?>
-                                    <?php
-                                    } elseif ($_GET['status'] == 5) {
-                                        echo  $title = 'Registration';
-                                        $data = $override->getNews('outcome', 'status', 1, 'site_id', $user->data()->site_id);
-                                    ?>
-                                    <?php
-                                    } elseif ($_GET['status'] == 5) {
-                                        echo  $title = 'Registration';
-                                        $data = $override->getNews('economic', 'status', 1, 'site_id', $user->data()->site_id);
-                                    ?>
-                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
+                                    Clients
                                 </h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active"><?= $title; ?></li>
+                                    <li class="breadcrumb-item active">Clients</li>
                                 </ol>
                             </div>
                         </div>
@@ -1601,39 +1131,55 @@ if ($user->isLoggedIn()) {
                                     <section class="content-header">
                                         <div class="container-fluid">
                                             <div class="row mb-2">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <?php
-                                                        if ($_GET['status'] == 1) { ?>
-                                                            <h3 class="card-title">List of Screened Clients</h3>
-                                                        <?php
-                                                        } elseif ($_GET['status'] == 2) { ?>
-                                                            <h3 class="card-title">List of Eligible Clients</h3>
-                                                        <?php
-                                                        } elseif ($_GET['status'] == 3) { ?>
-                                                            <h3 class="card-title">List of Enrolled Clients</h3>
-                                                        <?php
-                                                        } elseif ($_GET['status'] == 4) { ?>
-                                                            <h3 class="card-title">List of Terminated Clients</h3>
-                                                        <?php
-                                                        } elseif ($_GET['status'] == 5) { ?>
-                                                            <h3 class="card-title">List of Registered Clients</h3>
-                                                        <?php
-                                                        } ?>
+                                                        <h3 class="card-title">List of Clients</h3>
                                                     </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <ol class="breadcrumb float-sm-right">
-                                                        <li class="breadcrumb-item"><a href="index1.php">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
                                                                 < Back</a>
                                                         </li>
                                                         &nbsp;
-                                                        <li class="breadcrumb-item"><a href="add.php?id=4">
-                                                                Add new Client > </a>
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
                                                         </li>
                                                     </ol>
                                                 </div>
                                             </div>
+                                            <hr>
                                         </div><!-- /.container-fluid -->
                                     </section>
                                     <!-- /.card-header -->
@@ -1641,11 +1187,10 @@ if ($user->isLoggedIn()) {
                                         <table id="example1" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
                                                     <th>Study Id</th>
-                                                    <th>Age</th>
-                                                    <th>Sex</th>
                                                     <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1653,46 +1198,14 @@ if ($user->isLoggedIn()) {
                                             </thead>
                                             <tbody>
                                                 <?php
-
-                                                $kap = 0;
-                                                $screening = 0;
-                                                $health_care = 0;
-                                                if ($_GET['interview'] == 1) {
-                                                    $interview = 'kap';
-                                                } elseif ($_GET['interview'] == 2) {
-                                                    $interview = 'screening';
-                                                } elseif ($_GET['interview'] == 3) {
-                                                    $interview = 'health_care';
-                                                }
                                                 $x = 1;
-                                                foreach ($data as $value) {
-                                                    $yes_no = $override->get('yes_no', 'status', 1)[0];
-                                                    $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $results = $override->getNews('results', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $classification = $override->getNews('classification', 'status', 1, 'patient_id', $value['id'])[0];
-                                                    $economic = $override->getNews('economic', 'status', 1, 'patient_id', $value['id'])[0];
+                                                foreach ($clients as $value) {
                                                     $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
                                                 ?>
                                                     <tr>
                                                         <td class="table-user">
-                                                            <?= $value['firstname'] . '  ' . $value['middlename'] . ' ' . $value['lastname']; ?>
-                                                        </td>
-                                                        <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <?php if ($value['interview_type'] == 1) { ?>
                                                             <td class="table-user">
                                                                 Kap & Screening
@@ -1706,37 +1219,755 @@ if ($user->isLoggedIn()) {
                                                                 None
                                                             </td>
                                                         <?php } ?>
-
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
-                                                        <?php if ($value['age'] >= 18) { ?>
-                                                            <td class="text-center">
-                                                                <a href="#" class="btn btn-success"> <i class="ri-edit-box-line"></i>Eligible for KAP</a>
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="text-center">
-                                                                <a href="#" class="btn btn-danger"> <i class="ri-edit-box-line"></i>Not Eligible for KAP</a>
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="text-center">
-                                                            <a href="add.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-info"> <i class="ri-edit-box-line"></i>Update</a>
-                                                            <?php if ($value['age'] >= 18) { ?>
-                                                                <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add CRF's</a>
-                                                            <?php   } ?>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=4&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
                                                         </td>
                                                     </tr>
-
                                                 <?php $x++;
                                                 } ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Name</th>
                                                     <th>Study Id</th>
-                                                    <th>Age</th>
-                                                    <th>Sex</th>
                                                     <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+        <?php } elseif ($_GET['id'] == 6) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    } ?>
+                                    Kap
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">Kap</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">List of Kap</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($clients as $value) {
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+        <?php } elseif ($_GET['id'] == 7) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    } ?>
+                                    Kap
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">Kap</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">List of Kap</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($clients as $value) {
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+        <?php } elseif ($_GET['id'] == 8) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    } ?>
+                                    Kap
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">Kap</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">List of Kap</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($clients as $value) {
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+        <?php } elseif ($_GET['id'] == 9) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    } ?>
+                                    Kap
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">Kap</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">List of Kap</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($clients as $value) {
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1758,8 +1989,542 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 10) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    } ?>
+                                    Kap
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">Kap</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">List of Kap</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($clients as $value) {
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 11) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    } ?>
+                                    Kap
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">Kap</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">List of Kap</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($clients as $value) {
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 12) { ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <?php
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
+                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                        } else {
+                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                        }
+                                    } else {
+                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    } ?>
+                                    Kap
+                                </h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
+                                    <li class="breadcrumb-item active">Kap</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">List of Kap</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($clients as $value) {
+                                                    $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Kap & Screening
+                                                            </td>
+                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Health Care Worker
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td class="table-user">
+                                                                None
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $value['age']; ?>
+                                                        </td>
+                                                        <?php if ($value['sex'] == 1) { ?>
+                                                            <td class="table-user">
+                                                                Male
+                                                            </td>
+                                                        <?php } elseif ($value['sex'] == 2) { ?>
+                                                            <td class="table-user">
+                                                                Female
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class="table-user">
+                                                            <?= $sites['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="#" class="btn btn-success">Active</a>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Study Id</th>
+                                                    <th>Interview Type</th>
+                                                    <th>age</th>
+                                                    <th>sex</th>
+                                                    <th>Site</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 13) { ?>
         <?php } elseif ($_GET['id'] == 14) { ?>
         <?php } elseif ($_GET['id'] == 15) { ?>
