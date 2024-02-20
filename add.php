@@ -1455,7 +1455,7 @@ if ($user->isLoggedIn()) {
                                         <h3 class="card-title">Client Details</h3>
                                     </div>
                                     <!-- /.card-header -->
-                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                    <form id="clients" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-sm-3">
@@ -1661,7 +1661,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
-                                                            <textarea class="form-control" name="relation_patient_other" rows="3" placeholder="Type other relation here...">
+                                                            <textarea class="form-control" name="relation_patient_other" id="relation_patient_other_value" rows="3" placeholder="Type other relation here...">
                                                                 <?php if ($clients['relation_patient_other']) {
                                                                     print_r($clients['relation_patient_other']);
                                                                 }  ?>
@@ -1670,7 +1670,6 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                             </div>
-
 
                                             <div class="card card-warning">
                                                 <div class="card-header">
@@ -1873,7 +1872,7 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Other Name of insurance:</label>
-                                                            <textarea class="form-control" name="insurance_name_other" rows="3" placeholder="Type other insurance here..." >
+                                                            <textarea class="form-control" name="insurance_name_other" rows="3" placeholder="Type other insurance here...">
                                                                 <?php if ($clients['insurance_name_other']) {
                                                                     print_r($clients['insurance_name_other']);
                                                                 }  ?>
@@ -4346,10 +4345,15 @@ if ($user->isLoggedIn()) {
     <!-- Page specific script -->
 
 
-    <!-- demographic Js -->
+    <!-- clients Js -->
     <script src="myjs/add/clients/insurance.js"></script>
     <script src="myjs/add/clients/insurance_name.js"></script>
     <script src="myjs/add/clients/relation_patient.js"></script>
+    <script src="myjs/add/clients/validate_hidden_with_values.js"></script>
+    <script src="myjs/add/clients/validate_required_attribute.js"></script>
+    <script src="myjs/add/clients/validate_required_radio_checkboxes.js"></script>
+
+
 
     <!-- KAP Js -->
     <script src="myjs/add/kap/dalili_saratani.js"></script>

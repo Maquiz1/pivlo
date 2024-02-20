@@ -1,9 +1,11 @@
-const form = document.getElementById("myForm");
+// const clients = document.getElementById("clients");
 
-form.addEventListener("submit", function (event) {
-  const hiddenField = document.getElementById("hiddenField");
-  if (!hiddenField || !hiddenField.value) {
-    alert("Hidden field is empty.");
-    event.preventDefault();
-  }
-});
+// clients.addEventListener("submit", function (event) {
+//   const relation_patient_other_value = document.getElementById(
+//     "relation_patient_other_value"
+//   );
+//   if (!relation_patient_other_value || !relation_patient_other_value.value) {
+//     alert("Hidden field is empty.");
+//     event.preventDefault();
+//   }
+// });
