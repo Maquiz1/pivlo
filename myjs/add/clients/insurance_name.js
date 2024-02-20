@@ -1,26 +1,24 @@
-const insurance_name = document.getElementById("insurance_name");
+const insurance_name1 = document.getElementById("insurance_name1");
+const insurance_name2 = document.getElementById("insurance_name2");
+const insurance_name3 = document.getElementById("insurance_name3");
+const insurance_name96 = document.getElementById("insurance_name96");
 const insurance_name_other = document.getElementById("insurance_name_other");
 
-function showElement() {
-  if (insurance_name.value === "96") {
+
+function toggleElementVisibility() {
+  if (insurance_name96.checked) {
+    // console.log(insurance_name96);
+
     insurance_name_other.style.display = "block";
   } else {
     insurance_name_other.style.display = "none";
   }
-
-  // Save the selected value in localStorage
-  localStorage.setItem("selectedValue", insurance_name.value);
 }
 
-// Check if there's a previously selected value in localStorage
-const insurance_nameValue = localStorage.getItem("selectedValue");
+insurance_name1.addEventListener("change", toggleElementVisibility);
+insurance_name2.addEventListener("change", toggleElementVisibility);
+insurance_name3.addEventListener("change", toggleElementVisibility);
+insurance_name96.addEventListener("change", toggleElementVisibility);
 
-if (insurance_nameValue) {
-  insurance_name.value = insurance_nameValue;
-}
-
-// Show element if Option 2 is selected
-showElement();
-
-// Listen for changes in the dropdown
-insurance_name.addEventListener("change", showElement);
+// Initial check
+toggleElementVisibility();

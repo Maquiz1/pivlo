@@ -1640,7 +1640,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-3">
                                                     <label>Relation to patient(Supporter)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -1657,13 +1657,15 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3" id="relation_patient_other">
+                                                    <label>Other relation patient</label>
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Other relation patient other</label>
-                                                            <input class="form-control" type="text" name="relation_patient_other" value="<?php if ($clients['relation_patient_other']) {
-                                                                                                                                                print_r($clients['relation_patient_other']);
-                                                                                                                                            }  ?>" />
+                                                            <textarea class="form-control" name="relation_patient_other" rows="3" placeholder="Type other relation here...">
+                                                                <?php if ($clients['relation_patient_other']) {
+                                                                    print_r($clients['relation_patient_other']);
+                                                                }  ?>
+                                                            </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1810,20 +1812,20 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-4">
                                                     <label>Do you own health insurance?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="health_insurance" value="1" <?php if ($clients['health_insurance'] == 1) {
+                                                                <input class="form-check-input" type="radio" name="health_insurance" id="health_insurance1" value="1" <?php if ($clients['health_insurance'] == 1) {
                                                                                                                                                                             echo 'checked';
                                                                                                                                                                         } ?>>
                                                                 <label class="form-check-label">Yes</label>
                                                             </div>
 
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="health_insurance" id="health_insurance" value="2" <?php if ($clients['sex'] == 2) {
+                                                                <input class="form-check-input" type="radio" name="health_insurance" id="health_insurance2" value="2" <?php if ($clients['health_insurance'] == 2) {
                                                                                                                                                                             echo 'checked';
                                                                                                                                                                         } ?>>
                                                                 <label class="form-check-label">No</label>
@@ -1849,7 +1851,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-4" id="insurance_name1">
+                                                <div class="col-sm-4" id="insurance_name">
                                                     <label>Name of insurance:</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -1865,15 +1867,17 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                    
+
                                                 <div class="col-sm-4" id="insurance_name_other">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Other Name of insurance:</label>
-                                                            <input class="form-control" type="text" name="insurance_name_other" value="<?php if ($clients['insurance_name_other']) {
-                                                                                                                                            print_r($clients['insurance_name_other']);
-                                                                                                                                        }  ?>" />
+                                                            <textarea class="form-control" name="insurance_name_other" rows="3" placeholder="Type other insurance here..." >
+                                                                <?php if ($clients['insurance_name_other']) {
+                                                                    print_r($clients['insurance_name_other']);
+                                                                }  ?>
+                                                            </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
