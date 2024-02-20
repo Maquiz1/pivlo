@@ -7,11 +7,18 @@ $random = new Random();
 
 $users = $override->getData('user');
 if ($user->isLoggedIn()) {
-  if ($user->data()->power == 1) {
-    $screened = $override->getCount('history', 'status', 1);
-    $eligible = $override->getCount('history', 'eligible', 1);
-    $enrolled = $override->getCount('history', 'eligible', 1);
-    $end = $override->getCount('clients', 'status', 0);
+  if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+    if ($_GET['site_id'] != null) {
+      $screened = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
+      $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
+      $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
+      $end = $override->getCount1('clients', 'status', 0, 'site_id', $_GET['site_id']);
+    } else {
+      $screened = $override->getCount('history', 'status', 1);
+      $eligible = $override->getCount('history', 'eligible', 1);
+      $enrolled = $override->getCount('history', 'eligible', 1);
+      $end = $override->getCount('clients', 'status', 0);
+    }
   } else {
     $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
     $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
@@ -168,6 +175,35 @@ if ($user->isLoggedIn()) {
           <!-- /.row -->
 
           <hr>
+
+          <?php
+          if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+          ?>
+            <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row-form clearfix">
+                    <div class="form-group">
+                      <label>SITE</label>
+                      <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                        <option value="">Select</option>
+                        <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                          <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row-form clearfix">
+                    <div class="form-group">
+                      <input type="submit" name="search_by_site" value="Submit" class="btn btn-primary">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          <?php } ?>
 
           <div class="content-header">
             <div class="container-fluid">

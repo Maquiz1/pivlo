@@ -63,6 +63,44 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
+        } elseif (Input::get('search_by_site')) {
+
+            $validate = $validate->check($_POST, array(
+                'site_id' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                $url = 'info.php?id=3&status=' . Input::get('status') . '&site_id=' . Input::get('site_id');
+                Redirect::to($url);
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('clear_data')) {
+
+            $validate = $validate->check($_POST, array(
+                'name' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                try {
+                    if (Input::get('name')) {
+                        if (Input::get('name') == 'user' || Input::get('name') == 'sub_category' || Input::get('name') == 'test_list' || Input::get('name') == 'category' || Input::get('name') == 'medications' || Input::get('name') == 'site' || Input::get('name') == 'schedule' || Input::get('name') == 'study_id') {
+                            $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be Cleared';
+                        } else {
+                            $clearData = $override->clearDataTable(Input::get('name'));
+                        }
+                        $successMessage = 'Table ' . '"' . Input::get('name') . '"' . ' Cleared Successfull';
+                    } else {
+                        $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be Found!';
+                    }
+                    // die;
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
+            } else {
+                $pageError = $validate->errors();
+            }
         }
     }
 } else {
@@ -415,24 +453,24 @@ if ($user->isLoggedIn()) {
                             <div class="col-sm-6">
                                 <h1>
                                     <?php
-                                    if ($user->data()->power == 1) {
-                                        if ($_GET['sid'] != null) {
+                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                        if ($_GET['site_id'] != null) {
                                             if ($_GET['status'] == 1) {
-                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['sid'], 'id');
+                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['site_id'], 'id');
                                             } elseif ($_GET['status'] == 2) {
-                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'eligible', 1, 'site_id', $_GET['sid'], 'id');
+                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'eligible', 1, 'site_id', $_GET['site_id'], 'id');
                                             } elseif ($_GET['status'] == 3) {
-                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'enrolled', 1, 'site_id', $_GET['sid'], 'id');
+                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'enrolled', 1, 'site_id', $_GET['site_id'], 'id');
                                             } elseif ($_GET['status'] == 4) {
-                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'end_study', 1, 'site_id', $_GET['sid'], 'id');
+                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'end_study', 1, 'site_id', $_GET['site_id'], 'id');
                                             } elseif ($_GET['status'] == 5) {
-                                                $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['sid'],  'id');
+                                                $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                             } elseif ($_GET['status'] == 6) {
-                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['sid'], 'id');
+                                                $clients = $override->getDataDesc3('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['site_id'], 'id');
                                             } elseif ($_GET['status'] == 7) {
-                                                $clients = $override->getDataDesc1('clients', 'site_id', $_GET['sid'], 'id');
+                                                $clients = $override->getDataDesc1('clients', 'site_id', $_GET['site_id'], 'id');
                                             } elseif ($_GET['status'] == 8) {
-                                                $clients = $override->getDataDesc2('clients', 'status', 0, 'site_id', $_GET['sid'],  'id');
+                                                $clients = $override->getDataDesc2('clients', 'status', 0, 'site_id', $_GET['site_id'],  'id');
                                             }
                                         } else {
 
@@ -555,6 +593,34 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                             </div>
                                             <hr>
+                                            <?php
+                                            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                            ?>
+                                                <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row-form clearfix">
+                                                                <div class="form-group">
+                                                                    <label>SITE</label>
+                                                                    <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                        <option value="">Select</option>
+                                                                        <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                            <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                        <?php } ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="row-form clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="submit" name="search_by_site" value="Submit" class="btn btn-primary">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            <?php } ?>
                                         </div><!-- /.container-fluid -->
                                     </section>
                                     <!-- /.card-header -->

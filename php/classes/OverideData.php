@@ -643,4 +643,71 @@ class OverideData
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+
+    public function clearDataTable($table)
+    {
+        $query = $this->_pdo->query("TRUNCATE TABLE `$table`");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function deleteDataTable($table, $site)
+    {
+        $query = $this->_pdo->query("DELETE FROM `$table` WHERE 'site_id' = '$site'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    // public function clearDataTable($table)
+    // {
+    //     $query = $this->_pdo->query("TRUNCATE TABLE `$table`");
+    //     $result = $query->fetchAll(PDO::FETCH_ASSOC);
+    //     return $result;
+    // }
+
+    public function AllTables()
+    {
+        $query = $this->_pdo->query("SHOW TABLES");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
+    public function AllTablesCont()
+    {
+        $query = $this->_pdo->query("SHOW TABLES");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function AllColmuns($table)
+    {
+        $query = $this->_pdo->query("SHOW COLUMNS FROM $table");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function AllColmunsComments($table)
+    {
+        $query = $this->_pdo->query("SELECT COLUMN_NAME, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
+
+    public function AllDatabasesCount()
+    {
+        $query = $this->_pdo->query("SHOW DATABASES");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function AllDatabases()
+    {
+        $query = $this->_pdo->query("SHOW DATABASES");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
