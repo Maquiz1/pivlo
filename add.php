@@ -176,6 +176,7 @@ if ($user->isLoggedIn()) {
                 // ),
             ));
             if ($validate->passed()) {
+                print_r($_POST);
                 // $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
 
@@ -1501,23 +1502,25 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-2">
+                                                    <label>SEX</label>
+                                                    <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <label>SEX</label>
-                                                            <select class="form-control" name="sex" style="width: 100%;" required>
-                                                                <option value="<?= $clients['sex'] ?>"><?php if ($clients['sex']) {
-                                                                                                            if ($clients['sex'] == 1) {
-                                                                                                                echo 'Male';
-                                                                                                            } elseif ($clients['sex'] == 2) {
-                                                                                                                echo 'Female';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?></option>
-                                                                <option value="1">Male</option>
-                                                                <option value="2">Female</option>
-                                                            </select>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="sex" id="sex" value="1" <?php if ($clients['sex'] == 1) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Male</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="sex" id="sex" value="2" <?php if ($clients['sex'] == 2) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Female</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1637,22 +1640,19 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
+                                                    <label>Relation to patient(Supporter)</label>
+                                                    <!-- radio -->
                                                     <div class="row-form clearfix">
-                                                        <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Relation to patient(Supporter)</label>
-                                                            <select name="relation_patient" id="relation_patient" class="form-control" autocomplete="off" required>
-                                                                <option value="<?= $relation['id'] ?>"><?php if ($relation['name']) {
-                                                                                                            echo $relation['name'];
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                                </option>
-                                                                <?php foreach ($override->get('relation', 'status', 1) as $relation) { ?>
-                                                                    <option value="<?= $relation['id'] ?>"><?= $relation['name'] ?></option>
-                                                                <?php } ?>
-                                                            </select>
+                                                            <?php foreach ($override->get('relation', 'status', 1) as $relation) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="relation_patient" id="relation_patient<?= $relation['id']; ?>" value="<?= $relation['id']; ?>" <?php if ($clients['relation_patient'] == $relation['id']) {
+                                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                                            } ?>>
+                                                                    <label class="form-check-label"><?= $relation['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
