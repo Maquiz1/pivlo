@@ -124,7 +124,6 @@ if ($user->isLoggedIn()) {
                 $pageError = $validate->errors();
             }
         } elseif (Input::get('unset_study_id')) {
-
             $validate = $validate->check($_POST, array(
                 'name' => array(
                     'required' => true,
@@ -132,14 +131,14 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 try {
-                    if(Input::get('name') == 'study_id'){
-                        $setSiteId = $override->UnsetId('study_id', 1, 'client_id', 0, 'status', 0);
+                    if (Input::get('name') == 'study_id') {
+                        $setSiteId = $override->UnsetId('study_id', 'client_id', 0, 'status', 0, 1);
                         if ($setSiteId) {
                             $successMessage = 'Table ' . '"' . Input::get('name') . '"' . ' Unseted Successfull';
                         } else {
                             $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  encounter an error';
                         }
-                    }else{
+                    } else {
                         $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be unseted';
                     }
                 } catch (Exception $e) {
@@ -2681,7 +2680,7 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Clear Data on Table</h1>
+                                <h1>Unset Study ID</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
@@ -2689,7 +2688,7 @@ if ($user->isLoggedIn()) {
                                             < Back</a>
                                     </li>&nbsp;&nbsp;
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item active">Clear Data on Table</li>
+                                    <li class="breadcrumb-item active">Unset Study ID</li>
                                 </ol>
                             </div>
                         </div>
@@ -2705,7 +2704,7 @@ if ($user->isLoggedIn()) {
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">Clear Data on Table</h3>
+                                        <h3 class="card-title">Unset Study ID</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
@@ -2713,7 +2712,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="mb-3">
-                                                        <label for="name" class="form-label">Clear Data on Table</label>
+                                                        <label for="name" class="form-label">Unset Study ID</label>
                                                         <select name="name" id="name" class="form-control" required>
                                                             <option value="">Select Table</option>
                                                             <?php foreach ($AllTables as $tables) { ?>

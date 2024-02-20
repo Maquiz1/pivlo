@@ -718,9 +718,9 @@ class OverideData
         return $result;
     }
 
-    public function UnsetId($table, $where, $where1,$value1, $where2,$value2)
+    public function UnsetId($table, $where1, $value1, $where2, $value2, $where)
     {
-        $query = $this->_pdo->query("UPDATE $table SET $where1='$value1' AND $where2='$value2' WHERE $where");
+        $query = $this->_pdo->query("UPDATE $table SET $where1 = '$value1' AND $where2 = '$value2' WHERE $where");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
