@@ -11,6 +11,7 @@ $pageError = null;
 $errorMessage = null;
 if ($user->isLoggedIn()) {
     if (Input::exists('post')) {
+        $validate = new validate();
         if (Input::get('reset_pass')) {
             $salt = $random->get_rand_alphanumeric(32);
             $password = '12345678';
@@ -89,12 +90,12 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 try {
                     if (Input::get('name')) {
-                        if (Input::get('name') == 'user' || Input::get('name') == 'study_id' || Input::get('name') == 'sites' || Input::get('name') == 'position' || Input::get('name') == 'household' || Input::get('name') == 'insurance' || Input::get('name') == 'visit' || Input::get('name') == 'district' || Input::get('name') == 'education' || Input::get('name') == 'lung_rads' || Input::get('name') == 'occupation' || Input::get('name') == 'payments' || Input::get('name') == 'relation') {
+                        if (Input::get('name') == 'user' || Input::get('name') == 'study_id' || Input::get('name') == 'sites' || Input::get('name') == 'position' || Input::get('name') == 'household' || Input::get('name') == 'insurance' || Input::get('name') == 'district' || Input::get('name') == 'education' || Input::get('name') == 'lung_rads' || Input::get('name') == 'occupation' || Input::get('name') == 'payments' || Input::get('name') == 'relation') {
                             $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be Cleared';
                         } else {
                             $clearData = $override->clearDataTable(Input::get('name'));
+                            $successMessage = 'Table ' . '"' . Input::get('name') . '"' . ' Cleared Successfull';
                         }
-                        $successMessage = 'Table ' . '"' . Input::get('name') . '"' . ' Cleared Successfull';
                     } else {
                         $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be Found!';
                     }
@@ -122,7 +123,7 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
-        } elseif (Input::get('UnsetsetSiteId')) {
+        } elseif (Input::get('unset_study_id')) {
 
             $validate = $validate->check($_POST, array(
                 'name' => array(
@@ -131,8 +132,16 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 try {
-                    $setSiteId = $override->setSiteId('visit', 'site_id', Input::get('name'), 1);
-                    $successMessage = 'Site ID Successfull Unseted';
+                    if(Input::get('name') == 'study_id'){
+                        $setSiteId = $override->UnsetId('study_id', 1, 'client_id', 0, 'status', 0);
+                        if ($setSiteId) {
+                            $successMessage = 'Table ' . '"' . Input::get('name') . '"' . ' Unseted Successfull';
+                        } else {
+                            $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  encounter an error';
+                        }
+                    }else{
+                        $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be unseted';
+                    }
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -2634,7 +2643,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="mb-3">
-                                                        <label for="saratani_inatibika" class="form-label">Clear Data on Table</label>
+                                                        <label for="name" class="form-label">Clear Data on Table</label>
                                                         <select name="name" id="name" class="form-control" required>
                                                             <option value="">Select Table</option>
                                                             <?php foreach ($AllTables as $tables) { ?>
@@ -2662,7 +2671,75 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 15) { ?>
+            <?php
+            $AllTables = $override->AllTables();
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>Clear Data on Table</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="index1.php">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item active">Clear Data on Table</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
 
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Clear Data on Table</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label">Clear Data on Table</label>
+                                                        <select name="name" id="name" class="form-control" required>
+                                                            <option value="">Select Table</option>
+                                                            <?php foreach ($AllTables as $tables) { ?>
+                                                                <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <input type="submit" name="unset_study_id" value="Unset Study ID Table" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
         <?php  } ?>
     </div>
     <!-- /.col -->
