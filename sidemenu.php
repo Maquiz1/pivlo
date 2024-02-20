@@ -80,7 +80,8 @@ if ($user->isLoggedIn()) {
                         </li> -->
                     </ul>
                 </li>
-                <?php if ($user->data()->power) { ?>
+                <?php if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                ?>
 
                     <li class="nav-item">
                         <a href="#" class="nav-link">
