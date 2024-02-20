@@ -555,7 +555,7 @@ if ($user->isLoggedIn()) {
                                     <section class="content-header">
                                         <div class="container-fluid">
                                             <div class="row mb-2">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
                                                     <div class="card-header">
                                                         <?php
                                                         if ($_GET['status'] == 1) { ?>
@@ -578,6 +578,35 @@ if ($user->isLoggedIn()) {
                                                         <?php } ?>
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                                                                                <option value="">Select Site</option>
+                                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
                                                 <div class="col-sm-6">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
@@ -593,34 +622,6 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                             </div>
                                             <hr>
-                                            <?php
-                                            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                                            ?>
-                                                <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row-form clearfix">
-                                                                <div class="form-group">
-                                                                    <label>SITE</label>
-                                                                    <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
-                                                                        <option value="">Select</option>
-                                                                        <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
-                                                                            <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
-                                                                        <?php } ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="row-form clearfix">
-                                                                <div class="form-group">
-                                                                    <input type="submit" name="search_by_site" value="Submit" class="btn btn-primary">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            <?php } ?>
                                         </div><!-- /.container-fluid -->
                                     </section>
                                     <!-- /.card-header -->
