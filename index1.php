@@ -5,8 +5,28 @@ $override = new OverideData();
 $email = new Email();
 $random = new Random();
 
+
+
 $users = $override->getData('user');
 if ($user->isLoggedIn()) {
+  if (Input::exists('post')) {
+
+    if (Input::get('search_by_site')) {
+      $validate = new validate();
+      $validate = $validate->check($_POST, array(
+        'site_id' => array(
+          'required' => true,
+        ),
+      ));
+      if ($validate->passed()) {
+
+        $url = 'index1.php?&site_id=' . Input::get('site_id');
+        Redirect::to($url);
+        $pageError = $validate->errors();
+      }
+    }
+  }
+
   if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
     if ($_GET['site_id'] != null) {
       $screened = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
@@ -92,9 +112,40 @@ if ($user->isLoggedIn()) {
       <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-sm-3">
               <h1 class="m-0">Dashboard</h1>
             </div><!-- /.col -->
+            <div class="col-sm-3">
+
+              <?php
+              if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+              ?>
+                <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="row-form clearfix">
+                        <div class="form-group">
+                          <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
+                            <option value="">Select Site</option>
+                            <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                              <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                            <?php } ?>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="row-form clearfix">
+                        <div class="form-group">
+                          <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <?php } ?>
+            </div><!-- /.col -->
+
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -175,35 +226,6 @@ if ($user->isLoggedIn()) {
           <!-- /.row -->
 
           <hr>
-
-          <?php
-          if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-          ?>
-            <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="row-form clearfix">
-                    <div class="form-group">
-                      <label>SITE</label>
-                      <select class="form-control" name="site_id" style="width: 100%;" autocomplete="off">
-                        <option value="">Select</option>
-                        <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
-                          <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="row-form clearfix">
-                    <div class="form-group">
-                      <input type="submit" name="search_by_site" value="Submit" class="btn btn-primary">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          <?php } ?>
 
           <div class="content-header">
             <div class="container-fluid">
