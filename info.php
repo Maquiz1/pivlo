@@ -71,7 +71,11 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                $url = 'info.php?id=3&status=' . Input::get('status') . '&site_id=' . Input::get('site_id');
+                if (Input::get('status')) {
+                    $url = 'info.php?id=3&status=' . Input::get('status') . '&site_id=' . Input::get('site_id');
+                } else {
+                    $url = 'info.php?id=' . $_GET['id'] . '&site_id=' . Input::get('site_id');
+                }
                 Redirect::to($url);
                 $pageError = $validate->errors();
             }
@@ -129,83 +133,83 @@ if ($user->isLoggedIn()) {
                 $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
             }
             $filename = 'Kap Data';
-        } elseif (Input::get('download_clients')) {
+        } elseif (Input::get('download_history')) {
             if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    $data = $override->getNews('history', 'status', 1, 'site_id', $_GET['site_id']);
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->get('history', 'status', 1);
                 }
             } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                $data = $override->getNews('history', 'status', 1, 'site_id', $user->data()->site_id);
             }
-            $filename = 'Kap Data';
-        } elseif (Input::get('download_clients')) {
+            $filename = 'Kap history';
+        } elseif (Input::get('download_results')) {
             if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    $data = $override->getNews('results', 'status', 1, 'site_id', $_GET['site_id']);
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->get('results', 'status', 1);
                 }
             } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                $data = $override->getNews('results', 'status', 1, 'site_id', $user->data()->site_id);
             }
-            $filename = 'Kap Data';
-        } elseif (Input::get('download_clients')) {
+            $filename = 'Results Data';
+        } elseif (Input::get('download_classification')) {
             if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    $data = $override->getNews('classification', 'status', 1, 'site_id', $_GET['site_id']);
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->get('classification', 'status', 1);
                 }
             } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                $data = $override->getNews('classification', 'status', 1, 'site_id', $user->data()->site_id);
             }
-            $filename = 'Kap Data';
-        } elseif (Input::get('download_clients')) {
+            $filename = 'Classification Data';
+        } elseif (Input::get('download_outcome')) {
             if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    $data = $override->getNews('outcome', 'status', 1, 'site_id', $_GET['site_id']);
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->get('outcome', 'status', 1);
                 }
             } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                $data = $override->getNews('outcome', 'status', 1, 'site_id', $user->data()->site_id);
             }
-            $filename = 'Kap Data';
-        } elseif (Input::get('download_clients')) {
+            $filename = 'Outcome Data';
+        } elseif (Input::get('download_economic')) {
             if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    $data = $override->getNews('economic', 'status', 1, 'site_id', $_GET['site_id']);
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->get('economic', 'status', 1);
                 }
             } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                $data = $override->getNews('economic', 'status', 1, 'site_id', $user->data()->site_id);
             }
-            $filename = 'Kap Data';
-        } elseif (Input::get('download_clients')) {
+            $filename = 'Economic Data';
+        } elseif (Input::get('download_visit')) {
             if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    $data = $override->getNews('visit', 'status', 1, 'site_id', $_GET['site_id']);
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->get('visit', 'status', 1);
                 }
             } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                $data = $override->getNews('visit', 'status', 1, 'site_id', $user->data()->site_id);
             }
-            $filename = 'Kap Data';
-        } elseif (Input::get('download_clients')) {
+            $filename = 'Visits Data';
+        } elseif (Input::get('download_study_id')) {
             if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    $data = $override->getNews('study_id', 'status', 1, 'site_id', $_GET['site_id']);
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->get('study_id', 'status', 1);
                 }
             } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+                $data = $override->getNews('study_id', 'status', 1, 'site_id', $user->data()->site_id);
             }
-            $filename = 'Kap Data';
+            $filename = 'Study Id Data';
         }
 
         $user->exportData($data, $filename);
@@ -1273,7 +1277,24 @@ if ($user->isLoggedIn()) {
                                                         </form>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_clients" value="Download Clients" class="btn btn-info">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
                                                             <a href="index1.php">
@@ -1617,7 +1638,24 @@ if ($user->isLoggedIn()) {
                                                         </form>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_history" value="Download History" class="btn btn-info">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
                                                             <a href="index1.php">
@@ -1766,7 +1804,24 @@ if ($user->isLoggedIn()) {
                                                         </form>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_results" value="Download Results" class="btn btn-info">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
                                                             <a href="index1.php">
@@ -1915,7 +1970,24 @@ if ($user->isLoggedIn()) {
                                                         </form>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_classifiaction" value="Download Classification" class="btn btn-info">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
                                                             <a href="index1.php">
@@ -2032,7 +2104,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of history</h3>
+                                                        <h3 class="card-title">List of Outcomes</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2057,6 +2129,23 @@ if ($user->isLoggedIn()) {
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
                                                                             <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_outcome" value="Download Outcomes" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2212,7 +2301,24 @@ if ($user->isLoggedIn()) {
                                                         </form>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_economic" value="Download Economic" class="btn btn-info">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
                                                             <a href="index1.php">
@@ -2360,7 +2466,24 @@ if ($user->isLoggedIn()) {
                                                         </form>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_visit" value="Download Visits" class="btn btn-info">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
                                                             <a href="index1.php">
