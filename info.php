@@ -102,6 +102,114 @@ if ($user->isLoggedIn()) {
                 $pageError = $validate->errors();
             }
         }
+
+
+        // if ($_GET['id'] == 6) {
+        $data = null;
+        $filename = null;
+        if (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('clients', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('clients', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Clients Data';
+        } elseif (Input::get('download_kap')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        } elseif (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        } elseif (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        } elseif (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        } elseif (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        } elseif (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        } elseif (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        } elseif (Input::get('download_clients')) {
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                if ($_GET['site_id'] != null) {
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                } else {
+                    $data = $override->get('kap', 'status', 1);
+                }
+            } else {
+                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
+            }
+            $filename = 'Kap Data';
+        }
+
+        $user->exportData($data, $filename);
+        // }
     }
 } else {
     Redirect::to('index.php');
@@ -1281,12 +1389,12 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('kap', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('kap', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                        $clients = $override->getDataDesc2('kap', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
                                     Kap
                                 </h1>
@@ -1312,7 +1420,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Kap</h3>
+                                                        <h3 class="card-title">List of kap</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1344,7 +1452,24 @@ if ($user->isLoggedIn()) {
                                                         </form>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-3">
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row-form clearfix">
+                                                                        <div class="form-group">
+                                                                            <input type="submit" name="download_kap" value="Download Kap" class="btn btn-info">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <ol class="breadcrumb float-sm-right">
                                                         <li class="breadcrumb-item">
                                                             <a href="index1.php">
@@ -1367,9 +1492,6 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1385,31 +1507,6 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -1426,9 +1523,6 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1460,20 +1554,20 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('history', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('history', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                        $clients = $override->getDataDesc2('history', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
-                                    Kap
+                                    history
                                 </h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Kap</li>
+                                    <li class="breadcrumb-item active">history</li>
                                 </ol>
                             </div>
                         </div>
@@ -1491,7 +1585,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Kap</h3>
+                                                        <h3 class="card-title">List of history</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1546,9 +1640,6 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1564,31 +1655,6 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -1605,9 +1671,6 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1640,20 +1703,20 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('results', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('results', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                        $clients = $override->getDataDesc2('results', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
-                                    Kap
+                                    results
                                 </h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Kap</li>
+                                    <li class="breadcrumb-item active">results</li>
                                 </ol>
                             </div>
                         </div>
@@ -1671,7 +1734,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Kap</h3>
+                                                        <h3 class="card-title">List of results</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1726,9 +1789,6 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1744,31 +1804,6 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -1785,9 +1820,6 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1820,20 +1852,20 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('classification', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('classification', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                        $clients = $override->getDataDesc2('classification', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
-                                    Kap
+                                    classification
                                 </h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Kap</li>
+                                    <li class="breadcrumb-item active">classification</li>
                                 </ol>
                             </div>
                         </div>
@@ -1851,7 +1883,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Kap</h3>
+                                                        <h3 class="card-title">List of classification</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1906,9 +1938,6 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -1924,31 +1953,6 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -1965,9 +1969,6 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2000,20 +2001,20 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('outcome', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('outcome', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                        $clients = $override->getDataDesc2('outcome', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
-                                    Kap
+                                    outcome
                                 </h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Kap</li>
+                                    <li class="breadcrumb-item active">outcome</li>
                                 </ol>
                             </div>
                         </div>
@@ -2031,7 +2032,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Kap</h3>
+                                                        <h3 class="card-title">List of history</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2086,9 +2087,6 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2104,31 +2102,6 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -2145,9 +2118,6 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2179,20 +2149,20 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('eonomic', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('eonomic', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                        $clients = $override->getDataDesc2('eonomic', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
-                                    Kap
+                                    eonomic
                                 </h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Kap</li>
+                                    <li class="breadcrumb-item active">eonomic</li>
                                 </ol>
                             </div>
                         </div>
@@ -2210,7 +2180,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Kap</h3>
+                                                        <h3 class="card-title">List of eonomic</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2265,9 +2235,6 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2283,31 +2250,6 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -2324,9 +2266,6 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2358,20 +2297,20 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('visit', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('clients', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('visit', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('clients', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                        $clients = $override->getDataDesc2('visit', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     } ?>
-                                    Kap
+                                    visit
                                 </h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Kap</li>
+                                    <li class="breadcrumb-item active">visit</li>
                                 </ol>
                             </div>
                         </div>
@@ -2389,7 +2328,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Kap</h3>
+                                                        <h3 class="card-title">List of visit</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2444,9 +2383,6 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2462,31 +2398,6 @@ if ($user->isLoggedIn()) {
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
                                                         </td>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
-                                                            </td>
-                                                        <?php } ?>
-                                                        <td class="table-user">
-                                                            <?= $value['age']; ?>
-                                                        </td>
-                                                        <?php if ($value['sex'] == 1) { ?>
-                                                            <td class="table-user">
-                                                                Male
-                                                            </td>
-                                                        <?php } elseif ($value['sex'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Female
-                                                            </td>
-                                                        <?php } ?>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
@@ -2503,9 +2414,6 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
-                                                    <th>Interview Type</th>
-                                                    <th>age</th>
-                                                    <th>sex</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
