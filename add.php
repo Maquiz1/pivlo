@@ -1648,8 +1648,8 @@ if ($user->isLoggedIn()) {
                                                             <?php foreach ($override->get('relation', 'status', 1) as $relation) { ?>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="relation_patient" id="relation_patient<?= $relation['id']; ?>" value="<?= $relation['id']; ?>" <?php if ($clients['relation_patient'] == $relation['id']) {
-                                                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                                                            } ?>>
+                                                                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                                                                        } ?>>
                                                                     <label class="form-check-label"><?= $relation['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -1810,67 +1810,62 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-2">
+                                                    <label>Do you own health insurance?</label>
+                                                    <!-- radio -->
                                                     <div class="row-form clearfix">
-                                                        <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Do you own health insurance?</label>
-                                                            <select id="health_insurance" name="health_insurance" class="form-control" required>
-                                                                <option value="<?= $clients['health_insurance'] ?>"><?php if ($clients['health_insurance']) {
-                                                                                                                        if ($clients['health_insurance'] == 1) {
-                                                                                                                            echo 'Yes';
-                                                                                                                        } elseif ($clients['health_insurance'] == 2) {
-                                                                                                                            echo 'No';
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 'Select';
-                                                                                                                    } ?>
-                                                                </option>
-                                                                <option value="1">Yes</option>
-                                                                <option value="2">No</option>
-                                                            </select>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="health_insurance" value="1" <?php if ($clients['health_insurance'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Yes</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="health_insurance" id="health_insurance" value="2" <?php if ($clients['sex'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">No</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-4" id="pay_services">
+                                                    <label>If no, how do you pay for your health care services</label>
+                                                    <!-- radio -->
                                                     <div class="row-form clearfix">
-                                                        <!-- select -->
                                                         <div class="form-group">
-                                                            <label>If no, how do you pay for your health care services</label>
-                                                            <select name="pay_services" class="form-control">
-                                                                <option value="<?= $payments['id'] ?>"><?php if ($clients['pay_services']) {
-                                                                                                            print_r($payments['name']);
-                                                                                                        } else {
-                                                                                                            echo 'Select pay';
-                                                                                                        } ?>
-                                                                </option>
-                                                                <?php foreach ($override->get('payments', 'status', 1) as $payment) { ?>
-                                                                    <option value="<?= $payment['id'] ?>"><?= $payment['name'] ?></option>
-                                                                <?php } ?>
-                                                            </select>
+                                                            <?php foreach ($override->get('payments', 'status', 1) as $payment) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="pay_services" id="pay_services<?= $payment['id']; ?>" value="<?= $payment['id']; ?>" <?php if ($clients['pay_services'] == $payment['id']) {
+                                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                                            } ?>>
+                                                                    <label class="form-check-label"><?= $payment['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-4" id="insurance_name1">
+                                                    <label>Name of insurance:</label>
+                                                    <!-- radio -->
                                                     <div class="row-form clearfix">
-                                                        <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Name of insurance:</label>
-                                                            <select id="insurance_name" name="insurance_name" class="form-control">
-                                                                <option value="<?= $insurance['id'] ?>"><?php if ($clients['insurance_name']) {
-                                                                                                            print_r($insurance['name']);
-                                                                                                        } else {
-                                                                                                            echo 'Select pay';
-                                                                                                        } ?>
-                                                                </option>
-                                                                <?php foreach ($override->get('insurance', 'status', 1) as $insurance) { ?>
-                                                                    <option value="<?= $insurance['id'] ?>"><?= $insurance['name'] ?>
-                                                                    </option>
-                                                                <?php } ?>
-                                                            </select>
+                                                            <?php foreach ($override->get('insurance', 'status', 1) as $insurance) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="insurance_name" id="insurance_name<?= $insurance['id']; ?>" value="<?= $insurance['id']; ?>" <?php if ($clients['insurance_name'] == $insurance['id']) {
+                                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $insurance['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
+                    
                                                 <div class="col-sm-4" id="insurance_name_other">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
