@@ -2036,7 +2036,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="interview_date" class="form-label">Interview Date</label>
                                                         <input type="date" value="<?php if ($kap['interview_date']) {
                                                                                         print_r($kap['interview_date']);
-                                                                                    } ?>" id="interview_date" name="interview_date" class="form-control" placeholder="Enter interview date" required />
+                                                                                    } ?>" id="interview_date" name="interview_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter interview date" required />
                                                     </div>
                                                 </div>
 
@@ -3541,7 +3541,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="results_date" class="form-label">Date</label>
                                                         <input type="date" value="<?php if ($results) {
                                                                                         print_r($results['results_date']);
-                                                                                    } ?>" id="results_date" name="results_date" class="form-control" placeholder="Enter results date" required />
+                                                                                    } ?>" id="results_date" name="results_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter results date" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
@@ -3649,7 +3649,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="classification_date" class="form-label">Clasification Date</label>
                                                         <input type="date" value="<?php if ($classification) {
                                                                                         print_r($classification['classification_date']);
-                                                                                    } ?>" id="classification_date" name="classification_date" class="form-control" placeholder="Enter classification date" required />
+                                                                                    } ?>" id="classification_date" name="classification_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter classification date" required />
                                                     </div>
                                                 </div>
 
@@ -4133,7 +4133,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="outcome_date" class="form-label">Date</label>
                                                         <input type="date" value="<?php if ($outcome) {
                                                                                         print_r($outcome['outcome_date']);
-                                                                                    } ?>" id="outcome_date" name="outcome_date" class="form-control" placeholder="Enter outcome date" required />
+                                                                                    } ?>" id="outcome_date" name="outcome_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter outcome date" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
