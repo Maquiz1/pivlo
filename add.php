@@ -461,9 +461,6 @@ if ($user->isLoggedIn()) {
                 'ever_smoked' => array(
                     'required' => true,
                 ),
-                'type_smoked' => array(
-                    'required' => true,
-                ),
             ));
             if ($validate->passed()) {
                 $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid']);
