@@ -150,7 +150,7 @@ if ($user->isLoggedIn()) {
         }
 
 
-        // if ($_GET['id'] == 6) {
+        if ($_GET['id'] == 16) {
         $data = null;
         $filename = null;
         if (Input::get('download_clients')) {
@@ -255,7 +255,7 @@ if ($user->isLoggedIn()) {
         }
 
         $user->exportData($data, $filename);
-        // }
+        }
     }
 } else {
     Redirect::to('index.php');
