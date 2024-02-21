@@ -150,7 +150,7 @@ if ($user->isLoggedIn()) {
         }
 
 
-        if ($_GET['id'] == 16) {
+        if ($_GET['status'] == 16) {
         $data = null;
         $filename = null;
         if (Input::get('download_clients')) {

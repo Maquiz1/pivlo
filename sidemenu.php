@@ -167,49 +167,49 @@ if ($user->isLoggedIn()) {
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="info.php?id=5" class="nav-link">
+                                <a href="info.php?id=5&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of CLients</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=6" class="nav-link">
+                                <a href="info.php?id=6&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of KAP</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=7" class="nav-link">
+                                <a href="info.php?id=7&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of History</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=8" class="nav-link">
+                                <a href="info.php?id=8&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of Results</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=9" class="nav-link">
+                                <a href="info.php?id=9&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of Classification</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=10" class="nav-link">
+                                <a href="info.php?id=10&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of Outcome</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=11" class="nav-link">
+                                <a href="info.php?id=11&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of Economics</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="info.php?id=12" class="nav-link">
+                                <a href="info.php?id=12&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of Visits</p>
                                 </a>
