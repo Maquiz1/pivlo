@@ -1,28 +1,24 @@
-const uchunguzi_faida = document.getElementById("uchunguzi_faida");
-const saratani_hatari1 = document.getElementById("uchunguzi_faida_other");
+const uchunguzi_faida1 = document.getElementById("uchunguzi_faida1");
+const uchunguzi_faida2 = document.getElementById("uchunguzi_faida2");
+const uchunguzi_faida3 = document.getElementById("uchunguzi_faida3");
+const uchunguzi_faida99 = document.getElementById("uchunguzi_faida99");
+const uchunguzi_faida96 = document.getElementById("uchunguzi_faida96");
 
-// console.log(type_smoked);
+const uchunguzi_faida_other = document.getElementById("uchunguzi_faida_other");
 
-function showElement() {
-  if (uchunguzi_faida.value === "96") {
-    saratani_hatari1.style.display = "block";
+function toggleElementVisibility() {
+  if (uchunguzi_faida96.checked) {
+    uchunguzi_faida_other.style.display = "block";
   } else {
-    saratani_hatari1.style.display = "none";
+    uchunguzi_faida_other.style.display = "none";
   }
-
-  // Save the selected value in localStorage
-  localStorage.setItem("selectedValue", uchunguzi_faida.value);
 }
 
-// Check if there's a previously selected value in localStorage
-const uchunguzi_faidaValue = localStorage.getItem("selectedValue");
+uchunguzi_faida1.addEventListener("change", toggleElementVisibility);
+uchunguzi_faida2.addEventListener("change", toggleElementVisibility);
+uchunguzi_faida3.addEventListener("change", toggleElementVisibility);
+uchunguzi_faida99.addEventListener("change", toggleElementVisibility);
+uchunguzi_faida96.addEventListener("change", toggleElementVisibility);
 
-if (uchunguzi_faidaValue) {
-  uchunguzi_faida.value = uchunguzi_faidaValue;
-}
-
-// Show element if Option 2 is selected
-showElement();
-
-// Listen for changes in the dropdown
-uchunguzi_faida.addEventListener("change", showElement);
+// Initial check
+toggleElementVisibility();

@@ -321,6 +321,7 @@ if ($user->isLoggedIn()) {
                 $matibabu = implode(',', Input::get('matibabu'));
                 $kundi = implode(',', Input::get('kundi'));
                 $ushawishi = implode(',', Input::get('ushawishi'));
+                $saratani_hatari = implode(',', Input::get('saratani_hatari'));
 
                 if ($kap) {
                     $user->updateRecord('kap', array(
@@ -345,7 +346,7 @@ if ($user->isLoggedIn()) {
                         'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
                         'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
                         'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => Input::get('saratani_hatari'),
+                        'saratani_hatari' => $saratani_hatari,
                         'saratani_hatari_other' => Input::get('saratani_hatari_other'),
                         'kundi' => $kundi,
                         'kundi_other' => Input::get('kundi_other'),
@@ -393,7 +394,7 @@ if ($user->isLoggedIn()) {
                         'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
                         'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
                         'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => Input::get('saratani_hatari'),
+                        'saratani_hatari' => $saratani_hatari,
                         'saratani_hatari_other' => Input::get('saratani_hatari_other'),
                         'kundi' => $kundi,
                         'kundi_other' => Input::get('kundi_other'),
@@ -2536,39 +2537,51 @@ if ($user->isLoggedIn()) {
                                             <hr>
 
                                             <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="uchunguzi_maana" class="form-label">2. Nini maana ya uchunguzi wa saratani ya mapafu?</label>
-                                                        <select name="uchunguzi_maana" id="uchunguzi_maana" class="form-control" required>
-                                                            <option value="<?= $kap['uchunguzi_maana'] ?>"><?php if ($kap['uchunguzi_maana']) {
-                                                                                                                if ($kap['uchunguzi_maana'] == 1) {
-                                                                                                                    echo 'Uchunguzi wa saratani ya mapafu ni mchakato ambao hutumiwa kugundua uwepo wa saratani ya mapafu kwa watu wenye afya nzuri na wenye hatari kubwa ya kupata saratani ya mapafu.';
-                                                                                                                } elseif ($kap['uchunguzi_maana'] == 2) {
-                                                                                                                    echo 'Uchunguzi wa saratani ya mapafu ni mkakati wa uchunguzi wa saratani ya mapafu inayotumiwa kutambua saratani ya mapafu mapema kabla ya kuonyesha dalili ambapo ni hatua ya mwanzoni kabisa ambayo kuna uwezekano mkubwa wa kutibika.';
-                                                                                                                } elseif ($kap['uchunguzi_maana'] == 3) {
-                                                                                                                    echo 'Uchunguzi wa saratani ya mapafu ni kipimo cha kugundua saratani ya mapafu mapema kabla ya dalili kutokea.';
-                                                                                                                } elseif ($kap['uchunguzi_maana'] == 99) {
-                                                                                                                    echo 'Sijui';
-                                                                                                                } elseif ($kap['uchunguzi_maana'] == 96) {
-                                                                                                                    echo 'Nyinginezo';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Uchunguzi wa saratani ya mapafu ni mchakato ambao hutumiwa kugundua uwepo wa saratani ya mapafu kwa watu wenye afya nzuri na wenye hatari kubwa ya kupata saratani ya mapafu.</option>
-                                                            <option value="2">Uchunguzi wa saratani ya mapafu ni mkakati wa uchunguzi wa saratani ya mapafu inayotumiwa kutambua saratani ya mapafu mapema kabla ya kuonyesha dalili ambapo ni hatua ya mwanzoni kabisa ambayo kuna uwezekano mkubwa wa kutibika.</option>
-                                                            <option value="3">Uchunguzi wa saratani ya mapafu ni kipimo cha kugundua saratani ya mapafu mapema kabla ya dalili kutokea.</option>
-                                                            <option value="99">Sijui</option>
-                                                            <option value="96">Nyinginezo</option>
-                                                        </select>
+
+                                                <div class="col-sm-6" id="matibabu_saratani">
+                                                    <label>2. Nini maana ya uchunguzi wa saratani ya mapafu?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana1" value="1" <?php if ($kap['uchunguzi_maana'] == 1) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Uchunguzi wa saratani ya mapafu ni mchakato ambao hutumiwa kugundua uwepo wa saratani ya mapafu kwa watu wenye afya nzuri na wenye hatari kubwa ya kupata saratani ya mapafu</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana2" value="2" <?php if ($kap['uchunguzi_maana'] == 2) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Uchunguzi wa saratani ya mapafu ni mkakati wa uchunguzi wa saratani ya mapafu inayotumiwa kutambua saratani ya mapafu mapema kabla ya kuonyesha dalili ambapo ni hatua ya mwanzoni kabisa ambayo kuna uwezekano mkubwa wa kutibika</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana3" value="3" <?php if ($kap['uchunguzi_maana'] == 3) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Uchunguzi wa saratani ya mapafu ni kipimo cha kugundua saratani ya mapafu mapema kabla ya dalili kutokea</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana99" value="99" <?php if ($kap['uchunguzi_maana'] == 99) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sijui</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana96" value="96" <?php if ($kap['uchunguzi_maana'] == 96) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nyinginezo</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-6" id="uchunguzi_maana_other">
                                                     <div class=" mb-3">
                                                         <label for="uchunguzi_maana_other" class="form-label">2. Taja ?</label>
-                                                        <textarea class="form-control" name="uchunguzi_maana_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_maana_other']) {
+                                                        <textarea class="form-control" name="uchunguzi_maana_other" rows="4" placeholder="Type other here..."><?php if ($kap['uchunguzi_maana_other']) {
                                                                                                                                                                     print_r($kap['uchunguzi_maana_other']);
                                                                                                                                                                 }  ?>
                                                                 </textarea>
@@ -2578,39 +2591,50 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="uchunguzi_faida" class="form-label">3. Je, kuna faida gani ya kufanya uchunguzi wa saratani ya mapafu?</label>
-                                                        <select name="uchunguzi_faida" id="uchunguzi_faida" class="form-control" onchange="updateText1(this.value)" required>
-                                                            <option value="<?= $kap['uchunguzi_faida'] ?>"><?php if ($kap['uchunguzi_faida']) {
-                                                                                                                if ($kap['uchunguzi_faida'] == 1) {
-                                                                                                                    echo 'Utambuzi wa mapema ambao unaokoa maisha.';
-                                                                                                                } elseif ($kap['uchunguzi_faida'] == 2) {
-                                                                                                                    echo 'Kugundua saratani ya mapafu katika hatua ya awali wakati kuna uwezekano mkubwa wa kupona.';
-                                                                                                                } elseif ($kap['uchunguzi_faida'] == 3) {
-                                                                                                                    echo 'Hupunguza hatari ya kufa kwa saratani ya mapafu';
-                                                                                                                } elseif ($kap['uchunguzi_faida'] == 99) {
-                                                                                                                    echo 'Sijui.';
-                                                                                                                } elseif ($kap['uchunguzi_faida'] == 96) {
-                                                                                                                    echo 'Nyinginezo';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Utambuzi wa mapema ambao unaokoa maisha.</option>
-                                                            <option value="2">Kugundua saratani ya mapafu katika hatua ya awali wakati kuna uwezekano mkubwa wa kupona.</option>
-                                                            <option value="3">Hupunguza hatari ya kufa kwa saratani ya mapafu.</option>
-                                                            <option value="99">Sijui.</option>
-                                                            <option value="96">Nyinginezo</option>
-                                                        </select>
+                                                <div class="col-sm-6">
+                                                    <label>3. Je, kuna faida gani ya kufanya uchunguzi wa saratani ya mapafu?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida1" value="1" <?php if ($kap['uchunguzi_faida'] == 1) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Utambuzi wa mapema ambao unaokoa maisha</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida2" value="2" <?php if ($kap['uchunguzi_faida'] == 2) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Kugundua saratani ya mapafu katika hatua ya awali wakati kuna uwezekano mkubwa wa kupona</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida3" value="3" <?php if ($kap['uchunguzi_faida'] == 3) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Hupunguza hatari ya kufa kwa saratani ya mapafu</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida99" value="99" <?php if ($kap['uchunguzi_faida'] == 99) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sijui</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida96" value="96" <?php if ($kap['uchunguzi_faida'] == 96) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nyinginezo</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-6" id="uchunguzi_faida_other">
                                                     <div class="mb-3">
                                                         <label for="uchunguzi_faida_other" class="form-label">3. Taja ?</label>
-                                                        <textarea class="form-control" name="uchunguzi_faida_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_faida_other']) {
+                                                        <textarea class="form-control" name="uchunguzi_faida_other" rows="4" placeholder="Type other here..."><?php if ($kap['uchunguzi_faida_other']) {
                                                                                                                                                                     print_r($kap['uchunguzi_faida_other']);
                                                                                                                                                                 }  ?>
                                                                 </textarea>
@@ -2620,64 +2644,99 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-12">
-                                                    <div class="mb-3">
-                                                        <label for="uchunguzi_hatari" class="form-label">4. Je, kuna hatari zozote za kufanya uchunguzi wa saratani ya mapafu?</label>
-                                                        <select name="uchunguzi_hatari" id="uchunguzi_hatari" class="form-control" required>
-                                                            <option value="<?= $kap['uchunguzi_hatari'] ?>"><?php if ($kap['uchunguzi_hatari']) {
-                                                                                                                if ($kap['uchunguzi_hatari'] == 1) {
-                                                                                                                    echo 'Ndio';
-                                                                                                                } elseif ($kap['uchunguzi_hatari'] == 2) {
-                                                                                                                    echo 'Hapana';
-                                                                                                                } elseif ($kap['uchunguzi_hatari'] == 99) {
-                                                                                                                    echo 'Sijui';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
+                                                <div class="col-sm-12">
+                                                    <label>4. Je, kuna hatari zozote za kufanya uchunguzi wa saratani ya mapafu?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_hatari" id="uchunguzi_hatari1" value="1" <?php if ($kap['uchunguzi_hatari'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Ndio</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_hatari" id="uchunguzi_hatari2" value="2" <?php if ($kap['uchunguzi_hatari'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Hapana</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_hatari" id="uchunguzi_hatari99" value="99" <?php if ($kap['uchunguzi_hatari'] == 99) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sijui</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr>
-                                            <div class="row" id="saratani_hatari1">
-                                                <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="saratani_hatari" class="form-label">5. Kama jibu hapo juu ni ndio, je ni hatari gani zinazoweza kutokana na kufanya uchunguzi wa saratani ya mapafu?</label>
-                                                        <select name="saratani_hatari" id="saratani_hatari" class="form-control">
-                                                            <option value="<?= $kap['saratani_hatari'] ?>"><?php if ($kap['saratani_hatari']) {
-                                                                                                                if ($kap['saratani_hatari'] == 1) {
-                                                                                                                    echo 'Hatari ya kupata mionzi mwilini, kwa kuwa inatumia skana ya LDCT.';
-                                                                                                                } elseif ($kap['saratani_hatari'] == 2) {
-                                                                                                                    echo 'Uwoga Madaktari wanaweza wakagundua magonjwa mengine yanayofanana na  saratani ya mapafu ambayo siyo saratani ya mapafu (False positives).';
-                                                                                                                } elseif ($kap['saratani_hatari'] == 3) {
-                                                                                                                    echo 'Unaweza kupata uvimbe vidogo vidogo ambavyo ni saratani zinazokua polepole ambazo hazitakuletea madhara.(';
-                                                                                                                } elseif ($kap['saratani_hatari'] == 4) {
-                                                                                                                    echo 'Msongo wa mawaso(Pychological distress)';
-                                                                                                                } elseif ($kap['saratani_hatari'] == 5) {
-                                                                                                                    echo 'Uchunguzi wa kupita kiasi (Overdiagnosis)';
-                                                                                                                } elseif ($kap['saratani_hatari'] == 99) {
-                                                                                                                    echo 'Sijui.';
-                                                                                                                } elseif ($kap['saratani_hatari'] == 96) {
-                                                                                                                    echo 'Nyinginezo';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Uwoga Madaktari wanaweza wakagundua magonjwa mengine yanayofanana na saratani ya mapafu ambayo siyo saratani ya mapafu (False positives).</option>
-                                                            <option value="3">Unaweza kupata uvimbe vidogo vidogo ambavyo ni saratani zinazokua polepole ambazo hazitakuletea madhara.(</option>
-                                                            <option value="4">Msongo wa mawaso(Pychological distress)</option>
-                                                            <option value="5">Uchunguzi wa kupita kiasi (Overdiagnosis)</option>
-                                                            <option value="99">Sijui</option>
-                                                            <option value="96">Nyinyinezo</option>
-                                                        </select>
+                                            <div class="row" id="saratani_hatari">
+                                                <div class="col-sm-6">
+                                                    <label>5. Kama jibu hapo juu ni ndio, je ni hatari gani zinazoweza kutokana na kufanya uchunguzi wa saratani ya mapafu? (Multiple answer)</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari1" value="1" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
+                                                                                                                                                                                if ($value == 1) {
+                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                }
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Hatari ya kupata mionzi mwilini, kwa kuwa inatumia skana ya LDCT</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari2" value="2" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
+                                                                                                                                                                                if ($value == 2) {
+                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                }
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Uwoga Madaktari wanaweza wakagundua magonjwa mengine yanayofanana na saratani ya mapafu ambayo siyo saratani ya mapafu (False positives)</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari3" value="3" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
+                                                                                                                                                                                if ($value == 3) {
+                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                }
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Unaweza kupata uvimbe vidogo vidogo ambavyo ni saratani zinazokua polepole ambazo hazitakuletea madhara</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari4" value="4" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
+                                                                                                                                                                                if ($value == 4) {
+                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                }
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Msongo wa mawaso(Pychological distress)</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari5" value="5" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
+                                                                                                                                                                                if ($value == 5) {
+                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                }
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Uchunguzi wa kupita kiasi (Overdiagnosis)</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari99" value="99" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
+                                                                                                                                                                                if ($value == 99) {
+                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                }
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Sijui</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari96" value="96" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
+                                                                                                                                                                                if ($value == 96) {
+                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                }
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Nyinginezo</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
