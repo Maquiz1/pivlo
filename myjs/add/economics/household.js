@@ -1,26 +1,29 @@
-const income_household = document.getElementById('income_household');
+const income_household1 = document.getElementById("income_household96");
+const income_household2 = document.getElementById("income_household96");
+const income_household3 = document.getElementById("income_household96");
+const income_household4 = document.getElementById("income_household96");
+const income_household5 = document.getElementById("income_household96");
+const income_household6 = document.getElementById("income_household96");
+const income_household96 = document.getElementById("income_household96");
+
 const income_household_other = document.getElementById('income_household_other');
 
-function showElement() {
-  if (income_household.value === "96") {
+function toggleElementVisibility() {
+  if (income_household96.checked) {
     income_household_other.style.display = "block";
   } else {
     income_household_other.style.display = "none";
   }
-
-  // Save the selected value in localStorage
-  localStorage.setItem("selectedValue", income_household.value);
 }
 
-// Check if there's a previously selected value in localStorage
-const income_householdValue = localStorage.getItem("selectedValue");
+income_household1.addEventListener("change", toggleElementVisibility);
+income_household2.addEventListener("change", toggleElementVisibility);
+income_household3.addEventListener("change", toggleElementVisibility);
+income_household4.addEventListener("change", toggleElementVisibility);
+income_household5.addEventListener("change", toggleElementVisibility);
+income_household6.addEventListener("change", toggleElementVisibility);
+income_household96.addEventListener("change", toggleElementVisibility);
 
-if (income_householdValue) {
-  income_household.value = income_householdValue;
-}
 
-// Show element if Option 2 is selected
-showElement();
-
-// Listen for changes in the dropdown
-income_household.addEventListener("change", showElement);
+// Initial check
+toggleElementVisibility();

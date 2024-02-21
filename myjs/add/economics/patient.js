@@ -1,26 +1,29 @@
-const income_patient = document.getElementById('income_patient');
-const income_patient_other = document.getElementById('income_patient_other');
+const income_patient1 = document.getElementById("income_patient1");
+const income_patient2 = document.getElementById("income_patient2");
+const income_patient3 = document.getElementById("income_patient3");
+const income_patient4 = document.getElementById("income_patient4");
+const income_patient5 = document.getElementById("income_patient5");
+const income_patient6 = document.getElementById("income_patient6");
+const income_patient96 = document.getElementById("income_patient96");
 
-function showElement() {
-  if (income_patient.value === "96") {
+const income_patient_other = document.getElementById("income_patient_other");
+
+
+function toggleElementVisibility() {
+  if (income_patient96.checked) {
     income_patient_other.style.display = "block";
   } else {
     income_patient_other.style.display = "none";
   }
-
-  // Save the selected value in localStorage
-  localStorage.setItem("selectedValue", income_patient.value);
 }
 
-// Check if there's a previously selected value in localStorage
-const income_patientValue = localStorage.getItem("selectedValue");
+income_patient1.addEventListener("change", toggleElementVisibility);
+income_patient2.addEventListener("change", toggleElementVisibility);
+income_patient3.addEventListener("change", toggleElementVisibility);
+income_patient4.addEventListener("change", toggleElementVisibility);
+income_patient5.addEventListener("change", toggleElementVisibility);
+income_patient6.addEventListener("change", toggleElementVisibility);
+income_patient96.addEventListener("change", toggleElementVisibility);
 
-if (income_patientValue) {
-  income_patient.value = income_patientValue;
-}
-
-// Show element if Option 2 is selected
-showElement();
-
-// Listen for changes in the dropdown
-income_patient.addEventListener("change", showElement);
+// Initial check
+toggleElementVisibility();

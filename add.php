@@ -3856,45 +3856,62 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-3">
+                                                    <label>Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household1" value="1" <?php if ($economic['income_household'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Msharaha kwa mwezi</label>
+                                                            </div>
 
-                                                <div class="col-5">
-                                                    <div class="mb-2">
-                                                        <label for="income_household" class="form-label">Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
-                                                        <select class="form-control" id="income_household" name="income_household" style="width: 100%;" required>
-                                                            <option value="<?= $economic['income_household'] ?>"><?php if ($economic['income_household']) {
-                                                                                                                        if ($economic['income_household'] == 1) {
-                                                                                                                            echo 'Msharaha kwa mwezi';
-                                                                                                                        } elseif ($economic['income_household'] == 2) {
-                                                                                                                            echo 'Posho kwa siku';
-                                                                                                                        } elseif ($economic['income_household'] == 3) {
-                                                                                                                            echo 'Pato kutokana na mauzo ya biashara';
-                                                                                                                        } elseif ($economic['income_household'] == 4) {
-                                                                                                                            echo 'Pato kutokana na mauzo ya mazao au mifugo';
-                                                                                                                        } elseif ($economic['income_household'] == 5) {
-                                                                                                                            echo 'Hana kipato';
-                                                                                                                        } elseif ($economic['income_household'] == 6) {
-                                                                                                                            echo 'Mstaafu';
-                                                                                                                        } elseif ($economic['income_household'] == 96) {
-                                                                                                                            echo 'Nyingine';
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 'Select';
-                                                                                                                    } ?>
-                                                            </option>
-                                                            <option value="1">Msharaha kwa mwezi</option>
-                                                            <option value="2">Posho kwa siku</option>
-                                                            <option value="3">Pato kutokana na mauzo ya biashara</option>
-                                                            <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
-                                                            <option value="5">Hana kipato</option>
-                                                            <option value="6">Mstaafu</option>
-                                                            <option value="96">Nyingine</option>
-                                                        </select>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household2" value="2" <?php if ($economic['income_household'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Posho kwa siku</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household3" value="3" <?php if ($economic['income_household'] == 3) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Pato kutokana na mauzo ya biashara</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household4" value="4" <?php if ($economic['income_household'] == 4) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Pato kutokana na mauzo ya mazao au mifugo</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household5" value="5" <?php if ($economic['income_household'] == 5) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Hana kipato</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household6" value="6" <?php if ($economic['income_household'] == 6) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Mstaafu</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household96" value="96" <?php if ($economic['income_household'] == 96) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nyingine</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-4" id="income_household_other">
+
+                                                <div class="col-6" id="income_household_other">
                                                     <div class="mb-3">
                                                         <label for="monthly_earn" class="form-label">Taja</label>
-                                                        <textarea class="form-control" name="income_household_other" rows="2" placeholder="Type other here...">
+                                                        <textarea class="form-control" name="income_household_other" rows="4" placeholder="Type other here...">
                                                             <?php if ($economic['income_household_other']) {
                                                                 print_r($economic['income_household_other']);
                                                             }  ?>
@@ -3905,38 +3922,56 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="income_patient" class="form-label">Chanzo kikuu cha mapato cha mgonjwa? </label>
-                                                        <select class="form-control" id="income_patient" name="income_patient" style="width: 100%;" required>
-                                                            <option value="<?= $economic['income_patient'] ?>"><?php if ($economic['income_patient']) {
-                                                                                                                    if ($economic['income_patient'] == 1) {
-                                                                                                                        echo 'Msharaha kwa mwezi';
-                                                                                                                    } elseif ($economic['income_patient'] == 2) {
-                                                                                                                        echo 'Posho kwa siku';
-                                                                                                                    } elseif ($economic['income_patient'] == 3) {
-                                                                                                                        echo 'Pato kutokana na mauzo ya biashara';
-                                                                                                                    } elseif ($economic['income_patient'] == 4) {
-                                                                                                                        echo 'Pato kutokana na mauzo ya mazao au mifugo';
-                                                                                                                    } elseif ($economic['income_patient'] == 5) {
-                                                                                                                        echo 'Hana kipato';
-                                                                                                                    } elseif ($economic['income_patient'] == 6) {
-                                                                                                                        echo 'Mstaafu';
-                                                                                                                    } elseif ($economic['income_patient'] == 96) {
-                                                                                                                        echo 'Nyingine';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Msharaha kwa mwezi</option>
-                                                            <option value="2">Posho kwa siku</option>
-                                                            <option value="3">Pato kutokana na mauzo ya biashara</option>
-                                                            <option value="4">Pato kutokana na mauzo ya mazao au mifugo</option>
-                                                            <option value="5">Hana kipato</option>
-                                                            <option value="6">Mstaafu</option>
-                                                            <option value="96">Nyingine</option>
-                                                        </select>
+
+                                                <div class="col-sm-3">
+                                                    <label>Chanzo kikuu cha mapato cha mgonjwa?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient1" value="1" <?php if ($economic['income_patient'] == 1) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Msharaha kwa mwezi</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient2" value="2" <?php if ($economic['income_patient'] == 2) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Posho kwa siku</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient3" value="3" <?php if ($economic['income_patient'] == 3) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Pato kutokana na mauzo ya biashara</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient4" value="4" <?php if ($economic['income_patient'] == 4) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Pato kutokana na mauzo ya mazao au mifugo</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient5" value="5" <?php if ($economic['income_patient'] == 5) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Hana kipato</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient6" value="6" <?php if ($economic['income_patient'] == 6) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Mstaafu</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient96" value="96" <?php if ($economic['income_patient'] == 96) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Nyingine</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6" id="income_patient_other">
