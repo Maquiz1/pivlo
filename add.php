@@ -755,7 +755,9 @@ if ($user->isLoggedIn()) {
                     $user->updateRecord('economic', array(
                         'economic_date' => Input::get('economic_date'),
                         'income_household' => Input::get('income_household'),
+                        'income_household_other' => Input::get('income_household_other'),
                         'income_patient' => Input::get('income_patient'),
+                        'income_patient_other' => Input::get('income_patient_other'),
                         'monthly_earn' => Input::get('monthly_earn'),
                         'member_earn' => Input::get('member_earn'),
                         'transport' => Input::get('transport'),
@@ -780,7 +782,9 @@ if ($user->isLoggedIn()) {
                         'study_id' => $_GET['study_id'],
                         'sequence' => $_GET['sequence'],
                         'income_household' => Input::get('income_household'),
+                        'income_household_other' => Input::get('income_household_other'),
                         'income_patient' => Input::get('income_patient'),
+                        'income_patient_other' => Input::get('income_patient_other'),
                         'monthly_earn' => Input::get('monthly_earn'),
                         'member_earn' => Input::get('member_earn'),
                         'transport' => Input::get('transport'),
@@ -3853,10 +3857,10 @@ if ($user->isLoggedIn()) {
                                                         <label for="economic_date" class="form-label">Tarehe</label>
                                                         <input type="date" value="<?php if ($economic['economic_date']) {
                                                                                         print_r($economic['economic_date']);
-                                                                                    } ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
+                                                                                    } ?>" min="2024-02-21" max="<?= date('Y-m-d'); ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <label>Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -3902,28 +3906,18 @@ if ($user->isLoggedIn()) {
                                                                 <input class="form-check-input" type="radio" name="income_household" id="income_household96" value="96" <?php if ($economic['income_household'] == 96) {
                                                                                                                                                                             echo 'checked';
                                                                                                                                                                         } ?>>
-                                                                <label class="form-check-label">Nyingine</label>
+                                                                <label class="form-check-label">Nyingine, Taja</label>
                                                             </div>
+                                                            <textarea class="form-control" name="income_household_other" id="income_household_other" rows="2" placeholder="Type other here...">
+                                                                <?php if ($economic['income_household_other']) {
+                                                                    print_r($economic['income_household_other']);
+                                                                }  ?>
+                                                            </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6" id="income_household_other">
-                                                    <div class="mb-3">
-                                                        <label for="monthly_earn" class="form-label">Taja</label>
-                                                        <textarea class="form-control" name="income_household_other" rows="4" placeholder="Type other here...">
-                                                            <?php if ($economic['income_household_other']) {
-                                                                print_r($economic['income_household_other']);
-                                                            }  ?>
-                                                        </textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <label>Chanzo kikuu cha mapato cha mgonjwa?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -3969,15 +3963,10 @@ if ($user->isLoggedIn()) {
                                                                 <input class="form-check-input" type="radio" name="income_patient" id="income_patient96" value="96" <?php if ($economic['income_patient'] == 96) {
                                                                                                                                                                         echo 'checked';
                                                                                                                                                                     } ?>>
-                                                                <label class="form-check-label">Nyingine</label>
+                                                                <label class="form-check-label">Nyingine, Taja</label>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6" id="income_patient_other">
-                                                    <div class="mb-3">
-                                                        <label for="income_patient_other" class="form-label">Taja</label>
-                                                        <textarea class="form-control" name="income_patient_other" rows="2" placeholder="Type other here...">
+                                                        <textarea class="form-control" name="income_patient_other" id="income_patient_other" rows="2" placeholder="Type other here...">
                                                             <?php if ($economic['income_patient_other']) {
                                                                 print_r($economic['income_patient_other']);
                                                             }  ?>
@@ -3991,27 +3980,27 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="monthly_earn" class="form-label">Je, unaingiza shilingi ngapi kwa mwezi kutoka kwenye vyanzo vyako vyote vya fedha? ( TSHS )</label>
-                                                        <input type="number" value="<?php if ($economic['monthly_earn']) {
+                                                        <input type="text" value="<?php if ($economic['monthly_earn']) {
                                                                                         print_r($economic['monthly_earn']);
-                                                                                    } ?>" min="0" max="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
 
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="member_earn" class="form-label">Kwa mwezi, ni kiasi gani wanakaya wenzako wanaingiza kutoka kwenye vyanzo vyote vya fedha? (kwa ujumla)? </label>
-                                                        <input type="number" value="<?php if ($economic['member_earn']) {
+                                                        <input type="text" value="<?php if ($economic['member_earn']) {
                                                                                         print_r($economic['member_earn']);
-                                                                                    } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
 
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="transport" class="form-label">Ulilipa kiasi gani kwa ajili ya usafiri ulipoenda hospitali kwa ajili ya kufanyiwa uchunguzi wa saratani ya mapafu? </label>
-                                                        <input type="number" value="<?php if ($economic['transport']) {
+                                                        <input type="text" value="<?php if ($economic['transport']) {
                                                                                         print_r($economic['transport']);
-                                                                                    } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -4022,9 +4011,9 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="support_earn" class="form-label">Kama ulisindikizwa, alilipa fedha kiasi gani kwa ajili ya usafiri? </label>
-                                                        <input type="number" value="<?php if ($economic['support_earn']) {
+                                                        <input type="text" value="<?php if ($economic['support_earn']) {
                                                                                         print_r($economic['support_earn']);
-                                                                                    } ?>" min="0" max="100000000" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
 
@@ -4032,9 +4021,9 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="food_drinks" class="form-label">Ulilipa fedha kiasi gani kwa ajili ya chakula na vinywaji? </label>
-                                                        <input type="number" value="<?php if ($economic['food_drinks']) {
+                                                        <input type="text" value="<?php if ($economic['food_drinks']) {
                                                                                         print_r($economic['food_drinks']);
-                                                                                    } ?>" min="0" max="100000000" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
 
@@ -4042,9 +4031,9 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-4">
                                                     <div class="mb-3">
                                                         <label for="other_cost" class="form-label">Je, kuna gharama yoyote ambayo ulilipa tofauti na hizo ulizotaja hapo, kama ndio, ni shilingi ngapi? </label>
-                                                        <input type="number" value="<?php if ($economic['other_cost']) {
+                                                        <input type="text" value="<?php if ($economic['other_cost']) {
                                                                                         print_r($economic['other_cost']);
-                                                                                    } ?>" min="0" max="100000000" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -4063,17 +4052,17 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="days" class="form-label">Siku</label>
-                                                        <input type="number" value="<?php if ($economic['days']) {
+                                                        <input type="text" value="<?php if ($economic['days']) {
                                                                                         print_r($economic['days']);
-                                                                                    } ?>" min="0" max="100" id="days" name="days" class="form-control" placeholder="Enter days" required />
+                                                                                    } ?>" min="0" max="100" id="days" name="days" class="form-control" placeholder="Enter days" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="hours" class="form-label">Masaa</label>
-                                                        <input type="number" value="<?php if ($economic['hours']) {
+                                                        <input type="text" value="<?php if ($economic['hours']) {
                                                                                         print_r($economic['hours']);
-                                                                                    } ?>" min="0" max="100" id="hours" name="hours" class="form-control" placeholder="Enter hours" required />
+                                                                                    } ?>" min="0" max="100" id="hours" name="hours" class="form-control" placeholder="Enter hours" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -4091,34 +4080,34 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="registration" class="form-label">Usajili ( TSHS )</label>
-                                                        <input type="number" value="<?php if ($economic['registration']) {
+                                                        <input type="text" value="<?php if ($economic['registration']) {
                                                                                         print_r($economic['registration']);
-                                                                                    } ?>" min="0" max="100000000" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="consultation" class="form-label">Kumuona daktari (Consultation)_ ( TSHS )</label>
-                                                        <input type="number" value="<?php if ($economic['consultation']) {
+                                                        <input type="text" value="<?php if ($economic['consultation']) {
                                                                                         print_r($economic['consultation']);
-                                                                                    } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
-                                                        <input type="number" value="<?php if ($economic['diagnostic']) {
+                                                        <input type="text" value="<?php if ($economic['diagnostic']) {
                                                                                         print_r($economic['diagnostic']);
-                                                                                    } ?>" min="0" max="100000000" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="medications" class="form-label">Dawa (Medications) ( TSHS )</label>
-                                                        <input type="number" value="<?php if ($economic['medications']) {
+                                                        <input type="text" value="<?php if ($economic['medications']) {
                                                                                         print_r($economic['medications']);
-                                                                                    } ?>" min="0" max="100000000" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -4128,9 +4117,9 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="other_medical_cost" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
-                                                        <input type="number" value="<?php if ($economic['other_medical_cost']) {
+                                                        <input type="text" value="<?php if ($economic['other_medical_cost']) {
                                                                                         print_r($economic['other_medical_cost']);
-                                                                                    } ?>" min="0" max="100000000" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" required />
+                                                                                    } ?>" min="0" max="100000000" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -4485,8 +4474,21 @@ if ($user->isLoggedIn()) {
 
 
 
-
-
+    <!-- economics format numbers Js -->
+    <script src="myjs/add/economics/format_thousands/consultation.js"></script>
+    <script src="myjs/add/economics/format_thousands/days.js"></script>
+    <script src="myjs/add/economics/format_thousands/diagnostic.js"></script>
+    <script src="myjs/add/economics/format_thousands/food_drinks.js"></script>
+    <script src="myjs/add/economics/format_thousands/hours.js"></script>
+    <script src="myjs/add/economics/format_thousands/medications.js"></script>
+    <script src="myjs/add/economics/format_thousands/member_earn.js"></script>
+    <script src="myjs/add/economics/format_thousands/monthly_earn.js"></script>
+    <script src="myjs/add/economics/format_thousands/other_cost.js"></script>
+    <script src="myjs/add/economics/format_thousands/other_medical_cost.js"></script>
+    <script src="myjs/add/economics/format_thousands/registration.js"></script>
+    <script src="myjs/add/economics/format_thousands/registration.js"></script>
+    <script src="myjs/add/economics/format_thousands/support_earn.js"></script>
+    <script src="myjs/add/economics/format_thousands/transport.js"></script>
 
     <script>
         $(function() {
