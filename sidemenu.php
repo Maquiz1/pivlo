@@ -30,6 +30,13 @@ if ($user->isLoggedIn()) {
     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
         if ($_GET['site_id'] != null) {
             $kap = $override->getCount1('kap', 'status', 1, 'site_id', $_GET['site_id']);
+            $histroy = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
+            $kap = $override->getCount1('results', 'status', 1, 'site_id', $_GET['site_id']);
+            $classification = $override->getCount1('classification', 'status', 1, 'site_id', $_GET['site_id']);
+            $outcome = $override->getCount1('outcome', 'status', 1, 'site_id', $_GET['site_id']);
+            $economic = $override->getCount1('economic', 'status', 1, 'site_id', $_GET['site_id']);
+            $visit = $override->getCount1('visit', 'status', 1, 'site_id', $_GET['site_id']);
+
             $registered = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
             $screened = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
             $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
@@ -37,6 +44,13 @@ if ($user->isLoggedIn()) {
             $end = $override->getCount1('clients', 'status', 0, 'site_id', $_GET['site_id']);
         } else {
             $kap = $override->getCount('kap', 'status', 1);
+            $history = $override->getCount('history', 'status', 1);
+            $kap = $override->getCount('results', 'status', 1);
+            $classification = $override->getCount('classification', 'status', 1);
+            $outcome = $override->getCount('outcome', 'status', 1);
+            $economic = $override->getCount('economic', 'status', 1);
+            $visit = $override->getCount('visit', 'status', 1);
+
             $registered = $override->getCount('clients', 'status', 1);
             $screened = $override->getCount('history', 'status', 1);
             $eligible = $override->getCount('history', 'eligible', 1);
@@ -45,6 +59,13 @@ if ($user->isLoggedIn()) {
         }
     } else {
         $kap = $override->getCount1('kap', 'status', 1, 'site_id', $user->data()->site_id);
+        $histroy = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
+        $kap = $override->getCount1('results', 'status', 1, 'site_id', $user->data()->site_id);
+        $classification = $override->getCount1('classification', 'status', 1, 'site_id', $user->data()->site_id);
+        $outcome = $override->getCount1('outcome', 'status', 1, 'site_id', $user->data()->site_id);
+        $economic = $override->getCount1('economic', 'status', 1, 'site_id', $user->data()->site_id);
+        $visit = $override->getCount1('visit', 'status', 1, 'site_id', $user->data()->site_id);
+
         $registered = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
         $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
         $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
@@ -215,50 +236,57 @@ if ($user->isLoggedIn()) {
                             <li class="nav-item">
                                 <a href="info.php?id=5&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of CLients</p>
+                                    <span class="badge badge-info right"><?= $registered; ?></span>
+                                    <p>CLients</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=6&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <span class="badge badge-info right"><?= $kap; ?></span>
-                                    <p>List of KAP</p>
+                                    <p>Kap</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=7&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of History</p>
+                                    <span class="badge badge-info right"><?= $history; ?></span>
+                                    <p>History</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=8&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of Results</p>
+                                    <span class="badge badge-info right"><?= $results; ?></span>
+                                    <p>Results</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=9&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of Classification</p>
+                                    <span class="badge badge-info right"><?= $classification; ?></span>
+                                    <p>Classification</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=10&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of Outcome</p>
+                                    <span class="badge badge-info right"><?= $outcome; ?></span>
+                                    <p>Outcome</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=11&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of Economics</p>
+                                    <span class="badge badge-info right"><?= $economic; ?></span>
+                                    <p>Economics</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=12&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List of Visits</p>
+                                    <span class="badge badge-info right"><?= $visit; ?></span>
+                                    <p>Visits</p>
                                 </a>
                             </li>
                         </ul>
