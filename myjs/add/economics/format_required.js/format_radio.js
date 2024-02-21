@@ -1,23 +1,24 @@
-const form = document.getElementById("myForm");
+const economic_form = document.getElementById("economic");
 
-form.addEventListener("submit", function (event) {
-  const questions = ["income_household", "income_patient"];
-    //   const questions = ["question1", "question2", "question3"];
-    
+economic_form.addEventListener("submit", function (event) {
+  const economic_questions = ["income_household", "income_patient"];
+
   let isValid = true;
 
-  questions.forEach(function (question) {
-    const radios = document.querySelectorAll('input[name="' + question + '"]');
+  economic_questions.forEach(function (question) {
+    const economic_radios = document.querySelectorAll(
+      'input[name="' + economic_questions + '"]'
+    );
     let checked = false;
-    for (let i = 0; i < radios.length; i++) {
-      if (radios[i].checked) {
+    for (let i = 0; i < economic_radios.length; i++) {
+      if (economic_radios[i].checked) {
         checked = true;
         break;
       }
     }
     if (!checked) {
       isValid = false;
-      alert("Please select an option for " + question + ".");
+      alert("Please select an option for " + economic_questions + ".");
     }
   });
 

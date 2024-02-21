@@ -4406,6 +4406,10 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/economics/patient.js"></script>
 
 
+    <!-- economics radio requireds Js -->
+    <script src="myjs/add/economics/format_required.js/format_radio.js"></script>
+
+
 
     <!-- economics format numbers Js -->
     <script src="myjs/add/economics/format_thousands/consultation.js"></script>
@@ -4422,6 +4426,10 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/economics/format_thousands/registration.js"></script>
     <script src="myjs/add/economics/format_thousands/support_earn.js"></script>
     <script src="myjs/add/economics/format_thousands/transport.js"></script>
+
+
+
+
 
     <script>
         $(function() {
