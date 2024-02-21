@@ -6,8 +6,6 @@ const matibabu_saratani = document.getElementById("matibabu_saratani");
 function toggleElementVisibility() {
   if (saratani_inatibika1.checked) {
     matibabu_saratani.style.display = "block";
-  } else if (saratani_inatibika2.checked) {
-    matibabu_saratani.style.display = "block";
   } else {
     matibabu_saratani.style.display = "none";
   }

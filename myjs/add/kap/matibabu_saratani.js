@@ -6,8 +6,6 @@ const matibabu1 = document.getElementById("matibabu1");
 function toggleElementVisibility() {
   if (matibabu_saratani1.checked) {
     matibabu1.style.display = "block";
-  } else if (matibabu_saratani2.checked) {
-    matibabu1.style.display = "block";
   } else {
     matibabu1.style.display = "none";
   }

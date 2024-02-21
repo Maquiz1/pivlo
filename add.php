@@ -2365,50 +2365,52 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <hr>
-                                            <div class="col-sm-4">
-                                                <label>7. Je, ugonjwa wa saratani ya mapafu unatibika ?</label>
-                                                <!-- radio -->
-                                                <div class="row-form clearfix">
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika1" value="1" <?php if ($kap['saratani_inatibika'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Yes</label>
-                                                        </div>
+                                            <div class="row">
 
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika2" value="2" <?php if ($kap['saratani_inatibika'] == 2) {
+                                                <div class="col-sm-6">
+                                                    <label>7. Je, ugonjwa wa saratani ya mapafu unatibika ?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika1" value="1" <?php if ($kap['saratani_inatibika'] == 1) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Yes</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika2" value="2" <?php if ($kap['saratani_inatibika'] == 2) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6" id="matibabu_saratani">
+                                                    <label>8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani1" value="1" <?php if ($kap['matibabu_saratani'] == 1) {
                                                                                                                                                                             echo 'checked';
                                                                                                                                                                         } ?>>
-                                                            <label class="form-check-label">No</label>
+                                                                <label class="form-check-label">Yes</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani2" value="2" <?php if ($kap['matibabu_saratani'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">No</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-sm-4" id="matibabu_saratani">
-                                                <label>8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
-                                                <!-- radio -->
-                                                <div class="row-form clearfix">
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani1" value="1" <?php if ($kap['matibabu_saratani'] == 1) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Yes</label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani2" value="2" <?php if ($kap['matibabu_saratani'] == 2) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">No</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                             <hr>
                                             <div class="row" id="matibabu1">
                                                 <div class="col-6">
@@ -2482,16 +2484,18 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6" id="matibabu_other">
+                                                <div class="col-4" id="matibabu_other">
                                                     <div class="mb-3">
                                                         <label for="matibabu_other" class="form-label">9. Taja ?</label>
-                                                        <textarea class="form-control" name="matibabu_other" rows="3" placeholder="Type other here..."><?php if ($kap['matibabu_other']) {
-                                                                                                                                                            print_r($kap['matibabu_other']);
-                                                                                                                                                        }  ?>
-                                                                </textarea>
+                                                        <textarea class="form-control" name="matibabu_other" rows="3" placeholder="Type other here...">
+                                                            <?php if ($kap['matibabu_other']) {
+                                                                print_r($kap['matibabu_other']);
+                                                            }  ?>
+                                                        </textarea>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <hr>
 
                                             <div class="card card-warning">
@@ -2532,8 +2536,6 @@ if ($user->isLoggedIn()) {
                                             <hr>
 
                                             <div class="row">
-
-
                                                 <div class="col-6">
                                                     <div class="mb-3">
                                                         <label for="uchunguzi_maana" class="form-label">2. Nini maana ya uchunguzi wa saratani ya mapafu?</label>
@@ -3117,51 +3119,73 @@ if ($user->isLoggedIn()) {
                                             <hr>
 
                                             <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="wapi_matibabu" class="form-label">8. Je katika jamii yako, watu wakiumwa, huwa wanapendelea kwenda wapi kupata matibabu ?</label>
-                                                        <select name="wapi_matibabu" id="wapi_matibabu" class="form-control" required>
-                                                            <option value="<?= $kap['wapi_matibabu'] ?>"><?php if ($kap['wapi_matibabu']) {
-                                                                                                                if ($kap['wapi_matibabu'] == 1) {
-                                                                                                                    echo 'Kituo cha afya kilichopo karibu.';
-                                                                                                                } elseif ($kap['wapi_matibabu'] == 2) {
-                                                                                                                    echo 'Mganga wa jadi.';
-                                                                                                                } elseif ($kap['wapi_matibabu'] == 3) {
-                                                                                                                    echo 'Kanisani/msikitini.';
-                                                                                                                } elseif ($kap['wapi_matibabu'] == 4) {
-                                                                                                                    echo 'Duka la Dawa.';
-                                                                                                                } elseif ($kap['wapi_matibabu'] == 5) {
-                                                                                                                    echo 'Kituo cha tiba asili.';
-                                                                                                                } elseif ($kap['wapi_matibabu'] == 6) {
-                                                                                                                    echo 'Wanajitibu wenyewe.';
-                                                                                                                } elseif ($kap['wapi_matibabu'] == 99) {
-                                                                                                                    echo 'Sijui';
-                                                                                                                } elseif ($kap['wapi_matibabu'] == 96) {
-                                                                                                                    echo 'Nyinginezo';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Kituo cha afya kilichopo karibu.</option>
-                                                            <option value="2">Mganga wa jadi.</option>
-                                                            <option value="3">Kanisani/msikitini.</option>
-                                                            <option value="4">Duka la Dawa.</option>
-                                                            <option value="5">Kituo cha tiba asili.</option>
-                                                            <option value="6">Wanajitibu wenyewe.</option>
-                                                            <option value="99">Sijui</option>
-                                                            <option value="96">Nyinginezo</option>
-                                                        </select>
+
+                                                <div class="col-sm-4" id="matibabu_saratani">
+                                                    <label>8. Je katika jamii yako, watu wakiumwa, huwa wanapendelea kwenda wapi kupata matibabu ?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu1" value="1" <?php if ($kap['wapi_matibabu'] == 1) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Kituo cha afya kilichopo karibu</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu2" value="2" <?php if ($kap['wapi_matibabu'] == 2) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Mganga wa jadi</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu3" value="3" <?php if ($kap['wapi_matibabu'] == 3) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Kanisani/msikitini</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu4" value="4" <?php if ($kap['wapi_matibabu'] == 4) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Duka la Dawa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu5" value="5" <?php if ($kap['wapi_matibabu'] == 5) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Kituo cha tiba asili</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu6" value="6" <?php if ($kap['wapi_matibabu'] == 6) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Wanajitibu wenyewe</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu99" value="99" <?php if ($kap['wapi_matibabu'] == 99) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Sijui</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu96" value="96" <?php if ($kap['wapi_matibabu'] == 96) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Nyinginezo</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-6" id="wapi_matibabu_other">
                                                     <div class="mb-3">
                                                         <label for="wapi_matibabu_other" class="form-label">8. Taja ?</label>
-                                                        <textarea class="form-control" name="wapi_matibabu_other" rows="2" placeholder="Type other here..."><?php if ($kap['wapi_matibabu_other']) {
-                                                                                                                                                                print_r($kap['wapi_matibabu_other']);
-                                                                                                                                                            }  ?>
-                                                                </textarea>
+                                                        <textarea class="form-control" name="wapi_matibabu_other" rows="4" placeholder="Type other here...">
+                                                            <?php if ($kap['wapi_matibabu_other']) {
+                                                                print_r($kap['wapi_matibabu_other']);
+                                                            }  ?>
+                                                        </textarea>
                                                     </div>
                                                 </div>
                                             </div>
