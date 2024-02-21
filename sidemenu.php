@@ -29,13 +29,14 @@ if ($user->isLoggedIn()) {
 
     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
         if ($_GET['site_id'] != null) {
-            $kap = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
+            $kap = $override->getCount1('kap', 'status', 1, 'site_id', $_GET['site_id']);
             $registered = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
             $screened = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
             $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
             $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
             $end = $override->getCount1('clients', 'status', 0, 'site_id', $_GET['site_id']);
         } else {
+            $kap = $override->getCount('kap', 'status', 1);
             $registered = $override->getCount('clients', 'status', 1);
             $screened = $override->getCount('history', 'status', 1);
             $eligible = $override->getCount('history', 'eligible', 1);
@@ -43,7 +44,8 @@ if ($user->isLoggedIn()) {
             $end = $override->getCount('clients', 'status', 0);
         }
     } else {
-        $registered = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
+        $kap = $override->getCount1('kap', 'status', 1, 'site_id', $user->data()->site_id);
+        $registered = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
         $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
         $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
         $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
@@ -219,6 +221,7 @@ if ($user->isLoggedIn()) {
                             <li class="nav-item">
                                 <a href="info.php?id=6&status=16" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right"><?= $kap; ?></span>
                                     <p>List of KAP</p>
                                 </a>
                             </li>
