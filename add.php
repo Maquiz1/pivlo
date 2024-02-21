@@ -12,34 +12,58 @@ $errorMessage = null;
 if ($user->isLoggedIn()) {
     if (Input::exists('post')) {
         if (Input::get('add_user')) {
+            $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id']);
+
             $validate = new validate();
-            $validate = $validate->check($_POST, array(
-                'firstname' => array(
-                    'required' => true,
-                ),
-                'lastname' => array(
-                    'required' => true,
-                ),
-                'position' => array(
-                    'required' => true,
-                ),
-                'site_id' => array(
-                    'required' => true,
-                ),
-                // 'username' => array(
-                //     'required' => true,
-                //     'unique' => 'user'
-                // ),
-                // 'phone_number' => array(
-                //     'required' => true,
-                //     'unique' => 'user'
-                // ),
-                // 'email_address' => array(
-                //     'unique' => 'user'
-                // ),
-            ));
+            if ($staff) {
+                $validate = $validate->check($_POST, array(
+                    'firstname' => array(
+                        'required' => true,
+                    ),
+                    'middlename' => array(
+                        'required' => true,
+                    ),
+                    'lastname' => array(
+                        'required' => true,
+                    ),
+                    'position' => array(
+                        'required' => true,
+                    ),
+                    'site_id' => array(
+                        'required' => true,
+                    ),
+                ));
+            } else {
+                $validate = $validate->check($_POST, array(
+                    'firstname' => array(
+                        'required' => true,
+                    ),
+                    'middlename' => array(
+                        'required' => true,
+                    ),
+                    'lastname' => array(
+                        'required' => true,
+                    ),
+                    'position' => array(
+                        'required' => true,
+                    ),
+                    'site_id' => array(
+                        'required' => true,
+                    ),
+                    'username' => array(
+                        'required' => true,
+                        'unique' => 'user'
+                    ),
+                    'phone_number' => array(
+                        'required' => true,
+                        'unique' => 'user'
+                    ),
+                    'email_address' => array(
+                        'unique' => 'user'
+                    ),
+                ));
+            }
             if ($validate->passed()) {
-                print_r($_POST);
                 $salt = $random->get_rand_alphanumeric(32);
                 $password = '12345678';
                 switch (Input::get('position')) {
@@ -47,10 +71,10 @@ if ($user->isLoggedIn()) {
                         $accessLevel = 1;
                         break;
                     case 2:
-                        $accessLevel = 2;
+                        $accessLevel = 1;
                         break;
                     case 3:
-                        $accessLevel = 3;
+                        $accessLevel = 2;
                         break;
                     case 4:
                         $accessLevel = 3;
@@ -108,7 +132,7 @@ if ($user->isLoggedIn()) {
                         $successMessage = 'Account Created Successful';
                     }
 
-                    Redirect::to('info.php?id=1');
+                    Redirect::to('info.php?id=1&status=1');
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
