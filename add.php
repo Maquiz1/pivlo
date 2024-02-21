@@ -2040,7 +2040,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-9">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="saratani_mapafu" class="form-label">1. Je, unaweza kuniambia nini maana ya ugonjwa wa Saratani ya mapafu? </label>
                                                         <select name="saratani_mapafu" id="saratani_mapafu" class="form-control" required>
@@ -2068,11 +2068,8 @@ if ($user->isLoggedIn()) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-12">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="uhusiano_saratani" class="form-label">2. Je, kuna uhusiano kati ya saratani ya mapafu na maambukizi ya Virusi vya UKIMWI? </label>
                                                         <select name="uhusiano_saratani" id="uhusiano_saratani" class="form-control" required>
@@ -2095,7 +2092,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-12">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="kusambazwa_saratani" class="form-label">3. Je, saratani ya mapafu inaweza kusambazwa kutoka kwa mtu mmoja kwenda kwa mtu mwingine? </label>
                                                         <select name="kusambazwa_saratani" id="kusambazwa_saratani" class="form-control" required>
@@ -3185,25 +3182,17 @@ if ($user->isLoggedIn()) {
                                                                                                                                                                     } ?>>
                                                                 <label class="form-check-label">Nyinginezo</label>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6" id="wapi_matibabu_other">
-                                                    <div class="mb-3">
-                                                        <label for="wapi_matibabu_other" class="form-label">8. Taja ?</label>
-                                                        <textarea class="form-control" name="wapi_matibabu_other" rows="4" placeholder="Type other here...">
+                                                            <textarea class="form-control" name="wapi_matibabu_other" id="wapi_matibabu_other" rows="2" placeholder="Type other here...">
                                                             <?php if ($kap['wapi_matibabu_other']) {
                                                                 print_r($kap['wapi_matibabu_other']);
                                                             }  ?>
                                                         </textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-12">
+
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <label for="saratani_ushauri" class="form-label">9. Je! Wewe/watu katika jamii huwa wanakwenda kwenye vituo vya kutolea huduma za Afya kwa ajili ya ushauri kuhusu uchunguzi wa ugonjwa wa Saratani ya Mapafu?</label>
                                                         <select name="saratani_ushauri" id="saratani_ushauri" class="form-control" required>
@@ -3225,12 +3214,9 @@ if ($user->isLoggedIn()) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <hr>
-                                            <div class="row">
 
-                                                <div class="col-12">
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <label for="saratani_ujumbe" class="form-label">10. Katika mwezi uliopita umesikia ujumbe wa afya kuhusu maswala ya uchunguzi wa awali wa Saratani ya mapafu?</label>
                                                         <select name="saratani_ujumbe" id="saratani_ujumbe" class="form-control" required>
