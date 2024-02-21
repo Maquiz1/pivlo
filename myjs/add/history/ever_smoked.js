@@ -6,8 +6,6 @@ const ever_smoked = document.getElementById("ever_smoked");
 function toggleElementVisibility() {
   if (ever_smoked1.checked) {
     ever_smoked.style.display = "block";
-  } else if (ever_smoked2.checked) {
-    ever_smoked.style.display = "block";
   } else {
     ever_smoked.style.display = "none";
   }

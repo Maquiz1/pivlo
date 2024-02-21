@@ -444,7 +444,7 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid']);
                 $date1 = Input::get('start_smoking');
-                $packs = Input::get('packs_per_day');
+                $packs = Input::get('packs_cigarette_day');
                 $eligible = 0;
 
                 if (Input::get('ever_smoked') == 1) {
@@ -491,8 +491,8 @@ if ($user->isLoggedIn()) {
                         'type_smoked' => Input::get('type_smoked'),
                         'currently_smoking' => Input::get('currently_smoking'),
                         'quit_smoking' => Input::get('quit_smoking'),
-                        'packs_per_day' => Input::get('packs_per_day'),
-                        'packs_per_year' => $packs_year,
+                        'packs_cigarette_day' => Input::get('packs_cigarette_day'),
+                        'pack_year' => $packs_year,
                         'eligible' => $eligible,
                         'status' => 1,
                         'patient_id' => $_GET['cid'],
@@ -527,8 +527,8 @@ if ($user->isLoggedIn()) {
                         'type_smoked' => Input::get('type_smoked'),
                         'currently_smoking' => Input::get('currently_smoking'),
                         'quit_smoking' => Input::get('quit_smoking'),
-                        'packs_per_day' => Input::get('packs_per_day'),
-                        'packs_per_year' => $packs_year,
+                        'packs_cigarette_day' => Input::get('packs_cigarette_day'),
+                        'pack_year' => $packs_year,
                         'eligible' => $eligible,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
@@ -3428,7 +3428,7 @@ if ($user->isLoggedIn()) {
 
 
                                             <hr>
-                                            <div id="ever_smoked3">
+                                            <div id="ever_smoked">
                                                 <div class="row">
                                                     <div class="col-4">
                                                         <div class="mb-2">
@@ -3475,7 +3475,7 @@ if ($user->isLoggedIn()) {
 
 
                                                 <div class="row">
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-4">
                                                         <label>Amount smoked per day in cigarette sticks/packs?</label>
                                                         <!-- radio -->
                                                         <div class="row-form clearfix">
@@ -3496,39 +3496,34 @@ if ($user->isLoggedIn()) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-3">
+
+                                                    <div class="col-4">
                                                         <div class="mb-3">
-                                                            <label for="packs_per_day" id="packs_per_day" class="form-label">
-                                                                Number of packs per day
-                                                            </label>
-                                                            <label for="cigarette_per_day" id="cigarette_per_day" class="form-label">
-                                                                Number of Cigarette per day
-                                                            </label>
-                                                            <input type="number" value="<?php if ($history['packs_per_day']) {
-                                                                                            print_r($history['packs_per_day']);
-                                                                                        } ?>" min="0" name="packs_per_day" class="form-control" placeholder="Enter amount" />
+                                                            <label for="packs_per_day" id="packs_per_day" class="form-label">Number of packs per day</label>
+                                                            <label for="cigarette_per_day" id="cigarette_per_day" class="form-label">Number of Cigarette per day</label>
+                                                            <input type="number" value="<?php if ($history['packs_cigarette_day']) {
+                                                                                            print_r($history['packs_cigarette_day']);
+                                                                                        } ?>" min="0" name="packs_cigarette_day" class="form-control" placeholder="Enter amount" />
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-3">
+                                                    <div class="col-4">
                                                         <div class="mb-3">
-                                                            <label for="packs_per_year" class="form-label">Number of Pack year</label>
-                                                            <input type="number" value="<?php if ($history['packs_per_year']) {
-                                                                                            print_r($history['packs_per_year']);
-                                                                                        } ?>" min="0" name="packs_per_year" class="form-control" readonly />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3">&nbsp;&nbsp;
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Eligible ?</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <?php if ($history['eligible']) { ?>
-                                                                <a class="btn btn-success">Yes</a>
-                                                            <?php } else { ?>
-                                                                <a class="btn btn-warning">No</a>
-                                                            <?php } ?>
+                                                            <label for="pack_year" class="form-label">Number of Pack year</label>
+                                                            <input type="number" value="<?php if ($history['pack_year']) {
+                                                                                            print_r($history['pack_year']);
+                                                                                        } ?>" min="0" name="pack_year" class="form-control" readonly />
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                Eligible ?
+                                                <?php if ($history['eligible']) { ?>
+                                                    <a class="btn btn-success">Yes</a>
+                                                <?php } else { ?>
+                                                    <a class="btn btn-warning">No</a>
+                                                <?php } ?>
+
                                             </div>
                                             <hr>
 
