@@ -29,6 +29,7 @@ if ($user->isLoggedIn()) {
 
     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
         if ($_GET['site_id'] != null) {
+            $kap = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
             $registered = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
             $screened = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
             $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
