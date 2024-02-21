@@ -151,110 +151,110 @@ if ($user->isLoggedIn()) {
 
 
         if ($_GET['status'] == 16) {
-        $data = null;
-        $filename = null;
-        if (Input::get('download_clients')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('clients', 'status', 1, 'site_id', $_GET['site_id']);
+            $data = null;
+            $filename = null;
+            if (Input::get('download_clients')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('clients', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('clients', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('clients', 'status', 1);
+                    $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('clients', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Clients Data';
-        } elseif (Input::get('download_kap')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Clients Data';
+            } elseif (Input::get('download_kap')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('kap', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('kap', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('kap', 'status', 1);
+                    $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('kap', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Kap Data';
-        } elseif (Input::get('download_history')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('history', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Kap Data';
+            } elseif (Input::get('download_history')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('history', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('history', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('history', 'status', 1);
+                    $data = $override->getNews('history', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('history', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Kap history';
-        } elseif (Input::get('download_results')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('results', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Kap history';
+            } elseif (Input::get('download_results')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('results', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('results', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('results', 'status', 1);
+                    $data = $override->getNews('results', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('results', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Results Data';
-        } elseif (Input::get('download_classification')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('classification', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Results Data';
+            } elseif (Input::get('download_classification')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('classification', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('classification', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('classification', 'status', 1);
+                    $data = $override->getNews('classification', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('classification', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Classification Data';
-        } elseif (Input::get('download_outcome')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('outcome', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Classification Data';
+            } elseif (Input::get('download_outcome')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('outcome', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('outcome', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('outcome', 'status', 1);
+                    $data = $override->getNews('outcome', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('outcome', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Outcome Data';
-        } elseif (Input::get('download_economic')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('economic', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Outcome Data';
+            } elseif (Input::get('download_economic')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('economic', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('economic', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('economic', 'status', 1);
+                    $data = $override->getNews('economic', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('economic', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Economic Data';
-        } elseif (Input::get('download_visit')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('visit', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Economic Data';
+            } elseif (Input::get('download_visit')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('visit', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('visit', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('visit', 'status', 1);
+                    $data = $override->getNews('visit', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('visit', 'status', 1, 'site_id', $user->data()->site_id);
-            }
-            $filename = 'Visits Data';
-        } elseif (Input::get('download_study_id')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                if ($_GET['site_id'] != null) {
-                    $data = $override->getNews('study_id', 'status', 1, 'site_id', $_GET['site_id']);
+                $filename = 'Visits Data';
+            } elseif (Input::get('download_study_id')) {
+                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                    if ($_GET['site_id'] != null) {
+                        $data = $override->getNews('study_id', 'status', 1, 'site_id', $_GET['site_id']);
+                    } else {
+                        $data = $override->get('study_id', 'status', 1);
+                    }
                 } else {
-                    $data = $override->get('study_id', 'status', 1);
+                    $data = $override->getNews('study_id', 'status', 1, 'site_id', $user->data()->site_id);
                 }
-            } else {
-                $data = $override->getNews('study_id', 'status', 1, 'site_id', $user->data()->site_id);
+                $filename = 'Study Id Data';
             }
-            $filename = 'Study Id Data';
-        }
 
-        $user->exportData($data, $filename);
+            $user->exportData($data, $filename);
         }
     }
 
@@ -759,22 +759,28 @@ if ($user->isLoggedIn()) {
                                                     <div class="card-header">
                                                         <?php
                                                         if ($_GET['status'] == 1) { ?>
-                                                            <h3 class="card-title">List of Screened Clients</h3>
+                                                            <h3 class="card-title">List of Screened Clients</h3> &nbsp;&nbsp;
+                                                            <span class="badge badge-info right"><?= $screened; ?></span>
                                                         <?php
                                                         } elseif ($_GET['status'] == 2) { ?>
-                                                            <h3 class="card-title">List of Eligible Clients</h3>
+                                                            <h3 class="card-title">List of Eligible Clients</h3> &nbsp;&nbsp;
+                                                            <span class="badge badge-info right"><?= $eligible; ?></span>
                                                         <?php
                                                         } elseif ($_GET['status'] == 3) { ?>
-                                                            <h3 class="card-title">List of Enrolled Clients</h3>
+                                                            <h3 class="card-title">List of Enrolled Clients</h3> &nbsp;&nbsp;
+                                                            <span class="badge badge-info right"><?= $enrolled; ?></span>
                                                         <?php
                                                         } elseif ($_GET['status'] == 4) { ?>
-                                                            <h3 class="card-title">List of Terminated Clients</h3>
+                                                            <h3 class="card-title">List of Terminated Clients</h3> &nbsp;&nbsp;
+                                                            <span class="badge badge-info right"><?= $end; ?></span>
                                                         <?php
                                                         } elseif ($_GET['status'] == 5) { ?>
-                                                            <h3 class="card-title">List of Registered Clients</h3>
+                                                            <h3 class="card-title">List of Registered Clients</h3> &nbsp;&nbsp;
+                                                            <span class="badge badge-info right"><?= $registered; ?></span>
                                                         <?php
                                                         } elseif ($_GET['status'] == 7) { ?>
-                                                            <h3 class="card-title">List of Registered Clients</h3>
+                                                            <h3 class="card-title">List of Registered Clients</h3> &nbsp;&nbsp;
+                                                            <span class="badge badge-info right"><?= $registered; ?></span>
                                                         <?php } ?>
                                                     </div>
                                                 </div>
@@ -1333,7 +1339,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Clients</h3>
+                                                        <h3 class="card-title">List of Clients</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $clients; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1529,7 +1536,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of kap</h3>
+                                                        <h3 class="card-title">List of kap</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $kap; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1694,7 +1702,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of history</h3>
+                                                        <h3 class="card-title">List of history</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $history; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1860,7 +1869,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of results</h3>
+                                                        <h3 class="card-title">List of results</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $results; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2026,7 +2036,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of classification</h3>
+                                                        <h3 class="card-title">List of classification</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $classification; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2192,7 +2203,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of Outcomes</h3>
+                                                        <h3 class="card-title">List of Outcomes</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $outcome; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2333,7 +2345,7 @@ if ($user->isLoggedIn()) {
                                     } else {
                                         $clients = $override->getDataDesc2('economic', 'status', 1, 'site_id', $user->data()->site_id,  'id');
                                     }
-                                     ?>
+                                    ?>
                                     eonomic
                                 </h1>
                             </div>
@@ -2358,7 +2370,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of eonomic</h3>
+                                                        <h3 class="card-title">List of eonomic</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $economic; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -2523,7 +2536,8 @@ if ($user->isLoggedIn()) {
                                             <div class="row mb-2">
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">List of visit</h3>
+                                                        <h3 class="card-title">List of Visits</h3>&nbsp;&nbsp;
+                                                        <span class="badge badge-info right"><?= $visit; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
