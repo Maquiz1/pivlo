@@ -1340,7 +1340,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-sm-3">
                                                     <div class="card-header">
                                                         <h3 class="card-title">List of Clients</h3>&nbsp;&nbsp;
-                                                        <span class="badge badge-info right"><?= $clients; ?></span>
+                                                        <span class="badge badge-info right"><?= $registered; ?></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -1364,7 +1364,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1381,7 +1381,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_clients" value="Download Clients" class="btn btn-info">
+                                                                            <input type="submit" name="download_clients" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1561,7 +1561,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1578,7 +1578,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_kap" value="Download Kap" class="btn btn-info">
+                                                                            <input type="submit" name="download_kap" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1727,7 +1727,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1744,7 +1744,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_history" value="Download History" class="btn btn-info">
+                                                                            <input type="submit" name="download_history" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1894,7 +1894,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1911,7 +1911,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_results" value="Download Results" class="btn btn-info">
+                                                                            <input type="submit" name="download_results" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2061,7 +2061,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2078,7 +2078,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_classifiaction" value="Download Classification" class="btn btn-info">
+                                                                            <input type="submit" name="download_classifiaction" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2228,7 +2228,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2245,7 +2245,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_outcome" value="Download Outcomes" class="btn btn-info">
+                                                                            <input type="submit" name="download_outcome" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2395,7 +2395,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2412,7 +2412,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_economic" value="Download Economic" class="btn btn-info">
+                                                                            <input type="submit" name="download_economic" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2561,7 +2561,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="search_by_site" value="Search by Site" class="btn btn-primary">
+                                                                            <input type="submit" name="search_by_site" value="Search" class="btn btn-primary">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2578,7 +2578,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="col-sm-6">
                                                                     <div class="row-form clearfix">
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="download_visit" value="Download Visits" class="btn btn-info">
+                                                                            <input type="submit" name="download_visit" value="Download" class="btn btn-info">
                                                                         </div>
                                                                     </div>
                                                                 </div>

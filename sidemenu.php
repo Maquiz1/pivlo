@@ -31,7 +31,7 @@ if ($user->isLoggedIn()) {
         if ($_GET['site_id'] != null) {
             $kap = $override->getCount1('kap', 'status', 1, 'site_id', $_GET['site_id']);
             $histroy = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
-            $kap = $override->getCount1('results', 'status', 1, 'site_id', $_GET['site_id']);
+            $results = $override->getCount1('results', 'status', 1, 'site_id', $_GET['site_id']);
             $classification = $override->getCount1('classification', 'status', 1, 'site_id', $_GET['site_id']);
             $outcome = $override->getCount1('outcome', 'status', 1, 'site_id', $_GET['site_id']);
             $economic = $override->getCount1('economic', 'status', 1, 'site_id', $_GET['site_id']);
@@ -45,7 +45,7 @@ if ($user->isLoggedIn()) {
         } else {
             $kap = $override->getCount('kap', 'status', 1);
             $history = $override->getCount('history', 'status', 1);
-            $kap = $override->getCount('results', 'status', 1);
+            $results = $override->getCount('results', 'status', 1);
             $classification = $override->getCount('classification', 'status', 1);
             $outcome = $override->getCount('outcome', 'status', 1);
             $economic = $override->getCount('economic', 'status', 1);
@@ -60,7 +60,7 @@ if ($user->isLoggedIn()) {
     } else {
         $kap = $override->getCount1('kap', 'status', 1, 'site_id', $user->data()->site_id);
         $histroy = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
-        $kap = $override->getCount1('results', 'status', 1, 'site_id', $user->data()->site_id);
+        $results = $override->getCount1('results', 'status', 1, 'site_id', $user->data()->site_id);
         $classification = $override->getCount1('classification', 'status', 1, 'site_id', $user->data()->site_id);
         $outcome = $override->getCount1('outcome', 'status', 1, 'site_id', $user->data()->site_id);
         $economic = $override->getCount1('economic', 'status', 1, 'site_id', $user->data()->site_id);
