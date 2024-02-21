@@ -3881,7 +3881,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="economic_date" class="form-label">Tarehe</label>
                                                         <input type="date" value="<?php if ($economic['economic_date']) {
                                                                                         print_r($economic['economic_date']);
-                                                                                    } ?>" min="2024-02-21" max="<?= date('Y-m-d'); ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
+                                                                                    } ?>" max="<?= date('Y-m-d'); ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
