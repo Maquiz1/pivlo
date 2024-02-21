@@ -7,12 +7,12 @@ $random = new Random();
 header('Content-Type: application/json');
 
 
-$output = array();
-$all_generic = $override->getcolumns('clients', 'id', 'clinic_date', 'firstname', 'age');
-foreach ($all_generic as $name) {
-    $output[] = $name;
-}
-echo json_encode($output);
+// $output = array();
+// $all_generic = $override->getcolumns('clients', 'id', 'clinic_date', 'firstname', 'age');
+// foreach ($all_generic as $name) {
+//     $output[] = $name;
+// }
+// echo json_encode($output);
 
 
 if ($_GET['content'] == 'category') {

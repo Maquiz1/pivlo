@@ -86,7 +86,9 @@ if ($user->isLoggedIn()) {
 
   <style type="text/css">
     .chartBox {
-      width: 900px;
+      width: 1400px;
+      position: relative;
+      align-items: center;
     }
   </style>
 </head>
@@ -310,7 +312,7 @@ if ($user->isLoggedIn()) {
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-12">
-                  <h1 class="m-0 text-center">Screaning Progres as of <?= date('Y-m-d'); ?></h1>
+                  <h1 class="m-0 text-center">Screaning Progres Up to <?= date('Y-m-d'); ?></h1>
                 </div>
               </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -320,13 +322,33 @@ if ($user->isLoggedIn()) {
 
           <div class="row">
             <div class="chartBox">
-              <canvas id="myChart"></canvas>
-              <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
+              <canvas id="screening"></canvas>
             </div>
+
           </div>
 
           <hr>
 
+          <div class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-12">
+                  <h1 class="m-0 text-center">Registration Progres Up to <?= date('Y-m-d'); ?></h1>
+                </div>
+              </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="chartBox">
+              <canvas id="registration"></canvas>
+            </div>
+
+          </div>
+
+          <hr>
 
         </div>
         <!-- /.container-fluid -->
@@ -389,7 +411,7 @@ if ($user->isLoggedIn()) {
   <script>
     // SETUP BLOCK
 
-    fetch('process1.php')
+    fetch('process1.php?&status=1')
       .then(response => response.json())
       .then(data => {
         const monthname = Object.keys(data);
@@ -400,7 +422,7 @@ if ($user->isLoggedIn()) {
         const magomeni = monthname.map(monthname => data[monthname]['5']);
 
 
-        var ctx = document.getElementById('myChart').getContext('2d');
+        var ctx = document.getElementById('screening').getContext('2d');
         var chart = new Chart(ctx, {
           type: 'bar',
           data: {
@@ -437,6 +459,55 @@ if ($user->isLoggedIn()) {
         });
       });
 
+
+
+    fetch('process1.php?&status=2')
+      .then(response => response.json())
+      .then(data => {
+        const monthname = Object.keys(data);
+        const amana = monthname.map(monthname => data[monthname]['1']);
+        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+        const temeke = monthname.map(monthname => data[monthname]['3']);
+        const mbagala = monthname.map(monthname => data[monthname]['4']);
+        const magomeni = monthname.map(monthname => data[monthname]['5']);
+
+
+        var ctx = document.getElementById('registration').getContext('2d');
+        var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: monthname,
+            datasets: [{
+              label: 'Amana RRH',
+              backgroundColor: 'pink',
+              data: amana
+            }, {
+              label: 'Mwananyamala RRH',
+              backgroundColor: 'blue',
+              data: mwananyamala
+            }, {
+              label: 'Temeke RRH',
+              backgroundColor: 'yellow',
+              data: temeke
+            }, {
+              label: 'Mbagala Rangi Tatu Hospital',
+              backgroundColor: 'green',
+              data: mbagala
+            }, {
+              label: 'Magomeni Hospital',
+              backgroundColor: 'orange',
+              data: magomeni
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
 
 
 
