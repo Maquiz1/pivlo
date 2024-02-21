@@ -3873,7 +3873,7 @@ if ($user->isLoggedIn()) {
                                         <h3 class="card-title">CRF3: Taarifa za kiuchumi (Wakati wa screening)</h3>
                                     </div>
                                     <!-- /.card-header -->
-                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                    <form id="economic" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-3">
@@ -3989,12 +3989,12 @@ if ($user->isLoggedIn()) {
                                                                                                                                                                     } ?>>
                                                                 <label class="form-check-label">Nyingine, Taja</label>
                                                             </div>
-                                                        </div>
-                                                        <textarea class="form-control" name="income_patient_other" id="income_patient_other" rows="2" placeholder="Type other here...">
+                                                            <textarea class="form-control" name="income_patient_other" id="income_patient_other" rows="2" placeholder="Type other here...">
                                                             <?php if ($economic['income_patient_other']) {
                                                                 print_r($economic['income_patient_other']);
                                                             }  ?>
-                                                        </textarea>
+                                                            </textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -4292,97 +4292,6 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 11) { ?>
-            <?php
-            $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
-            ?>
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <?php if (!$kap) { ?>
-                                    <h1>Add New Health Care KAP</h1>
-                                <?php } else { ?>
-                                    <h1>Update Health Care KAP</h1>
-                                <?php } ?>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                            < Back</a>
-                                    </li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                            Go to screening list > </a>
-                                    </li>&nbsp;&nbsp;
-                                    <?php if (!$kap) { ?>
-                                        <li class="breadcrumb-item active">Add New Health Care KAP</li>
-                                    <?php } else { ?>
-                                        <li class="breadcrumb-item active">Update Health Care KAP</li>
-                                    <?php } ?>
-                                </ol>
-                            </div>
-                        </div>
-                    </div><!-- /.container-fluid -->
-                </section>
-
-                <!-- Main content -->
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <!-- right column -->
-                            <div class="col-md-12">
-                                <!-- general form elements disabled -->
-                                <div class="card card-warning">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Health Care Kap</h3>
-                                    </div>
-                                    <!-- /.card-header -->
-                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="interview_date" class="form-label">Interview Date</label>
-                                                        <input type="date" value="<?php if ($kap['interview_date']) {
-                                                                                        print_r($kap['interview_date']);
-                                                                                    } ?>" id="interview_date" name="interview_date" class="form-control" placeholder="Enter interview date" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <div class="row-form clearfix">
-                                                        <!-- select -->
-                                                        <div class="form-group">
-                                                            <label>Remarks / Comments:</label>
-                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($kap['comments']) {
-                                                                                                                                                            print_r($kap['comments']);
-                                                                                                                                                        }  ?>
-                                                                </textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /.card-body -->
-                                        <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&study_id=<?= $_GET['study_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                            <input type="submit" name="add_health_care_kap" value="Submit" class="btn btn-primary">
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!--/.col (right) -->
-                        </div>
-                        <!-- /.row -->
-                    </div><!-- /.container-fluid -->
-                </section>
-                <!-- /.content -->
-            </div>
-            <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 12) { ?>
 
