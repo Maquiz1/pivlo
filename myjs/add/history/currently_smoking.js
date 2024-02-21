@@ -1,30 +1,20 @@
-const currently_smoking = document.getElementById("currently_smoking");
+const currently_smoking1 = document.getElementById("currently_smoking1");
+const currently_smoking2 = document.getElementById("currently_smoking2");
+
 const quit_smoking = document.getElementById("quit_smoking");
 
-// console.log(type_smoked);
-
-function showElement() {
-  if (currently_smoking.value === "1") {
+function toggleElementVisibility() {
+  if (currently_smoking1.checked) {
     quit_smoking.style.display = "none";
-  } else if (currently_smoking.value === "2") {
+  } else if (currently_smoking2.checked) {
     quit_smoking.style.display = "block";
   } else {
     quit_smoking.style.display = "none";
   }
-
-  // Save the selected value in localStorage
-  localStorage.setItem("selectedValue", currently_smoking.value);
 }
 
-// Check if there's a previously selected value in localStorage
-const currently_smokingValue = localStorage.getItem("selectedValue");
+currently_smoking1.addEventListener("change", toggleElementVisibility);
+currently_smoking2.addEventListener("change", toggleElementVisibility);
 
-if (currently_smokingValue) {
-  currently_smoking.value = currently_smokingValue;
-}
-
-// Show element if Option 2 is selected
-showElement();
-
-// Listen for changes in the dropdown
-currently_smoking.addEventListener("change", showElement);
+// Initial check
+toggleElementVisibility();
