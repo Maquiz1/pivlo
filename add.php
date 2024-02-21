@@ -2197,24 +2197,13 @@ if ($user->isLoggedIn()) {
                                                                                                                                                                     } ?>>
                                                             <label class="form-check-label">Other</label>
                                                         </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-6" id="vitu_hatarishi_other">
-                                                    <div class="mb-3">
-                                                        <label for="vitu_hatarishi_other" class="form-label">4. Taja ?</label>
-                                                        <textarea class="form-control" name="vitu_hatarishi_other" rows="2" placeholder="Type other here..."><?php if ($kap['vitu_hatarishi_other']) {
-                                                                                                                                                                    print_r($kap['vitu_hatarishi_other']);
-                                                                                                                                                                }  ?>
+                                                        <textarea class="form-control" name="vitu_hatarishi_other" id="vitu_hatarishi_other" rows="3" placeholder="Type other here..."><?php if ($kap['vitu_hatarishi_other']) {
+                                                                                                                                                                                            print_r($kap['vitu_hatarishi_other']);
+                                                                                                                                                                                        }  ?>
                                                                 </textarea>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <hr>
-
-                                            <div class="row">
                                                 <div class="col-6">
                                                     <label>5. Je, mtu mwenye Saratani ya mapafu anakua na dalili zipi? ( Multiple answer )</label>
                                                     <!-- checkbox -->
@@ -2307,18 +2296,13 @@ if ($user->isLoggedIn()) {
                                                                                                                                                                         } ?>>
                                                             <label class="form-check-label">Other</label>
                                                         </div>
+                                                        <textarea class="form-control" name="dalili_saratani_other" id="dalili_saratani_other" rows="2" placeholder="Type other here...">
+                                                            <?php if ($kap['dalili_saratani_other']) {
+                                                                print_r($kap['dalili_saratani_other']);
+                                                            }  ?>
+                                                        </textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-6" id="dalili_saratani_other">
-                                                    <div class="mb-3">
-                                                        <label for="dalili_saratani_other" class="form-label">5. Taja ?</label>
-                                                        <textarea class="form-control" name="dalili_saratani_other" rows="2" placeholder="Type other here..."><?php if ($kap['dalili_saratani_other']) {
-                                                                                                                                                                    print_r($kap['dalili_saratani_other']);
-                                                                                                                                                                }  ?>
-                                                                </textarea>
-                                                    </div>
-                                                </div>
-
                                             </div>
 
                                             <hr>
@@ -2376,22 +2360,13 @@ if ($user->isLoggedIn()) {
                                                                                                                                                                         } ?>>
                                                             <label class="form-check-label">Other</label>
                                                         </div>
+                                                        <textarea class="form-control" name="saratani_vipimo_other" id="saratani_vipimo_other" rows="2" placeholder="Type other here...">
+                                                            <?php if ($kap['saratani_vipimo_other']) {
+                                                                print_r($kap['saratani_vipimo_other']);
+                                                            }  ?>
+                                                        </textarea>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-6" id="saratani_vipimo_other">
-                                                    <div class="mb-3">
-                                                        <label for="saratani_vipimo_other" class="form-label">6. Taja ?</label>
-                                                        <textarea class="form-control" name="saratani_vipimo_other" rows="3" placeholder="Type other here..."><?php if ($kap['saratani_vipimo_other']) {
-                                                                                                                                                                    print_r($kap['saratani_vipimo_other']);
-                                                                                                                                                                }  ?>
-                                                                </textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
 
                                                 <div class="col-sm-6">
                                                     <label>7. Je, ugonjwa wa saratani ya mapafu unatibika ?</label>
@@ -2414,7 +2389,10 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
 
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-sm-6" id="matibabu_saratani">
                                                     <label>8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
                                                     <!-- radio -->
@@ -2436,10 +2414,8 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row" id="matibabu1">
-                                                <div class="col-6">
+
+                                                <div class="col-6" id="matibabu1">
                                                     <label>9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
                                                     <!-- checkbox -->
                                                     <div class="form-group">
@@ -2508,12 +2484,7 @@ if ($user->isLoggedIn()) {
                                                                                                                                                         } ?>>
                                                             <label class="form-check-label">Other</label>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4" id="matibabu_other">
-                                                    <div class="mb-3">
-                                                        <label for="matibabu_other" class="form-label">9. Taja ?</label>
-                                                        <textarea class="form-control" name="matibabu_other" rows="3" placeholder="Type other here...">
+                                                        <textarea class="form-control" name="matibabu_other" id="matibabu_other" rows="3" placeholder="Type other here...">
                                                             <?php if ($kap['matibabu_other']) {
                                                                 print_r($kap['matibabu_other']);
                                                             }  ?>
@@ -2534,7 +2505,7 @@ if ($user->isLoggedIn()) {
 
                                             <div class="row">
 
-                                                <div class="col-12">
+                                                <div class="col-6">
                                                     <div class="mb-2">
                                                         <label for="saratani_uchunguzi" class="form-label">1. Je, umewahi kusikia chochote kuhusu uchunguzi wa saratani ya mapafu, inawezekana kwa kusoma mahali Fulani, kusikia kwenye vyombo vya habari au kusikia kutoka kituo cha kutolea huduma za Afya? </label>
                                                         <select name="saratani_uchunguzi" id="saratani_uchunguzi" class="form-control" required>
@@ -2557,13 +2528,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="row">
-
-                                                <div class="col-sm-6" id="matibabu_saratani">
+                                                <div class="col-sm-6">
                                                     <label>2. Nini maana ya uchunguzi wa saratani ya mapafu?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -2599,17 +2564,11 @@ if ($user->isLoggedIn()) {
                                                                                                                                                                         } ?>>
                                                                 <label class="form-check-label">Nyinginezo</label>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6" id="uchunguzi_maana_other">
-                                                    <div class=" mb-3">
-                                                        <label for="uchunguzi_maana_other" class="form-label">2. Taja ?</label>
-                                                        <textarea class="form-control" name="uchunguzi_maana_other" rows="4" placeholder="Type other here..."><?php if ($kap['uchunguzi_maana_other']) {
-                                                                                                                                                                    print_r($kap['uchunguzi_maana_other']);
-                                                                                                                                                                }  ?>
+                                                            <textarea class="form-control" name="uchunguzi_maana_other" id="uchunguzi_maana_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_maana_other']) {
+                                                                                                                                                                                                    print_r($kap['uchunguzi_maana_other']);
+                                                                                                                                                                                                }  ?>
                                                                 </textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2652,24 +2611,15 @@ if ($user->isLoggedIn()) {
                                                                                                                                                                         } ?>>
                                                                 <label class="form-check-label">Nyinginezo</label>
                                                             </div>
+                                                            <textarea class="form-control" name="uchunguzi_faida_other" id="uchunguzi_faida_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_faida_other']) {
+                                                                                                                                                                                                    print_r($kap['uchunguzi_faida_other']);
+                                                                                                                                                                                                }  ?>
+                                                                </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6" id="uchunguzi_faida_other">
-                                                    <div class="mb-3">
-                                                        <label for="uchunguzi_faida_other" class="form-label">3. Taja ?</label>
-                                                        <textarea class="form-control" name="uchunguzi_faida_other" rows="4" placeholder="Type other here..."><?php if ($kap['uchunguzi_faida_other']) {
-                                                                                                                                                                    print_r($kap['uchunguzi_faida_other']);
-                                                                                                                                                                }  ?>
-                                                                </textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-6">
                                                     <label>4. Je, kuna hatari zozote za kufanya uchunguzi wa saratani ya mapafu?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -3623,7 +3573,7 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="results_date" class="form-label">Date</label>
                                                         <input type="date" value="<?php if ($results) {
@@ -3631,7 +3581,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="results_date" name="results_date" class="form-control" placeholder="Enter results date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="ldct_results" class="form-label">LDCT RESULTS</label>
                                                         <input type="text" value="<?php if ($results) {
@@ -3639,7 +3589,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="ldct_results" name="ldct_results" class="form-control" placeholder="Enter LDCT results" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="rad_score" class="form-label">RAD SCORE</label>
                                                         <input type="text" value="<?php if ($results) {
@@ -3647,7 +3597,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="rad_score" name="rad_score" class="form-control" placeholder="Enter RAD score" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="findings" class="form-label">FINDINGS:</label>
                                                         <textarea class="form-control" name="findings" id="findings" rows="5">
@@ -4108,7 +4058,7 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="mb-3">
-                                                        <label for="consultation" class="form-label">Kumuona daktari (Consultation)_ ( TSHS )</label>
+                                                        <label for="consultation" class="form-label">Kumuona daktari (Consultation) ( TSHS )</label>
                                                         <input type="text" value="<?php if ($economic['consultation']) {
                                                                                         print_r($economic['consultation']);
                                                                                     } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
