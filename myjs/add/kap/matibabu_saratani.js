@@ -1,28 +1,20 @@
-const matibabu_saratani = document.getElementById("matibabu_saratani1");
+const matibabu_saratani1 = document.getElementById("matibabu_saratani1");
+const matibabu_saratani2 = document.getElementById("matibabu_saratani2");
+
 const matibabu1 = document.getElementById("matibabu1");
 
-// console.log(type_smoked);
-
-function showElement() {
-  if (matibabu_saratani.value === "1") {
+function toggleElementVisibility() {
+  if (matibabu_saratani1.checked) {
+    matibabu1.style.display = "block";
+  } else if (matibabu_saratani2.checked) {
     matibabu1.style.display = "block";
   } else {
     matibabu1.style.display = "none";
   }
-
-  // Save the selected value in localStorage
-  localStorage.setItem("selectedValue", matibabu_saratani.value);
 }
 
-// Check if there's a previously selected value in localStorage
-const matibabu_sarataniValue = localStorage.getItem("selectedValue");
+matibabu_saratani1.addEventListener("change", toggleElementVisibility);
+matibabu_saratani2.addEventListener("change", toggleElementVisibility);
 
-if (matibabu_sarataniValue) {
-  matibabu_saratani.value = matibabu_sarataniValue;
-}
-
-// Show element if Option 2 is selected
-showElement();
-
-// Listen for changes in the dropdown
-matibabu_saratani.addEventListener("change", showElement);
+// Initial check
+toggleElementVisibility();

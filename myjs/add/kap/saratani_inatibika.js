@@ -1,28 +1,20 @@
-const saratani_inatibika = document.getElementById("saratani_inatibika2");
-const matibabu_saratani1 = document.getElementById("matibabu_saratani2");
+const saratani_inatibika1 = document.getElementById("saratani_inatibika1");
+const saratani_inatibika2 = document.getElementById("saratani_inatibika2");
 
-// console.log(type_smoked);
+const matibabu_saratani = document.getElementById("matibabu_saratani");
 
-function showElement() {
-  if (saratani_inatibika.value === "1") {
-    matibabu_saratani1.style.display = "block";
+function toggleElementVisibility() {
+  if (saratani_inatibika1.checked) {
+    matibabu_saratani.style.display = "block";
+  } else if (saratani_inatibika2.checked) {
+    matibabu_saratani.style.display = "block";
   } else {
-    matibabu_saratani1.style.display = "none";
+    matibabu_saratani.style.display = "none";
   }
-
-  // Save the selected value in localStorage
-  localStorage.setItem("selectedValue", saratani_inatibika.value);
 }
 
-// Check if there's a previously selected value in localStorage
-const saratani_inatibikaValue = localStorage.getItem("selectedValue");
+saratani_inatibika1.addEventListener("change", toggleElementVisibility);
+saratani_inatibika2.addEventListener("change", toggleElementVisibility);
 
-if (saratani_inatibikaValue) {
-  saratani_inatibika.value = saratani_inatibikaValue;
-}
-
-// Show element if Option 2 is selected
-showElement();
-
-// Listen for changes in the dropdown
-saratani_inatibika.addEventListener("change", showElement);
+// Initial check
+toggleElementVisibility();

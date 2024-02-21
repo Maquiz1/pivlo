@@ -2365,57 +2365,53 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <hr>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="saratani_inatibika" class="form-label">7. Je, ugonjwa wa saratani ya mapafu unatibika?</label>
-                                                        <select name="saratani_inatibika" id="saratani_inatibika2" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_inatibika'] ?>"><?php if ($kap['saratani_inatibika']) {
-                                                                                                                    if ($kap['saratani_inatibika'] == 1) {
-                                                                                                                        echo 'Ndio';
-                                                                                                                    } elseif ($kap['saratani_inatibika'] == 2) {
-                                                                                                                        echo 'Hapana';
-                                                                                                                    } elseif ($kap['saratani_inatibika'] == 99) {
-                                                                                                                        echo 'Sijui';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
+                                            <div class="col-sm-4">
+                                                <label>7. Je, ugonjwa wa saratani ya mapafu unatibika ?</label>
+                                                <!-- radio -->
+                                                <div class="row-form clearfix">
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika1" value="1" <?php if ($kap['saratani_inatibika'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">Yes</label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika2" value="2" <?php if ($kap['saratani_inatibika'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                            <label class="form-check-label">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="col-8" id="matibabu_saratani2">
-                                                    <div class="mb-3">
-                                                        <label for="matibabu_saratani" class="form-label">8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
-                                                        <select name="matibabu_saratani" id="matibabu_saratani1" class="form-control">
-                                                            <option value="<?= $kap['matibabu_saratani'] ?>"><?php if ($kap['matibabu_saratani']) {
-                                                                                                                    if ($kap['matibabu_saratani'] == 1) {
-                                                                                                                        echo 'Ndio';
-                                                                                                                    } elseif ($kap['matibabu_saratani'] == 2) {
-                                                                                                                        echo 'Hapana';
-                                                                                                                    } elseif ($kap['matibabu_saratani'] == 99) {
-                                                                                                                        echo 'Sijui';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
+                                            <div class="col-sm-4" id="matibabu_saratani">
+                                                <label>8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
+                                                <!-- radio -->
+                                                <div class="row-form clearfix">
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani1" value="1" <?php if ($kap['matibabu_saratani'] == 1) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">Yes</label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani2" value="2" <?php if ($kap['matibabu_saratani'] == 2) {
+                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                    } ?>>
+                                                            <label class="form-check-label">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr>
-                                            <div class="row">
-                                                <div class="col-6" id="matibabu1">
+                                            <div class="row" id="matibabu1">
+                                                <div class="col-6">
                                                     <label>9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
                                                     <!-- checkbox -->
                                                     <div class="form-group">
@@ -3349,9 +3345,9 @@ if ($user->isLoggedIn()) {
 
 
                                             <hr>
-                                            <div id="ever_smoked">
+                                            <div id="ever_smoked3">
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-4">
                                                         <div class="mb-2">
                                                             <label for="start_smoking" class="form-label">When did you start smoking?</label>
                                                             <input type="number" value="<?php if ($history['start_smoking']) {
@@ -3361,7 +3357,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
 
                                                     <hr>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <label>Are you Currently Smoking ?</label>
                                                         <!-- radio -->
                                                         <div class="row-form clearfix">
@@ -3382,12 +3378,8 @@ if ($user->isLoggedIn()) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <hr>
 
-                                                <div class="row">
-
-                                                    <div class="col-6" id="quit_smoking">
+                                                    <div class="col-4" id="quit_smoking">
                                                         <div class="mb-3">
                                                             <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
                                                             <input type="number" value="<?php if ($history['quit_smoking']) {
@@ -3395,8 +3387,6 @@ if ($user->isLoggedIn()) {
                                                                                         } ?>" min="1970" max="<?= date('Y') ?>" name="quit_smoking" class="form-control" placeholder="Enter Year" />
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                                 <hr>
 
@@ -3433,7 +3423,7 @@ if ($user->isLoggedIn()) {
                                                             </label>
                                                             <input type="number" value="<?php if ($history['packs_per_day']) {
                                                                                             print_r($history['packs_per_day']);
-                                                                                        } ?>" min="0" id="packs_per_day" name="packs_per_day" class="form-control" placeholder="Enter amount" />
+                                                                                        } ?>" min="0" name="packs_per_day" class="form-control" placeholder="Enter amount" />
                                                         </div>
                                                     </div>
 
@@ -3442,7 +3432,7 @@ if ($user->isLoggedIn()) {
                                                             <label for="packs_per_year" class="form-label">Number of Pack year</label>
                                                             <input type="number" value="<?php if ($history['packs_per_year']) {
                                                                                             print_r($history['packs_per_year']);
-                                                                                        } ?>" min="0" id="packs_per_year" name="packs_per_year" class="form-control" readonly />
+                                                                                        } ?>" min="0" name="packs_per_year" class="form-control" readonly />
                                                         </div>
                                                     </div>
                                                     <div class="col-3">&nbsp;&nbsp;
