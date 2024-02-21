@@ -2280,13 +2280,14 @@ if ($user->isLoggedIn()) {
                                     <?php
                                     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                         if ($_GET['site_id'] != null) {
-                                            $clients = $override->getDataDesc2('eonomic', 'status', 1, 'site_id', $_GET['site_id'],  'id');
+                                            $clients = $override->getDataDesc2('economic', 'status', 1, 'site_id', $_GET['site_id'],  'id');
                                         } else {
-                                            $clients = $override->getDataDesc1('eonomic', 'status', 1, 'id');
+                                            $clients = $override->getDataDesc1('economic', 'status', 1, 'id');
                                         }
                                     } else {
-                                        $clients = $override->getDataDesc2('eonomic', 'status', 1, 'site_id', $user->data()->site_id,  'id');
-                                    } ?>
+                                        $clients = $override->getDataDesc2('economic', 'status', 1, 'site_id', $user->data()->site_id,  'id');
+                                    }
+                                     ?>
                                     eonomic
                                 </h1>
                             </div>
