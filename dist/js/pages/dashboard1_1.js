@@ -61,7 +61,6 @@ $(function () {
       const temeke = monthname.map((monthname) => data[monthname]["3"]);
       const mbagala = monthname.map((monthname) => data[monthname]["4"]);
       const magomeni = monthname.map((monthname) => data[monthname]["5"]);
-      
 
       /* Chart.js Charts */
       // registration
@@ -141,6 +140,10 @@ $(function () {
       var salesChartOptions = {
         maintainAspectRatio: false,
         responsive: true,
+        title: {
+          display: true,
+          text: "data",
+        },
         legend: {
           display: false,
         },
@@ -154,6 +157,10 @@ $(function () {
           ],
           yAxes: [
             {
+              ticks: {
+                stepSize: 1,
+                suggestedMax: 10,
+              },
               gridLines: {
                 display: false,
               },
@@ -175,9 +182,6 @@ $(function () {
         data: salesChartData,
         options: salesChartOptions,
       });
-
-
-
 
       // Donut Chart
       var pieChartCanvas = $("#registration2").get(0).getContext("2d");
@@ -206,7 +210,5 @@ $(function () {
         data: pieData,
         options: pieOptions,
       });
-
-
     });
 });
