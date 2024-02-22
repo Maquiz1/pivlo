@@ -2910,210 +2910,283 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="vifo" class="form-label">1. Fikiria kuhusu vifo vinavyotokea kwasababu ya Saratani; “Nisingependa kujua kama nina saratani ya mapafu”. </label>
-                                                        <select name="vifo" id="vifo" class="form-control" required>
-                                                            <option value="<?= $kap['vifo'] ?>"><?php if ($kap['vifo']) {
-                                                                                                    if ($kap['vifo'] == 1) {
-                                                                                                        echo 'Nakubali sana.';
-                                                                                                    } elseif ($kap['vifo'] == 2) {
-                                                                                                        echo 'Nakubali';
-                                                                                                    } elseif ($kap['vifo'] == 3) {
-                                                                                                        echo 'Kawaida';
-                                                                                                    } elseif ($kap['vifo'] == 4) {
-                                                                                                        echo 'Sikubali kabisa.';
-                                                                                                    } elseif ($kap['vifo'] == 5) {
-                                                                                                        echo 'Sikubali';
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    echo 'Select';
-                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Nakubali sana.</option>
-                                                            <option value="2">Nakubali</option>
-                                                            <option value="3">Kawaida</option>
-                                                            <option value="4">Sikubali kabisa.</option>
-                                                            <option value="5">Sikubali</option>
-                                                        </select>
+                                                <div class="col-sm-3">
+                                                    <label>1. Fikiria kuhusu vifo vinavyotokea kwasababu ya Saratani; “Nisingependa kujua kama nina saratani ya mapafu</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo1" value="1" <?php if ($kap['vifo'] == 1) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Nakubali sana</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo2" value="2" <?php if ($kap['vifo'] == 2) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Nakubali</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo3" value="3" <?php if ($kap['vifo'] == 3) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Kawaida</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo4" value="4" <?php if ($kap['vifo'] == 4) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Sikubali kabisa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo5" value="5" <?php if ($kap['vifo'] == 5) {
+                                                                                                                                                    echo 'checked';
+                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Sikubali</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-3">
+                                                    <label>2. Fikiria jinsi dalili zinavyoonekana, “ Kwenda kwa daktari wangu mapema nikiwa tayari na dalili za ugonjwa wa saratani ya mapafu,akulete utofauti wowote wa mimi kupona saratani ya mapafu</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili1" value="1" <?php if ($kap['tayari_dalili'] == 1) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Nakubali sana</label>
+                                                            </div>
 
-                                                <div class="col-8">
-                                                    <div class="mb-3">
-                                                        <label for="tayari_dalili" class="form-label">2. Fikiria jinsi dalili zinavyoonekana, “ Kwenda kwa daktari wangu mapema nikiwa tayari na dalili za ugonjwa wa saratani ya mapafu,akulete utofauti wowote wa mimi kupona saratani ya mapafu”. </label>
-                                                        <select name="tayari_dalili" id="tayari_dalili" class="form-control" required>
-                                                            <option value="<?= $kap['tayari_dalili'] ?>"><?php if ($kap['tayari_dalili']) {
-                                                                                                                if ($kap['tayari_dalili'] == 1) {
-                                                                                                                    echo 'Nakubali sana.';
-                                                                                                                } elseif ($kap['tayari_dalili'] == 2) {
-                                                                                                                    echo 'Nakubali';
-                                                                                                                } elseif ($kap['tayari_dalili'] == 3) {
-                                                                                                                    echo 'Kawaida';
-                                                                                                                } elseif ($kap['tayari_dalili'] == 4) {
-                                                                                                                    echo 'Sikubali kabisa.';
-                                                                                                                } elseif ($kap['tayari_dalili'] == 5) {
-                                                                                                                    echo 'Sikubali';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Nakubali sana.</option>
-                                                            <option value="2">Nakubali</option>
-                                                            <option value="3">Kawaida</option>
-                                                            <option value="4">Sikubali kabisa.</option>
-                                                            <option value="5">Sikubali</option>
-                                                        </select>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili2" value="2" <?php if ($kap['tayari_dalili'] == 2) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Nakubali</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili3" value="3" <?php if ($kap['tayari_dalili'] == 3) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Kawaida</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili4" value="4" <?php if ($kap['tayari_dalili'] == 4) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Sikubali kabisa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili5" value="5" <?php if ($kap['tayari_dalili'] == 5) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Sikubali</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>3. Fikiria jinsi dalili zinavyoonekana ; “Endapo saratani ya mapafu ikigundulika mapema, kuna uwezekano mkubwa wa kutibika”</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika1" value="1" <?php if ($kap['saratani_kutibika'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali sana</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika2" value="2" <?php if ($kap['saratani_kutibika'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="tsaratani_kutibika3" value="3" <?php if ($kap['saratani_kutibika'] == 3) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Kawaida</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika4" value="4" <?php if ($kap['saratani_kutibika'] == 4) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali kabisa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika5" value="5" <?php if ($kap['saratani_kutibika'] == 5) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>4. “Ningependelea kutokwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu nina wasiwasi juu ya kile kinachoweza kugundulika wakati wa uchunguzi wa saratani ya mapafu”</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi1" value="1" <?php if ($kap['saratani_wasiwasi'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali sana</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi2" value="2" <?php if ($kap['saratani_wasiwasi'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi3" value="3" <?php if ($kap['saratani_wasiwasi'] == 3) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Kawaida</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi4" value="4" <?php if ($kap['saratani_wasiwasi'] == 4) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali kabisa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi5" value="5" <?php if ($kap['saratani_wasiwasi'] == 5) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-5">
-                                                    <div class="mb-2">
-                                                        <label for="saratani_kutibika" class="form-label">3. Fikiria jinsi dalili zinavyoonekana ; “Endapo saratani ya mapafu ikigundulika mapema, kuna uwezekano mkubwa wa kutibika”. </label>
-                                                        <select name="saratani_kutibika" id="saratani_kutibika" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_kutibika'] ?>"><?php if ($kap['saratani_kutibika']) {
-                                                                                                                    if ($kap['saratani_kutibika'] == 1) {
-                                                                                                                        echo 'Nakubali sana.';
-                                                                                                                    } elseif ($kap['saratani_kutibika'] == 2) {
-                                                                                                                        echo 'Nakubali';
-                                                                                                                    } elseif ($kap['saratani_kutibika'] == 3) {
-                                                                                                                        echo 'Kawaida';
-                                                                                                                    } elseif ($kap['saratani_kutibika'] == 4) {
-                                                                                                                        echo 'Sikubali kabisa.';
-                                                                                                                    } elseif ($kap['saratani_kutibika'] == 5) {
-                                                                                                                        echo 'Sikubali';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Nakubali sana.</option>
-                                                            <option value="2">Nakubali</option>
-                                                            <option value="3">Kawaida</option>
-                                                            <option value="4">Sikubali kabisa.</option>
-                                                            <option value="5">Sikubali</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-7">
-                                                    <div class="mb-2">
-                                                        <label for="saratani_wasiwasi" class="form-label">4. “Ningependelea kutokwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu nina wasiwasi juu ya kile kinachoweza kugundulika wakati wa uchunguzi wa saratani ya mapafu”. </label>
-                                                        <select name="saratani_wasiwasi" id="saratani_wasiwasi" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_wasiwasi'] ?>"><?php if ($kap['saratani_wasiwasi']) {
-                                                                                                                    if ($kap['saratani_wasiwasi'] == 1) {
-                                                                                                                        echo 'Nakubali sana.';
-                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 2) {
-                                                                                                                        echo 'Nakubali';
-                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 3) {
-                                                                                                                        echo 'Kawaida';
-                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 4) {
-                                                                                                                        echo 'Sikubali kabisa.';
-                                                                                                                    } elseif ($kap['saratani_wasiwasi'] == 5) {
-                                                                                                                        echo 'Sikubali';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Nakubali sana.</option>
-                                                            <option value="2">Nakubali</option>
-                                                            <option value="3">Kawaida</option>
-                                                            <option value="4">Sikubali kabisa.</option>
-                                                            <option value="5">Sikubali</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                <div class="col-sm-4">
+                                                    <label>5. “Sidhani kama kuna umuhimu wowote wa kwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu haita athiri matokeo”</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu1" value="1" <?php if ($kap['saratani_umuhimu'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali sana</label>
+                                                            </div>
 
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="saratani_umuhimu" class="form-label">5. “Sidhani kama kuna umuhimu wowote wa kwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu haita athiri matokeo”. </label>
-                                                        <select name="saratani_umuhimu" id="saratani_umuhimu" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_umuhimu'] ?>"><?php if ($kap['saratani_umuhimu']) {
-                                                                                                                if ($kap['saratani_umuhimu'] == 1) {
-                                                                                                                    echo 'Nakubali sana.';
-                                                                                                                } elseif ($kap['saratani_umuhimu'] == 2) {
-                                                                                                                    echo 'Nakubali';
-                                                                                                                } elseif ($kap['saratani_umuhimu'] == 3) {
-                                                                                                                    echo 'Kawaida';
-                                                                                                                } elseif ($kap['saratani_umuhimu'] == 4) {
-                                                                                                                    echo 'Sikubali kabisa.';
-                                                                                                                } elseif ($kap['saratani_umuhimu'] == 5) {
-                                                                                                                    echo 'Sikubali';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Nakubali sana.</option>
-                                                            <option value="2">Nakubali</option>
-                                                            <option value="3">Kawaida</option>
-                                                            <option value="4">Sikubali kabisa.</option>
-                                                            <option value="5">Sikubali</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="saratani_kufa" class="form-label">6.“Kufanya uchunguzi wa saratani ya mapafu kunaweza kupunguza uwezekano wangu wa kufa kutokana na saratani ya mapafu.” </label>
-                                                        <select name="saratani_kufa" id="saratani_kufa" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_kufa'] ?>"><?php if ($kap['saratani_kufa']) {
-                                                                                                                if ($kap['saratani_kufa'] == 1) {
-                                                                                                                    echo 'Nakubali sana.';
-                                                                                                                } elseif ($kap['saratani_kufa'] == 2) {
-                                                                                                                    echo 'Nakubali';
-                                                                                                                } elseif ($kap['saratani_kufa'] == 3) {
-                                                                                                                    echo 'Kawaida';
-                                                                                                                } elseif ($kap['saratani_kufa'] == 4) {
-                                                                                                                    echo 'Sikubali kabisa.';
-                                                                                                                } elseif ($kap['saratani_kufa'] == 5) {
-                                                                                                                    echo 'Sikubali';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Nakubali sana.</option>
-                                                            <option value="2">Nakubali</option>
-                                                            <option value="3">Kawaida</option>
-                                                            <option value="4">Sikubali kabisa.</option>
-                                                            <option value="5">Sikubali</option>
-                                                        </select>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu2" value="2" <?php if ($kap['saratani_umuhimu'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu3" value="3" <?php if ($kap['saratani_umuhimu'] == 3) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Kawaida</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu4" value="4" <?php if ($kap['saratani_umuhimu'] == 4) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali kabisa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu5" value="5" <?php if ($kap['saratani_umuhimu'] == 5) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="uchunguzi_haraka" class="form-label">7. “Endapo nitapata dalili zozote za awali za ugonjwa wa Saratani ya mapafu nitakwenda kwa ajili ya uchunguzi wa saratani ya mapafu haraka iwezekanavyo”. </label>
-                                                        <select name="uchunguzi_haraka" id="uchunguzi_haraka" class="form-control" required>
-                                                            <option value="<?= $kap['uchunguzi_haraka'] ?>"><?php if ($kap['uchunguzi_haraka']) {
-                                                                                                                if ($kap['uchunguzi_haraka'] == 1) {
-                                                                                                                    echo 'Nakubali sana.';
-                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 2) {
-                                                                                                                    echo 'Nakubali';
-                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 3) {
-                                                                                                                    echo 'Kawaida';
-                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 4) {
-                                                                                                                    echo 'Sikubali kabisa.';
-                                                                                                                } elseif ($kap['uchunguzi_haraka'] == 5) {
-                                                                                                                    echo 'Sikubali';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Nakubali sana.</option>
-                                                            <option value="2">Nakubali</option>
-                                                            <option value="3">Kawaida</option>
-                                                            <option value="4">Sikubali kabisa.</option>
-                                                            <option value="5">Sikubali</option>
-                                                        </select>
+                                                <div class="col-sm-4">
+                                                    <label>6.“Kufanya uchunguzi wa saratani ya mapafu kunaweza kupunguza uwezekano wangu wa kufa kutokana na saratani ya mapafu.”</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa1" value="1" <?php if ($kap['saratani_kufa'] == 1) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Nakubali sana</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa2" value="2" <?php if ($kap['saratani_kufa'] == 2) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Nakubali</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa3" value="3" <?php if ($kap['saratani_kufa'] == 3) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Kawaida</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa4" value="4" <?php if ($kap['saratani_kufa'] == 4) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Sikubali kabisa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa5" value="5" <?php if ($kap['saratani_kufa'] == 5) {
+                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label">Sikubali</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label>7. “Endapo nitapata dalili zozote za awali za ugonjwa wa Saratani ya mapafu nitakwenda kwa ajili ya uchunguzi wa saratani ya mapafu haraka iwezekanavyo”</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka1" value="1" <?php if ($kap['uchunguzi_haraka'] == 1) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali sana</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka2" value="2" <?php if ($kap['uchunguzi_haraka'] == 2) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Nakubali</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka3" value="3" <?php if ($kap['uchunguzi_haraka'] == 3) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Kawaida</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka4" value="4" <?php if ($kap['uchunguzi_haraka'] == 4) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali kabisa</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka5" value="5" <?php if ($kap['uchunguzi_haraka'] == 5) {
+                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                        } ?>>
+                                                                <label class="form-check-label">Sikubali</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
