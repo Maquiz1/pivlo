@@ -312,7 +312,7 @@ if ($user->isLoggedIn()) {
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-12">
-                  <h1 class="m-0 text-center">Registration Progres Up to <?= date('Y-m-d'); ?></h1>
+                  <h1 class="m-0 text-center">Registration Up to <?= date('Y-m-d'); ?></h1>
                 </div>
               </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -333,7 +333,7 @@ if ($user->isLoggedIn()) {
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-12">
-                  <h1 class="m-0 text-center">Screaning Progres Up to <?= date('Y-m-d'); ?></h1>
+                  <h1 class="m-0 text-center">Screaning Up to <?= date('Y-m-d'); ?></h1>
                 </div>
               </div><!-- /.row -->
             </div><!-- /.container-fluid -->
