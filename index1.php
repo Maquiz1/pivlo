@@ -230,6 +230,7 @@ if ($user->isLoggedIn()) {
           <?php
           //  if ($_GET['id'] == 100) {
           ?>
+
           <div class="row">
             <!-- Left col -->
             <section class="col-lg-6 connectedSortable">
@@ -238,19 +239,20 @@ if ($user->isLoggedIn()) {
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Registration Up to <?= date('Y-m-d'); ?>
+                    Registration to <?= date('Y-m-d'); ?>
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
                       <li class="nav-item">
                         <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
                       </li>
-                      <li class="nav-item">
+                      <!-- <li class="nav-item">
                         <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
-                </div><!-- /.card-header -->
+                </div>
+                <!-- /.card-header -->
                 <div class="card-body">
                   <div class="tab-content p-0">
                     <!-- Morris chart - Sales -->
@@ -261,7 +263,8 @@ if ($user->isLoggedIn()) {
                       <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
                     </div>
                   </div>
-                </div><!-- /.card-body -->
+                </div>
+                <!-- /.card-body -->
               </div>
               <!-- /.card -->
 
@@ -274,19 +277,20 @@ if ($user->isLoggedIn()) {
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Screaning Up to <?= date('Y-m-d'); ?>
+                    Screaning to <?= date('Y-m-d'); ?>
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
                       <li class="nav-item">
                         <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
                       </li>
-                      <li class="nav-item">
+                      <!-- <li class="nav-item">
                         <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
-                </div><!-- /.card-header -->
+                </div>
+                <!-- /.card-header -->
                 <div class="card-body">
                   <div class="tab-content p-0">
                     <!-- Morris chart - Sales -->
@@ -297,10 +301,85 @@ if ($user->isLoggedIn()) {
                       <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
                     </div>
                   </div>
-                </div><!-- /.card-body -->
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </section>
+            <!-- right col -->
+            <!-- Left col -->
+            <section class="col-lg-6 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Eligible to <?= date('Y-m-d'); ?>
+                  </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                      </li>
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li> -->
+                    </ul>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="tab-content p-0">
+                    <!-- Morris chart - Sales -->
+                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                      <canvas id="eligible" height="300" style="height: 300px;"></canvas>
+                    </div>
+                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
               </div>
               <!-- /.card -->
 
+            </section>
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-6 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Enrolled to <?= date('Y-m-d'); ?>
+                  </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                      </li>
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li> -->
+                    </ul>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="tab-content p-0">
+                    <!-- Morris chart - Sales -->
+                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                      <canvas id="enrolled" height="300" style="height: 300px;"></canvas>
+                    </div>
+                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
             </section>
             <!-- right col -->
           </div>
@@ -309,8 +388,7 @@ if ($user->isLoggedIn()) {
           <?php
           //  }
           ?>
-
-          <hr>
+          <!-- <hr>
 
           <div class="content-header">
             <div class="container-fluid">
@@ -318,11 +396,13 @@ if ($user->isLoggedIn()) {
                 <div class="col-sm-12">
                   <h1 class="m-0 text-center">Registration Up to <?= date('Y-m-d'); ?></h1>
                 </div>
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </div>
+              </div> -->
+          <!-- /.row -->
+          <!-- </div> -->
+          <!-- /.container-fluid -->
+          <!-- </div>
 
-          <hr>
+          <hr> -->
 
           <!-- <div class="row">
             <div class="chartBox">
@@ -331,19 +411,21 @@ if ($user->isLoggedIn()) {
 
           </div> -->
 
-          <hr>
+          <!-- <hr>
 
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-12">
                   <h1 class="m-0 text-center">Screaning Up to <?= date('Y-m-d'); ?></h1>
-                </div>
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </div>
+                </div> -->
+          <!-- </div> -->
+          <!-- /.row -->
+          <!-- </div> -->
+          <!-- /.container-fluid -->
+          <!-- </div>
 
-          <hr>
+          <hr> -->
 
           <!-- <div class="row">
             <div class="chartBox">
@@ -352,7 +434,7 @@ if ($user->isLoggedIn()) {
 
           </div> -->
 
-          <hr>
+          <!-- <hr>
 
           <div class="content-header">
             <div class="container-fluid">
@@ -360,9 +442,11 @@ if ($user->isLoggedIn()) {
                 <div class="col-sm-12">
                   <h1 class="m-0 text-center">Eligible Up to <?= date('Y-m-d'); ?></h1>
                 </div>
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </div>
+              </div> -->
+          <!-- /.row -->
+          <!-- </div> -->
+          <!-- /.container-fluid -->
+          <!-- </div>
 
           <hr>
 
@@ -373,17 +457,19 @@ if ($user->isLoggedIn()) {
 
           </div>
 
-          <hr>
+          <hr> -->
 
-          <div class="content-header">
+          <!-- <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-12">
                   <h1 class="m-0 text-center">Enrolled Up to <?= date('Y-m-d'); ?></h1>
-                </div>
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </div>
+                </div> -->
+          <!-- </div> -->
+          <!-- /.row -->
+          <!-- </div> -->
+          <!-- /.container-fluid -->
+          <!-- </div>
 
           <hr>
 
@@ -394,19 +480,21 @@ if ($user->isLoggedIn()) {
 
           </div>
 
-          <hr>
+          <hr> -->
 
-          <div class="content-header">
+          <!-- <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-12">
                   <h1 class="m-0 text-center">End Study Up to <?= date('Y-m-d'); ?></h1>
                 </div>
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </div>
+              </div> -->
+          <!-- /.row -->
+          <!-- </div> -->
+          <!-- /.container-fluid -->
+          <!-- </div> -->
 
-          <hr>
+          <!-- <hr>
 
           <div class="row">
             <div class="chartBox">
@@ -415,7 +503,7 @@ if ($user->isLoggedIn()) {
 
           </div>
 
-          <hr>
+          <hr> -->
 
         </div>
         <!-- /.container-fluid -->
@@ -447,7 +535,11 @@ if ($user->isLoggedIn()) {
   <!-- Bootstrap 4 -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- ChartJS -->
+
   <script src="plugins/chart.js/Chart.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- Sparkline -->
   <script src="plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
@@ -470,14 +562,17 @@ if ($user->isLoggedIn()) {
   <!-- <script src="dist/js/demo.js"></script> -->
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <!-- <script src="dist/js/pages/dashboard.js"></script> -->
-  <script src="dist/js/pages/dashboard1.js"></script>
+  <script src="dist/js/pages/dashboard1_1.js"></script>
   <script src="dist/js/pages/dashboard1_2.js"></script>
   <script src="dist/js/pages/dashboard1_3.js"></script>
+  <script src="dist/js/pages/dashboard1_4.js"></script>
+  <script src="dist/js/pages/dashboard1_5.js"></script>
+
 
 
   <script>
     // SETUP BLOCK
-    
+
 
     // fetch('process1.php')
     //   .then(response => response.json())
@@ -530,199 +625,199 @@ if ($user->isLoggedIn()) {
 
 
 
-    fetch('process2.php')
-      .then(response => response.json())
-      .then(data => {
-        const monthname = Object.keys(data);
-        const amana = monthname.map(monthname => data[monthname]['1']);
-        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
-        const temeke = monthname.map(monthname => data[monthname]['3']);
-        const mbagala = monthname.map(monthname => data[monthname]['4']);
-        const magomeni = monthname.map(monthname => data[monthname]['5']);
+    // fetch('process2.php')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     const monthname = Object.keys(data);
+    //     const amana = monthname.map(monthname => data[monthname]['1']);
+    //     const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+    //     const temeke = monthname.map(monthname => data[monthname]['3']);
+    //     const mbagala = monthname.map(monthname => data[monthname]['4']);
+    //     const magomeni = monthname.map(monthname => data[monthname]['5']);
 
 
-        var ctx = document.getElementById('screening').getContext('2d');
-        var chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: monthname,
-            datasets: [{
-              label: 'Amana RRH',
-              backgroundColor: 'pink',
-              data: amana
-            }, {
-              label: 'Mwananyamala RRH',
-              backgroundColor: 'blue',
-              data: mwananyamala
-            }, {
-              label: 'Temeke RRH',
-              backgroundColor: 'yellow',
-              data: temeke
-            }, {
-              label: 'Mbagala Rangi Tatu Hospital',
-              backgroundColor: 'green',
-              data: mbagala
-            }, {
-              label: 'Magomeni Hospital',
-              backgroundColor: 'orange',
-              data: magomeni
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      });
+    //     var ctx = document.getElementById('screening').getContext('2d');
+    //     var chart = new Chart(ctx, {
+    //       type: 'bar',
+    //       data: {
+    //         labels: monthname,
+    //         datasets: [{
+    //           label: 'Amana RRH',
+    //           backgroundColor: 'pink',
+    //           data: amana
+    //         }, {
+    //           label: 'Mwananyamala RRH',
+    //           backgroundColor: 'blue',
+    //           data: mwananyamala
+    //         }, {
+    //           label: 'Temeke RRH',
+    //           backgroundColor: 'yellow',
+    //           data: temeke
+    //         }, {
+    //           label: 'Mbagala Rangi Tatu Hospital',
+    //           backgroundColor: 'green',
+    //           data: mbagala
+    //         }, {
+    //           label: 'Magomeni Hospital',
+    //           backgroundColor: 'orange',
+    //           data: magomeni
+    //         }]
+    //       },
+    //       options: {
+    //         scales: {
+    //           y: {
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       }
+    //     });
+    //   });
 
-    fetch('process3.php')
-      .then(response => response.json())
-      .then(data => {
-        const monthname = Object.keys(data);
-        const amana = monthname.map(monthname => data[monthname]['1']);
-        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
-        const temeke = monthname.map(monthname => data[monthname]['3']);
-        const mbagala = monthname.map(monthname => data[monthname]['4']);
-        const magomeni = monthname.map(monthname => data[monthname]['5']);
-
-
-        var ctx = document.getElementById('eligible').getContext('2d');
-        var chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: monthname,
-            datasets: [{
-              label: 'Amana RRH',
-              backgroundColor: 'pink',
-              data: amana
-            }, {
-              label: 'Mwananyamala RRH',
-              backgroundColor: 'blue',
-              data: mwananyamala
-            }, {
-              label: 'Temeke RRH',
-              backgroundColor: 'yellow',
-              data: temeke
-            }, {
-              label: 'Mbagala Rangi Tatu Hospital',
-              backgroundColor: 'green',
-              data: mbagala
-            }, {
-              label: 'Magomeni Hospital',
-              backgroundColor: 'orange',
-              data: magomeni
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      });
+    // fetch('process3.php')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     const monthname = Object.keys(data);
+    //     const amana = monthname.map(monthname => data[monthname]['1']);
+    //     const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+    //     const temeke = monthname.map(monthname => data[monthname]['3']);
+    //     const mbagala = monthname.map(monthname => data[monthname]['4']);
+    //     const magomeni = monthname.map(monthname => data[monthname]['5']);
 
 
-    fetch('process4.php')
-      .then(response => response.json())
-      .then(data => {
-        const monthname = Object.keys(data);
-        const amana = monthname.map(monthname => data[monthname]['1']);
-        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
-        const temeke = monthname.map(monthname => data[monthname]['3']);
-        const mbagala = monthname.map(monthname => data[monthname]['4']);
-        const magomeni = monthname.map(monthname => data[monthname]['5']);
+    //     var ctx = document.getElementById('eligible').getContext('2d');
+    //     var chart = new Chart(ctx, {
+    //       type: 'bar',
+    //       data: {
+    //         labels: monthname,
+    //         datasets: [{
+    //           label: 'Amana RRH',
+    //           backgroundColor: 'pink',
+    //           data: amana
+    //         }, {
+    //           label: 'Mwananyamala RRH',
+    //           backgroundColor: 'blue',
+    //           data: mwananyamala
+    //         }, {
+    //           label: 'Temeke RRH',
+    //           backgroundColor: 'yellow',
+    //           data: temeke
+    //         }, {
+    //           label: 'Mbagala Rangi Tatu Hospital',
+    //           backgroundColor: 'green',
+    //           data: mbagala
+    //         }, {
+    //           label: 'Magomeni Hospital',
+    //           backgroundColor: 'orange',
+    //           data: magomeni
+    //         }]
+    //       },
+    //       options: {
+    //         scales: {
+    //           y: {
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       }
+    //     });
+    //   });
 
 
-        var ctx = document.getElementById('enrolled').getContext('2d');
-        var chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: monthname,
-            datasets: [{
-              label: 'Amana RRH',
-              backgroundColor: 'pink',
-              data: amana
-            }, {
-              label: 'Mwananyamala RRH',
-              backgroundColor: 'blue',
-              data: mwananyamala
-            }, {
-              label: 'Temeke RRH',
-              backgroundColor: 'yellow',
-              data: temeke
-            }, {
-              label: 'Mbagala Rangi Tatu Hospital',
-              backgroundColor: 'green',
-              data: mbagala
-            }, {
-              label: 'Magomeni Hospital',
-              backgroundColor: 'orange',
-              data: magomeni
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      });
+    // fetch('process4.php')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     const monthname = Object.keys(data);
+    //     const amana = monthname.map(monthname => data[monthname]['1']);
+    //     const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+    //     const temeke = monthname.map(monthname => data[monthname]['3']);
+    //     const mbagala = monthname.map(monthname => data[monthname]['4']);
+    //     const magomeni = monthname.map(monthname => data[monthname]['5']);
 
 
-    fetch('process5.php')
-      .then(response => response.json())
-      .then(data => {
-        const monthname = Object.keys(data);
-        const amana = monthname.map(monthname => data[monthname]['1']);
-        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
-        const temeke = monthname.map(monthname => data[monthname]['3']);
-        const mbagala = monthname.map(monthname => data[monthname]['4']);
-        const magomeni = monthname.map(monthname => data[monthname]['5']);
+    //     var ctx = document.getElementById('enrolled').getContext('2d');
+    //     var chart = new Chart(ctx, {
+    //       type: 'bar',
+    //       data: {
+    //         labels: monthname,
+    //         datasets: [{
+    //           label: 'Amana RRH',
+    //           backgroundColor: 'pink',
+    //           data: amana
+    //         }, {
+    //           label: 'Mwananyamala RRH',
+    //           backgroundColor: 'blue',
+    //           data: mwananyamala
+    //         }, {
+    //           label: 'Temeke RRH',
+    //           backgroundColor: 'yellow',
+    //           data: temeke
+    //         }, {
+    //           label: 'Mbagala Rangi Tatu Hospital',
+    //           backgroundColor: 'green',
+    //           data: mbagala
+    //         }, {
+    //           label: 'Magomeni Hospital',
+    //           backgroundColor: 'orange',
+    //           data: magomeni
+    //         }]
+    //       },
+    //       options: {
+    //         scales: {
+    //           y: {
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       }
+    //     });
+    //   });
 
 
-        var ctx = document.getElementById('end').getContext('2d');
-        var chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: monthname,
-            datasets: [{
-              label: 'Amana RRH',
-              backgroundColor: 'pink',
-              data: amana
-            }, {
-              label: 'Mwananyamala RRH',
-              backgroundColor: 'blue',
-              data: mwananyamala
-            }, {
-              label: 'Temeke RRH',
-              backgroundColor: 'yellow',
-              data: temeke
-            }, {
-              label: 'Mbagala Rangi Tatu Hospital',
-              backgroundColor: 'green',
-              data: mbagala
-            }, {
-              label: 'Magomeni Hospital',
-              backgroundColor: 'orange',
-              data: magomeni
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      });
+    // fetch('process5.php')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     const monthname = Object.keys(data);
+    //     const amana = monthname.map(monthname => data[monthname]['1']);
+    //     const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+    //     const temeke = monthname.map(monthname => data[monthname]['3']);
+    //     const mbagala = monthname.map(monthname => data[monthname]['4']);
+    //     const magomeni = monthname.map(monthname => data[monthname]['5']);
+
+
+    //     var ctx = document.getElementById('end').getContext('2d');
+    //     var chart = new Chart(ctx, {
+    //       type: 'bar',
+    //       data: {
+    //         labels: monthname,
+    //         datasets: [{
+    //           label: 'Amana RRH',
+    //           backgroundColor: 'pink',
+    //           data: amana
+    //         }, {
+    //           label: 'Mwananyamala RRH',
+    //           backgroundColor: 'blue',
+    //           data: mwananyamala
+    //         }, {
+    //           label: 'Temeke RRH',
+    //           backgroundColor: 'yellow',
+    //           data: temeke
+    //         }, {
+    //           label: 'Mbagala Rangi Tatu Hospital',
+    //           backgroundColor: 'green',
+    //           data: mbagala
+    //         }, {
+    //           label: 'Magomeni Hospital',
+    //           backgroundColor: 'orange',
+    //           data: magomeni
+    //         }]
+    //       },
+    //       options: {
+    //         scales: {
+    //           y: {
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       }
+    //     });
+    //   });
 
 
     // const month = <?php echo json_encode($month) ?>;
@@ -738,6 +833,8 @@ if ($user->isLoggedIn()) {
     //     borderWidth: 1
     //   }]
     // }
+
+
     // // //CONFIG BLOCK
     // const config = {
     //   type: 'bar',

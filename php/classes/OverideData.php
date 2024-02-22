@@ -731,4 +731,67 @@ class OverideData
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+
+
+    public function getNews7Month()
+    {
+        $query = $this->_pdo->query("SELECT * FROM clients WHERE MONTH(created_on) >= MONTH(NOW() - INTERVAL 2 MONTH)
+                            AND (YEAR(created_on) <= YEAR(NOW() - INTERVAL 0 MONTH))");
+
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
+    public function getNews7Month2()
+    {
+        $query = $this->_pdo->query("SELECT * FROM clients WHERE MONTH(created_on) >= MONTH(NOW() - INTERVAL 2 MONTH)
+                            AND (YEAR(created_on) <= YEAR(NOW() - INTERVAL 0 MONTH))");
+        $num = $query->rowCount();
+        return $num;
+    }
+
+    public function getMonthData()
+    {
+        $query = $this->_pdo->query("SELECT YEAR(created_on) AS year, MONTH(created_on) AS month, COUNT(*) AS records_count 
+          FROM clients 
+          GROUP BY YEAR(created_on), MONTH(created_on) 
+          ORDER BY YEAR(created_on), MONTH(created_on)");
+
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getMonthSum()
+    {
+        $query = $this->_pdo->query("SELECT MONTHNAME(created_on) as monthname, SUM(status) as amount FROM clients WHERE status = 1 GROUP BY monthname");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getMonthCount()
+    {
+        $query = $this->_pdo->query("SELECT MONTHNAME(created_on) as monthname, COUNT(status) as amount FROM clients WHERE status = 1 GROUP BY monthname");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getMonthCountSite($site_id)
+    {
+        $query = $this->_pdo->query("SELECT site_id, MONTHNAME(created_on) as monthname,COUNT(*) as count_data FROM clients WHERE site_id = '$site_id' AND status = 1 GROUP BY monthname, site_id ORDER BY monthname, site_id");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getMonthCountSiteTest($startDate, $endDate)
+    {
+        $query = $this->_pdo->query("SELECT site_id as site, MONTH(created_on) as month, COUNT(*) as count_data
+        FROM clients
+        WHERE created_on BETWEEN '$startDate' AND '$endDate'
+        GROUP BY site, MONTH(created_on)
+        ORDER BY site, MONTH(created_on)");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
