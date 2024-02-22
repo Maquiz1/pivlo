@@ -61,6 +61,7 @@ $(function () {
       const temeke = monthname.map((monthname) => data[monthname]["3"]);
       const mbagala = monthname.map((monthname) => data[monthname]["4"]);
       const magomeni = monthname.map((monthname) => data[monthname]["5"]);
+      
 
       /* Chart.js Charts */
       // registration
@@ -174,5 +175,38 @@ $(function () {
         data: salesChartData,
         options: salesChartOptions,
       });
+
+
+
+
+      // Donut Chart
+      var pieChartCanvas = $("#registration2").get(0).getContext("2d");
+      var pieData = {
+        labels: monthname,
+        datasets: [
+          {
+            data: amana,
+            backgroundColor: ["#f56954", "#00a65a", "#f39c12"],
+          },
+        ],
+      };
+      var pieOptions = {
+        legend: {
+          display: false,
+        },
+        maintainAspectRatio: false,
+        responsive: true,
+      };
+      // Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      // eslint-disable-next-line no-unused-vars
+      var pieChart = new Chart(pieChartCanvas, {
+        // lgtm[js/unused-local-variable]
+        type: "doughnut",
+        data: pieData,
+        options: pieOptions,
+      });
+
+
     });
 });

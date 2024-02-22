@@ -244,11 +244,11 @@ if ($user->isLoggedIn()) {
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
                       <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                        <a class="nav-link active" href="#registration_bar" data-toggle="tab">Bar</a>
                       </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li> -->
+                      <li class="nav-item">
+                        <a class="nav-link" href="#registration_donat" data-toggle="tab">Donut</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -256,11 +256,11 @@ if ($user->isLoggedIn()) {
                 <div class="card-body">
                   <div class="tab-content p-0">
                     <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                    <div class="chart tab-pane active" id="registration_bar" style="position: relative; height: 300px;">
                       <canvas id="registration" height="300" style="height: 300px;"></canvas>
                     </div>
-                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                    <div class="chart tab-pane" id="registration_donat" style="position: relative; height: 300px;">
+                      <canvas id="registration2" height="300" style="height: 300px;"></canvas>
                     </div>
                   </div>
                 </div>
@@ -277,16 +277,16 @@ if ($user->isLoggedIn()) {
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Screaning to <?= date('Y-m-d'); ?>
+                    Screening to <?= date('Y-m-d'); ?>
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
                       <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                        <a class="nav-link active" href="#screening1" data-toggle="tab">Bar</a>
                       </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                      </li> -->
+                      <li class="nav-item">
+                        <a class="nav-link" href="#screening2" data-toggle="tab">Donut</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -294,11 +294,11 @@ if ($user->isLoggedIn()) {
                 <div class="card-body">
                   <div class="tab-content p-0">
                     <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                    <div class="chart tab-pane active" id="screening1" style="position: relative; height: 300px;">
                       <canvas id="screening" height="300" style="height: 300px;"></canvas>
                     </div>
-                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                    <div class="chart tab-pane" id="screening2" style="position: relative; height: 300px;">
+                      <canvas id="screening2" height="300" style="height: 300px;"></canvas>
                     </div>
                   </div>
                 </div>
