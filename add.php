@@ -575,6 +575,9 @@ if ($user->isLoggedIn()) {
             }
         } elseif (Input::get('add_results')) {
             $validate = $validate->check($_POST, array(
+                'test_date' => array(
+                    'required' => true,
+                ),
                 'results_date' => array(
                     'required' => true,
                 ),
@@ -589,10 +592,12 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
+                // print_r($_POST);
                 $results = $override->get3('results', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
 
                 if ($results) {
                     $user->updateRecord('results', array(
+                        'test_date' => Input::get('test_date'),
                         'results_date' => Input::get('results_date'),
                         'ldct_results' => Input::get('ldct_results'),
                         'rad_score' => Input::get('rad_score'),
@@ -603,6 +608,7 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Results  Successful Updated';
                 } else {
                     $user->createRecord('results', array(
+                        'test_date' => Input::get('test_date'),
                         'results_date' => Input::get('results_date'),
                         'visit_code' => $_GET['visit_code'],
                         'study_id' => $_GET['study_id'],
@@ -836,7 +842,7 @@ if ($user->isLoggedIn()) {
             }
         } elseif (Input::get('add_outcome')) {
             $validate = $validate->check($_POST, array(
-                'outcome_date' => array(
+                'visit_date' => array(
                     'required' => true,
                 ),
                 'diagnosis' => array(
@@ -853,9 +859,10 @@ if ($user->isLoggedIn()) {
 
                 if ($outcome) {
                     $user->updateRecord('outcome', array(
-                        'outcome_date' => Input::get('outcome_date'),
+                        'visit_date' => Input::get('visit_date'),
                         'diagnosis' => Input::get('diagnosis'),
                         'outcome' => Input::get('outcome'),
+                        'outcome_date' => Input::get('outcome_date'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
                     ), $outcome[0]['id']);
@@ -863,12 +870,13 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Outcome  Successful Updated';
                 } else {
                     $user->createRecord('outcome', array(
-                        'outcome_date' => Input::get('outcome_date'),
+                        'visit_date' => Input::get('visit_date'),
                         'visit_code' => $_GET['visit_code'],
                         'study_id' => $_GET['study_id'],
                         'sequence' => $_GET['sequence'],
                         'diagnosis' => Input::get('diagnosis'),
                         'outcome' => Input::get('outcome'),
+                        'outcome_date' => Input::get('outcome_date'),
                         'status' => 1,
                         'patient_id' => $_GET['cid'],
                         'create_on' => date('Y-m-d H:i:s'),
@@ -3609,34 +3617,44 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
-                                                        <label for="results_date" class="form-label">Date</label>
+                                                        <label for="test_date" class="form-label">Date of Test</label>
+                                                        <input type="date" value="<?php if ($results) {
+                                                                                        print_r($results['test_date']);
+                                                                                    } ?>" id="test_date" name="test_date" class="form-control" placeholder="Enter test date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="results_date" class="form-label">Date of Results</label>
                                                         <input type="date" value="<?php if ($results) {
                                                                                         print_r($results['results_date']);
-                                                                                    } ?>" id="results_date" name="results_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter results date" required />
+                                                                                    } ?>" id="results_date" name="results_date" class="form-control" placeholder="Enter results date" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="ldct_results" class="form-label">LDCT RESULTS</label>
-                                                        <input type="text" value="<?php if ($results) {
-                                                                                        print_r($results['ldct_results']);
-                                                                                    } ?>" id="ldct_results" name="ldct_results" class="form-control" placeholder="Enter LDCT results" required />
+                                                        <textarea class="form-control" name="ldct_results" id="ldct_results" rows="4" placeholder="Enter LDCT results" required>
+                                                            <?php if ($results) {
+                                                                print_r($results['ldct_results']);
+                                                            } ?>
+                                                        </textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="rad_score" class="form-label">RAD SCORE</label>
-                                                        <input type="text" value="<?php if ($results) {
+                                                        <input type="number" value="<?php if ($results) {
                                                                                         print_r($results['rad_score']);
-                                                                                    } ?>" id="rad_score" name="rad_score" class="form-control" placeholder="Enter RAD score" required />
+                                                                                    } ?>" id="rad_score" name="rad_score" min="0" class="form-control" placeholder="Enter RAD score" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="findings" class="form-label">FINDINGS:</label>
-                                                        <textarea class="form-control" name="findings" id="findings" rows="5">
+                                                        <textarea class="form-control" name="findings" id="findings" rows="4" placeholder="Enter findings" required>
                                                                                             <?php if ($results) {
                                                                                                 print_r($results['findings']);
                                                                                             } ?>
@@ -4198,12 +4216,12 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
-                                                        <label for="outcome_date" class="form-label">Date</label>
+                                                        <label for="visit_date" class="form-label">Entry Date</label>
                                                         <input type="date" value="<?php if ($outcome) {
-                                                                                        print_r($outcome['outcome_date']);
-                                                                                    } ?>" id="outcome_date" name="outcome_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter outcome date" required />
+                                                                                        print_r($outcome['visit_date']);
+                                                                                    } ?>" id="visit_date" name="visit_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter visit date" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
@@ -4221,33 +4239,53 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="outcome" class="form-label">Outcome</label>
-                                                        <select class="form-control" id="outcome" name="outcome" style="width: 100%;" required>
-                                                            <option value="<?= $outcome['outcome'] ?>"><?php if ($outcome) {
-                                                                                                            if ($outcome['outcome'] == 1) {
-                                                                                                                echo 'Await another screening';
-                                                                                                            } elseif ($outcome['outcome'] == 2) {
-                                                                                                                echo 'On treatment';
-                                                                                                            } elseif ($outcome['outcome'] == 3) {
-                                                                                                                echo 'Recovered';
-                                                                                                            } elseif ($outcome['outcome'] == 4) {
-                                                                                                                echo 'Died';
-                                                                                                            } elseif ($outcome['outcome'] == 5) {
-                                                                                                                echo 'Unknown/Loss to follow up1';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                            </option>
-                                                            <option value="1">Await another screening</option>
-                                                            <option value="2">On treatment</option>
-                                                            <option value="3">Recovered</option>
-                                                            <option value="4">Died</option>
-                                                            <option value="5">Unknown/Loss to follow up</option>
-                                                        </select>
+                                                <div class="col-sm-2">
+                                                    <label>Outcome</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome1" value="1" <?php if ($outcome['outcome'] == 1) {
+                                                                                                                                                        echo 'checked';
+                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Await another screening</label>
+                                                            </div>
 
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome2" value="2" <?php if ($outcome['outcome'] == 2) {
+                                                                                                                                                        echo 'checked';
+                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">On treatment</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome3" value="3" <?php if ($outcome['outcome'] == 3) {
+                                                                                                                                                        echo 'checked';
+                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Recovered</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome4" value="4" <?php if ($outcome['outcome'] == 4) {
+                                                                                                                                                        echo 'checked';
+                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Died</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome5" value="5" <?php if ($outcome['outcome'] == 5) {
+                                                                                                                                                        echo 'checked';
+                                                                                                                                                    } ?>>
+                                                                <label class="form-check-label">Unknown/Loss to follow up</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-2" id="outcome_date">
+                                                    <div class="mb-2">
+                                                        <label for="died" id="died" class="form-label">Date of Death</label>
+                                                        <label for="ltf" id="ltf" class="form-label">Date Last known to be alive</label>
+                                                        <input type="date" value="<?php if ($outcome) {
+                                                                                        print_r($outcome['outcome_date']);
+                                                                                    } ?>" name="outcome_date" class="form-control" max="<?= date('Y-m-d') ?>" placeholder="Enter outcome date" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -4385,6 +4423,8 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/economics/household.js"></script>
     <script src="myjs/add/economics/patient.js"></script>
 
+    <!-- economics Js -->
+    <script src="myjs/add/outcome/outcome.js"></script>
 
     <!-- economics radio requireds Js -->
     <script src="myjs/add/economics/format_required.js/format_radio.js"></script>
