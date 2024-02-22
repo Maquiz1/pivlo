@@ -350,6 +350,69 @@ if ($user->isLoggedIn()) {
 
           <hr>
 
+          <div class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-12">
+                  <h1 class="m-0 text-center">Eligible Up to <?= date('Y-m-d'); ?></h1>
+                </div>
+              </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="chartBox">
+              <canvas id="eligible"></canvas>
+            </div>
+
+          </div>
+
+          <hr>
+
+          <div class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-12">
+                  <h1 class="m-0 text-center">Enrolled Up to <?= date('Y-m-d'); ?></h1>
+                </div>
+              </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="chartBox">
+              <canvas id="enrolled"></canvas>
+            </div>
+
+          </div>
+
+          <hr>
+
+          <div class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-12">
+                  <h1 class="m-0 text-center">End Study Up to <?= date('Y-m-d'); ?></h1>
+                </div>
+              </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="chartBox">
+              <canvas id="end"></canvas>
+            </div>
+
+          </div>
+
+          <hr>
+
         </div>
         <!-- /.container-fluid -->
       </section>
@@ -411,7 +474,7 @@ if ($user->isLoggedIn()) {
   <script>
     // SETUP BLOCK
 
-    fetch('process1.php?&status=1')
+    fetch('process1.php')
       .then(response => response.json())
       .then(data => {
         const monthname = Object.keys(data);
@@ -462,7 +525,7 @@ if ($user->isLoggedIn()) {
 
 
 
-    fetch('process2.php?&status=2')
+    fetch('process2.php')
       .then(response => response.json())
       .then(data => {
         const monthname = Object.keys(data);
@@ -474,6 +537,152 @@ if ($user->isLoggedIn()) {
 
 
         var ctx = document.getElementById('screening').getContext('2d');
+        var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: monthname,
+            datasets: [{
+              label: 'Amana RRH',
+              backgroundColor: 'pink',
+              data: amana
+            }, {
+              label: 'Mwananyamala RRH',
+              backgroundColor: 'blue',
+              data: mwananyamala
+            }, {
+              label: 'Temeke RRH',
+              backgroundColor: 'yellow',
+              data: temeke
+            }, {
+              label: 'Mbagala Rangi Tatu Hospital',
+              backgroundColor: 'green',
+              data: mbagala
+            }, {
+              label: 'Magomeni Hospital',
+              backgroundColor: 'orange',
+              data: magomeni
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+
+    fetch('process3.php')
+      .then(response => response.json())
+      .then(data => {
+        const monthname = Object.keys(data);
+        const amana = monthname.map(monthname => data[monthname]['1']);
+        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+        const temeke = monthname.map(monthname => data[monthname]['3']);
+        const mbagala = monthname.map(monthname => data[monthname]['4']);
+        const magomeni = monthname.map(monthname => data[monthname]['5']);
+
+
+        var ctx = document.getElementById('eligible').getContext('2d');
+        var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: monthname,
+            datasets: [{
+              label: 'Amana RRH',
+              backgroundColor: 'pink',
+              data: amana
+            }, {
+              label: 'Mwananyamala RRH',
+              backgroundColor: 'blue',
+              data: mwananyamala
+            }, {
+              label: 'Temeke RRH',
+              backgroundColor: 'yellow',
+              data: temeke
+            }, {
+              label: 'Mbagala Rangi Tatu Hospital',
+              backgroundColor: 'green',
+              data: mbagala
+            }, {
+              label: 'Magomeni Hospital',
+              backgroundColor: 'orange',
+              data: magomeni
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+
+
+    fetch('process4.php')
+      .then(response => response.json())
+      .then(data => {
+        const monthname = Object.keys(data);
+        const amana = monthname.map(monthname => data[monthname]['1']);
+        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+        const temeke = monthname.map(monthname => data[monthname]['3']);
+        const mbagala = monthname.map(monthname => data[monthname]['4']);
+        const magomeni = monthname.map(monthname => data[monthname]['5']);
+
+
+        var ctx = document.getElementById('enrolled').getContext('2d');
+        var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: monthname,
+            datasets: [{
+              label: 'Amana RRH',
+              backgroundColor: 'pink',
+              data: amana
+            }, {
+              label: 'Mwananyamala RRH',
+              backgroundColor: 'blue',
+              data: mwananyamala
+            }, {
+              label: 'Temeke RRH',
+              backgroundColor: 'yellow',
+              data: temeke
+            }, {
+              label: 'Mbagala Rangi Tatu Hospital',
+              backgroundColor: 'green',
+              data: mbagala
+            }, {
+              label: 'Magomeni Hospital',
+              backgroundColor: 'orange',
+              data: magomeni
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+
+
+    fetch('process5.php')
+      .then(response => response.json())
+      .then(data => {
+        const monthname = Object.keys(data);
+        const amana = monthname.map(monthname => data[monthname]['1']);
+        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+        const temeke = monthname.map(monthname => data[monthname]['3']);
+        const mbagala = monthname.map(monthname => data[monthname]['4']);
+        const magomeni = monthname.map(monthname => data[monthname]['5']);
+
+
+        var ctx = document.getElementById('end').getContext('2d');
         var chart = new Chart(ctx, {
           type: 'bar',
           data: {

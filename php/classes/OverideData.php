@@ -622,16 +622,16 @@ class OverideData
         return $result;
     }
 
-    public function getDataRegister3()
+    public function getDataRegister3($where, $value)
     {
-        $query = $this->_pdo->query("SELECT MONTHNAME(date_registered) AS monthname, site_id as site_id, COUNT(*) AS count FROM clients GROUP BY monthname, site_id");
+        $query = $this->_pdo->query("SELECT MONTHNAME(date_registered) AS monthname, site_id as site_id, COUNT(*) AS count FROM clients WHERE $where = '$value' GROUP BY monthname, site_id");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-        public function getDataRegister4()
+        public function getDataRegister4($where, $value,$where1, $value1)
     {
-        $query = $this->_pdo->query("SELECT MONTHNAME(date_registered) AS monthname, site_id as site_id, COUNT(*) AS count FROM clients WHERE screened = 1 GROUP BY monthname, site_id");
+        $query = $this->_pdo->query("SELECT MONTHNAME(date_registered) AS monthname, site_id as site_id, COUNT(*) AS count FROM clients WHERE $where = '$value' AND $where1 = '$value1' GROUP BY monthname, site_id");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }

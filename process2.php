@@ -8,7 +8,8 @@ header('Content-Type: application/json');
 
 
 $data = array();
-$result = $override->getDataRegister4();
+
+$result = $override->getDataRegister4('status', 1, 'screened', 1);
 
 foreach ($result as $value) {
     $monthname = $value['monthname'];

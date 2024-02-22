@@ -6,8 +6,11 @@ $email = new Email();
 $random = new Random();
 header('Content-Type: application/json');
 
+
 $data = array();
-$result = $override->getDataRegister3('status', 1);
+
+$result = $override->getDataRegister4('status', 1, 'eligible', 1);
+
 foreach ($result as $value) {
     $monthname = $value['monthname'];
     $site_id = $value['site_id'];
@@ -19,6 +22,5 @@ foreach ($result as $value) {
 
     $data[$monthname][$site_id] = $count;
 }
-
 
 echo json_encode($data);
