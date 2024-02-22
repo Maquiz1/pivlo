@@ -2298,7 +2298,7 @@ if ($user->isLoggedIn()) {
                                                             <a href="#" class="btn btn-success">Active</a>
                                                         </td>
                                                         <td class="table-user">
-                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                            <a href="add.php?id=10&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
                                                         </td>
                                                     </tr>
                                                 <?php $x++;
@@ -2465,7 +2465,7 @@ if ($user->isLoggedIn()) {
                                                             <a href="#" class="btn btn-success">Active</a>
                                                         </td>
                                                         <td class="table-user">
-                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                            <a href="add.php?id=9&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
                                                         </td>
                                                     </tr>
                                                 <?php $x++;
@@ -2631,7 +2631,7 @@ if ($user->isLoggedIn()) {
                                                             <a href="#" class="btn btn-success">Active</a>
                                                         </td>
                                                         <td class="table-user">
-                                                            <a href="add.php?id=5&cid=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                            <a href="#" class="btn btn-info">Update</a>
                                                         </td>
                                                     </tr>
                                                 <?php $x++;
