@@ -159,11 +159,11 @@ $(function () {
             },
           ],
         },
-        plugins: {
-          labels: {
-            render: "value",
-          },
-        },
+        // plugins: {
+        //   labels: {
+        //     render: "value",
+        //   },
+        // },
       };
 
       // This will get the first returned node in the jQuery collection.
