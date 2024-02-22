@@ -10,6 +10,12 @@
 $(function () {
   ("use strict");
 
+  var ticksStyle = {
+    fontColor: "#495057",
+    fontStyle: "bold",
+  };
+
+
   // Make the dashboard widgets sortable Using jquery UI
   $(".connectedSortable").sortable({
     placeholder: "sort-highlight",
@@ -157,13 +163,24 @@ $(function () {
           ],
           yAxes: [
             {
-              ticks: {
-                stepSize: 1,
-                suggestedMax: 10,
-              },
               gridLines: {
                 display: false,
               },
+              ticks: $.extend(
+                {
+                  beginAtZero: true,
+                  stepSize: 1,
+                  suggestedMax: 5,
+                },
+                ticksStyle
+              ),
+
+              // ticks: {
+              //   beginAtZero: true,
+              //   stepSize: 1,
+              //   // fontColor: "#8f9092",
+              //   // suggestedMax: 60,
+              // },
             },
           ],
         },
