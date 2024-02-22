@@ -13,20 +13,20 @@ $(function () {
   // $(document).ready(function () {
   // var getUid = $(this).attr("update-data");
 
-  $.ajax({
-    url: "process1.php",
-    type: "GET",
-    data: {
-      getUid: 1,
-    },
-    dataType: "json",
-    success: function (data) {
-      createChart(data);
-    },
-    error: function (error) {
-      console.error("Error fetching data:", error);
-    },
-  });
+  // $.ajax({
+  //   url: "process1.php?content=all",
+  //   type: "GET",
+  //   data: {
+  //     getUid: 1,
+  //   },
+  //   dataType: "json",
+  //   success: function (data) {
+  //     createChart(data);
+  //   },
+  //   error: function (error) {
+  //     console.error("Error fetching data:", error);
+  //   },
+  // });
   // });
 
 
@@ -182,7 +182,7 @@ $(function () {
     /* Chart.js Charts */
     // Sales chart
     var salesChartCanvas = document
-      .getElementById("registration")
+      .getElementById("revenue-chart-canvas")
       .getContext("2d");
     // $('#revenue-chart').get(0).getContext('2d');
 

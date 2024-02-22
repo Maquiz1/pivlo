@@ -227,84 +227,88 @@ if ($user->isLoggedIn()) {
           </div>
           <!-- /.row -->
 
-          <?php if ($_GET['id'] == 100) { ?>
-            <div class="row">
-              <!-- Left col -->
-              <section class="col-lg-6 connectedSortable">
-                <!-- Custom tabs (Charts with tabs)-->
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="fas fa-chart-pie mr-1"></i>
-                      Sales
-                    </h3>
-                    <div class="card-tools">
-                      <ul class="nav nav-pills ml-auto">
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                        </li>
-                      </ul>
+          <?php
+          //  if ($_GET['id'] == 100) {
+          ?>
+          <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-6 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Registration Up to <?= date('Y-m-d'); ?>
+                  </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                  <div class="tab-content p-0">
+                    <!-- Morris chart - Sales -->
+                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                      <canvas id="registration" height="300" style="height: 300px;"></canvas>
                     </div>
-                  </div><!-- /.card-header -->
-                  <div class="card-body">
-                    <div class="tab-content p-0">
-                      <!-- Morris chart - Sales -->
-                      <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                        <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                      </div>
-                      <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                        <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                      </div>
+                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
                     </div>
-                  </div><!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+                  </div>
+                </div><!-- /.card-body -->
+              </div>
+              <!-- /.card -->
 
-              </section>
-              <!-- /.Left col -->
-              <!-- right col (We are only adding the ID to make the widgets sortable)-->
-              <section class="col-lg-6 connectedSortable">
-                <!-- Custom tabs (Charts with tabs)-->
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="fas fa-chart-pie mr-1"></i>
-                      Sales
-                    </h3>
-                    <div class="card-tools">
-                      <ul class="nav nav-pills ml-auto">
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                        </li>
-                      </ul>
+            </section>
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-6 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Screaning Up to <?= date('Y-m-d'); ?>
+                  </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                  <div class="tab-content p-0">
+                    <!-- Morris chart - Sales -->
+                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                      <canvas id="screening" height="300" style="height: 300px;"></canvas>
                     </div>
-                  </div><!-- /.card-header -->
-                  <div class="card-body">
-                    <div class="tab-content p-0">
-                      <!-- Morris chart - Sales -->
-                      <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                        <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                      </div>
-                      <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                        <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                      </div>
+                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
                     </div>
-                  </div><!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+                  </div>
+                </div><!-- /.card-body -->
+              </div>
+              <!-- /.card -->
 
-              </section>
-              <!-- right col -->
-            </div>
-            <!-- /.row (main row) -->
+            </section>
+            <!-- right col -->
+          </div>
+          <!-- /.row (main row) -->
 
-          <?php } ?>
+          <?php
+          //  }
+          ?>
 
           <hr>
 
@@ -320,12 +324,12 @@ if ($user->isLoggedIn()) {
 
           <hr>
 
-          <div class="row">
+          <!-- <div class="row">
             <div class="chartBox">
               <canvas id="registration"></canvas>
             </div>
 
-          </div>
+          </div> -->
 
           <hr>
 
@@ -341,12 +345,12 @@ if ($user->isLoggedIn()) {
 
           <hr>
 
-          <div class="row">
+          <!-- <div class="row">
             <div class="chartBox">
               <canvas id="screening"></canvas>
             </div>
 
-          </div>
+          </div> -->
 
           <hr>
 
@@ -473,55 +477,56 @@ if ($user->isLoggedIn()) {
 
   <script>
     // SETUP BLOCK
+    
 
-    fetch('process1.php')
-      .then(response => response.json())
-      .then(data => {
-        const monthname = Object.keys(data);
-        const amana = monthname.map(monthname => data[monthname]['1']);
-        const mwananyamala = monthname.map(monthname => data[monthname]['2']);
-        const temeke = monthname.map(monthname => data[monthname]['3']);
-        const mbagala = monthname.map(monthname => data[monthname]['4']);
-        const magomeni = monthname.map(monthname => data[monthname]['5']);
+    // fetch('process1.php')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     const monthname = Object.keys(data);
+    //     const amana = monthname.map(monthname => data[monthname]['1']);
+    //     const mwananyamala = monthname.map(monthname => data[monthname]['2']);
+    //     const temeke = monthname.map(monthname => data[monthname]['3']);
+    //     const mbagala = monthname.map(monthname => data[monthname]['4']);
+    //     const magomeni = monthname.map(monthname => data[monthname]['5']);
 
 
-        var ctx = document.getElementById('registration').getContext('2d');
+    //     var ctx = document.getElementById('registration').getContext('2d');
 
-        var chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: monthname,
-            datasets: [{
-              label: 'Amana RRH',
-              backgroundColor: 'pink',
-              data: amana
-            }, {
-              label: 'Mwananyamala RRH',
-              backgroundColor: 'blue',
-              data: mwananyamala
-            }, {
-              label: 'Temeke RRH',
-              backgroundColor: 'yellow',
-              data: temeke
-            }, {
-              label: 'Mbagala Rangi Tatu Hospital',
-              backgroundColor: 'green',
-              data: mbagala
-            }, {
-              label: 'Magomeni Hospital',
-              backgroundColor: 'orange',
-              data: magomeni
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      });
+    //     var chart = new Chart(ctx, {
+    //       type: 'bar',
+    //       data: {
+    //         labels: monthname,
+    //         datasets: [{
+    //           label: 'Amana RRH',
+    //           backgroundColor: 'pink',
+    //           data: amana
+    //         }, {
+    //           label: 'Mwananyamala RRH',
+    //           backgroundColor: 'blue',
+    //           data: mwananyamala
+    //         }, {
+    //           label: 'Temeke RRH',
+    //           backgroundColor: 'yellow',
+    //           data: temeke
+    //         }, {
+    //           label: 'Mbagala Rangi Tatu Hospital',
+    //           backgroundColor: 'green',
+    //           data: mbagala
+    //         }, {
+    //           label: 'Magomeni Hospital',
+    //           backgroundColor: 'orange',
+    //           data: magomeni
+    //         }]
+    //       },
+    //       options: {
+    //         scales: {
+    //           y: {
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       }
+    //     });
+    //   });
 
 
 
