@@ -10,12 +10,6 @@
 $(function () {
   ("use strict");
 
-  var ticksStyle = {
-    fontColor: "#495057",
-    fontStyle: "bold",
-  };
-
-
   // Make the dashboard widgets sortable Using jquery UI
   $(".connectedSortable").sortable({
     placeholder: "sort-highlight",
@@ -67,6 +61,11 @@ $(function () {
       const temeke = monthname.map((monthname) => data[monthname]["3"]);
       const mbagala = monthname.map((monthname) => data[monthname]["4"]);
       const magomeni = monthname.map((monthname) => data[monthname]["5"]);
+
+        var ticksStyle = {
+          fontColor: "#495057",
+          fontStyle: "bold",
+        };
 
       /* Chart.js Charts */
       // registration
@@ -170,7 +169,7 @@ $(function () {
                 {
                   beginAtZero: true,
                   stepSize: 1,
-                  suggestedMax: 5,
+                  suggestedMax: 10,
                 },
                 ticksStyle
               ),

@@ -1218,7 +1218,7 @@ if ($user->isLoggedIn()) {
                                                                                         <label>Visit Date</label>
                                                                                         <input value="<?php if ($visit['visit_date']) {
                                                                                                             echo $visit['visit_date'];
-                                                                                                        } ?>" class="form-control" type="date" name="visit_date" id="visit_date" required />
+                                                                                                        } ?>" class="form-control" max="<?= date('Y-m-d'); ?>" type="date" name="visit_date" id="visit_date" required />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1247,9 +1247,11 @@ if ($user->isLoggedIn()) {
                                                                                     <!-- select -->
                                                                                     <div class="form-group">
                                                                                         <label>Notes / Remarks /Comments</label>
-                                                                                        <textarea class="form-control" name="comments" rows="3"><?php if ($visit['comments']) {
-                                                                                                                                                    echo $visit['comments'];
-                                                                                                                                                } ?></textarea>
+                                                                                        <textarea class="form-control" name="comments" rows="3">
+                                                                                            <?php if ($visit['comments']) {
+                                                                                                echo $visit['comments'];
+                                                                                            } ?>
+                                                                                                                                                </textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
