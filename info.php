@@ -2611,6 +2611,9 @@ if ($user->isLoggedIn()) {
                                             <thead>
                                                 <tr>
                                                     <th>Study Id</th>
+                                                    <th>Visit Name</th>
+                                                    <th>Expected Date</th>
+                                                    <th>Visit Date</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2625,6 +2628,15 @@ if ($user->isLoggedIn()) {
                                                     <tr>
                                                         <td class="table-user">
                                                             <?= $value['study_id']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $value['visit_name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $value['expected_date']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $value['visit_date']; ?>
                                                         </td>
                                                         <td class="table-user">
                                                             <?= $sites['name']; ?>
@@ -2642,6 +2654,9 @@ if ($user->isLoggedIn()) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Study Id</th>
+                                                    <th>Visit Name</th>
+                                                    <th>Expected Date</th>
+                                                    <th>Visit Date</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
