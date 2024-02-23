@@ -1261,7 +1261,7 @@ if ($user->isLoggedIn()) {
                                                                                             <?php if ($visit['comments']) {
                                                                                                 echo $visit['comments'];
                                                                                             } ?>
-                                                                                                                                                </textarea>
+                                                                                        </textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
