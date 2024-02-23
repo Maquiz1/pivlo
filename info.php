@@ -918,7 +918,7 @@ if ($user->isLoggedIn()) {
                                                             <td class="text-center">
                                                                 <a href="#" class="btn btn-success">
                                                                     <i class="ri-edit-box-line">
-                                                                    </i>Eligible for KAP <?php if ($value['age'] >= 45 & $value['age'] <= 80) {  ?> & History Screening <?php } ?>
+                                                                    </i><?php if ($value['age'] >= 45 & $value['age'] <= 80) {  ?>Eligible for KAP & History Screening <?php } else { ?>Eligible for KAP ONLY <?php } ?>
                                                                 </a>
                                                             </td>
                                                         <?php  } else { ?>
@@ -2650,8 +2650,8 @@ if ($user->isLoggedIn()) {
                                                                 <a href="#" class="btn btn-success">Done</a>
                                                             <?php } else if ($value['visit_status'] == 2) { ?>
                                                                 <a href="#" class="btn btn-warning">Missed</a>
-                                                            <?php } else if ($value['visit_status'] == 3) { ?>
-                                                                <a href="#" class="btn btn-danger">Not Known</a>
+                                                            <?php } else if ($value['visit_status'] == 0) { ?>
+                                                                <a href="#" class="btn btn-danger">Not Eligible</a>
                                                             <?php } else { ?>
                                                                 <a href="#" class="btn btn-danger">Not Known</a>
                                                             <?php } ?>

@@ -195,6 +195,7 @@ if ($user->isLoggedIn()) {
                     ),
                     'hospital_id' => array(
                         'required' => true,
+                        // 'unique' => 'clients'
                     ),
                     'site' => array(
                         'required' => true,
@@ -219,6 +220,7 @@ if ($user->isLoggedIn()) {
                     ),
                     'hospital_id' => array(
                         'required' => true,
+                        // 'unique' => 'clients'
                     ),
                 ));
             }
