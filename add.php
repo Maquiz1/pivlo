@@ -176,33 +176,59 @@ if ($user->isLoggedIn()) {
                 $pageError = $validate->errors();
             }
         } elseif (Input::get('add_client')) {
-            $validate = $validate->check($_POST, array(
-                'date_registered' => array(
-                    'required' => true,
-                ),
-                'firstname' => array(
-                    'required' => true,
-                ),
-                'middlename' => array(
-                    'required' => true,
-                ),
-                'lastname' => array(
-                    'required' => true,
-                ),
-                'sex' => array(
-                    'required' => true,
-                ),
-                'hospital_id' => array(
-                    'required' => true,
-                ),
-                // 'location' => array(
-                //     'required' => true,
-                // ),
-            ));
+            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                $validate = $validate->check($_POST, array(
+                    'date_registered' => array(
+                        'required' => true,
+                    ),
+                    'firstname' => array(
+                        'required' => true,
+                    ),
+                    'middlename' => array(
+                        'required' => true,
+                    ),
+                    'lastname' => array(
+                        'required' => true,
+                    ),
+                    'sex' => array(
+                        'required' => true,
+                    ),
+                    'hospital_id' => array(
+                        'required' => true,
+                    ),
+                    'site' => array(
+                        'required' => true,
+                    ),
+                ));
+            } else {
+                $validate = $validate->check($_POST, array(
+                    'date_registered' => array(
+                        'required' => true,
+                    ),
+                    'firstname' => array(
+                        'required' => true,
+                    ),
+                    'middlename' => array(
+                        'required' => true,
+                    ),
+                    'lastname' => array(
+                        'required' => true,
+                    ),
+                    'sex' => array(
+                        'required' => true,
+                    ),
+                    'hospital_id' => array(
+                        'required' => true,
+                    ),
+                ));
+            }
             if ($validate->passed()) {
-                print_r($_POST);
                 // $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
+                    $site_id = $user->data()->site_id;
+                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                        $site_id = Input::get('site');
+                    }
 
                     $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
 
@@ -290,7 +316,7 @@ if ($user->isLoggedIn()) {
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                            'site_id' => $user->data()->site_id,
+                            'site_id' => $site_id,
                         ));
 
                         $last_row = $override->lastRow('clients', 'id')[0];
@@ -315,7 +341,7 @@ if ($user->isLoggedIn()) {
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                            'site_id' => $user->data()->site_id,
+                            'site_id' => $site_id,
                         ));
 
                         $successMessage = 'Client  Added Successful';
@@ -338,6 +364,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
                 $vitu_hatarishi = implode(',', Input::get('vitu_hatarishi'));
                 $dalili_saratani = implode(',', Input::get('dalili_saratani'));
@@ -443,7 +470,7 @@ if ($user->isLoggedIn()) {
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
+                        'site_id' => $clients['site_id'],
                     ));
 
                     $successMessage = 'Kap  Successful Added';
@@ -463,6 +490,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid']);
                 $date1 = Input::get('start_smoking');
                 $packs = Input::get('packs_cigarette_day');
@@ -521,13 +549,13 @@ if ($user->isLoggedIn()) {
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
+                        'site_id' => $clients['site_id'],
                     ));
 
                     if ($eligible) {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 1);
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
                     } else {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 0);
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
                     }
 
                     $user->updateRecord('clients', array(
@@ -556,9 +584,9 @@ if ($user->isLoggedIn()) {
                     ), $history[0]['id']);
 
                     if ($eligible) {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 1);
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
                     } else {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $user->data()->site_id, 0);
+                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
                     }
                 }
 
@@ -592,7 +620,7 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
-                // print_r($_POST);
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 $results = $override->get3('results', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
 
                 if ($results) {
@@ -622,7 +650,7 @@ if ($user->isLoggedIn()) {
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
+                        'site_id' => $clients['site_id'],
                     ));
 
                     $user->updateRecord('clients', array(
@@ -644,7 +672,6 @@ if ($user->isLoggedIn()) {
             ));
 
             if ($validate->passed()) {
-                print_r($_POST);
                 if (count(Input::get('category')) == 1) {
                     foreach (Input::get('category') as $value) {
                         $visit_code = '';
@@ -673,6 +700,7 @@ if ($user->isLoggedIn()) {
                         }
                     }
 
+                    $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                     $classification = $override->get3('classification', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
 
@@ -697,7 +725,7 @@ if ($user->isLoggedIn()) {
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                            'site_id' => $user->data()->site_id,
+                            'site_id' => $clients['site_id'],
                         ));
 
 
@@ -729,7 +757,7 @@ if ($user->isLoggedIn()) {
                                 'staff_id' => $user->data()->id,
                                 'update_on' => date('Y-m-d H:i:s'),
                                 'update_id' => $user->data()->id,
-                                'site_id' => $user->data()->site_id,
+                                'site_id' => $clients['site_id'],
                             ));
                         }
                     }
@@ -776,6 +804,8 @@ if ($user->isLoggedIn()) {
                 ),
             ));
             if ($validate->passed()) {
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+
                 $economic = $override->get3('economic', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
 
                 if ($economic) {
@@ -831,7 +861,7 @@ if ($user->isLoggedIn()) {
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
+                        'site_id' => $clients['site_id'],
                     ));
                     $successMessage = 'Economic  Successful Added';
                 }
@@ -854,6 +884,7 @@ if ($user->isLoggedIn()) {
             ));
 
             if ($validate->passed()) {
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 $outcome = $override->get3('outcome', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
 
@@ -883,131 +914,11 @@ if ($user->isLoggedIn()) {
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
+                        'site_id' => $clients['site_id'],
                     ));
                     $successMessage = 'Outcome  Successful Added';
                 }
                 Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_health_care_kap')) {
-            $validate = $validate->check($_POST, array(
-                'interview_date' => array(
-                    'required' => true,
-                ),
-                'saratani_mapafu' => array(
-                    'required' => true,
-                ),
-                'uhusiano_saratani' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-                $history = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
-                if (!$kap) {
-                    $user->createRecord('kap', array(
-                        'study_id' => $_GET['study_id'],
-                        'interview_date' => Input::get('interview_date'),
-                        'saratani_mapafu' => Input::get('saratani_mapafu'),
-                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
-                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
-                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => Input::get('dalili_saratani'),
-                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => Input::get('saratani_vipimo'),
-                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
-                        'saratani_inatibika' => Input::get('saratani_inatibika'),
-                        'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => Input::get('matibabu'),
-                        'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
-                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
-                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
-                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
-                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
-                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
-                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => Input::get('saratani_hatari'),
-                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => Input::get('kundi'),
-                        'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => Input::get('ushawishi'),
-                        'ushawishi_other' => Input::get('ushawishi_other'),
-                        'hitaji_elimu' => Input::get('hitaji_elimu'),
-                        'vifo' => Input::get('vifo'),
-                        'tayari_dalili' => Input::get('tayari_dalili'),
-                        'saratani_kutibika' => Input::get('saratani_kutibika'),
-                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
-                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
-                        'saratani_kufa' => Input::get('saratani_kufa'),
-                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
-                        'wapi_matibabu' => Input::get('wapi_matibabu'),
-                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
-                        'saratani_ushauri' => Input::get('saratani_ushauri'),
-                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
-                        'comments' => Input::get('comments'),
-                        'status' => 1,
-                        'patient_id' => $_GET['cid'],
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $user->data()->site_id,
-                    ));
-
-                    $successMessage = 'Kap  Successful Added';
-                } else {
-                    $user->updateRecord('kap', array(
-                        'interview_date' => Input::get('interview_date'),
-                        'study_id' => $_GET['study_id'],
-                        'saratani_mapafu' => Input::get('saratani_mapafu'),
-                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
-                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => Input::get('vitu_hatarishi'),
-                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => Input::get('dalili_saratani'),
-                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => Input::get('saratani_vipimo'),
-                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
-                        'saratani_inatibika' => Input::get('saratani_inatibika'),
-                        'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => Input::get('matibabu'),
-                        'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
-                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
-                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
-                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
-                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
-                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
-                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => Input::get('saratani_hatari'),
-                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => Input::get('kundi'),
-                        'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => Input::get('ushawishi'),
-                        'ushawishi_other' => Input::get('ushawishi_other'),
-                        'hitaji_elimu' => Input::get('hitaji_elimu'),
-                        'vifo' => Input::get('vifo'),
-                        'tayari_dalili' => Input::get('tayari_dalili'),
-                        'saratani_kutibika' => Input::get('saratani_kutibika'),
-                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
-                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
-                        'saratani_kufa' => Input::get('saratani_kufa'),
-                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
-                        'wapi_matibabu' => Input::get('wapi_matibabu'),
-                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
-                        'saratani_ushauri' => Input::get('saratani_ushauri'),
-                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
-                        'comments' => Input::get('comments'),
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), $kap[0]['id']);
-                    $successMessage = 'Kap  Successful Updated';
-                }
-
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -1915,17 +1826,28 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="card card-warning">
                                                         <div class="card-header">
                                                             <h3 class="card-title">Type of Interview</h3>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <?php
+                                                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                ?>
+                                                    <div class="col-md-3">
+                                                        <div class="card card-warning">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">Site Name</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                                <div class="col-md-6">
                                                     <div class="card card-warning">
                                                         <div class="card-header">
                                                             <h3 class="card-title">ANY OTHER COMENT OR REMARKS</h3>
@@ -1933,9 +1855,8 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1957,7 +1878,27 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-8">
+                                                <?php
+                                                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                ?>
+                                                    <div class="col-sm-3" id="insurance_name">
+                                                        <label>Name Of Site:</label>
+                                                        <!-- radio -->
+                                                        <div class="row-form clearfix">
+                                                            <div class="form-group">
+                                                                <?php foreach ($override->get('sites', 'status', 1) as $site) { ?>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="site" id="site<?= $site['id']; ?>" value="<?= $site['id']; ?>" <?php if ($clients['site_id'] == $site['id']) {
+                                                                                                                                                                                                echo 'checked' . ' ' . 'required';
+                                                                                                                                                                                            } ?>>
+                                                                        <label class="form-check-label"><?= $site['name']; ?></label>
+                                                                    </div>
+                                                                <?php } ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                                <div class="col-sm-6">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">

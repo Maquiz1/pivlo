@@ -27,6 +27,15 @@ if ($user->isLoggedIn()) {
         }
     }
 
+
+    $staff_all = $override->getNo('user');
+    $staff_active = $override->getDataStaffCount('user', 'status', 1, 'power', 0, 'count', 4, 'id');
+    $staff_inactive = $override->getDataStaffCount('user', 'status', 0, 'power', 0, 'count', 4, 'id');
+    $staff_lock_active = $override->getDataStaff1Count('user', 'status', 1, 'power', 0, 'count', 4, 'id');
+    $staff_lock_inactive = $override->getDataStaff1Count('user', 'status', 0, 'power', 0, 'count', 4, 'id');
+
+
+
     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
         if ($_GET['site_id'] != null) {
             $kap = $override->getCount1('kap', 'status', 1, 'site_id', $_GET['site_id']);
@@ -153,6 +162,7 @@ if ($user->isLoggedIn()) {
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
+                            <span class="badge badge-info right"><?= $staff_all; ?></span>
                             <p>
                                 Staff <i class="fas fa-angle-left right"></i>
 
@@ -171,24 +181,28 @@ if ($user->isLoggedIn()) {
                             <li class="nav-item">
                                 <a href="info.php?id=1&status=1" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right"><?= $staff_active; ?></span>
                                     <p>Active</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=1&status=2" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right"><?= $staff_inactive; ?></span>
                                     <p>Inactive</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=1&status=3" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right"><?= $staff_lock_active; ?></span>
                                     <p>Locked And Active</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="info.php?id=1&status=4" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right"><?= $staff_lock_inactive; ?></span>
                                     <p>Locked And Inactive</p>
                                 </a>
                             </li>
@@ -198,6 +212,7 @@ if ($user->isLoggedIn()) {
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
+                        <span class="badge badge-info right"><?= $registered; ?></span>
                         <p>
                             Registration <i class="fas fa-angle-left right"></i>
                         </p>

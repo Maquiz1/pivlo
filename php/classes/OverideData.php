@@ -644,11 +644,25 @@ class OverideData
         return $result;
     }
 
+        public function getDataStaffCount($table, $where, $id, $where2, $id2, $where3, $id3, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 < '$id3' ORDER BY $name ASC");
+        $num = $query->rowCount();
+        return $num;
+    }
+
     public function getDataStaff1($table, $where, $id, $where2, $id2, $where3, $id3, $name)
     {
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 >= '$id3' ORDER BY $name ASC");
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+        public function getDataStaff1Count($table, $where, $id, $where2, $id2, $where3, $id3, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' AND $where3 >= '$id3' ORDER BY $name ASC");
+        $num = $query->rowCount();
+        return $num;
     }
 
 
