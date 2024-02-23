@@ -334,7 +334,6 @@ if ($user->isLoggedIn()) {
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => '',
                             'visit_status' => 0,
-                            'comments' => Input::get('comments'),
                             'status' => 1,
                             'patient_id' => $last_row['id'],
                             'create_on' => date('Y-m-d H:i:s'),

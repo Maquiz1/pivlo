@@ -2614,6 +2614,7 @@ if ($user->isLoggedIn()) {
                                                     <th>Visit Name</th>
                                                     <th>Expected Date</th>
                                                     <th>Visit Date</th>
+                                                    <th>Reason</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
@@ -2639,10 +2640,21 @@ if ($user->isLoggedIn()) {
                                                             <?= $value['visit_date']; ?>
                                                         </td>
                                                         <td class="table-user">
+                                                            <?= $value['comments']; ?>
+                                                        </td>
+                                                        <td class="table-user">
                                                             <?= $sites['name']; ?>
                                                         </td>
                                                         <td class="table-user">
-                                                            <a href="#" class="btn btn-success">Active</a>
+                                                            <?php if ($value['visit_status'] == 1) { ?>
+                                                                <a href="#" class="btn btn-success">Done</a>
+                                                            <?php } else if ($value['visit_status'] == 2) { ?>
+                                                                <a href="#" class="btn btn-warning">Missed</a>
+                                                            <?php } else if ($value['visit_status'] == 3) { ?>
+                                                                <a href="#" class="btn btn-danger">Not Known</a>
+                                                            <?php } else { ?>
+                                                                <a href="#" class="btn btn-danger">Not Known</a>
+                                                            <?php } ?>
                                                         </td>
                                                         <td class="table-user">
                                                             <a href="#" class="btn btn-info">Update</a>
@@ -2657,6 +2669,7 @@ if ($user->isLoggedIn()) {
                                                     <th>Visit Name</th>
                                                     <th>Expected Date</th>
                                                     <th>Visit Date</th>
+                                                    <th>Reason</th>
                                                     <th>Site</th>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
