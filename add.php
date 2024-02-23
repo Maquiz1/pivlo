@@ -13,8 +13,6 @@ if ($user->isLoggedIn()) {
     if (Input::exists('post')) {
         if (Input::get('add_user')) {
             $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id']);
-
-            $validate = new validate();
             if ($staff) {
                 $validate = $validate->check($_POST, array(
                     'firstname' => array(
@@ -275,7 +273,7 @@ if ($user->isLoggedIn()) {
                         $successMessage = 'Client Updated Successful';
                     } else {
 
-                        $std_id = $override->getNews('study_id', 'site_id', $user->data()->site_id, 'status', 0)[0];
+                        $std_id = $override->getNews('study_id', 'site_id', $site_id, 'status', 0)[0];
 
                         $user->createRecord('clients', array(
                             'date_registered' => Input::get('date_registered'),
