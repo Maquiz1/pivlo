@@ -133,7 +133,7 @@ if ($user->isLoggedIn()) {
                 try {
                     if (Input::get('name') == 'study_id') {
                         $study_id = $override->getData('study_id');
-                        foreach($study_id as $row){
+                        foreach ($study_id as $row) {
                             $user->updateRecord('study_id', array(
                                 'client_id' => 0,
                                 'status' => 0,
@@ -2736,6 +2736,24 @@ if ($user->isLoggedIn()) {
                                     <div class="card-header">
                                         <h3 class="card-title">Clear Data on Table</h3>
                                     </div>
+                                    <!-- <dl>
+                                        <dt>Clients</dt>
+                                        <dd>- Clients</dd>
+                                        <dt>Kap</dt>
+                                        <dd>- Kap</dd>
+                                        <dt>History</dt>
+                                        <dd>- History</dd>
+                                        <dt>Results</dt>
+                                        <dd>- Results</dd>
+                                        <dt>Classification</dt>
+                                        <dd>- Classification</dd>
+                                        <dt>Outcome</dt>
+                                        <dd>- Outcome</dd>
+                                        <dt>Economic</dt>
+                                        <dd>- Economic</dd>
+                                        <dt>Visit</dt>
+                                        <dd>- Visit</dd>
+                                    </dl> -->
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
@@ -2745,9 +2763,11 @@ if ($user->isLoggedIn()) {
                                                         <label for="name" class="form-label">Clear Data on Table</label>
                                                         <select name="name" id="name" class="form-control" required>
                                                             <option value="">Select Table</option>
-                                                            <?php foreach ($AllTables as $tables) { ?>
-                                                                <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
-                                                            <?php } ?>
+                                                            <?php foreach ($AllTables as $tables) {
+                                                                if ($tables['Tables_in_lungcancer'] == 'clients' || $tables['Tables_in_lungcancer'] == 'kap' || $tables['Tables_in_lungcancer'] == 'history' || $tables['Tables_in_lungcancer'] == 'results' || $tables['Tables_in_lungcancer'] == 'outcome' || $tables['Tables_in_lungcancer'] == 'economic' || $tables['Tables_in_lungcancer'] == 'visit') { ?> ?>
+                                                                    <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
+                                                            <?php }
+                                                            } ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -2815,9 +2835,11 @@ if ($user->isLoggedIn()) {
                                                         <label for="name" class="form-label">Unset Study ID</label>
                                                         <select name="name" id="name" class="form-control" required>
                                                             <option value="">Select Table</option>
-                                                            <?php foreach ($AllTables as $tables) { ?>
-                                                                <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
-                                                            <?php } ?>
+                                                            <?php foreach ($AllTables as $tables) {
+                                                                if ($tables['Tables_in_lungcancer'] == 'study_id') { ?>
+                                                                    <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
+                                                            <?php }
+                                                            } ?>
                                                         </select>
                                                     </div>
                                                 </div>
