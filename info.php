@@ -996,7 +996,7 @@ if ($user->isLoggedIn()) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
                                     <li class="breadcrumb-item active">Participant Schedules</li>
                                 </ol>
                             </div>
@@ -1030,14 +1030,20 @@ if ($user->isLoggedIn()) {
                                             $gender = 'Female';
                                         }
 
-                                        $name = 'Name: ' . $patient['firstname'] . ' ' . $patient['lastname'] . ' Age: ' . $patient['age'] . ' Gender: ' . $gender . ' Type: ' . $cat;
-
+                                        $name = 'Name: ' . $patient['firstname'] . ' ' . $patient['lastname'];
+                                        $age =  'Age:  ' . $patient['age'];
+                                        $gender =  'Gender: ' . $gender;
+                                        $cat =  'Type: ' . $cat;
                                         ?>
 
 
                                         <div class="row mb-2">
                                             <div class="col-sm-6">
-                                                <h1>Study ID: <?= $patient['study_id'] ?><h4><?= $name ?></h4>
+                                                <h1>Study ID: <?= $patient['study_id'] ?></h1>
+                                                <h4><?= $name ?></h4>
+                                                <h4><?= $age ?></h4>
+                                                <h4><?= $gender ?></h4>
+                                                <h4><?= $cat ?></h4>
                                             </div>
                                             <div class="col-sm-6">
                                                 <ol class="breadcrumb float-sm-right">
