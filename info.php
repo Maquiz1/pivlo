@@ -132,14 +132,13 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 try {
                     if (Input::get('name') == 'study_id') {
-                        $setSiteId = $override->UnsetId('study_id', 'client_id', 0, 'status', 0, 1);
-                        if ($setSiteId) {
-                            $successMessage = 'Table ' . '"' . Input::get('name') . '"' . ' Unseted Successfull';
-                        } else {
-                            $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  encounter an error';
+                        $study_id = $override->getData('study_id');
+                        foreach($study_id as $row){
+                            $user->updateRecord('study_id', array(
+                                'client_id' => 0,
+                                'status' => 0,
+                            ), $row['id']);
                         }
-                    } else {
-                        $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be unseted';
                     }
                 } catch (Exception $e) {
                     die($e->getMessage());
