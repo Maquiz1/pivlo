@@ -18,3 +18,18 @@ currently_smoking2.addEventListener("change", toggleElementVisibility);
 
 // Initial check
 toggleElementVisibility();
+
+
+
+function toggleRequiredCurrentlySmoking(radio) {
+  var quit_smoking1_1 = document.getElementById("quit_smoking1");
+  if (radio.value === "2") {
+    quit_smoking1_1.setAttribute("required", "required");
+  } else {
+    quit_smoking1_1.removeAttribute("required");
+    if (quit_smoking1_1.value !== "") {
+      quit_smoking1_1.value = "";
+    }
+  }
+}
+

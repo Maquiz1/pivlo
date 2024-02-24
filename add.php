@@ -3370,14 +3370,14 @@ if ($user->isLoggedIn()) {
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="ever_smoked" id="ever_smoked1" value="1" <?php if ($history['ever_smoked'] == 1) {
                                                                                                                                                                 echo 'checked';
-                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Yes</label>
+                                                                                                                                                            } ?> onchange="toggleRequired(this)" required>
+                                                                <label class=" form-check-label">Yes</label>
                                                             </div>
 
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="ever_smoked" id="ever_smoked2" value="2" <?php if ($history['ever_smoked'] == 2) {
                                                                                                                                                                 echo 'checked';
-                                                                                                                                                            } ?>>
+                                                                                                                                                            } ?> onchange="toggleRequired(this)" required>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
                                                         </div>
@@ -3388,7 +3388,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="start_smoking" class="form-label">When did you start smoking?</label>
                                                         <input type="number" value="<?php if ($history['start_smoking']) {
                                                                                         print_r($history['start_smoking']);
-                                                                                    } ?>" min="1970" max="<?= date('Y') ?>" name="start_smoking" class="form-control" placeholder="Enter Year" />
+                                                                                    } ?>" min="1970" max="<?= date('Y') ?>" name="start_smoking" id="start_smoking1" class="form-control" placeholder="Enter Year" />
                                                     </div>
                                                 </div>
 
@@ -3400,14 +3400,14 @@ if ($user->isLoggedIn()) {
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="currently_smoking" id="currently_smoking1" value="1" <?php if ($history['currently_smoking'] == 1) {
                                                                                                                                                                             echo 'checked';
-                                                                                                                                                                        } ?>>
+                                                                                                                                                                        } ?> onchange="toggleRequiredCurrentlySmoking(this)">
                                                                 <label class="form-check-label">Yes</label>
                                                             </div>
 
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="currently_smoking" id="currently_smoking2" value="2" <?php if ($history['currently_smoking'] == 2) {
                                                                                                                                                                             echo 'checked';
-                                                                                                                                                                        } ?>>
+                                                                                                                                                                        } ?> onchange="toggleRequiredCurrentlySmoking(this)">
                                                                 <label class="form-check-label">No</label>
                                                             </div>
                                                         </div>
@@ -3424,7 +3424,7 @@ if ($user->isLoggedIn()) {
                                                             <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
                                                             <input type="number" value="<?php if ($history['quit_smoking']) {
                                                                                             print_r($history['quit_smoking']);
-                                                                                        } ?>" min="1970" max="<?= date('Y') ?>" name="quit_smoking" class="form-control" placeholder="Enter Year" />
+                                                                                        } ?>" min="1970" max="<?= date('Y') ?>" name="quit_smoking" id="quit_smoking1" class="form-control" placeholder="Enter Year" />
                                                         </div>
                                                     </div>
 
@@ -3456,7 +3456,7 @@ if ($user->isLoggedIn()) {
                                                             <label for="cigarette_per_day" id="cigarette_per_day" class="form-label">Number of Cigarette per day</label>
                                                             <input type="number" value="<?php if ($history['packs_cigarette_day']) {
                                                                                             print_r($history['packs_cigarette_day']);
-                                                                                        } ?>" min="0" name="packs_cigarette_day" class="form-control" placeholder="Enter amount" />
+                                                                                        } ?>" min="0" max="1000" name="packs_cigarette_day" id="packs_cigarette_day" class="form-control" placeholder="Enter amount" />
                                                         </div>
                                                     </div>
 

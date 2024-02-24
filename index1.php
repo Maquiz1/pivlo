@@ -81,6 +81,7 @@ if ($user->isLoggedIn()) {
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -534,11 +535,16 @@ if ($user->isLoggedIn()) {
   </script>
   <!-- Bootstrap 4 -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
   <!-- ChartJS -->
-
   <script src="plugins/chart.js/Chart.min.js"></script>
+  
 
+  <!-- MY LINKS TO CHAARTS JS -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 
   <!-- Sparkline -->
   <script src="plugins/sparklines/sparkline.js"></script>

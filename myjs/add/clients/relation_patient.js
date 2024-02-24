@@ -11,6 +11,7 @@ const relation_patient_other = document.getElementById(
 function toggleElementVisibility() {
   if (relation_patient96.checked) {
     relation_patient_other.style.display = "block";
+    // addRequiredAttribute();
   } else {
     relation_patient_other.style.display = "none";
   }
@@ -25,3 +26,5 @@ relation_patient96.addEventListener("change", toggleElementVisibility);
 
 // Initial check
 toggleElementVisibility();
+
+
