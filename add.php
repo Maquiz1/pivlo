@@ -496,57 +496,57 @@ if ($user->isLoggedIn()) {
                 $packs = Input::get('packs_cigarette_day');
                 $eligible = 0;
 
-                if (Input::get('ever_smoked') == 2) {
-                    if (Input::get('start_smoking') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "When did you start smoking?" ' . ' before submit';
-                    } elseif (Input::get('currently_smoking') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "Are you Currently Smoking?" ' . ' before submit';
-                    } elseif (Input::get('type_smoked') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "Amount smoked per day in cigarette sticks/packs?" ' . ' before submit';
-                    } elseif (Input::get('packs_cigarette_day') == 3) {
-                        $errorMessage = 'Please remove the value from the question ' . ' "Number of packs per day" ' . ' before submit';
-                    } elseif (Input::get('currently_smoking') == 3) {
-                        $successMessage = 'History  Successful Updated';
-                    } else {
-                        $successMessage = 'History  Successful Updated';
-                    }
-                } else {
 
-                    if (Input::get('ever_smoked') == 1) {
-                        if (Input::get('currently_smoking') == 1) {
-                            $date2 = date('Y', strtotime(Input::get('screening_date')));
-                            if (Input::get('type_smoked') == 1) {
-                                $years = $date2 - $date1;
-                                $packs_year = $packs * $years;
-                                if ($packs_year >= 20) {
-                                    $eligible = 1;
-                                }
-                            } elseif (Input::get('type_smoked') == 2) {
-                                $years = $date2 - $date1;
-                                $packs_year = ($packs / 20) * $years;
-                                if ($packs_year >= 20) {
-                                    $eligible = 1;
-                                }
+                if (Input::get('ever_smoked') == 1) {
+                    if (Input::get('currently_smoking') == 1) {
+                        $date2 = date('Y', strtotime(Input::get('screening_date')));
+                        if (Input::get('type_smoked') == 1) {
+                            $years = $date2 - $date1;
+                            $packs_year = $packs * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
                             }
-                        } elseif (Input::get('currently_smoking') == 2) {
-                            $date2 = Input::get('quit_smoking');
-                            if (Input::get('type_smoked') == 1) {
-                                $years = $date2 - $date1;
-                                $packs_year = $packs * $years;
-                                if ($packs_year >= 20) {
-                                    $eligible = 1;
-                                }
-                            } elseif (Input::get('type_smoked') == 2) {
-                                $years = $date2 - $date1;
-                                $packs_year = ($packs / 20) * $years;
-                                if ($packs_year >= 20) {
-                                    $eligible = 1;
-                                }
+                        } elseif (Input::get('type_smoked') == 2) {
+                            $years = $date2 - $date1;
+                            $packs_year = ($packs / 20) * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
+                            }
+                        }
+                    } elseif (Input::get('currently_smoking') == 2) {
+                        $date2 = Input::get('quit_smoking');
+                        if (Input::get('type_smoked') == 1) {
+                            $years = $date2 - $date1;
+                            $packs_year = $packs * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
+                            }
+                        } elseif (Input::get('type_smoked') == 2) {
+                            $years = $date2 - $date1;
+                            $packs_year = ($packs / 20) * $years;
+                            if ($packs_year >= 20) {
+                                $eligible = 1;
                             }
                         }
                     }
+                }
+
+
+                if (Input::get('ever_smoked') == 2 && Input::get('start_smoking') != '') {
+                    $errorMessage = 'Please remove the value from the question ' . ' "When did you start smoking?" ' . ' before submit';
+                } elseif (Input::get('ever_smoked') == 2 && Input::get('currently_smoking') != '') {
+                    $errorMessage = 'Please remove the value from the question ' . ' "Are you Currently Smoking?" ' . ' before submit';
+                } elseif (Input::get('ever_smoked') == 2 && Input::get('type_smoked') != '') {
+                    $errorMessage = 'Please remove the value from the question ' . ' "Amount smoked per day in cigarette sticks/packs?" ' . ' before submit';
+                } elseif (Input::get('ever_smoked') == 2 && Input::get('packs_cigarette_day') != '') {
+                    $errorMessage = 'Please remove the value from the question ' . ' "Number of packs per day" ' . ' before submit';
+                } else {
+                    if (Input::get('ever_smoked') == 1 && Input::get('currently_smoking') == 1 && Input::get('quit_smoking') != '') {
+                        $errorMessage = 'Please remove the value from the question ' . ' "When did you quit smoking in years?" ' . ' before submit';
+                    }
 
                     if (!$history) {
+
                         $user->createRecord('history', array(
                             'screening_date' => Input::get('screening_date'),
                             'study_id' => $_GET['study_id'],
