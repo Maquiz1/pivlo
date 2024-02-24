@@ -499,12 +499,12 @@ if ($user->isLoggedIn()) {
                 if (Input::get('ever_smoked') == 2) {
                     if (Input::get('start_smoking') != '') {
                         $errorMessage = 'Please remove the value from the question ' . ' "When did you start smoking?" ' . ' before submit';
-                    } elseif (Input::get('currently_smoking') == 3) {
-                        $successMessage = 'History  Successful Updated';
-                    } elseif (Input::get('currently_smoking') == 3) {
-                        $successMessage = 'History  Successful Updated';
-                    } elseif (Input::get('currently_smoking') == 3) {
-                        $successMessage = 'History  Successful Updated';
+                    } elseif (Input::get('currently_smoking') != '') {
+                        $errorMessage = 'Please remove the value from the question ' . ' "Are you Currently Smoking?" ' . ' before submit';
+                    } elseif (Input::get('type_smoked') != '') {
+                        $errorMessage = 'Please remove the value from the question ' . ' "Amount smoked per day in cigarette sticks/packs?" ' . ' before submit';
+                    } elseif (Input::get('packs_cigarette_day') == 3) {
+                        $errorMessage = 'Please remove the value from the question ' . ' "Number of packs per day" ' . ' before submit';
                     } elseif (Input::get('currently_smoking') == 3) {
                         $successMessage = 'History  Successful Updated';
                     } else {
