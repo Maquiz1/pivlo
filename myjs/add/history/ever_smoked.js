@@ -47,6 +47,17 @@ function toggleRequired(radio) {
     document
       .getElementById("packs_cigarette_day")
       .removeAttribute("required", "required");
+    if (
+      document
+        .getElementById("packs_cigarette_day")
+        .removeAttribute("required", "required").value !== ""
+    ) {
+      document
+        .getElementById("packs_cigarette_day")
+        .removeAttribute("required", "required").value = "";
+    }
+
+    
 
     document
       .getElementById("ever_smoked")
