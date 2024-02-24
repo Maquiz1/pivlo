@@ -488,6 +488,7 @@ if ($user->isLoggedIn()) {
                     'required' => true,
                 ),
             ));
+
             if ($validate->passed()) {
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                 $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid']);
@@ -495,66 +496,114 @@ if ($user->isLoggedIn()) {
                 $packs = Input::get('packs_cigarette_day');
                 $eligible = 0;
 
-                if (Input::get('ever_smoked') == 1) {
-                    if (Input::get('currently_smoking') == 1) {
-                        $date2 = date('Y', strtotime(Input::get('screening_date')));
-                        if (Input::get('type_smoked') == 1) {
-                            $years = $date2 - $date1;
-                            $packs_year = $packs * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
+                if (Input::get('ever_smoked') == 2) {
+                    if (Input::get('start_smoking') != '') {
+                        $errorMessage = 'Please remove the value from the question ' . ' "When did you start smoking?" ' . ' before submit';
+                    } elseif (Input::get('currently_smoking') == 3) {
+                        $successMessage = 'History  Successful Updated';
+                    } elseif (Input::get('currently_smoking') == 3) {
+                        $successMessage = 'History  Successful Updated';
+                    } elseif (Input::get('currently_smoking') == 3) {
+                        $successMessage = 'History  Successful Updated';
+                    } elseif (Input::get('currently_smoking') == 3) {
+                        $successMessage = 'History  Successful Updated';
+                    } else {
+                        $successMessage = 'History  Successful Updated';
+                    }
+                } else {
+
+                    if (Input::get('ever_smoked') == 1) {
+                        if (Input::get('currently_smoking') == 1) {
+                            $date2 = date('Y', strtotime(Input::get('screening_date')));
+                            if (Input::get('type_smoked') == 1) {
+                                $years = $date2 - $date1;
+                                $packs_year = $packs * $years;
+                                if ($packs_year >= 20) {
+                                    $eligible = 1;
+                                }
+                            } elseif (Input::get('type_smoked') == 2) {
+                                $years = $date2 - $date1;
+                                $packs_year = ($packs / 20) * $years;
+                                if ($packs_year >= 20) {
+                                    $eligible = 1;
+                                }
                             }
-                        } elseif (Input::get('type_smoked') == 2) {
-                            $years = $date2 - $date1;
-                            $packs_year = ($packs / 20) * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
-                            }
-                        }
-                    } elseif (Input::get('currently_smoking') == 2) {
-                        $date2 = Input::get('quit_smoking');
-                        if (Input::get('type_smoked') == 1) {
-                            $years = $date2 - $date1;
-                            $packs_year = $packs * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
-                            }
-                        } elseif (Input::get('type_smoked') == 2) {
-                            $years = $date2 - $date1;
-                            $packs_year = ($packs / 20) * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
+                        } elseif (Input::get('currently_smoking') == 2) {
+                            $date2 = Input::get('quit_smoking');
+                            if (Input::get('type_smoked') == 1) {
+                                $years = $date2 - $date1;
+                                $packs_year = $packs * $years;
+                                if ($packs_year >= 20) {
+                                    $eligible = 1;
+                                }
+                            } elseif (Input::get('type_smoked') == 2) {
+                                $years = $date2 - $date1;
+                                $packs_year = ($packs / 20) * $years;
+                                if ($packs_year >= 20) {
+                                    $eligible = 1;
+                                }
                             }
                         }
                     }
-                }
 
-                if (!$history) {
-                    $user->createRecord('history', array(
-                        'screening_date' => Input::get('screening_date'),
-                        'study_id' => $_GET['study_id'],
-                        'ever_smoked' => Input::get('ever_smoked'),
-                        'start_smoking' => Input::get('start_smoking'),
-                        'smoking_long' => Input::get('smoking_long'),
-                        'type_smoked' => Input::get('type_smoked'),
-                        'currently_smoking' => Input::get('currently_smoking'),
-                        'quit_smoking' => Input::get('quit_smoking'),
-                        'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                        'pack_year' => $packs_year,
-                        'eligible' => $eligible,
-                        'status' => 1,
-                        'patient_id' => $_GET['cid'],
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $clients['site_id'],
-                    ));
+                    if (!$history) {
+                        $user->createRecord('history', array(
+                            'screening_date' => Input::get('screening_date'),
+                            'study_id' => $_GET['study_id'],
+                            'ever_smoked' => Input::get('ever_smoked'),
+                            'start_smoking' => Input::get('start_smoking'),
+                            'smoking_long' => Input::get('smoking_long'),
+                            'type_smoked' => Input::get('type_smoked'),
+                            'currently_smoking' => Input::get('currently_smoking'),
+                            'quit_smoking' => Input::get('quit_smoking'),
+                            'packs_cigarette_day' => Input::get('packs_cigarette_day'),
+                            'pack_year' => $packs_year,
+                            'eligible' => $eligible,
+                            'status' => 1,
+                            'patient_id' => $_GET['cid'],
+                            'create_on' => date('Y-m-d H:i:s'),
+                            'staff_id' => $user->data()->id,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                            'site_id' => $clients['site_id'],
+                        ));
 
-                    if ($eligible) {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
+                        if ($eligible) {
+                            $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
+                        } else {
+                            $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
+                        }
+
+                        $user->updateRecord('clients', array(
+                            'screened' => 1,
+                            'eligible' => $eligible,
+                        ), $_GET['cid']);
+
+                        $successMessage = 'History  Successful Added';
+
+                        Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
                     } else {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
+                        $user->updateRecord('history', array(
+                            'screening_date' => Input::get('screening_date'),
+                            'study_id' => $_GET['study_id'],
+                            'ever_smoked' => Input::get('ever_smoked'),
+                            'start_smoking' => Input::get('start_smoking'),
+                            'smoking_long' => Input::get('smoking_long'),
+                            'type_smoked' => Input::get('type_smoked'),
+                            'currently_smoking' => Input::get('currently_smoking'),
+                            'quit_smoking' => Input::get('quit_smoking'),
+                            'packs_cigarette_day' => Input::get('packs_cigarette_day'),
+                            'pack_year' => $packs_year,
+                            'eligible' => $eligible,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), $history[0]['id']);
+
+                        if ($eligible) {
+                            $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
+                        } else {
+                            $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
+                        }
                     }
 
                     $user->updateRecord('clients', array(
@@ -562,41 +611,10 @@ if ($user->isLoggedIn()) {
                         'eligible' => $eligible,
                     ), $_GET['cid']);
 
-                    $successMessage = 'History  Successful Added';
+                    $successMessage = 'History  Successful Updated';
 
                     Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                } else {
-                    $user->updateRecord('history', array(
-                        'screening_date' => Input::get('screening_date'),
-                        'study_id' => $_GET['study_id'],
-                        'ever_smoked' => Input::get('ever_smoked'),
-                        'start_smoking' => Input::get('start_smoking'),
-                        'smoking_long' => Input::get('smoking_long'),
-                        'type_smoked' => Input::get('type_smoked'),
-                        'currently_smoking' => Input::get('currently_smoking'),
-                        'quit_smoking' => Input::get('quit_smoking'),
-                        'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                        'pack_year' => $packs_year,
-                        'eligible' => $eligible,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), $history[0]['id']);
-
-                    if ($eligible) {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                    } else {
-                        $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                    }
                 }
-
-                $user->updateRecord('clients', array(
-                    'screened' => 1,
-                    'eligible' => $eligible,
-                ), $_GET['cid']);
-
-                $successMessage = 'History  Successful Updated';
-
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
