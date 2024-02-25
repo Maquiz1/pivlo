@@ -27,9 +27,9 @@ function toggleRequiredCurrentlySmoking(radio) {
     quit_smoking1_1.setAttribute("required", "required");
   } else {
     quit_smoking1_1.removeAttribute("required");
-    if (quit_smoking1_1.value !== "") {
-      quit_smoking1_1.value = "";
-    }
+    // if (quit_smoking1_1.value !== "") {
+    //   quit_smoking1_1.value = "";
+    // }
   }
 }
 

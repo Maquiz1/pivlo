@@ -27,6 +27,14 @@ toggleElementVisibility();
 
 
 function toggleRequired(radio) {
+
+  // if (radio.checked) {
+  //   radio.checked = false;
+  // } else {
+  //   radio.checked = true;
+  // }
+
+
   var start_smoking1 = document.getElementById("start_smoking1");
   var currently_smokingRequired = currently_smoking.querySelector(
     'input[name="currently_smoking"]'
