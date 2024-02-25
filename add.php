@@ -539,6 +539,8 @@ if ($user->isLoggedIn()) {
                     } elseif (Input::get('currently_smoking') == 2) {
                         if (Input::get('quit_smoking') == '') {
                             $errorMessage = 'Please the add value from the question ' . ' "When did you quit smoking in years?" ' . ' before submit';
+                        } elseif (Input::get('quit_smoking') < Input::get('start_smoking')) {
+                            $errorMessage = 'Please the value from the question ' . ' "When did you quit smoking in years?" ' . 'can not be less than ' . ' When did you start smoking?';
                         } else {
                             if (!$history) {
 
@@ -612,7 +614,9 @@ if ($user->isLoggedIn()) {
                         }
                     } elseif (Input::get('currently_smoking') == 1) {
                         if (Input::get('quit_smoking') != '') {
-                            $errorMessage = 'Please the remove value from the question ' . ' "When did you quit smoking in years?" ' . ' before submit';
+                            $errorMessage = 'Please remove value from the question ' . ' "When did you quit smoking in years?" ' . ' before submit';
+                        } elseif (Input::get('start_smoking') > date('Y', strtotime(Input::get('screening_date')))) {
+                            $errorMessage = 'Please the value from the question ' . ' "When did you start smoking?" ' . 'can not be greater than ' . ' Screening date';
                         } else {
                             if (!$history) {
 
@@ -772,7 +776,7 @@ if ($user->isLoggedIn()) {
                     } elseif (Input::get('packs_cigarette_day') != '') {
                         $errorMessage = 'Please remove the value from the question ' . ' "Number of packs per day" ' . ' before submit';
                     } else {
-                        
+
                         if (!$history) {
 
                             $user->createRecord('history', array(
