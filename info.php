@@ -838,8 +838,12 @@ if ($user->isLoggedIn()) {
                                                     <th>Study Id</th>
                                                     <th>Age</th>
                                                     <th>Sex</th>
-                                                    <th>Interview Type</th>
-                                                    <th>Site</th>
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <th>Interview Type</th>
+                                                        <th>Site</th>
+                                                    <?php } ?>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
@@ -896,23 +900,27 @@ if ($user->isLoggedIn()) {
                                                                 Female
                                                             </td>
                                                         <?php } ?>
-                                                        <?php if ($value['interview_type'] == 1) { ?>
+                                                        <?php
+                                                        if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                        ?>
+                                                            <?php if ($value['interview_type'] == 1) { ?>
+                                                                <td class="table-user">
+                                                                    Kap & Screening
+                                                                </td>
+                                                            <?php } elseif ($value['interview_type'] == 2) { ?>
+                                                                <td class="table-user">
+                                                                    Health Care Worker
+                                                                </td>
+                                                            <?php } else { ?>
+                                                                <td class="table-user">
+                                                                    None
+                                                                </td>
+                                                            <?php } ?>
+
                                                             <td class="table-user">
-                                                                Kap & Screening
-                                                            </td>
-                                                        <?php } elseif ($value['interview_type'] == 2) { ?>
-                                                            <td class="table-user">
-                                                                Health Care Worker
-                                                            </td>
-                                                        <?php } else { ?>
-                                                            <td class="table-user">
-                                                                None
+                                                                <?= $sites['name']; ?>
                                                             </td>
                                                         <?php } ?>
-
-                                                        <td class="table-user">
-                                                            <?= $sites['name']; ?>
-                                                        </td>
                                                         <?php if ($value['age'] >= 18) { ?>
                                                             <td class="text-center">
                                                                 <a href="#" class="btn btn-success">
@@ -963,8 +971,12 @@ if ($user->isLoggedIn()) {
                                                     <th>Study Id</th>
                                                     <th>Age</th>
                                                     <th>Sex</th>
-                                                    <th>Interview Type</th>
-                                                    <th>Site</th>
+                                                    <?php
+                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                    ?>
+                                                        <th>Interview Type</th>
+                                                        <th>Site</th>
+                                                    <?php } ?>
                                                     <th>Status</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
@@ -1086,6 +1098,7 @@ if ($user->isLoggedIn()) {
                                                         <td> <?= $visit['visit_name'] ?></td>
                                                         <td> <?= $visit['expected_date'] ?></td>
                                                         <td> <?= $visit['visit_date'] ?> </td>
+
                                                         <?php
                                                         if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                                                         ?>
