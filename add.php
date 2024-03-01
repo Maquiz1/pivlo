@@ -2123,7 +2123,11 @@ if ($user->isLoggedIn()) {
                                                                                                                     } ?>
                                                                 </option>
                                                                 <option value="1">Kap & Screening </option>
-                                                                <option value="2">Health Care Worker </option>
+                                                                <?php
+                                                                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+                                                                ?>
+                                                                    <option value="2">Health Care Worker </option>
+                                                                <?php } ?>
                                                             </select>
                                                         </div>
                                                     </div>
