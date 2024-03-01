@@ -1062,14 +1062,11 @@ if ($user->isLoggedIn()) {
                                         <table id="example1" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th>Client ID</th>
                                                     <th>Visit Day</th>
                                                     <th>Expected Date</th>
                                                     <th>Visit Date</th>
-                                                    <?php
-                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                                                    ?>
-                                                        <th>SITE</th>
-                                                    <?php } ?>
+                                                    <th>SITE</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -1083,14 +1080,11 @@ if ($user->isLoggedIn()) {
                                                     $history = $override->get('history', 'patient_id', $_GET['cid']);
                                                 ?>
                                                     <tr>
+                                                        <td><?= $clients['study_id'] ?></td>
                                                         <td> <?= $visit['visit_name'] ?></td>
                                                         <td> <?= $visit['expected_date'] ?></td>
                                                         <td> <?= $visit['visit_date'] ?> </td>
-                                                        <?php
-                                                        if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                                                        ?>
-                                                            <td> <?= $site['name'] ?> </td>
-                                                        <?php } ?>
+                                                        <td> <?= $site['name'] ?> </td>
                                                         <td>
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">
@@ -1290,14 +1284,11 @@ if ($user->isLoggedIn()) {
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <th>Patient ID</th>
                                                     <th>Visit Day</th>
                                                     <th>Expected Date</th>
                                                     <th>Visit Date</th>
-                                                    <?php
-                                                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                                                    ?>
-                                                        <th>SITE</th>
-                                                    <?php } ?>
+                                                    <th>SITE</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
