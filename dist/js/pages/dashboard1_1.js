@@ -117,8 +117,8 @@ $(function () {
           },
           {
             label: "Mbagala Rangi Tatu Hospital",
-            backgroundColor: "rgba(210, 214, 222, 1)",
-            // backgroundColor: "yellow",
+            // backgroundColor: "rgba(210, 214, 222, 1)",
+            backgroundColor: "yellow",
             borderColor: "rgba(210, 214, 222, 1)",
             pointRadius: false,
             pointColor: "rgba(210, 214, 222, 1)",
