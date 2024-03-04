@@ -2786,7 +2786,7 @@ if ($user->isLoggedIn()) {
                                                         <select name="name" id="name" class="form-control" required>
                                                             <option value="">Select Table</option>
                                                             <?php foreach ($AllTables as $tables) {
-                                                                if ($tables['Tables_in_lungcancer'] == 'clients' || $tables['Tables_in_lungcancer'] == 'kap' || $tables['Tables_in_lungcancer'] == 'history' || $tables['Tables_in_lungcancer'] == 'results' || $tables['Tables_in_lungcancer'] == 'outcome' || $tables['Tables_in_lungcancer'] == 'economic' || $tables['Tables_in_lungcancer'] == 'visit') { ?> ?>
+                                                                if ($tables['Tables_in_lungcancer'] == 'clients' || $tables['Tables_in_lungcancer'] == 'kap' || $tables['Tables_in_lungcancer'] == 'history' || $tables['Tables_in_lungcancer'] == 'results' || $tables['Tables_in_lungcancer'] == 'classification' || $tables['Tables_in_lungcancer'] == 'outcome'|| $tables['Tables_in_lungcancer'] == 'economic' || $tables['Tables_in_lungcancer'] == 'visit') { ?> ?>
                                                                     <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
                                                             <?php }
                                                             } ?>
