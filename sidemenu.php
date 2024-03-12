@@ -49,7 +49,7 @@ if ($user->isLoggedIn()) {
             $registered = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
             $screened = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
             $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
-            $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
+            $enrolled = $override->getCount1('results', 'status', 1, 'site_id', $_GET['site_id']);
             $end = $override->getCount1('clients', 'status', 0, 'site_id', $_GET['site_id']);
         } else {
             $kap = $override->getCount('kap', 'status', 1);
@@ -63,7 +63,7 @@ if ($user->isLoggedIn()) {
             $registered = $override->getCount('clients', 'status', 1);
             $screened = $override->getCount('history', 'status', 1);
             $eligible = $override->getCount('history', 'eligible', 1);
-            $enrolled = $override->getCount('history', 'eligible', 1);
+            $enrolled = $override->getCount('results', 'status', 1);
             $end = $override->getCount('clients', 'status', 0);
         }
     } else {
@@ -78,7 +78,7 @@ if ($user->isLoggedIn()) {
         $registered = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
         $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
         $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
-        $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
+        $enrolled = $override->getCount1('results', 'status', 1, 'site_id', $user->data()->site_id);
         $end = $override->getCount1('clients', 'status', 0, 'site_id', $user->data()->site_id);
     }
 } else {

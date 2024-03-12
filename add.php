@@ -83,7 +83,7 @@ if ($user->isLoggedIn()) {
                 }
                 try {
 
-                    $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id']);
+                    // $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id']);
 
                     if ($staff) {
                         $user->updateRecord('user', array(
@@ -1558,9 +1558,7 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Power</label>
-                                                            <input class="form-control" type="number" min="0" max="2" name="power" id="power" value="<?php if ($staff['power']) {
-                                                                                                                                                            print_r($staff['power']);
-                                                                                                                                                        }  ?>" />
+                                                            <input class="form-control" type="number" min="0" max="2" name="power" id="power" value="0" />
                                                         </div>
                                                     </div>
                                                 </div>

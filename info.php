@@ -612,7 +612,6 @@ if ($user->isLoggedIn()) {
                                                             </form>
                                                         </div>
                                                     </div>
-
                                                 <?php $x++;
                                                 } ?>
                                             </tbody>
