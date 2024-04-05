@@ -6,7 +6,7 @@ $GLOBALS['config'] = array(
       'host' => 'localhost',
       'username' => 'root',
       'password' => 'Data@2020',
-      'db' => 'lungcancer'
+      'db' => 'pivlo'
   	),
   'remember' =>array(
       'cookie_name' => 'hash',

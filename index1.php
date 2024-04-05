@@ -58,7 +58,7 @@ if ($user->isLoggedIn()) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lung Cancer Database | Dashboard</title>
+  <title>Pivlo Database | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -540,7 +540,7 @@ if ($user->isLoggedIn()) {
 
   <!-- ChartJS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
-  
+
 
   <!-- MY LINKS TO CHAARTS JS -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
