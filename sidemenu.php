@@ -236,6 +236,33 @@ if ($user->isLoggedIn()) {
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <span class="badge badge-info right"><?= $override->getCount('sites', 'status', 1); ?></span>
+                        <p>
+                            Facilities <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="add.php?id=3" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Add
+                                    <span class="right badge badge-danger">New Client</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="info.php?id=11" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <span class="badge badge-info right"></span>
+                                <p>List of Facilities</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <?php
                 if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 ?>
@@ -341,6 +368,35 @@ if ($user->isLoggedIn()) {
                         </ul> -->
                     </li>
                 <?php } ?>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Extra <i class="fas fa-angle-left right"></i>
+
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="add.php?id=8" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Regions</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="add.php?id=9" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Disricts</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="add.php?id=10" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Wards</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

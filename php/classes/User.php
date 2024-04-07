@@ -254,9 +254,9 @@ class User
     }
 
 
-    function visit_delete1($client_id, $screening_date, $study_id, $staff_id, $site_id, $eligible)
+    function visit_delete1($client_id, $screening_date, $study_id, $staff_id, $site_id, $eligible, $sequence, $visit_code, $visit_name)
     {
-        $visit_id = $this->_override->getNews('visit', 'patient_id', $client_id, 'sequence', 1);
+        $visit_id = $this->_override->getNews('visit', 'patient_id', $client_id, 'sequence', $sequence);
         if ($eligible) {
             if ($visit_id) {
                 $this->updateRecord('visit', array(
@@ -266,12 +266,13 @@ class User
                 ), $visit_id[0]['id']);
             } else {
                 $this->createRecord('visit', array(
-                    'sequence' => 1,
+                    'sequence' => $sequence,
+                    'pid' => $study_id,
+                    'study_id' => $study_id,
+                    'visit_code' => $visit_code,
+                    'visit_name' => $visit_name,
                     'expected_date' => $screening_date,
                     'visit_date' => '',
-                    'visit_code' => 'M0',
-                    'visit_name' => 'Month 0',
-                    'study_id' => $study_id,
                     'visit_status' => 0,
                     'status' => 1,
                     'patient_id' => $client_id,

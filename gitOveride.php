@@ -594,6 +594,13 @@ class OverideData
         return $result;
     }
 
+    public function getlastRow1($table, $where, $value, $where1, $value1, $id)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE  $where='$value' AND $where1='$value1' ORDER BY $id DESC LIMIT 1");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function getDataPoints()
     {
         $query = $this->_pdo->query("SELECT * FROM descriptionlabels INNER JOIN datapoints ON descriptionlabels.id = datapoints.descriptionlabelid");

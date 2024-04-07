@@ -8,12 +8,17 @@ const relation_patient_other = document.getElementById(
   "relation_patient_other"
 );
 
+const relation_patient_other_label = document.getElementById(
+  "relation_patient_other_label"
+);
+
 function toggleElementVisibility() {
   if (relation_patient96.checked) {
     relation_patient_other.style.display = "block";
-    // addRequiredAttribute();
+    relation_patient_other_label.style.display = "block";
   } else {
     relation_patient_other.style.display = "none";
+    relation_patient_other_label.style.display = "none";
   }
 }
 
@@ -26,5 +31,3 @@ relation_patient96.addEventListener("change", toggleElementVisibility);
 
 // Initial check
 toggleElementVisibility();
-
-

@@ -122,7 +122,7 @@ if (!$user->isLoggedIn()) {
 
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>Lung Cancer</b>&nbsp;Database</a>
+            <a href="#"><b>PIVLO-TEST</b>&nbsp;Database</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

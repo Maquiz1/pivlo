@@ -808,4 +808,11 @@ class OverideData
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function getcolumns($table, $id, $date, $firstname, $age)
+    {
+        $query = $this->_pdo->query("SELECT $id,$date, $firstname, $age FROM $table");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

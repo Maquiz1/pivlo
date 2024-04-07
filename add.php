@@ -9,6 +9,7 @@ $validate = new validate();
 $successMessage = null;
 $pageError = null;
 $errorMessage = null;
+$numRec = 10;
 if ($user->isLoggedIn()) {
     if (Input::exists('post')) {
         if (Input::get('add_user')) {
@@ -163,10 +164,43 @@ if ($user->isLoggedIn()) {
             ));
             if ($validate->passed()) {
                 try {
-                    $user->createRecord('site', array(
-                        'name' => Input::get('name'),
-                    ));
-                    $successMessage = 'Site Successful Added';
+                    $site = $override->getNews('sites', 'status', 1, 'id', $_GET['site_id']);
+                    if ($site) {
+                        $user->updateRecord('sites', array(
+                            'name' => Input::get('name'),
+                            'entry_date' => Input::get('entry_date'),
+                            'arm' => Input::get('arm'),
+                            'level' => Input::get('level'),
+                            'type' => Input::get('type'),
+                            'category' => Input::get('category'),
+                            'respondent' => Input::get('respondent'),
+                            'region' => Input::get('region'),
+                            'district' => Input::get('district'),
+                            'ward' => Input::get('ward'),
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), $site[0]['id']);
+                        $successMessage = 'Site Successful Updated';
+                    } else {
+                        $user->createRecord('sites', array(
+                            'name' => Input::get('name'),
+                            'entry_date' => Input::get('entry_date'),
+                            'arm' => Input::get('arm'),
+                            'level' => Input::get('level'),
+                            'type' => Input::get('type'),
+                            'category' => Input::get('category'),
+                            'respondent' => Input::get('respondent'),
+                            'region' => Input::get('region'),
+                            'district' => Input::get('district'),
+                            'ward' => Input::get('ward'),
+                            'status' => 1,
+                            'create_on' => date('Y-m-d H:i:s'),
+                            'staff_id' => $user->data()->id,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ));
+                        $successMessage = 'Site Successful Added';
+                    }
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -230,9 +264,20 @@ if ($user->isLoggedIn()) {
                         $site_id = Input::get('site');
                     }
 
+
+
                     $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
 
                     $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
+
+                    $screened = 0;
+                    $eligible = 0;
+                    $enrolled = 0;
+                    $end_study = 0;
+                    if ($age >= 1) {
+                        $screened = 1;
+                        $eligible = 1;
+                    }
 
                     if ($clients) {
                         $user->updateRecord('clients', array(
@@ -244,6 +289,7 @@ if ($user->isLoggedIn()) {
                             'dob' => Input::get('dob'),
                             'age' => $age,
                             'hospital_id' => Input::get('hospital_id'),
+                            'ctc_id' => Input::get('ctc_id'),
                             'patient_phone' => Input::get('patient_phone'),
                             'patient_phone2' => Input::get('patient_phone2'),
                             'supporter_fname' => Input::get('supporter_fname'),
@@ -253,7 +299,9 @@ if ($user->isLoggedIn()) {
                             'supporter_phone2' => Input::get('supporter_phone2'),
                             'relation_patient' => Input::get('relation_patient'),
                             'relation_patient_other' => Input::get('relation_patient_other'),
+                            'region' => Input::get('region'),
                             'district' => Input::get('district'),
+                            'ward' => Input::get('ward'),
                             'street' => Input::get('street'),
                             'location' => Input::get('location'),
                             'house_number' => Input::get('house_number'),
@@ -264,7 +312,11 @@ if ($user->isLoggedIn()) {
                             'insurance_name' => Input::get('insurance_name'),
                             'pay_services' => Input::get('pay_services'),
                             'insurance_name_other' => Input::get('insurance_name_other'),
-                            'interview_type' => Input::get('interview_type'),
+                            'respondent' => Input::get('respondent'),
+                            'screened' => $screened,
+                            'eligible' => $eligible,
+                            'enrolled' => $enrolled,
+                            'end_study' => $end_study,
                             'comments' => Input::get('comments'),
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
@@ -276,6 +328,8 @@ if ($user->isLoggedIn()) {
                         $std_id = $override->getNews('study_id', 'site_id', $site_id, 'status', 0)[0];
 
                         $user->createRecord('clients', array(
+                            'sequence' => 0,
+                            'visit_code' => 'M00',
                             'date_registered' => Input::get('date_registered'),
                             'study_id' => $std_id['study_id'],
                             'firstname' => Input::get('firstname'),
@@ -285,6 +339,7 @@ if ($user->isLoggedIn()) {
                             'dob' => Input::get('dob'),
                             'age' => $age,
                             'hospital_id' => Input::get('hospital_id'),
+                            'ctc_id' => Input::get('ctc_id'),
                             'patient_phone' => Input::get('patient_phone'),
                             'patient_phone2' => Input::get('patient_phone2'),
                             'supporter_fname' => Input::get('supporter_fname'),
@@ -294,7 +349,9 @@ if ($user->isLoggedIn()) {
                             'supporter_phone2' => Input::get('supporter_phone2'),
                             'relation_patient' => Input::get('relation_patient'),
                             'relation_patient_other' => Input::get('relation_patient_other'),
+                            'region' => Input::get('region'),
                             'district' => Input::get('district'),
+                            'ward' => Input::get('ward'),
                             'street' => Input::get('street'),
                             'location' => Input::get('location'),
                             'house_number' => Input::get('house_number'),
@@ -306,12 +363,12 @@ if ($user->isLoggedIn()) {
                             'insurance_name_other' => Input::get('insurance_name_other'),
                             'pay_services' => Input::get('pay_services'),
                             'comments' => Input::get('comments'),
-                            'interview_type' => Input::get('interview_type'),
+                            'respondent' => Input::get('respondent'),
                             'status' => 1,
-                            'screened' => 0,
-                            'eligible' => 0,
-                            'enrolled' => 0,
-                            'end_study' => 0,
+                            'screened' => $screened,
+                            'eligible' => $eligible,
+                            'enrolled' => $enrolled,
+                            'end_study' => $end_study,
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
@@ -329,8 +386,9 @@ if ($user->isLoggedIn()) {
                         $user->createRecord('visit', array(
                             'sequence' => 0,
                             'study_id' => $std_id['study_id'],
-                            'visit_code' => 'RS',
-                            'visit_name' => 'Registration & Screening',
+                            'pid' => $std_id['study_id'],
+                            'visit_code' => 'M00',
+                            'visit_name' => 'Month 0',
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => '',
                             'visit_status' => 0,
@@ -350,552 +408,138 @@ if ($user->isLoggedIn()) {
                     die($e->getMessage());
                 }
             }
-        } elseif (Input::get('add_kap')) {
+        } elseif (Input::get('add_individual')) {
             $validate = $validate->check($_POST, array(
-                'interview_date' => array(
+                'visit_date' => array(
                     'required' => true,
                 ),
-                'saratani_mapafu' => array(
+                'previous_vl_date' => array(
                     'required' => true,
                 ),
-                'uhusiano_saratani' => array(
+                'recent_vl_results' => array(
                     'required' => true,
                 ),
             ));
             if ($validate->passed()) {
+                // print_r($_POST);
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-                $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid']);
-                $vitu_hatarishi = implode(',', Input::get('vitu_hatarishi'));
-                $dalili_saratani = implode(',', Input::get('dalili_saratani'));
-                $saratani_vipimo = implode(',', Input::get('saratani_vipimo'));
-                $matibabu = implode(',', Input::get('matibabu'));
-                $kundi = implode(',', Input::get('kundi'));
-                $ushawishi = implode(',', Input::get('ushawishi'));
-                $saratani_hatari = implode(',', Input::get('saratani_hatari'));
+                $individual = $override->getNews('individual', 'status', 1, 'patient_id', $_GET['cid']);
+                $first_line = 0;
+                $second_line = 0;
+                $third_line = 0;
+                $sequence = '';
+                $visit_code = '';
+                $visit_name = '';
 
-                if ($kap) {
-                    $user->updateRecord('kap', array(
-                        'interview_date' => Input::get('interview_date'),
-                        'saratani_mapafu' => Input::get('saratani_mapafu'),
-                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
-                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => $vitu_hatarishi,
-                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => $dalili_saratani,
-                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => $saratani_vipimo,
-                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
-                        'saratani_inatibika' => Input::get('saratani_inatibika'),
-                        'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => $matibabu,
-                        'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
-                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
-                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
-                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
-                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
-                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
-                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => $saratani_hatari,
-                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => $kundi,
-                        'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => $ushawishi,
-                        'ushawishi_other' => Input::get('ushawishi_other'),
-                        'hitaji_elimu' => Input::get('hitaji_elimu'),
-                        'vifo' => Input::get('vifo'),
-                        'tayari_dalili' => Input::get('tayari_dalili'),
-                        'saratani_kutibika' => Input::get('saratani_kutibika'),
-                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
-                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
-                        'saratani_kufa' => Input::get('saratani_kufa'),
-                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
-                        'wapi_matibabu' => Input::get('wapi_matibabu'),
-                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
-                        'saratani_ushauri' => Input::get('saratani_ushauri'),
-                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
+                if (Input::get('first_line')) {
+                    $first_line = Input::get('first_line');
+                }
+
+                if (Input::get('second_line')) {
+                    $second_line = Input::get('second_line');
+                }
+
+                if (Input::get('third_line')) {
+                    $third_line = Input::get('third_line');
+                }
+
+                // $expected_date = date('Y-m-d', strtotime('+1 month', strtotime(Input::get('visit_date'))));
+
+                // $last_visit = $override->getlastRow1('visit', 'patient_id', $clients['id'], 'sequence', $_GET['sequence'], 'id')[0];
+                $sequence = intval($_GET['sequence']) + 1;
+                if ($sequence) {
+                    $visit_code = 'M' . $sequence;
+                    $visit_name = 'Month ' . $sequence;
+                }
+
+                $enrolled = 0;
+                $end_study = 0;
+                if (Input::get('next_appointment') == 1) {
+                    $enrolled = 1;
+                }
+
+                if ($individual) {
+                    $user->updateRecord('individual', array(
+                        'visit_date' => Input::get('visit_date'),
+                        'previous_vl_date' => Input::get('previous_vl_date'),
+                        'recent_vl_results' => Input::get('recent_vl_results'),
+                        'trained_pivlo' => Input::get('trained_pivlo'),
+                        'initiate_test_hcw' => Input::get('initiate_test_hcw'),
+                        'tested_this_month' => Input::get('tested_this_month'),
+                        'new_vl_date' => Input::get('new_vl_date'),
+                        'new_vl_results' => Input::get('new_vl_results'),
+                        'recent_cd4' => Input::get('recent_cd4'),
+                        'cd4_date' => Input::get('cd4_date'),
+                        'recent_tb_results' => Input::get('recent_tb_results'),
+                        'recent_tb_date' => Input::get('recent_tb_date'),
+                        'date_art_treatment' => Input::get('date_art_treatment'),
+                        'art_regimen' => Input::get('art_regimen'),
+                        'art_regimen_other' => Input::get('art_regimen_other'),
+                        'first_line' => $first_line,
+                        'other_first_line' => Input::get('other_first_line'),
+                        'second_line' => $second_line,
+                        'other_second_line' => Input::get('other_second_line'),
+                        'third_line' => $third_line,
+                        'other_third_line' => Input::get('other_third_line'),
+                        'weight' => Input::get('weight'),
+                        'height' => Input::get('height'),
+                        'systolic' => Input::get('systolic'),
+                        'diastolic' => Input::get('diastolic'),
+                        'chronic_condition' => Input::get('chronic_condition'),
+                        'other_chronic' => Input::get('other_chronic'),
+                        'reasons' => Input::get('reasons'),
+                        'next_appointment' => Input::get('next_appointment'),
+                        'next_date' => Input::get('next_date'),
                         'comments' => Input::get('comments'),
+                        'individual_complete' => Input::get('individual_complete'),
+                        'date_completed' => Input::get('date_completed'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                    ), $kap[0]['id']);
+                    ), $individual[0]['id']);
 
-                    $successMessage = 'Kap  Successful Updated';
+                    $successMessage = 'Individual  Successful Updated';
                 } else {
-                    $user->createRecord('kap', array(
-                        'interview_date' => Input::get('interview_date'),
-                        'study_id' => $_GET['study_id'],
-                        'saratani_mapafu' => Input::get('saratani_mapafu'),
-                        'uhusiano_saratani' => Input::get('uhusiano_saratani'),
-                        'kusambazwa_saratani' => Input::get('kusambazwa_saratani'),
-                        'vitu_hatarishi' => $vitu_hatarishi,
-                        'vitu_hatarishi_other' => Input::get('vitu_hatarishi_other'),
-                        'dalili_saratani' => $dalili_saratani,
-                        'dalili_saratani_other' => Input::get('dalili_saratani_other'),
-                        'saratani_vipimo' => $saratani_vipimo,
-                        'saratani_vipimo_other' => Input::get('saratani_vipimo_other'),
-                        'saratani_inatibika' => Input::get('saratani_inatibika'),
-                        'matibabu_saratani' => Input::get('matibabu_saratani'),
-                        'matibabu' => $matibabu,
-                        'matibabu_other' => Input::get('matibabu_other'),
-                        'saratani_uchunguzi' => Input::get('saratani_uchunguzi'),
-                        'uchunguzi_maana' => Input::get('uchunguzi_maana'),
-                        'uchunguzi_maana_other' => Input::get('uchunguzi_maana_other'),
-                        'uchunguzi_faida' => Input::get('uchunguzi_faida'),
-                        'uchunguzi_faida_other' => Input::get('uchunguzi_faida_other'),
-                        'uchunguzi_hatari' => Input::get('uchunguzi_hatari'),
-                        'uchunguzi_hatari_other' => Input::get('uchunguzi_hatari_other'),
-                        'saratani_hatari' => $saratani_hatari,
-                        'saratani_hatari_other' => Input::get('saratani_hatari_other'),
-                        'kundi' => $kundi,
-                        'kundi_other' => Input::get('kundi_other'),
-                        'ushawishi' => $ushawishi,
-                        'ushawishi_other' => Input::get('ushawishi_other'),
-                        'hitaji_elimu' => Input::get('hitaji_elimu'),
-                        'vifo' => Input::get('vifo'),
-                        'tayari_dalili' => Input::get('tayari_dalili'),
-                        'saratani_kutibika' => Input::get('saratani_kutibika'),
-                        'saratani_wasiwasi' => Input::get('saratani_wasiwasi'),
-                        'saratani_umuhimu' => Input::get('saratani_umuhimu'),
-                        'saratani_kufa' => Input::get('saratani_kufa'),
-                        'uchunguzi_haraka' => Input::get('uchunguzi_haraka'),
-                        'wapi_matibabu' => Input::get('wapi_matibabu'),
-                        'wapi_matibabu_other' => Input::get('wapi_matibabu_other'),
-                        'saratani_ushauri' => Input::get('saratani_ushauri'),
-                        'saratani_ujumbe' => Input::get('saratani_ujumbe'),
-                        'comments' => Input::get('comments'),
-                        'status' => 1,
-                        'patient_id' => $_GET['cid'],
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $clients['site_id'],
-                    ));
-
-                    $successMessage = 'Kap  Successful Added';
-                }
-
-                // Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_history')) {
-            $validate = $validate->check($_POST, array(
-                'screening_date' => array(
-                    'required' => true,
-                ),
-                'ever_smoked' => array(
-                    'required' => true,
-                ),
-            ));
-
-            if ($validate->passed()) {
-                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-                $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid']);
-                $date1 = Input::get('start_smoking');
-                $packs = Input::get('packs_cigarette_day');
-                $eligible = 0;
-
-
-                if (Input::get('ever_smoked') == 1) {
-                    if (Input::get('currently_smoking') == 1) {
-                        $date2 = date('Y', strtotime(Input::get('screening_date')));
-                        if (Input::get('type_smoked') == 1) {
-                            $years = $date2 - $date1;
-                            $packs_year = $packs * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
-                            }
-                        } elseif (Input::get('type_smoked') == 2) {
-                            $years = $date2 - $date1;
-                            $packs_year = ($packs / 20) * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
-                            }
-                        }
-                    } elseif (Input::get('currently_smoking') == 2) {
-                        $date2 = Input::get('quit_smoking');
-                        if (Input::get('type_smoked') == 1) {
-                            $years = $date2 - $date1;
-                            $packs_year = $packs * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
-                            }
-                        } elseif (Input::get('type_smoked') == 2) {
-                            $years = $date2 - $date1;
-                            $packs_year = ($packs / 20) * $years;
-                            if ($packs_year >= 20) {
-                                $eligible = 1;
-                            }
-                        }
-                    }
-                }
-
-                if (Input::get('ever_smoked') == 1) {
-                    if (Input::get('start_smoking') == '') {
-                        $errorMessage = 'Please the add value from the question ' . ' "When did you start smoking?" ' . ' before submit';
-                    } elseif (Input::get('currently_smoking') == '') {
-                        $errorMessage = 'Please add the value from the question ' . ' "Are you Currently Smoking?" ' . ' before submit';
-                    } elseif (Input::get('currently_smoking') == 2) {
-                        if (Input::get('quit_smoking') == '') {
-                            $errorMessage = 'Please the add value from the question ' . ' "When did you quit smoking in years?" ' . ' before submit';
-                        } elseif (Input::get('quit_smoking') < Input::get('start_smoking')) {
-                            $errorMessage = 'Please the value from the question ' . ' "When did you quit smoking in years?" ' . 'can not be less than ' . ' When did you start smoking?';
-                        } else {
-                            if (!$history) {
-
-                                $user->createRecord('history', array(
-                                    'screening_date' => Input::get('screening_date'),
-                                    'study_id' => $_GET['study_id'],
-                                    'ever_smoked' => Input::get('ever_smoked'),
-                                    'start_smoking' => Input::get('start_smoking'),
-                                    'smoking_long' => Input::get('smoking_long'),
-                                    'type_smoked' => Input::get('type_smoked'),
-                                    'currently_smoking' => Input::get('currently_smoking'),
-                                    'quit_smoking' => Input::get('quit_smoking'),
-                                    'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                    'pack_year' => $packs_year,
-                                    'eligible' => $eligible,
-                                    'status' => 1,
-                                    'patient_id' => $_GET['cid'],
-                                    'create_on' => date('Y-m-d H:i:s'),
-                                    'staff_id' => $user->data()->id,
-                                    'update_on' => date('Y-m-d H:i:s'),
-                                    'update_id' => $user->data()->id,
-                                    'site_id' => $clients['site_id'],
-                                ));
-
-                                if ($eligible) {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                                } else {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                                }
-
-                                $user->updateRecord('clients', array(
-                                    'screened' => 1,
-                                    'eligible' => $eligible,
-                                ), $_GET['cid']);
-
-                                $successMessage = 'History  Successful Added';
-
-                                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                            } else {
-                                $user->updateRecord('history', array(
-                                    'screening_date' => Input::get('screening_date'),
-                                    'study_id' => $_GET['study_id'],
-                                    'ever_smoked' => Input::get('ever_smoked'),
-                                    'start_smoking' => Input::get('start_smoking'),
-                                    'smoking_long' => Input::get('smoking_long'),
-                                    'type_smoked' => Input::get('type_smoked'),
-                                    'currently_smoking' => Input::get('currently_smoking'),
-                                    'quit_smoking' => Input::get('quit_smoking'),
-                                    'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                    'pack_year' => $packs_year,
-                                    'eligible' => $eligible,
-                                    'update_on' => date('Y-m-d H:i:s'),
-                                    'update_id' => $user->data()->id,
-                                ), $history[0]['id']);
-
-                                if ($eligible) {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                                } else {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                                }
-                            }
-
-                            $user->updateRecord('clients', array(
-                                'screened' => 1,
-                                'eligible' => $eligible,
-                            ), $_GET['cid']);
-
-                            $successMessage = 'History  Successful Updated';
-
-                            Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                        }
-                    } elseif (Input::get('currently_smoking') == 1) {
-                        if (Input::get('quit_smoking') != '') {
-                            $errorMessage = 'Please remove value from the question ' . ' "When did you quit smoking in years?" ' . ' before submit';
-                        } elseif (Input::get('start_smoking') > date('Y', strtotime(Input::get('screening_date')))) {
-                            $errorMessage = 'Please the value from the question ' . ' "When did you start smoking?" ' . 'can not be greater than ' . ' Screening date';
-                        } else {
-                            if (!$history) {
-
-                                $user->createRecord('history', array(
-                                    'screening_date' => Input::get('screening_date'),
-                                    'study_id' => $_GET['study_id'],
-                                    'ever_smoked' => Input::get('ever_smoked'),
-                                    'start_smoking' => Input::get('start_smoking'),
-                                    'smoking_long' => Input::get('smoking_long'),
-                                    'type_smoked' => Input::get('type_smoked'),
-                                    'currently_smoking' => Input::get('currently_smoking'),
-                                    'quit_smoking' => Input::get('quit_smoking'),
-                                    'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                    'pack_year' => $packs_year,
-                                    'eligible' => $eligible,
-                                    'status' => 1,
-                                    'patient_id' => $_GET['cid'],
-                                    'create_on' => date('Y-m-d H:i:s'),
-                                    'staff_id' => $user->data()->id,
-                                    'update_on' => date('Y-m-d H:i:s'),
-                                    'update_id' => $user->data()->id,
-                                    'site_id' => $clients['site_id'],
-                                ));
-
-                                if ($eligible) {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                                } else {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                                }
-
-                                $user->updateRecord('clients', array(
-                                    'screened' => 1,
-                                    'eligible' => $eligible,
-                                ), $_GET['cid']);
-
-                                $successMessage = 'History  Successful Added';
-
-                                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                            } else {
-                                $user->updateRecord('history', array(
-                                    'screening_date' => Input::get('screening_date'),
-                                    'study_id' => $_GET['study_id'],
-                                    'ever_smoked' => Input::get('ever_smoked'),
-                                    'start_smoking' => Input::get('start_smoking'),
-                                    'smoking_long' => Input::get('smoking_long'),
-                                    'type_smoked' => Input::get('type_smoked'),
-                                    'currently_smoking' => Input::get('currently_smoking'),
-                                    'quit_smoking' => Input::get('quit_smoking'),
-                                    'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                    'pack_year' => $packs_year,
-                                    'eligible' => $eligible,
-                                    'update_on' => date('Y-m-d H:i:s'),
-                                    'update_id' => $user->data()->id,
-                                ), $history[0]['id']);
-
-                                if ($eligible) {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                                } else {
-                                    $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                                }
-                            }
-
-                            $user->updateRecord('clients', array(
-                                'screened' => 1,
-                                'eligible' => $eligible,
-                            ), $_GET['cid']);
-
-                            $successMessage = 'History  Successful Updated';
-
-                            Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                        }
-                    } elseif (Input::get('type_smoked') == '') {
-                        $errorMessage = 'Please add the value from the question ' . ' "Amount smoked per day in cigarette sticks/packs?" ' . ' before submit';
-                    } elseif (Input::get('packs_cigarette_day') == '') {
-                        $errorMessage = 'Please add the value from the question ' . ' "Number of packs per day" ' . ' before submit';
-                    } else {
-
-                        if (!$history) {
-
-                            $user->createRecord('history', array(
-                                'screening_date' => Input::get('screening_date'),
-                                'study_id' => $_GET['study_id'],
-                                'ever_smoked' => Input::get('ever_smoked'),
-                                'start_smoking' => Input::get('start_smoking'),
-                                'smoking_long' => Input::get('smoking_long'),
-                                'type_smoked' => Input::get('type_smoked'),
-                                'currently_smoking' => Input::get('currently_smoking'),
-                                'quit_smoking' => Input::get('quit_smoking'),
-                                'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                'pack_year' => $packs_year,
-                                'eligible' => $eligible,
-                                'status' => 1,
-                                'patient_id' => $_GET['cid'],
-                                'create_on' => date('Y-m-d H:i:s'),
-                                'staff_id' => $user->data()->id,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                                'site_id' => $clients['site_id'],
-                            ));
-
-                            if ($eligible) {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                            } else {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                            }
-
-                            $user->updateRecord('clients', array(
-                                'screened' => 1,
-                                'eligible' => $eligible,
-                            ), $_GET['cid']);
-
-                            $successMessage = 'History  Successful Added';
-
-                            Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                        } else {
-                            $user->updateRecord('history', array(
-                                'screening_date' => Input::get('screening_date'),
-                                'study_id' => $_GET['study_id'],
-                                'ever_smoked' => Input::get('ever_smoked'),
-                                'start_smoking' => Input::get('start_smoking'),
-                                'smoking_long' => Input::get('smoking_long'),
-                                'type_smoked' => Input::get('type_smoked'),
-                                'currently_smoking' => Input::get('currently_smoking'),
-                                'quit_smoking' => Input::get('quit_smoking'),
-                                'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                'pack_year' => $packs_year,
-                                'eligible' => $eligible,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                            ), $history[0]['id']);
-
-                            if ($eligible) {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                            } else {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                            }
-                        }
-
-                        $user->updateRecord('clients', array(
-                            'screened' => 1,
-                            'eligible' => $eligible,
-                        ), $_GET['cid']);
-
-                        $successMessage = 'History  Successful Updated';
-
-                        Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                    }
-                } elseif (Input::get('ever_smoked') == 2) {
-                    if (Input::get('start_smoking') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "When did you start smoking?" ' . ' before submit';
-                    } elseif (Input::get('currently_smoking') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "Are you Currently Smoking?" ' . ' before submit';
-                    } elseif (Input::get('quit_smoking') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "When did you quit smoking in years?" ' . ' before submit';
-                    } elseif (Input::get('type_smoked') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "Amount smoked per day in cigarette sticks/packs?" ' . ' before submit';
-                    } elseif (Input::get('packs_cigarette_day') != '') {
-                        $errorMessage = 'Please remove the value from the question ' . ' "Number of packs per day" ' . ' before submit';
-                    } else {
-
-                        if (!$history) {
-
-                            $user->createRecord('history', array(
-                                'screening_date' => Input::get('screening_date'),
-                                'study_id' => $_GET['study_id'],
-                                'ever_smoked' => Input::get('ever_smoked'),
-                                'start_smoking' => Input::get('start_smoking'),
-                                'smoking_long' => Input::get('smoking_long'),
-                                'type_smoked' => Input::get('type_smoked'),
-                                'currently_smoking' => Input::get('currently_smoking'),
-                                'quit_smoking' => Input::get('quit_smoking'),
-                                'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                'pack_year' => $packs_year,
-                                'eligible' => $eligible,
-                                'status' => 1,
-                                'patient_id' => $_GET['cid'],
-                                'create_on' => date('Y-m-d H:i:s'),
-                                'staff_id' => $user->data()->id,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                                'site_id' => $clients['site_id'],
-                            ));
-
-                            if ($eligible) {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                            } else {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                            }
-
-                            $user->updateRecord('clients', array(
-                                'screened' => 1,
-                                'eligible' => $eligible,
-                            ), $_GET['cid']);
-
-                            $successMessage = 'History  Successful Added';
-
-                            Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                        } else {
-                            $user->updateRecord('history', array(
-                                'screening_date' => Input::get('screening_date'),
-                                'study_id' => $_GET['study_id'],
-                                'ever_smoked' => Input::get('ever_smoked'),
-                                'start_smoking' => Input::get('start_smoking'),
-                                'smoking_long' => Input::get('smoking_long'),
-                                'type_smoked' => Input::get('type_smoked'),
-                                'currently_smoking' => Input::get('currently_smoking'),
-                                'quit_smoking' => Input::get('quit_smoking'),
-                                'packs_cigarette_day' => Input::get('packs_cigarette_day'),
-                                'pack_year' => $packs_year,
-                                'eligible' => $eligible,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                            ), $history[0]['id']);
-
-                            if ($eligible) {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 1);
-                            } else {
-                                $user->visit_delete1($_GET['cid'], Input::get('screening_date'), $_GET['study_id'], $user->data()->id, $clients['site_id'], 0);
-                            }
-                        }
-
-                        $user->updateRecord('clients', array(
-                            'screened' => 1,
-                            'eligible' => $eligible,
-                        ), $_GET['cid']);
-
-                        $successMessage = 'History  Successful Updated';
-
-                        Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                    }
-                }
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_results')) {
-            $validate = $validate->check($_POST, array(
-                'test_date' => array(
-                    'required' => true,
-                ),
-                'results_date' => array(
-                    'required' => true,
-                ),
-                'ldct_results' => array(
-                    'required' => true,
-                ),
-                'rad_score' => array(
-                    'required' => true,
-                ),
-                'findings' => array(
-                    'required' => true,
-                ),
-            ));
-            if ($validate->passed()) {
-                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-                $results = $override->get3('results', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
-
-                if ($results) {
-                    $user->updateRecord('results', array(
-                        'test_date' => Input::get('test_date'),
-                        'results_date' => Input::get('results_date'),
-                        'ldct_results' => Input::get('ldct_results'),
-                        'rad_score' => Input::get('rad_score'),
-                        'findings' => Input::get('findings'),
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), $results[0]['id']);
-                    $successMessage = 'Results  Successful Updated';
-                } else {
-                    $user->createRecord('results', array(
-                        'test_date' => Input::get('test_date'),
-                        'results_date' => Input::get('results_date'),
-                        'visit_code' => $_GET['visit_code'],
-                        'study_id' => $_GET['study_id'],
+                    $user->createRecord('individual', array(
+                        'vid' => $_GET['vid'],
                         'sequence' => $_GET['sequence'],
-                        'ldct_results' => Input::get('ldct_results'),
-                        'rad_score' => Input::get('rad_score'),
-                        'findings' => Input::get('findings'),
+                        'visit_code' => $_GET['visit_code'],
+                        'pid' => $clients['study_id'],
+                        'study_id' => $clients['study_id'],
+                        'visit_date' => Input::get('visit_date'),
+                        'previous_vl_date' => Input::get('previous_vl_date'),
+                        'recent_vl_results' => Input::get('recent_vl_results'),
+                        'trained_pivlo' => Input::get('trained_pivlo'),
+                        'initiate_test_hcw' => Input::get('initiate_test_hcw'),
+                        'tested_this_month' => Input::get('tested_this_month'),
+                        'new_vl_date' => Input::get('new_vl_date'),
+                        'new_vl_results' => Input::get('new_vl_results'),
+                        'recent_cd4' => Input::get('recent_cd4'),
+                        'cd4_date' => Input::get('cd4_date'),
+                        'recent_tb_results' => Input::get('recent_tb_results'),
+                        'recent_tb_date' => Input::get('recent_tb_date'),
+                        'date_art_treatment' => Input::get('date_art_treatment'),
+                        'art_regimen' => Input::get('art_regimen'),
+                        'art_regimen_other' => Input::get('art_regimen_other'),
+                        'first_line' => $first_line,
+                        'other_first_line' => Input::get('other_first_line'),
+                        'second_line' => $second_line,
+                        'other_second_line' => Input::get('other_second_line'),
+                        'third_line' => $third_line,
+                        'other_third_line' => Input::get('other_third_line'),
+                        'weight' => Input::get('weight'),
+                        'height' => Input::get('height'),
+                        'systolic' => Input::get('systolic'),
+                        'diastolic' => Input::get('diastolic'),
+                        'chronic_condition' => Input::get('chronic_condition'),
+                        'other_chronic' => Input::get('other_chronic'),
+                        'reasons' => Input::get('reasons'),
+                        'next_appointment' => Input::get('next_appointment'),
+                        'next_date' => Input::get('next_date'),
+                        'comments' => Input::get('comments'),
+                        'individual_complete' => Input::get('individual_complete'),
+                        'date_completed' => Input::get('date_completed'),
                         'status' => 1,
-                        'patient_id' => $_GET['cid'],
+                        'patient_id' => $clients['id'],
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
@@ -903,119 +547,18 @@ if ($user->isLoggedIn()) {
                         'site_id' => $clients['site_id'],
                     ));
 
-                    $user->updateRecord('clients', array(
-                        'enrolled' => 1,
-                    ), $_GET['cid']);
-
-                    $successMessage = 'Results  Successful Added';
+                    $successMessage = 'Individual  Successful Added';
                 }
 
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-            } else {
-                $pageError = $validate->errors();
-            }
-        } elseif (Input::get('add_classification')) {
-            $validate = $validate->check($_POST, array(
-                'classification_date' => array(
-                    'required' => true,
-                ),
-            ));
 
-            if ($validate->passed()) {
-                if (count(Input::get('category')) == 1) {
-                    foreach (Input::get('category') as $value) {
-                        $visit_code = '';
-                        $visit_name = '';
+                $user->updateRecord('clients', array(
+                    'enrolled' => $enrolled,
+                ), $clients['id']);
 
-                        if ($value == 1) {
-                            $visit_code = 'M12';
-                            $visit_name = 'Month 12';
-                            $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                        } elseif ($value == 2) {
-                            $visit_code = 'M12';
-                            $visit_name = 'Month 12';
-                            $expected_date = date('Y-m-d', strtotime('+12 month', strtotime(Input::get('classification_date'))));
-                        } elseif ($value == 3) {
-                            $visit_code = 'M06';
-                            $visit_name = 'Month 6';
-                            $expected_date = date('Y-m-d', strtotime('+6 month', strtotime(Input::get('classification_date'))));
-                        } elseif ($value == 4) {
-                            $visit_code = 'M03';
-                            $visit_name = 'Month 3';
-                            $expected_date = date('Y-m-d', strtotime('+3 month', strtotime(Input::get('classification_date'))));
-                        } elseif ($value == 5) {
-                            $visit_code = 'RFT';
-                            $visit_name = 'Referred';
-                            $expected_date = date('Y-m-d', strtotime('+2 month', strtotime(Input::get('classification_date'))));
-                        }
-                    }
-
-                    $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
-
-                    $classification = $override->get3('classification', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
-
-                    if ($classification) {
-                        $user->updateRecord('classification', array(
-                            'classification_date' => Input::get('classification_date'),
-                            'category' => $value,
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                        ), $classification[0]['id']);
-                        $successMessage = 'Classification  Successful Updated';
-                    } else {
-                        $user->createRecord('classification', array(
-                            'classification_date' => Input::get('classification_date'),
-                            'visit_code' => $_GET['visit_code'],
-                            'study_id' => $_GET['study_id'],
-                            'sequence' => $_GET['sequence'],
-                            'category' => $value,
-                            'status' => 1,
-                            'patient_id' => $_GET['cid'],
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'update_id' => $user->data()->id,
-                            'site_id' => $clients['site_id'],
-                        ));
+                $user->visit_delete1($clients['id'], Input::get('next_date'), $clients['study_id'], $user->data()->id, $clients['site_id'], $enrolled, $sequence, $visit_code, $visit_name);
 
 
-                        $successMessage = 'Classification  Successful Added';
-                    }
-
-                    if ($_GET['sequence'] == 1) {
-                        $visit_id = $override->getNews('visit', 'patient_id', $_GET['cid'], 'sequence', 2);
-                        if ($visit_id) {
-                            $user->updateRecord('visit', array(
-                                'expected_date' => $expected_date,
-                                'visit_code' => $visit_code,
-                                'visit_name' => $visit_name,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                            ), $visit_id[0]['id']);
-                        } else {
-                            $user->createRecord('visit', array(
-                                'expected_date' => $expected_date,
-                                'visit_date' => '',
-                                'visit_code' => $visit_code,
-                                'visit_name' => $visit_name,
-                                'study_id' => $_GET['study_id'],
-                                'sequence' => 2,
-                                'visit_status' => 0,
-                                'status' => 1,
-                                'patient_id' => $_GET['cid'],
-                                'create_on' => date('Y-m-d H:i:s'),
-                                'staff_id' => $user->data()->id,
-                                'update_on' => date('Y-m-d H:i:s'),
-                                'update_id' => $user->data()->id,
-                                'site_id' => $clients['site_id'],
-                            ));
-                        }
-                    }
-
-                    Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
-                } else {
-                    $errorMessage = 'Please chose only one Classification!';
-                }
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -1041,134 +584,292 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
-        } elseif (Input::get('add_economic')) {
+        } elseif (Input::get('add_screening')) {
             $validate = $validate->check($_POST, array(
-                'economic_date' => array(
+                'screening_date' => array(
                     'required' => true,
                 ),
-                'income_household' => array(
-                    'required' => true,
-                ),
-                'income_patient' => array(
+                'conset' => array(
                     'required' => true,
                 ),
             ));
+
             if ($validate->passed()) {
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
-                $economic = $override->get3('economic', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
+                $screening = $override->get3('screening', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', 0);
+                $sequence = 1;
+                $visit_code = '';
+                $visit_name = '';
+                $eligible = 0;
+                if (Input::get('conset') == 1) {
+                    $eligible = 1;
+                    $sequence = 1;
+                    $visit_code = 'M' . $sequence;
+                    $visit_name = 'Month ' . $sequence;
+                }
 
-                if ($economic) {
-                    $user->updateRecord('economic', array(
-                        'economic_date' => Input::get('economic_date'),
-                        'income_household' => Input::get('income_household'),
-                        'income_household_other' => Input::get('income_household_other'),
-                        'income_patient' => Input::get('income_patient'),
-                        'income_patient_other' => Input::get('income_patient_other'),
-                        'monthly_earn' => Input::get('monthly_earn'),
-                        'member_earn' => Input::get('member_earn'),
-                        'transport' => Input::get('transport'),
-                        'support_earn' => Input::get('support_earn'),
-                        'food_drinks' => Input::get('food_drinks'),
-                        'other_cost' => Input::get('other_cost'),
-                        'days' => Input::get('days'),
-                        'hours' => Input::get('hours'),
-                        'registration' => Input::get('registration'),
-                        'consultation' => Input::get('consultation'),
-                        'diagnostic' => Input::get('diagnostic'),
-                        'medications' => Input::get('medications'),
-                        'other_medical_cost' => Input::get('other_medical_cost'),
+                if ($screening) {
+                    $user->updateRecord('screening', array(
+                        'screening_date' => Input::get('screening_date'),
+                        'conset' => Input::get('conset'),
+                        'conset_date' => Input::get('conset_date'),
+                        'comments' => Input::get('comments'),
+                        'eligible' => $eligible,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                    ), $economic[0]['id']);
-                    $successMessage = 'Economic  Successful Updated';
+                    ), $screening[0]['id']);
+
+                    $successMessage = 'Screening  Successful Updated';
                 } else {
-                    $user->createRecord('economic', array(
-                        'economic_date' => Input::get('economic_date'),
-                        'visit_code' => $_GET['visit_code'],
-                        'study_id' => $_GET['study_id'],
-                        'sequence' => $_GET['sequence'],
-                        'income_household' => Input::get('income_household'),
-                        'income_household_other' => Input::get('income_household_other'),
-                        'income_patient' => Input::get('income_patient'),
-                        'income_patient_other' => Input::get('income_patient_other'),
-                        'monthly_earn' => Input::get('monthly_earn'),
-                        'member_earn' => Input::get('member_earn'),
-                        'transport' => Input::get('transport'),
-                        'support_earn' => Input::get('support_earn'),
-                        'food_drinks' => Input::get('food_drinks'),
-                        'other_cost' => Input::get('other_cost'),
-                        'days' => Input::get('days'),
-                        'hours' => Input::get('hours'),
-                        'registration' => Input::get('registration'),
-                        'consultation' => Input::get('consultation'),
-                        'diagnostic' => Input::get('diagnostic'),
-                        'medications' => Input::get('medications'),
-                        'other_medical_cost' => Input::get('other_medical_cost'),
+                    $user->createRecord('screening', array(
+                        'sequence' => 0,
+                        'vid' => $_GET['vid'],
+                        'pid' => $clients['study_id'],
+                        'visit_code' => 'M0',
+                        'study_id' => $clients['study_id'],
+                        'screening_date' => Input::get('screening_date'),
+                        'conset' => Input::get('conset'),
+                        'conset_date' => Input::get('conset_date'),
+                        'comments' => Input::get('comments'),
+                        'eligible' => $eligible,
                         'status' => 1,
-                        'patient_id' => $_GET['cid'],
+                        'patient_id' => $clients['id'],
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
                         'site_id' => $clients['site_id'],
                     ));
-                    $successMessage = 'Economic  Successful Added';
+                    $successMessage = 'Screening  Successful Added';
                 }
+
+                $user->visit_delete1($clients['id'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $clients['site_id'], $eligible, $sequence, $visit_code, $visit_name);
+
+
+                $user->updateRecord('clients', array(
+                    'eligible' => $eligible,
+                ), $clients['id']);
+
+
 
                 Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
-        } elseif (Input::get('add_outcome')) {
+        } elseif (Input::get('add_facility')) {
             $validate = $validate->check($_POST, array(
                 'visit_date' => array(
                     'required' => true,
                 ),
-                'diagnosis' => array(
-                    'required' => true,
-                ),
-                'outcome' => array(
+                'month_name' => array(
                     'required' => true,
                 ),
             ));
 
             if ($validate->passed()) {
-                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
-                $outcome = $override->get3('outcome', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
+                $sites = $override->getNews('sites', 'status', 1, 'id', $_GET['site_id'])[0];
 
-                if ($outcome) {
-                    $user->updateRecord('outcome', array(
+                $facility = $override->get3('facility', 'status', 1, 'site_id', $_GET['site_id'], 'sequence', $_GET['sequence']);
+                $first_line = 0;
+                $second_line = 0;
+                $third_line = 0;
+                $sequence = '';
+                $visit_code = '';
+                $visit_name = '';
+
+                // if (Input::get('first_line')) {
+                //     $first_line = Input::get('first_line');
+                // }
+
+                // if (Input::get('second_line')) {
+                //     $second_line = Input::get('second_line');
+                // }
+
+                // if (Input::get('third_line')) {
+                //     $third_line = Input::get('third_line');
+                // }
+
+                // $expected_date = date('Y-m-d', strtotime('+1 month', strtotime(Input::get('visit_date'))));
+
+                // $last_visit = $override->getlastRow1('visit', 'patient_id', $clients['id'], 'sequence', $_GET['sequence'], 'id')[0];
+
+                $sequence = intval($_GET['sequence']) + 1;
+                if ($sequence) {
+                    $visit_code = 'M' . $sequence;
+                    $visit_name = 'Month ' . $sequence;
+                }
+                if ($facility) {
+                    $user->updateRecord('facility', array(
+                        'facility_id' => Input::get('facility_id'),
                         'visit_date' => Input::get('visit_date'),
-                        'diagnosis' => Input::get('diagnosis'),
-                        'outcome' => Input::get('outcome'),
-                        'outcome_date' => Input::get('outcome_date'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => Input::get('appointments'),
+                        'month_name' => Input::get('month_name'),
+                        'patients_tested' => Input::get('patients_tested'),
+                        'vl_results_available' => Input::get('vl_results_available'),
+                        'comments' => Input::get('comments'),
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => Input::get('facility_completed'),
+                        'date_completed' => Input::get('date_completed'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                    ), $outcome[0]['id']);
+                    ), $facility[0]['id']);
 
-                    $successMessage = 'Outcome  Successful Updated';
+                    $successMessage = 'Facility  Successful Updated';
                 } else {
-                    $user->createRecord('outcome', array(
-                        'visit_date' => Input::get('visit_date'),
-                        'visit_code' => $_GET['visit_code'],
-                        'study_id' => $_GET['study_id'],
+                    $user->createRecord('facility', array(
                         'sequence' => $_GET['sequence'],
-                        'diagnosis' => Input::get('diagnosis'),
-                        'outcome' => Input::get('outcome'),
-                        'outcome_date' => Input::get('outcome_date'),
+                        'vid' => $_GET['vid'],
+                        'visit_code' => $_GET['visit_code'],
+                        'facility_id' => Input::get('facility_id'),
+                        'visit_date' => Input::get('visit_date'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => Input::get('appointments'),
+                        'month_name' => Input::get('month_name'),
+                        'patients_tested' => Input::get('patients_tested'),
+                        'vl_results_available' => Input::get('vl_results_available'),
+                        'comments' => Input::get('comments'),
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => Input::get('facility_completed'),
+                        'date_completed' => Input::get('date_completed'),
                         'status' => 1,
-                        'patient_id' => $_GET['cid'],
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => $clients['site_id'],
+                        'site_id' => $_GET['site_id'],
                     ));
-                    $successMessage = 'Outcome  Successful Added';
+                    $successMessage = 'Facility  Successful Added';
                 }
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
+
+                $user->visit_delete1($_GET['site_id'], Input::get('visit_date'), $_GET['site_id'], $user->data()->id, $_GET['site_id'], $eligible, $sequence, $visit_code, $visit_name);
+
+
+                // Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_facility_visit')) {
+            $validate = $validate->check($_POST, array(
+                'visit_date' => array(
+                    'required' => true,
+                ),
+            ));
+
+            if ($validate->passed()) {
+                $user->updateRecord('visit', array(
+                    'visit_date' => Input::get('visit_date'),
+                    'visit_status' => Input::get('visit_status'),
+                    'comments' => Input::get('comments'),
+                    'status' => 1,
+                    'patient_id' => Input::get('cid'),
+                    'update_on' => date('Y-m-d H:i:s'),
+                    'update_id' => $user->data()->id,
+                ), Input::get('id'));
+
+                $successMessage = 'Visit Updates  Successful';
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_region')) {
+            $validate = $validate->check($_POST, array(
+                'name' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                try {
+                    $regions = $override->get('regions', 'id', $_GET['region_id']);
+                    if ($regions) {
+                        $user->updateRecord('regions', array(
+                            'name' => Input::get('name'),
+                        ), $_GET['region_id']);
+                        $successMessage = 'Region Successful Updated';
+                    } else {
+                        $user->createRecord('regions', array(
+                            'name' => Input::get('name'),
+                            'status' => 1,
+                        ));
+                        $successMessage = 'Region Successful Added';
+                    }
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_district')) {
+            $validate = $validate->check($_POST, array(
+                'region_id' => array(
+                    'required' => true,
+                ),
+                'name' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                try {
+                    $districts = $override->get('districts', 'id', $_GET['district_id']);
+                    if ($districts) {
+                        $user->updateRecord('districts', array(
+                            'region_id' => $_GET['region_id'],
+                            'name' => Input::get('name'),
+                        ), $_GET['district_id']);
+                        $successMessage = 'District Successful Updated';
+                    } else {
+                        $user->createRecord('districts', array(
+                            'region_id' => Input::get('region_id'),
+                            'name' => Input::get('name'),
+                            'status' => 1,
+                        ));
+                        $successMessage = 'District Successful Added';
+                    }
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_ward')) {
+            $validate = $validate->check($_POST, array(
+                'region_id' => array(
+                    'required' => true,
+                ),
+                'district_id' => array(
+                    'required' => true,
+                ),
+                'name' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                try {
+                    $wards = $override->get('wards', 'id', $_GET['ward_id']);
+                    if ($wards) {
+                        $user->updateRecord('wards', array(
+                            'region_id' => $_GET['region_id'],
+                            'district_id' => $_GET['district_id'],
+                            'name' => Input::get('name'),
+                        ), $_GET['ward_id']);
+                        $successMessage = 'Ward Successful Updated';
+                    } else {
+                        $user->createRecord('wards', array(
+                            'region_id' => Input::get('region_id'),
+                            'district_id' => Input::get('district_id'),
+                            'name' => Input::get('name'),
+                            'status' => 1,
+                        ));
+                        $successMessage = 'Ward Successful Added';
+                    }
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }
             } else {
                 $pageError = $validate->errors();
             }
@@ -1583,6 +1284,256 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 2) { ?>
         <?php } elseif ($_GET['id'] == 3) { ?>
+            <?php
+            $sites = $override->getNews('sites', 'status', 1, 'id', $_GET['site_id'])[0];
+            $regions = $override->get('regions', 'id', $_GET['region_id']);
+            $districts = $override->getNews('districts', 'region_id', $_GET['region_id'], 'id', $_GET['district_id']);
+            $wards = $override->get('wards', 'id', $_GET['ward_id']);
+            // print_r($regions)
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if ($sites) { ?>
+                                    <h1>Add New Site</h1>
+                                <?php } else { ?>
+                                    <h1>Update Site</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=12&site_id=<?= $_GET['site_id']; ?>&status=<?= $_GET['status']; ?>">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item">
+                                        <a href="index1.php">Home</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=11&status=<?= $_GET['status']; ?>">
+                                            Go to Facilities list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if ($sites) { ?>
+                                        <li class="breadcrumb-item active">Add New Site</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update Site</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Name & Date</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="mb-2">
+                                                        <label for="entry_date" class="form-label">Date of Entry</label>
+                                                        <input type="date" value="<?php if ($sites['entry_date']) {
+                                                                                        print_r($sites['entry_date']);
+                                                                                    } ?>" id="entry_date" name="entry_date" class="form-control" placeholder="Enter date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="mb-2">
+                                                        <label for="name" class="form-label">Name</label>
+                                                        <input type="text" value="<?php if ($sites['name']) {
+                                                                                        print_r($sites['name']);
+                                                                                    } ?>" id="name" name="name" class="form-control" placeholder="Enter here name" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">ARMS, LEVEL , TYPE & CATEGORY</h3>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <label for="arm" class="form-label">Arm</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('facility_arm', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="arm" id="arm<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($sites['arm'] == $value['id']) {
+                                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                                        } ?> required>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label for="level" class="form-label">Level</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('facility_level', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="level" id="level<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($sites['level'] == $value['id']) {
+                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                            } ?> required>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label for="type" class="form-label">Type</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('facility_type', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="type" id="type<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($sites['type'] == $value['id']) {
+                                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                                        } ?> required>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label for="category" class="form-label">Category</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('facility_category', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="category" id="category<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($sites['category'] == $value['id']) {
+                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                } ?> required>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label for="category" class="form-label">Respondent Type</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->getNews('respondent_type', 'status', 1, 'respondent', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="respondent" id="respondent<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($sites['respondent'] == $value['id']) {
+                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                    } ?> required>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Adress</h3>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Region</label>
+                                                            <select id="region" name="region" class="form-control" required>
+                                                                <option value="<?= $regions['id'] ?>"><?php if ($sites['region']) {
+                                                                                                            print_r($regions[0]['name']);
+                                                                                                        } else {
+                                                                                                            echo 'Select region';
+                                                                                                        } ?>
+                                                                </option>
+                                                                <?php foreach ($override->get('regions', 'status', 1) as $region) { ?>
+                                                                    <option value="<?= $region['id'] ?>"><?= $region['name'] ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>District</label>
+                                                            <select id="district" name="district" class="form-control" required>
+                                                                <option value="<?= $districts['id'] ?>"><?php if ($sites['district']) {
+                                                                                                            print_r($districts[0]['name']);
+                                                                                                        } else {
+                                                                                                            echo 'Select district';
+                                                                                                        } ?>
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Ward</label>
+                                                            <select id="ward" name="ward" class="form-control" required>
+                                                                <option value="<?= $wards['id'] ?>"><?php if ($sites['ward']) {
+                                                                                                        print_r($wards[0]['name']);
+                                                                                                    } else {
+                                                                                                        echo 'Select district';
+                                                                                                    } ?>
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=11&site_id=<?= $sites['id'] ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="site_id" value="<?= $sites['id'] ?>">
+                                            <input type="submit" name="add_site" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 4) { ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -1633,12 +1584,15 @@ if ($user->isLoggedIn()) {
                             $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
                             $relation = $override->get('relation', 'id', $clients['relation_patient'])[0];
                             $sex = $override->get('sex', 'id', $clients['sex'])[0];
-                            $district = $override->get('district', 'id', $clients['district'])[0];
                             $education = $override->get('education', 'id', $clients['education'])[0];
                             $occupation = $override->get('occupation', 'id', $clients['occupation'])[0];
                             $insurance = $override->get('insurance', 'id', $clients['health_insurance'])[0];
                             $payments = $override->get('payments', 'id', $clients['pay_services'])[0];
                             $household = $override->get('household', 'id', $clients['head_household'])[0];
+
+                            $regions = $override->get('regions', 'id', $clients['region'])[0];
+                            $districts = $override->get('districts', 'id', $clients['district'])[0];
+                            $wards = $override->get('wards', 'id', $clients['ward'])[0];
                             ?>
                             <!-- right column -->
                             <div class="col-md-12">
@@ -1650,8 +1604,9 @@ if ($user->isLoggedIn()) {
                                     <!-- /.card-header -->
                                     <form id="clients" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
+                                            <hr>
                                             <div class="row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1663,17 +1618,28 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <label>Hospital ID ( CTC ID )</label>
-                                                            <input class="form-control" type="text" minlength="14" maxlength="14" size="14" pattern=[0]{1}[0-9]{13} name="hospital_id" id="hospital_id" placeholder="Type CTC ID..." value="<?php if ($clients['hospital_id']) {
-                                                                                                                                                                                                                                                print_r($clients['hospital_id']);
-                                                                                                                                                                                                                                            }  ?>" required />
+                                                            <label>Hospital ID</label>
+                                                            <input class="form-control" type="text" name="hospital_id" id="hospital_id" placeholder="Type Hospital ID..." value="<?php if ($clients['hospital_id']) {
+                                                                                                                                                                                        print_r($clients['hospital_id']);
+                                                                                                                                                                                    }  ?>" required />
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-2">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>CTC ID </label>
+                                                            <input class="form-control" type="text" minlength="14" maxlength="14" size="14" pattern=[0]{1}[0-9]{13} name="ctc_id" id="ctc_id" placeholder="Type CTC ID..." value="<?php if ($clients['ctc_id']) {
+                                                                                                                                                                                                                                        print_r($clients['ctc_id']);
+                                                                                                                                                                                                                                    }  ?>" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1684,7 +1650,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1692,28 +1658,6 @@ if ($user->isLoggedIn()) {
                                                             <input class="form-control" type="tel" pattern=[0]{1}[0-9]{9} minlength="10" maxlength="10" name="patient_phone2" id="patient_phone2" value="<?php if ($clients['patient_phone2']) {
                                                                                                                                                                                                                 print_r($clients['patient_phone2']);
                                                                                                                                                                                                             }  ?>" /> <span>Example: 0700 000 111</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-2">
-                                                    <label>SEX</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="sex" id="sex" value="1" <?php if ($clients['sex'] == 1) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Male</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="sex" id="sex" value="2" <?php if ($clients['sex'] == 2) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Female</label>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1751,7 +1695,29 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <label>SEX</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="sex" id="sex" value="1" <?php if ($clients['sex'] == 1) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?> required>
+                                                                <label class="form-check-label">Male</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="sex" id="sex" value="2" <?php if ($clients['sex'] == 2) {
+                                                                                                                                                echo 'checked';
+                                                                                                                                            } ?>>
+                                                                <label class="form-check-label">Female</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1807,7 +1773,7 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1820,7 +1786,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1833,7 +1799,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <label>Relation to patient(Supporter)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -1846,15 +1812,8 @@ if ($user->isLoggedIn()) {
                                                                     <label class="form-check-label"><?= $relation['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3" id="relation_patient_other">
-                                                    <label>Other relation patient</label>
-                                                    <div class="row-form clearfix">
-                                                        <!-- select -->
-                                                        <div class="form-group">
-                                                            <textarea class="form-control" name="relation_patient_other" id="relation_patient_other_value" rows="3" placeholder="Type other relation here...">
+                                                            <label id="relation_patient_other_label">Other relation patient</label>
+                                                            <textarea class="form-control" name="relation_patient_other" id="relation_patient_other" rows="3" placeholder="Type other relation here...">
                                                                 <?php if ($clients['relation_patient_other']) {
                                                                     print_r($clients['relation_patient_other']);
                                                                 }  ?>
@@ -1871,26 +1830,62 @@ if ($user->isLoggedIn()) {
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <label>District</label>
-                                                            <select id="district" name="district" class="form-control" required>
-                                                                <option value="<?= $district['id'] ?>"><?php if ($clients) {
-                                                                                                            print_r($district['name']);
+                                                            <label>Region</label>
+                                                            <select id="region" name="region" class="form-control" required>
+                                                                <option value="<?= $regions['id'] ?>"><?php if ($clients['region']) {
+                                                                                                            print_r($regions['name']);
                                                                                                         } else {
-                                                                                                            echo 'Select district';
+                                                                                                            echo 'Select region';
                                                                                                         } ?>
                                                                 </option>
-                                                                <?php foreach ($override->get('district', 'status', 1) as $value) { ?>
-                                                                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                                <?php foreach ($override->get('regions', 'status', 1) as $region) { ?>
+                                                                    <option value="<?= $region['id'] ?>"><?= $region['name'] ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>District</label>
+                                                            <select id="district" name="district" class="form-control" required>
+                                                                <option value="<?= $districts['id'] ?>"><?php if ($clients['district']) {
+                                                                                                            print_r($districts['name']);
+                                                                                                        } else {
+                                                                                                            echo 'Select district';
+                                                                                                        } ?>
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Ward</label>
+                                                            <select id="ward" name="ward" class="form-control" required>
+                                                                <option value="<?= $wards['id'] ?>"><?php if ($clients['ward']) {
+                                                                                                        print_r($wards['name']);
+                                                                                                    } else {
+                                                                                                        echo 'Select district';
+                                                                                                    } ?>
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -1905,17 +1900,17 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Location:</label>
-                                                            <textarea class="form-control" name="location" rows="3" placeholder="Type location here..." required>
-                                                                <?php if ($clients['location']) {
-                                                                    print_r($clients['location']);
-                                                                }  ?>
-                                                            </textarea>
+                                                            <label>Physical Address ( Location )</label>
+                                                            <textarea class="form-control" id="location" placeholder="Type physical address here" name="location" rows="3" style="width: 100%;" required>
+                                                                    <?php if ($clients['location']) {
+                                                                        print_r($clients['location']);
+                                                                    }  ?>
+                                                                </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -2108,23 +2103,20 @@ if ($user->isLoggedIn()) {
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
-                                                            <label>Type</label>
-                                                            <select id="interview_type" name="interview_type" class="form-control" required>
-                                                                <option value="<?= $clients['interview_type'] ?>"><?php if ($clients['interview_type']) {
-                                                                                                                        if ($clients['interview_type'] == 1) {
-                                                                                                                            echo 'Kap & Screening';
-                                                                                                                        } elseif ($clients['interview_type'] == 2) {
-                                                                                                                            echo 'Health Care Worker';
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        echo 'Select';
-                                                                                                                    } ?>
+                                                            <label>Respondent Type</label>
+                                                            <select id="respondent" name="respondent" class="form-control" required>
+                                                                <option value="<?= $clients['respondent'] ?>"><?php if ($clients['respondent']) {
+                                                                                                                    if ($clients['respondent'] == 1) {
+                                                                                                                        echo 'Facility';
+                                                                                                                    } elseif ($clients['respondent'] == 2) {
+                                                                                                                        echo 'Patient';
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    echo 'Select';
+                                                                                                                } ?>
                                                                 </option>
-                                                                <option value="1">Kap & Screening </option>
-                                                                <?php
-                                                                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                                                                ?>
-                                                                    <option value="2">Health Care Worker </option>
+                                                                <?php foreach ($override->getNews('respondent_type', 'status', 1, 'respondent', 2) as $value) { ?>
+                                                                    <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
@@ -2182,7 +2174,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 5) { ?>
             <?php
-            $kap = $override->getNews('kap', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $individual = $override->get3('individual', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -2191,10 +2183,10 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <?php if (!$kap) { ?>
-                                    <h1>Add New KAP</h1>
+                                <?php if (!$individual) { ?>
+                                    <h1>Add New Section 2: Individual Patients Information</h1>
                                 <?php } else { ?>
-                                    <h1>Update KAP</h1>
+                                    <h1>Update Section 2: Individual Patients Information</h1>
                                 <?php } ?>
                             </div>
                             <div class="col-sm-6">
@@ -2206,10 +2198,10 @@ if ($user->isLoggedIn()) {
                                     <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
                                             Go to screening list > </a>
                                     </li>&nbsp;&nbsp;
-                                    <?php if (!$kap) { ?>
-                                        <li class="breadcrumb-item active">Add New KAP</li>
+                                    <?php if (!$individual) { ?>
+                                        <li class="breadcrumb-item active">Add New Section 2: Individual Patients Information</li>
                                     <?php } else { ?>
-                                        <li class="breadcrumb-item active">Update KAP</li>
+                                        <li class="breadcrumb-item active">Update Section 2: Individual Patients Information</li>
                                     <?php } ?>
                                 </ol>
                             </div>
@@ -2226,467 +2218,121 @@ if ($user->isLoggedIn()) {
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">Sehemu ya 2: Uelewa juu ya Saratani ya mapafu. (Usimsomee machaguo)</h3>
+                                        <h3 class="card-title">Most Recents Viroal Load Results</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
+                                            <hr>
                                             <div class="row">
                                                 <div class="col-3">
                                                     <div class="mb-2">
-                                                        <label for="interview_date" class="form-label">Interview Date</label>
-                                                        <input type="date" value="<?php if ($kap['interview_date']) {
-                                                                                        print_r($kap['interview_date']);
-                                                                                    } ?>" id="interview_date" name="interview_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter interview date" required />
+                                                        <label for="visit_date" class="form-label">Visit Date</label>
+                                                        <input type="date" value="<?php if ($individual['visit_date']) {
+                                                                                        print_r($individual['visit_date']);
+                                                                                    } ?>" id="visit_date" name="visit_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3">
                                                     <div class="mb-2">
-                                                        <label for="saratani_mapafu" class="form-label">1. Je, unaweza kuniambia nini maana ya ugonjwa wa Saratani ya mapafu? </label>
-                                                        <select name="saratani_mapafu" id="saratani_mapafu" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_mapafu'] ?>"><?php if ($kap['saratani_mapafu']) {
-                                                                                                                if ($kap['saratani_mapafu'] == 1) {
-                                                                                                                    echo 'Ugonjwa wa saratani ya mapafu ni ugonjwa ambao unatokea endapo seli za mapafu zinazaliana bila mpangilio maalum, na unaweza ukasambaa kwenye tezi za mwili na sehemu zinginezo.';
-                                                                                                                } elseif ($kap['saratani_mapafu'] == 2) {
-                                                                                                                    echo 'Wagonjwa wenye saratani ya mapafu hawaonyeshi dalili zozote wakati wa hatua za mwanzoni za ugonjwa.';
-                                                                                                                } elseif ($kap['saratani_mapafu'] == 3) {
-                                                                                                                    echo 'Sina uhakika nini maana ya ugonjwa wa saratani ya mapafu.';
-                                                                                                                } elseif ($kap['saratani_mapafu'] == 4) {
-                                                                                                                    echo 'Sijawahi kusikia kitu chochote juu ya ugonjwa wa saratani ya mapafu.';
-                                                                                                                } elseif ($kap['saratani_mapafu'] == 99) {
-                                                                                                                    echo 'Sijui';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">a. Ugonjwa wa saratani ya mapafu ni ugonjwa ambao unatokea endapo seli za mapafu zinazaliana bila mpangilio maalum, na unaweza ukasambaa kwenye tezi za mwili na sehemu zinginezo.</option>
-                                                            <option value="2">b. Wagonjwa wenye saratani ya mapafu hawaonyeshi dalili zozote wakati wa hatua za mwanzoni za ugonjwa.</option>
-                                                            <option value="3">c. Sina uhakika nini maana ya ugonjwa wa saratani ya mapafu.</option>
-                                                            <option value="4">d. Sijawahi kusikia kitu chochote juu ya ugonjwa wa saratani ya mapafu.</option>
-                                                            <option value="99">e. Sijui</option>
-                                                        </select>
+                                                        <label for="previous_vl_date" class="form-label">Date of previous VL test</label>
+                                                        <input type="date" value="<?php if ($individual['previous_vl_date']) {
+                                                                                        print_r($individual['previous_vl_date']);
+                                                                                    } ?>" id="previous_vl_date" name="previous_vl_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="recent_vl_results" class="form-label">Most recent VL test results before this month.</label>
+                                                        <input type="number" value="<?php if ($individual['recent_vl_results']) {
+                                                                                        print_r($individual['recent_vl_results']);
+                                                                                    } ?>" id="recent_vl_results" name="recent_vl_results" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                    <span>copies/ul</span>
+                                                </div>
+
+                                                <div class="col-sm-3" id="trained_pivlo">
+                                                    <label for="trained_pivlo" class="form-label">Was the patient trained for PIVLO before test?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="trained_pivlo" id="trained_pivlo<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['trained_pivlo'] == $value['id']) {
+                                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                                            } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">New Viroal Load Results</h3>
+                                                </div>
+                                            </div>
+
+
+                                            <hr>
+
+                                            <div class="row">
+
+                                                <div class="col-sm-3" id="initiate_test_hcw">
+                                                    <label for="trained_pivlo" class="form-label">Did he/she initiate the test to the HCW?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="initiate_test_hcw" id="initiate_test_hcw<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['initiate_test_hcw'] == $value['id']) {
+                                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3" id="tested_this_month">
+                                                    <label for="tested_this_month" class="form-label">Did the patient got tested this month?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="tested_this_month" id="tested_this_month<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['tested_this_month'] == $value['id']) {
+                                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3">
-                                                    <div class="mb-3">
-                                                        <label for="uhusiano_saratani" class="form-label">2. Je, kuna uhusiano kati ya saratani ya mapafu na maambukizi ya Virusi vya UKIMWI? </label>
-                                                        <select name="uhusiano_saratani" id="uhusiano_saratani" class="form-control" required>
-                                                            <option value="<?= $kap['uhusiano_saratani'] ?>"><?php if ($kap['uhusiano_saratani']) {
-                                                                                                                    if ($kap['uhusiano_saratani'] == 1) {
-                                                                                                                        echo 'Ndio';
-                                                                                                                    } elseif ($kap['uhusiano_saratani'] == 2) {
-                                                                                                                        echo 'Hapana';
-                                                                                                                    } elseif ($kap['uhusiano_saratani'] == 99) {
-                                                                                                                        echo 'Sijui';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
+                                                    <div class="mb-2">
+                                                        <label for="new_vl_date" class="form-label">New VL test date</label>
+                                                        <input type="date" value="<?php if ($individual['new_vl_date']) {
+                                                                                        print_r($individual['new_vl_date']);
+                                                                                    } ?>" id="new_vl_date" name="new_vl_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3">
-                                                    <div class="mb-3">
-                                                        <label for="kusambazwa_saratani" class="form-label">3. Je, saratani ya mapafu inaweza kusambazwa kutoka kwa mtu mmoja kwenda kwa mtu mwingine? </label>
-                                                        <select name="kusambazwa_saratani" id="kusambazwa_saratani" class="form-control" required>
-                                                            <option value="<?= $kap['kusambazwa_saratani'] ?>"><?php if ($kap['kusambazwa_saratani']) {
-                                                                                                                    if ($kap['kusambazwa_saratani'] == 1) {
-                                                                                                                        echo 'Ndio';
-                                                                                                                    } elseif ($kap['kusambazwa_saratani'] == 2) {
-                                                                                                                        echo 'Hapana';
-                                                                                                                    } elseif ($kap['kusambazwa_saratani'] == 99) {
-                                                                                                                        echo 'Sijui';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label>4. Je, vitu gani hatarishi vinaweza kusababisha mtu kupata saratani ya mapafu? (Multiple answer)</label>
-                                                    <!-- checkbox -->
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="1" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Uvutaji sigara</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="2" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Kufanya kazi kwenye migodi</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="3" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 3) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Kufanya kazi viwandani. (kiwanda cha bidhaa ya kemikali)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="4" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 4) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Kufanya kazi katika maeneo yenye hewa chafu sana.(highly air pollutes areas)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="5" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 5) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Mtu akiwa na saratani nyingine yeyote mwilini</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="6" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 6) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Kuwa na mtu kwenye familia mwenye historia ya saratani ya mapafu</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="7" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 7) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Kuwa na historia ya kupigwa mionzi ya kifua</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi[]" value="8" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 8) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Kutumia uzazi wa mpango (vidonge vya majira).</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="vitu_hatarishi[]" id="vitu_hatarishi" value="96" <?php foreach (explode(',', $kap['vitu_hatarishi']) as $value) {
-                                                                                                                                                                        if ($value == 96) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        }
-                                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Other</label>
-                                                        </div>
-                                                        <textarea class="form-control" name="vitu_hatarishi_other" id="vitu_hatarishi_other" rows="3" placeholder="Type other here..."><?php if ($kap['vitu_hatarishi_other']) {
-                                                                                                                                                                                            print_r($kap['vitu_hatarishi_other']);
-                                                                                                                                                                                        }  ?>
-                                                                </textarea>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6">
-                                                    <label>5. Je, mtu mwenye Saratani ya mapafu anakua na dalili zipi? ( Multiple answer )</label>
-                                                    <!-- checkbox -->
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="1" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 1) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kikohozi cha Zaidi ya wiki 2 au 3</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="2" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 2) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kikohozi cha muda mrefu kinachozidi kuwa kibaya</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="3" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 3) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kukohoa damu au makohozi yenye rangi ya kutu (spit or phlegm)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="4" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 4) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Magonjwa ya mara kwa mara ya kifua kama bronchitis, pneumonia etc</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="5" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 5) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Maumivu ya kifua yanayoongezeka wakati wa kupumua au kukohoa</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="6" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 6) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kupumua kwa shida (Persistent breathlessness)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="7" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 7) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Uchovu wa mara kwa mara au r lack of energy</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="8" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 8) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kutoa kisauti wakati wa kupumua (Wheezing)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="9" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 9) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kukosa pumzi (Shortness of breath)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani[]" value="10" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 10) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kupungua uzito kusiko na sababu</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="dalili_saratani[]" id="dalili_saratani" value="96" <?php foreach (explode(',', $kap['dalili_saratani']) as $value) {
-                                                                                                                                                                            if ($value == 96) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Other</label>
-                                                        </div>
-                                                        <textarea class="form-control" name="dalili_saratani_other" id="dalili_saratani_other" rows="2" placeholder="Type other here...">
-                                                            <?php if ($kap['dalili_saratani_other']) {
-                                                                print_r($kap['dalili_saratani_other']);
-                                                            }  ?>
-                                                        </textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label>6. Kama mtu akigundulika ana saratani ya mapafu ,ni vipimo gani vinatakiwa kufanyika? (Multiple answer)</label>
-                                                    <!-- checkbox -->
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="1" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
-                                                                                                                                                                            if ($value == 1) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Vipimo vya damu</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="2" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
-                                                                                                                                                                            if ($value == 2) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Picha ya kifua (Chest X-ray)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="3" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
-                                                                                                                                                                            if ($value == 3) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">CT scan ya kifua</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="4" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
-                                                                                                                                                                            if ($value == 4) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kutoa kinyama kwenye mapafu (Lung Biopsy)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo[]" value="99" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
-                                                                                                                                                                            if ($value == 99) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Sijui</label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="saratani_vipimo[]" id="saratani_vipimo" value="96" <?php foreach (explode(',', $kap['saratani_vipimo']) as $value) {
-                                                                                                                                                                            if ($value == 96) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            }
-                                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Other</label>
-                                                        </div>
-                                                        <textarea class="form-control" name="saratani_vipimo_other" id="saratani_vipimo_other" rows="2" placeholder="Type other here...">
-                                                            <?php if ($kap['saratani_vipimo_other']) {
-                                                                print_r($kap['saratani_vipimo_other']);
-                                                            }  ?>
-                                                        </textarea>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <label>7. Je, ugonjwa wa saratani ya mapafu unatibika ?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika1" value="1" <?php if ($kap['saratani_inatibika'] == 1) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Yes</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_inatibika" id="saratani_inatibika2" value="2" <?php if ($kap['saratani_inatibika'] == 2) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-6" id="matibabu_saratani">
-                                                    <label>8. Kama jibu ni ndio, Je unajua njia yoyote ya matibabu ya saratani ya mapafu?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani1" value="1" <?php if ($kap['matibabu_saratani'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Yes</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="matibabu_saratani" id="matibabu_saratani2" value="2" <?php if ($kap['matibabu_saratani'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6" id="matibabu1">
-                                                    <label>9. Kama jibu ni ndio, je ni njia gani za matibabu ya saratani ya mapafu unazozijua? Zitaje.. (Multiple answer)</label>
-                                                    <!-- checkbox -->
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="1" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                            if ($value == 1) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            }
-                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Upasuaji</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="2" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                            if ($value == 2) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            }
-                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Tiba kemikali (Chemotherapy)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="3" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                            if ($value == 3) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            }
-                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Tiba ya mionzi (Radiotherapy)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="4" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                            if ($value == 4) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            }
-                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Tiba ya kinga (Immunotherapy)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="5" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                            if ($value == 5) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            }
-                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Kizuizi cha Tyrosine Kinase (Tyrosine kinase inhibitor)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="6" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                            if ($value == 6) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            }
-                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Tiba inayolengwa na kinga. (Immune target therapy)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu[]" value="99" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                                if ($value == 99) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Sijui</label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="matibabu[]" id="matibabu" value="96" <?php foreach (explode(',', $kap['matibabu']) as $value) {
-                                                                                                                                                            if ($value == 96) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            }
-                                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Other</label>
-                                                        </div>
-                                                        <textarea class="form-control" name="matibabu_other" id="matibabu_other" rows="3" placeholder="Type other here...">
-                                                            <?php if ($kap['matibabu_other']) {
-                                                                print_r($kap['matibabu_other']);
-                                                            }  ?>
-                                                        </textarea>
+                                                    <div class="mb-2">
+                                                        <label for="new_vl_results" class="form-label">New VL test Results</label>
+                                                        <input type="number" value="<?php if ($individual['new_vl_results']) {
+                                                                                        print_r($individual['new_vl_results']);
+                                                                                    } ?>" id="new_vl_results" name="new_vl_results" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -2695,821 +2341,284 @@ if ($user->isLoggedIn()) {
 
                                             <div class="card card-warning">
                                                 <div class="card-header">
-                                                    <h3 class="card-title">Sehemu ya 3; Uchunguzi(Screening) wa saratani ya mapafu. (Usimusmoee machaguo)</h3>
+                                                    <h3 class="card-title">CD4 and TB Results</h3>
                                                 </div>
                                             </div>
 
-                                            <hr>
-
-                                            <div class="row">
-
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="saratani_uchunguzi" class="form-label">1. Je, umewahi kusikia chochote kuhusu uchunguzi wa saratani ya mapafu, inawezekana kwa kusoma mahali Fulani, kusikia kwenye vyombo vya habari au kusikia kutoka kituo cha kutolea huduma za Afya? </label>
-                                                        <select name="saratani_uchunguzi" id="saratani_uchunguzi" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_uchunguzi'] ?>"><?php if ($kap['saratani_uchunguzi']) {
-                                                                                                                    if ($kap['saratani_uchunguzi'] == 1) {
-                                                                                                                        echo 'Ndio';
-                                                                                                                    } elseif ($kap['saratani_uchunguzi'] == 2) {
-                                                                                                                        echo 'Hapana';
-                                                                                                                    } elseif ($kap['saratani_uchunguzi'] == 99) {
-                                                                                                                        echo 'Sijui';
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    echo 'Select';
-                                                                                                                } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <label>2. Nini maana ya uchunguzi wa saratani ya mapafu?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana1" value="1" <?php if ($kap['uchunguzi_maana'] == 1) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Uchunguzi wa saratani ya mapafu ni mchakato ambao hutumiwa kugundua uwepo wa saratani ya mapafu kwa watu wenye afya nzuri na wenye hatari kubwa ya kupata saratani ya mapafu</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana2" value="2" <?php if ($kap['uchunguzi_maana'] == 2) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Uchunguzi wa saratani ya mapafu ni mkakati wa uchunguzi wa saratani ya mapafu inayotumiwa kutambua saratani ya mapafu mapema kabla ya kuonyesha dalili ambapo ni hatua ya mwanzoni kabisa ambayo kuna uwezekano mkubwa wa kutibika</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana3" value="3" <?php if ($kap['uchunguzi_maana'] == 3) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Uchunguzi wa saratani ya mapafu ni kipimo cha kugundua saratani ya mapafu mapema kabla ya dalili kutokea</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana99" value="99" <?php if ($kap['uchunguzi_maana'] == 99) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sijui</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_maana" id="uchunguzi_maana96" value="96" <?php if ($kap['uchunguzi_maana'] == 96) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nyinginezo</label>
-                                                            </div>
-                                                            <textarea class="form-control" name="uchunguzi_maana_other" id="uchunguzi_maana_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_maana_other']) {
-                                                                                                                                                                                                    print_r($kap['uchunguzi_maana_other']);
-                                                                                                                                                                                                }  ?>
-                                                                </textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label>3. Je, kuna faida gani ya kufanya uchunguzi wa saratani ya mapafu?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida1" value="1" <?php if ($kap['uchunguzi_faida'] == 1) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Utambuzi wa mapema ambao unaokoa maisha</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida2" value="2" <?php if ($kap['uchunguzi_faida'] == 2) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Kugundua saratani ya mapafu katika hatua ya awali wakati kuna uwezekano mkubwa wa kupona</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida3" value="3" <?php if ($kap['uchunguzi_faida'] == 3) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Hupunguza hatari ya kufa kwa saratani ya mapafu</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida99" value="99" <?php if ($kap['uchunguzi_faida'] == 99) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sijui</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_faida" id="uchunguzi_faida96" value="96" <?php if ($kap['uchunguzi_faida'] == 96) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nyinginezo</label>
-                                                            </div>
-                                                            <textarea class="form-control" name="uchunguzi_faida_other" id="uchunguzi_faida_other" rows="2" placeholder="Type other here..."><?php if ($kap['uchunguzi_faida_other']) {
-                                                                                                                                                                                                    print_r($kap['uchunguzi_faida_other']);
-                                                                                                                                                                                                }  ?>
-                                                                </textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <label>4. Je, kuna hatari zozote za kufanya uchunguzi wa saratani ya mapafu?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_hatari" id="uchunguzi_hatari1" value="1" <?php if ($kap['uchunguzi_hatari'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Ndio</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_hatari" id="uchunguzi_hatari2" value="2" <?php if ($kap['uchunguzi_hatari'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Hapana</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_hatari" id="uchunguzi_hatari99" value="99" <?php if ($kap['uchunguzi_hatari'] == 99) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sijui</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-6" id="saratani_hatari">
-                                                    <label>5. Kama jibu hapo juu ni ndio, je ni hatari gani zinazoweza kutokana na kufanya uchunguzi wa saratani ya mapafu? (Multiple answer)</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari1" value="1" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
-                                                                                                                                                                                if ($value == 1) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Hatari ya kupata mionzi mwilini, kwa kuwa inatumia skana ya LDCT</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari2" value="2" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
-                                                                                                                                                                                if ($value == 2) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Uwoga Madaktari wanaweza wakagundua magonjwa mengine yanayofanana na saratani ya mapafu ambayo siyo saratani ya mapafu (False positives)</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari3" value="3" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
-                                                                                                                                                                                if ($value == 3) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Unaweza kupata uvimbe vidogo vidogo ambavyo ni saratani zinazokua polepole ambazo hazitakuletea madhara</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari4" value="4" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
-                                                                                                                                                                                if ($value == 4) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Msongo wa mawaso(Pychological distress)</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari5" value="5" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
-                                                                                                                                                                                if ($value == 5) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Uchunguzi wa kupita kiasi (Overdiagnosis)</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari99" value="99" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
-                                                                                                                                                                                if ($value == 99) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Sijui</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="saratani_hatari[]" id="saratani_hatari96" value="96" <?php foreach (explode(',', $kap['saratani_hatari']) as $value) {
-                                                                                                                                                                                if ($value == 96) {
-                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                }
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Nyinginezo</label>
-                                                            </div>
-                                                            <textarea class="form-control" name="saratani_hatari_other" id="saratani_hatari_other" rows="2" placeholder="Type other here..."><?php if ($kap['saratani_hatari_other']) {
-                                                                                                                                                                                                    print_r($kap['saratani_hatari_other']);
-                                                                                                                                                                                                }  ?>
-                                                                </textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="col-6">
-                                                    <label>6. Je, ni kundi gani la watu linalofaa kufanyiwa uchunguzi wa saratani ya mapafu? (Multiple answer)</label>
-                                                    <!-- checkbox -->
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" value="1" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                            if ($value == 1) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            }
-                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Wazee(Zaidi ya miaka 45) ambao wanavuta sigara kwa sasa, au walivuta sigara zamani</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" value="2" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                            if ($value == 2) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            }
-                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Vijana (chini ya miaka 45) ambao wamevuta sigara kwa miaka mingi</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" value="3" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                            if ($value == 3) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            }
-                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">TVijana (chini ya miaka 45) waliowahi kuvuta sana sigara lakini wakaacha</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" value="4" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                            if ($value == 4) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            }
-                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Watu ambao wana historia ya kuugua saratani kwenye familia zao</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" value="5" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                            if ($value == 5) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            }
-                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Watu wenye viashiria vya saratani ya mapafu</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" value="6" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                            if ($value == 6) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            }
-                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Watu wenye afya njema</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" value="99" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                            if ($value == 99) {
-                                                                                                                                                echo 'checked';
-                                                                                                                                            }
-                                                                                                                                        } ?>>
-                                                            <label class="form-check-label">Sijui</label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="kundi[]" id="kundi" value="96" <?php foreach (explode(',', $kap['kundi']) as $value) {
-                                                                                                                                                        if ($value == 96) {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        }
-                                                                                                                                                    } ?>>
-                                                            <label class="form-check-label">Other</label>
-                                                        </div>
-                                                        <textarea class="form-control" name="kundi_other" id="kundi_other" rows="3" placeholder="Type other here..."><?php if ($kap['kundi_other']) {
-                                                                                                                                                                            print_r($kap['kundi_other']);
-                                                                                                                                                                        }  ?>
-                                                                </textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-
-                                                <div class="col-6">
-                                                    <label>7. Je! Unazani nani ana ushawishi mkubwa katika kutoa elimu ya ugonjwa wa Saratani ya Mapafu? (Multiple answer)</label>
-                                                    <!-- checkbox -->
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="1" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                if ($value == 1) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                }
-                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Watoa huduma ya Afya ngazi ya jamii (CHWs)</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="2" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                if ($value == 2) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                }
-                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Wataalamu wa Afya</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="3" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                if ($value == 3) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                }
-                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Watu waliopona ugonjwa wa saratani ya mapafu</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="4" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                if ($value == 4) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                }
-                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Viongozi wa Dini</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="5" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                if ($value == 5) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                }
-                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Waganga wa jadi/jamii/Ukoo</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="6" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                if ($value == 6) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                }
-                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Viongozi wa jamii/mtaa/kijiji</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" value="7" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                if ($value == 7) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                }
-                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Serikali</label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="ushawishi[]" id="ushawishi" value="96" <?php foreach (explode(',', $kap['ushawishi']) as $value) {
-                                                                                                                                                                if ($value == 96) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                }
-                                                                                                                                                            } ?>>
-                                                            <label class="form-check-label">Other</label>
-                                                        </div>
-                                                        <textarea class="form-control" name="ushawishi_other" id="ushawishi_other" rows="2" placeholder="Type other here..."><?php if ($kap['ushawishi_other']) {
-                                                                                                                                                                                    print_r($kap['ushawishi_other']);
-                                                                                                                                                                                }  ?>
-                                                                </textarea>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6" id="hitaji_elimu1">
-                                                    <div class="mb-3">
-                                                        <label for="hitaji_elimu" class="form-label">8. Je unahisi unahitaji taarifa/elimu Zaidi juu ya uchunguzi wa awali wa ugonjwa wa Saratani ya Mapafu na ugonjwa wenyewe kwa jumla?</label>
-                                                        <select name="hitaji_elimu" id="hitaji_elimu" class="form-control">
-                                                            <option value="<?= $kap['hitaji_elimu'] ?>"><?php if ($kap['hitaji_elimu']) {
-                                                                                                            if ($kap['hitaji_elimu'] == 1) {
-                                                                                                                echo 'Ndio';
-                                                                                                            } elseif ($kap['hitaji_elimu'] == 2) {
-                                                                                                                echo 'Hapana';
-                                                                                                            } elseif ($kap['hitaji_elimu'] == 99) {
-                                                                                                                echo 'Sijui';
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            echo 'Select';
-                                                                                                        } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Sehemu ya 4; Mtazamo juu ya uchunguzi wa saratani ya mapafu</h3>
-                                                </div>
-                                            </div>
-
-                                            <div class="card-header">
-                                                <h3 class="card-title">Fikiria kuhusu uchunguzi wa saratani ya mapafu, unaweza kuniambia ni kwa kiasi gani unakubaliana na kila kauli zifuatazo?</h3>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <label>1. Fikiria kuhusu vifo vinavyotokea kwasababu ya Saratani; “Nisingependa kujua kama nina saratani ya mapafu</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo1" value="1" <?php if ($kap['vifo'] == 1) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Nakubali sana</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo2" value="2" <?php if ($kap['vifo'] == 2) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Nakubali</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo3" value="3" <?php if ($kap['vifo'] == 3) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Kawaida</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo4" value="4" <?php if ($kap['vifo'] == 4) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Sikubali kabisa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="vifo" id="vifo5" value="5" <?php if ($kap['vifo'] == 5) {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Sikubali</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label>2. Fikiria jinsi dalili zinavyoonekana, “ Kwenda kwa daktari wangu mapema nikiwa tayari na dalili za ugonjwa wa saratani ya mapafu,akulete utofauti wowote wa mimi kupona saratani ya mapafu</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili1" value="1" <?php if ($kap['tayari_dalili'] == 1) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Nakubali sana</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili2" value="2" <?php if ($kap['tayari_dalili'] == 2) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Nakubali</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili3" value="3" <?php if ($kap['tayari_dalili'] == 3) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Kawaida</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili4" value="4" <?php if ($kap['tayari_dalili'] == 4) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Sikubali kabisa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tayari_dalili" id="tayari_dalili5" value="5" <?php if ($kap['tayari_dalili'] == 5) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Sikubali</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label>3. Fikiria jinsi dalili zinavyoonekana ; “Endapo saratani ya mapafu ikigundulika mapema, kuna uwezekano mkubwa wa kutibika”</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika1" value="1" <?php if ($kap['saratani_kutibika'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali sana</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika2" value="2" <?php if ($kap['saratani_kutibika'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="tsaratani_kutibika3" value="3" <?php if ($kap['saratani_kutibika'] == 3) {
-                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                            } ?>>
-                                                                <label class="form-check-label">Kawaida</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika4" value="4" <?php if ($kap['saratani_kutibika'] == 4) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali kabisa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kutibika" id="saratani_kutibika5" value="5" <?php if ($kap['saratani_kutibika'] == 5) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label>4. “Ningependelea kutokwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu nina wasiwasi juu ya kile kinachoweza kugundulika wakati wa uchunguzi wa saratani ya mapafu”</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi1" value="1" <?php if ($kap['saratani_wasiwasi'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali sana</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi2" value="2" <?php if ($kap['saratani_wasiwasi'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi3" value="3" <?php if ($kap['saratani_wasiwasi'] == 3) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Kawaida</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi4" value="4" <?php if ($kap['saratani_wasiwasi'] == 4) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali kabisa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_wasiwasi" id="saratani_wasiwasi5" value="5" <?php if ($kap['saratani_wasiwasi'] == 5) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <label>5. “Sidhani kama kuna umuhimu wowote wa kwenda kufanya uchunguzi wa saratani ya mapafu kwa sababu haita athiri matokeo”</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu1" value="1" <?php if ($kap['saratani_umuhimu'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali sana</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu2" value="2" <?php if ($kap['saratani_umuhimu'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu3" value="3" <?php if ($kap['saratani_umuhimu'] == 3) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Kawaida</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu4" value="4" <?php if ($kap['saratani_umuhimu'] == 4) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali kabisa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_umuhimu" id="saratani_umuhimu5" value="5" <?php if ($kap['saratani_umuhimu'] == 5) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-4">
-                                                    <label>6.“Kufanya uchunguzi wa saratani ya mapafu kunaweza kupunguza uwezekano wangu wa kufa kutokana na saratani ya mapafu.”</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa1" value="1" <?php if ($kap['saratani_kufa'] == 1) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Nakubali sana</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa2" value="2" <?php if ($kap['saratani_kufa'] == 2) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Nakubali</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa3" value="3" <?php if ($kap['saratani_kufa'] == 3) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Kawaida</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa4" value="4" <?php if ($kap['saratani_kufa'] == 4) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Sikubali kabisa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="saratani_kufa" id="saratani_kufa5" value="5" <?php if ($kap['saratani_kufa'] == 5) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Sikubali</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-4">
-                                                    <label>7. “Endapo nitapata dalili zozote za awali za ugonjwa wa Saratani ya mapafu nitakwenda kwa ajili ya uchunguzi wa saratani ya mapafu haraka iwezekanavyo”</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka1" value="1" <?php if ($kap['uchunguzi_haraka'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali sana</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka2" value="2" <?php if ($kap['uchunguzi_haraka'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nakubali</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka3" value="3" <?php if ($kap['uchunguzi_haraka'] == 3) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Kawaida</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka4" value="4" <?php if ($kap['uchunguzi_haraka'] == 4) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali kabisa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="uchunguzi_haraka" id="uchunguzi_haraka5" value="5" <?php if ($kap['uchunguzi_haraka'] == 5) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Sikubali</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Sehemu ya 5; Utaratibu(Practice) juu ya uchunguzi wa saratani ya mapafu</h3>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="row">
-
-                                                <div class="col-sm-4" id="matibabu_saratani">
-                                                    <label>8. Je katika jamii yako, watu wakiumwa, huwa wanapendelea kwenda wapi kupata matibabu ?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu1" value="1" <?php if ($kap['wapi_matibabu'] == 1) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Kituo cha afya kilichopo karibu</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu2" value="2" <?php if ($kap['wapi_matibabu'] == 2) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Mganga wa jadi</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu3" value="3" <?php if ($kap['wapi_matibabu'] == 3) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Kanisani/msikitini</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu4" value="4" <?php if ($kap['wapi_matibabu'] == 4) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Duka la Dawa</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu5" value="5" <?php if ($kap['wapi_matibabu'] == 5) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Kituo cha tiba asili</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu6" value="6" <?php if ($kap['wapi_matibabu'] == 6) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label">Wanajitibu wenyewe</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu99" value="99" <?php if ($kap['wapi_matibabu'] == 99) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Sijui</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="wapi_matibabu" id="wapi_matibabu96" value="96" <?php if ($kap['wapi_matibabu'] == 96) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Nyinginezo</label>
-                                                            </div>
-                                                            <textarea class="form-control" name="wapi_matibabu_other" id="wapi_matibabu_other" rows="2" placeholder="Type other here...">
-                                                            <?php if ($kap['wapi_matibabu_other']) {
-                                                                print_r($kap['wapi_matibabu_other']);
-                                                            }  ?>
-                                                        </textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
 
                                                 <div class="col-4">
                                                     <div class="mb-2">
-                                                        <label for="saratani_ushauri" class="form-label">9. Je! Wewe/watu katika jamii huwa wanakwenda kwenye vituo vya kutolea huduma za Afya kwa ajili ya ushauri kuhusu uchunguzi wa ugonjwa wa Saratani ya Mapafu?</label>
-                                                        <select name="saratani_ushauri" id="saratani_ushauri" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_ushauri'] ?>"><?php if ($kap['saratani_ushauri']) {
-                                                                                                                if ($kap['saratani_ushauri'] == 1) {
-                                                                                                                    echo 'Ndio';
-                                                                                                                } elseif ($kap['saratani_ushauri'] == 2) {
-                                                                                                                    echo 'Hapana';
-                                                                                                                } elseif ($kap['saratani_ushauri'] == 99) {
-                                                                                                                    echo 'Sijui';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
+                                                        <label for="recent_cd4" class="form-label">Most recent CD4 count</label>
+                                                        <input type="number" value="<?php if ($individual['recent_cd4']) {
+                                                                                        print_r($individual['recent_cd4']);
+                                                                                    } ?>" id="recent_cd4" name="recent_cd4" min="0" class="form-control" placeholder="Enter date" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="cd4_date" class="form-label">CD4 count test date</label>
+                                                        <input type="date" value="<?php if ($individual['cd4_date']) {
+                                                                                        print_r($individual['cd4_date']);
+                                                                                    } ?>" id="cd4_date" name="cd4_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label for="recent_tb_results" class="form-label">Recent TB screening results</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('tb_results', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="recent_tb_results" id="recent_tb_results<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['recent_tb_results'] == $value['id']) {
+                                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                            <label for="recent_tb_date_label" id="recent_tb_date_label" class="form-label">Tb test date</label>
+                                                            <input type="date" value="<?php if ($individual['recent_tb_date']) {
+                                                                                            print_r($individual['cd4_date']);
+                                                                                        } ?>" id="recent_tb_date" name="recent_tb_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" />
+                                                            <div class="text-danger" id="recent_tb_date_error"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">ART Services</h3>
+                                                </div>
+                                            </div>
+
+
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="mb-3">
+                                                        <label for="date_art_treatment" class="form-label">3.1 When did you begin taking ART-Treatment?</label>
+                                                        <input type="date" value="<?php if ($individual['date_art_treatment']) {
+                                                                                        print_r($individual['date_art_treatment']);
+                                                                                    } ?>" id="date_art_treatment" name="date_art_treatment" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date art treatment" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label>Which antiretroviral therapy regimen is the patient currently on?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('art_regimes', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="art_regimen" id="art_regimen<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['art_regimen'] == $value['id']) {
+                                                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                                                        } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                            <label for="art_regimen_other" id="art_regimen_other_label" class="form-label">Other ART Regime</label>
+                                                            <input type="text" value="<?php if ($individual['art_regimen_other']) {
+                                                                                            print_r($individual['art_regimen_other']);
+                                                                                        } ?>" id="art_regimen_other" name="art_regimen_other" class="form-control" placeholder="Enter here" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4" id="first_line">
+                                                    <label>First Line</label>
+                                                    <!-- checkbox -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->getNews('art_regimes_specific', 'status', 1, 'regime_line', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="first_line" id="first_line<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['first_line'] == $value['id']) {
+                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                            <label for="other_first_line" id="other_first_line_label" class="form-label">Other First Line Regime</label>
+                                                            <input type="text" value="<?php if ($individual['other_first_line']) {
+                                                                                            print_r($individual['other_first_line']);
+                                                                                        } ?>" id="other_first_line" name="other_first_line" class="form-control" placeholder="Enter here" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4" id="second_line">
+                                                    <label>Second Line</label>
+                                                    <!-- checkbox -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->getNews('art_regimes_specific', 'status', 1, 'regime_line', 2) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="second_line" id="second_line<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['second_line'] == $value['id']) {
+                                                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                                                        } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                            <label for="other_second_line" id="other_second_line_label" class="form-label">Other Second Line Regime</label>
+                                                            <input type="text" value="<?php if ($individual['other_second_line']) {
+                                                                                            print_r($individual['other_second_line']);
+                                                                                        } ?>" id="other_second_line" name="other_second_line" class="form-control" placeholder="Enter here" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4" id="third_line">
+                                                <label>Third line</label>
+                                                <!-- checkbox -->
+                                                <div class="row-form clearfix">
+                                                    <div class="form-group">
+                                                        <?php foreach ($override->getNews('art_regimes_specific', 'status', 1, 'regime_line', 3) as $value) { ?>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="third_line" id="third_line<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['third_line'] == $value['id']) {
+                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                } ?>>
+                                                                <label class="form-check-label"><?= $value['name']; ?></label>
+                                                            </div>
+                                                        <?php } ?>
+                                                        <label for="other_third_line" id="other_third_line_label" class="form-label">Other Second Line Regime</label>
+                                                        <input type="text" value="<?php if ($individual['other_third_line']) {
+                                                                                        print_r($individual['other_third_line']);
+                                                                                    } ?>" id="other_third_line" name="other_third_line" class="form-control" placeholder="Enter here" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Section 3: Examination</h3>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="row">
+
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="weight" class="form-label">Weight (kg)</label>
+                                                        <input type="number" value="<?php if ($individual['weight']) {
+                                                                                        print_r($individual['weight']);
+                                                                                    } ?>" id="weight" name="weight" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
 
 
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-2">
-                                                        <label for="saratani_ujumbe" class="form-label">10. Katika mwezi uliopita umesikia ujumbe wa afya kuhusu maswala ya uchunguzi wa awali wa Saratani ya mapafu?</label>
-                                                        <select name="saratani_ujumbe" id="saratani_ujumbe" class="form-control" required>
-                                                            <option value="<?= $kap['saratani_ujumbe'] ?>"><?php if ($kap['saratani_ujumbe']) {
-                                                                                                                if ($kap['saratani_ujumbe'] == 1) {
-                                                                                                                    echo 'Ndio';
-                                                                                                                } elseif ($kap['saratani_ujumbe'] == 2) {
-                                                                                                                    echo 'Hapana';
-                                                                                                                } elseif ($kap['saratani_ujumbe'] == 99) {
-                                                                                                                    echo 'Sijui';
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                echo 'Select';
-                                                                                                            } ?>
-                                                            </option>
-                                                            <option value="1">Ndio</option>
-                                                            <option value="2">Hapana</option>
-                                                            <option value="99">Sijui</option>
-                                                        </select>
+                                                        <label for="height" class="form-label">Height (cm)</label>
+                                                        <input type="number" value="<?php if ($individual['height']) {
+                                                                                        print_r($individual['height']);
+                                                                                    } ?>" id="height" name="height" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="systolic" class="form-label">Systolic blood pressure (mmHg)</label>
+                                                        <input type="number" value="<?php if ($individual['systolic']) {
+                                                                                        print_r($individual['systolic']);
+                                                                                    } ?>" id="systolic" name="systolic" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                    <span>Blood pressure reading</span>
+                                                </div>
+
+
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="diastolic" class="form-label">Diastolic blood pressure (mmHg)</label>
+                                                        <input type="number" value="<?php if ($individual['diastolic']) {
+                                                                                        print_r($individual['diastolic']);
+                                                                                    } ?>" id="diastolic" name="diastolic" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                    <span>Blood pressure reading</span>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Next Visit And Chronic Diseases</h3>
+                                                </div>
+                                            </div>
+
+
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3" id="chronic_condition">
+                                                    <label for="chronic_condition" class="form-label">Do the patient has other chronic condition? (Like Diabetes, High BP, renal etc)</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="chronic_condition" id="chronic_condition<?= $value['id']; ?>" value="1" <?php if ($individual['chronic_condition'] == $value['id']) {
+                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                            <label>Mention it:</label>
+                                                            <textarea class="form-control" name="other_chronic" rows="3" placeholder="Type other here...">
+                                                                <?php if ($kap['other_chronic']) {
+                                                                    print_r($kap['other_chronic']);
+                                                                }  ?>
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3" id="matibabu_saratani">
+                                                    <label>What was the reason for this visit?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('reasons', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="reasons" id="reasons<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['reasons'] == $value['id']) {
+                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3" id="next_appointment">
+                                                    <label for="next_appointment_schedule" class="form-label">Has the patient been scheduled for their next VL test appointment?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="next_appointment" id="next_appointment_schedule<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['next_appointment'] == $value['id']) {
+                                                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                                                            } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="next_date" class="form-label">Next appointment date</label>
+                                                        <input type="date" value="<?php if ($individual['next_date']) {
+                                                                                        print_r($individual['next_date']);
+                                                                                    } ?>" id="next_date" name="next_date" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -3528,19 +2637,55 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Remarks / Comments:</label>
-                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($kap['comments']) {
-                                                                                                                                                            print_r($kap['comments']);
+                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($individual['comments']) {
+                                                                                                                                                            print_r($individual['comments']);
                                                                                                                                                         }  ?>
                                                                 </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">FORM STATUS</h3>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-sm-6" id="individual_complete">
+                                                    <label>Complete?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('form_completness', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="individual_complete" id="recent_tb_results<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['individual_complete'] == $value['id']) {
+                                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                                    } ?> required>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="date_completed" class="form-label">Date form completed</label>
+                                                        <input type="date" value="<?php if ($individual['date_completed']) {
+                                                                                        print_r($individual['date_completed']);
+                                                                                    } ?>" id="date_completed" name="date_completed" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
                                             <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&study_id=<?= $_GET['study_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                            <input type="submit" name="add_kap" value="Submit" class="btn btn-primary">
+                                            <input type="submit" name="add_individual" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
                                 </div>
@@ -3556,7 +2701,8 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 6) { ?>
             <?php
-            $history = $override->getNews('history', 'status', 1, 'patient_id', $_GET['cid'])[0];
+            $facility = $override->get3('facility', 'status', 1, 'sequence', $_GET['sequence'], 'site_id', $_GET['site_id'])[0];
+            $site = $override->getNews('sites', 'status', 1, 'id', $_GET['site_id'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -3565,25 +2711,29 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <?php if (!$history) { ?>
-                                    <h1>Add New HISTORY</h1>
+                                <?php if ($facility) { ?>
+                                    <h1>Add New Facility</h1>
                                 <?php } else { ?>
-                                    <h1>Update HISTORY</h1>
+                                    <h1>Update Facility</h1>
                                 <?php } ?>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=12&site_id=<?= $_GET['site_id']; ?>&status=<?= $_GET['status']; ?>">
                                             < Back</a>
                                     </li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                            Go to screening list > </a>
+                                    <li class="breadcrumb-item">
+                                        <a href="index1.php">Home</a>
                                     </li>&nbsp;&nbsp;
-                                    <?php if (!$history) { ?>
-                                        <li class="breadcrumb-item active">Add New HISTORY</li>
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=11&status=<?= $_GET['status']; ?>">
+                                            Go to Facilities list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if ($facility) { ?>
+                                        <li class="breadcrumb-item active">Add New Facility</li>
                                     <?php } else { ?>
-                                        <li class="breadcrumb-item active">Update HISTORY</li>
+                                        <li class="breadcrumb-item active">Update Facility</li>
                                     <?php } ?>
                                 </ol>
                             </div>
@@ -3600,148 +2750,125 @@ if ($user->isLoggedIn()) {
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">Part B: Smoking history</h3>
+                                        <h3 class="card-title">Section 1: Facility PIVLO-Test list details (to be completed monthly in clinic)</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-3">
+                                                <div class="col-sm-6">
                                                     <div class="mb-2">
-                                                        <label for="screening_date" class="form-label">Screening date</label>
-                                                        <input type="date" value="<?php if ($history['screening_date']) {
-                                                                                        print_r($history['screening_date']);
-                                                                                    } ?>" id="screening_date" name="screening_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter screening date" required />
+                                                        <label for="visit_date" class="form-label">Date of Visit</label>
+                                                        <input type="date" value="<?php if ($facility['visit_date']) {
+                                                                                        print_r($facility['visit_date']);
+                                                                                    } ?>" id="visit_date" name="visit_date" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
-
-                                                <div class="col-sm-3">
-                                                    <label>Have you ever smoked cigarette?</label>
+                                                <div class="col-sm-6">
+                                                    <label for="month_name" class="form-label">Month (Name)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="ever_smoked" id="ever_smoked1" value="1" <?php if ($history['ever_smoked'] == 1) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            } ?> onchange="toggleRequired(this)" required>
-                                                                <label class=" form-check-label">Yes</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="ever_smoked" id="ever_smoked2" value="2" <?php if ($history['ever_smoked'] == 2) {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            } ?> onchange="toggleRequired(this)" required>
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
+                                                            <?php foreach ($override->get('months', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="month_name" id="month_name<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($facility['month_name'] == $value['id']) {
+                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-3" id="start_smoking">
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-4">
                                                     <div class="mb-2">
-                                                        <label for="start_smoking" class="form-label">When did you start smoking?</label>
-                                                        <input type="number" value="<?php if ($history['start_smoking']) {
-                                                                                        print_r($history['start_smoking']);
-                                                                                    } ?>" min="1970" max="<?= date('Y') ?>" name="start_smoking" id="start_smoking1" class="form-control" placeholder="Enter Year" />
+                                                        <label for="appointments" class="form-label">Total number of test appointment in a
+                                                            month.</label>
+                                                        <input type="number" value="<?php if ($facility['appointments']) {
+                                                                                        print_r($facility['appointments']);
+                                                                                    } ?>" id="appointments" name="appointments" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="patients_tested" class="form-label">Total patients got tested this month</label>
+                                                        <input type="number" value="<?php if ($facility['patients_tested']) {
+                                                                                        print_r($facility['patients_tested']);
+                                                                                    } ?>" id="patients_tested" name="patients_tested" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="vl_results_available" class="form-label">Total VL test results made available for
+                                                            this month</label>
+                                                        <input type="number" value="<?php if ($facility['vl_results_available']) {
+                                                                                        print_r($facility['vl_results_available']);
+                                                                                    } ?>" id="vl_results_available" name="vl_results_available" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <label for="comments" class="form-label">Any Comments ( If Available ):</label>
+                                                        <textarea class="form-control" name="comments" id="comments" rows="4" placeholder="Enter comments here">
+                                                                                            <?php if ($facility['comments']) {
+                                                                                                print_r($facility['comments']);
+                                                                                            } ?>
+                                                                                            </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
 
-                                                <div class="col-sm-3" id="currently_smoking">
-                                                    <label>Are you Currently Smoking?</label>
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">FORM STATUS</h3>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-sm-6" id="facility_completed">
+                                                    <label>Complete?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="currently_smoking" id="currently_smoking1" value="1" <?php if ($history['currently_smoking'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?> onchange="toggleRequiredCurrentlySmoking(this)">
-                                                                <label class="form-check-label">Yes</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="currently_smoking" id="currently_smoking2" value="2" <?php if ($history['currently_smoking'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?> onchange="toggleRequiredCurrentlySmoking(this)">
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-
-                                            <div id="ever_smoked">
-                                                <div class="row">
-                                                    <div class="col-3" id="quit_smoking">
-                                                        <div class="mb-3">
-                                                            <label for="quit_smoking" class="form-label">When did you quit smoking in years?</label>
-                                                            <input type="number" value="<?php if ($history['quit_smoking']) {
-                                                                                            print_r($history['quit_smoking']);
-                                                                                        } ?>" min="1970" max="<?= date('Y') ?>" name="quit_smoking" id="quit_smoking1" class="form-control" placeholder="Enter Year" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-3">
-                                                        <label>Amount smoked per day in cigarette sticks/packs?</label>
-                                                        <!-- radio -->
-                                                        <div class="row-form clearfix">
-                                                            <div class="form-group">
+                                                            <?php foreach ($override->get('form_completness', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="type_smoked" id="type_smoked1" value="1" <?php if ($history['type_smoked'] == 1) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                    <label class="form-check-label">Packs</label>
+                                                                    <input class="form-check-input" type="radio" name="facility_completed" id="facility_completed<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($facility['facility_completed'] == $value['id']) {
+                                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                                    } ?> required>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
-
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="type_smoked" id="type_smoked2" value="2" <?php if ($history['type_smoked'] == 2) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                } ?>>
-                                                                    <label class="form-check-label">Cigarette</label>
-                                                                </div>
-                                                            </div>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-3">
-                                                        <div class="mb-3">
-                                                            <label for="packs_per_day" id="packs_per_day" class="form-label">Number of packs per day</label>
-                                                            <label for="cigarette_per_day" id="cigarette_per_day" class="form-label">Number of Cigarette per day</label>
-                                                            <input type="number" value="<?php if ($history['packs_cigarette_day']) {
-                                                                                            print_r($history['packs_cigarette_day']);
-                                                                                        } ?>" min="0" max="1000" name="packs_cigarette_day" id="packs_cigarette_day" class="form-control" placeholder="Enter amount" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-3">
-                                                        <div class="mb-3">
-                                                            <label for="pack_year" class="form-label">Number of Pack year</label>
-                                                            <input type="number" value="<?php if ($history['pack_year']) {
-                                                                                            print_r($history['pack_year']);
-                                                                                        } ?>" min="0" name="pack_year" class="form-control" readonly />
-                                                        </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-2">
+                                                        <label for="date_completed" class="form-label">Date form completed</label>
+                                                        <input type="date" value="<?php if ($facility['date_completed']) {
+                                                                                        print_r($facility['date_completed']);
+                                                                                    } ?>" id="date_completed" name="date_completed" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
                                             </div>
                                             <hr>
-
-                                            <?php if ($history['eligible']) { ?>
-                                                <div class="text-center"> Eligible ?
-                                                    <a class="btn btn-success">Yes</a>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="text-center"> Eligible ?
-                                                    <a class="btn btn-warning text-center">No</a>
-                                                </div>
-                                            <?php } ?>
-
-                                            <hr>
-                                            <!-- /.card-body -->
-                                            <div class="card-footer">
-                                                <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&study_id=<?= $_GET['study_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                                <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                                <input type="submit" name="add_history" value="Submit" class="btn btn-primary">
-                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=11&site_id=<?= $_GET['site_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="facility_id" value="<?= $site['id'] ?>">
+                                            <input type="hidden" name="facility_arm" value="<?= $site['arm'] ?>">
+                                            <input type="hidden" name="facility_level" value="<?= $site['level'] ?>">
+                                            <input type="hidden" name="facility_type" value="<?= $site['type'] ?>">
+                                            <input type="submit" name="add_facility" value="Submit" class="btn btn-primary">
+                                        </div>
                                     </form>
                                 </div>
                                 <!-- /.card -->
@@ -3756,7 +2883,7 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 7) { ?>
             <?php
-            $results = $override->get3('results', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
+            $screening = $override->get3('screening', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -3765,10 +2892,10 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <?php if ($results) { ?>
-                                    <h1>Add New test results</h1>
+                                <?php if ($screening) { ?>
+                                    <h1>Add New Screening</h1>
                                 <?php } else { ?>
-                                    <h1>Update test results</h1>
+                                    <h1>Update Screening</h1>
                                 <?php } ?>
                             </div>
                             <div class="col-sm-6">
@@ -3785,9 +2912,9 @@ if ($user->isLoggedIn()) {
                                             Go to screening list > </a>
                                     </li>&nbsp;&nbsp;
                                     <?php if ($results) { ?>
-                                        <li class="breadcrumb-item active">Add New test results</li>
+                                        <li class="breadcrumb-item active">Add New Screening</li>
                                     <?php } else { ?>
-                                        <li class="breadcrumb-item active">Update test results</li>
+                                        <li class="breadcrumb-item active">Update Screening</li>
                                     <?php } ?>
                                 </ol>
                             </div>
@@ -3804,54 +2931,56 @@ if ($user->isLoggedIn()) {
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">CRF2: Screeing test results using LDCT</h3>
+                                        <h3 class="card-title">Screeing Form</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
+                                            <hr>
                                             <div class="row">
-                                                <div class="col-2">
+                                                <div class="col-4">
                                                     <div class="mb-2">
-                                                        <label for="test_date" class="form-label">Date of Test</label>
-                                                        <input type="date" value="<?php if ($results) {
-                                                                                        print_r($results['test_date']);
-                                                                                    } ?>" id="test_date" name="test_date" class="form-control" placeholder="Enter test date" required />
+                                                        <label for="test_date" class="form-label">Date of Screening</label>
+                                                        <input type="date" value="<?php if ($screening['screening_date']) {
+                                                                                        print_r($screening['screening_date']);
+                                                                                    } ?>" id="screening_date" name="screening_date" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-2">
-                                                    <div class="mb-2">
-                                                        <label for="results_date" class="form-label">Date of Results</label>
-                                                        <input type="date" value="<?php if ($results) {
-                                                                                        print_r($results['results_date']);
-                                                                                    } ?>" id="results_date" name="results_date" class="form-control" placeholder="Enter results date" required />
+                                                <div class="col-sm-4">
+                                                    <label for="conset" class="form-label">Patient Conset?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="conset" id="conset<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['conset'] == $value['id']) {
+                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                            } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="mb-2">
-                                                        <label for="ldct_results" class="form-label">LDCT RESULTS</label>
-                                                        <textarea class="form-control" name="ldct_results" id="ldct_results" rows="4" placeholder="Enter LDCT results" required>
-                                                            <?php if ($results) {
-                                                                print_r($results['ldct_results']);
+                                                        <label for="results_date" class="form-label">Date of Conset</label>
+                                                        <input type="date" value="<?php if ($screening) {
+                                                                                        print_r($screening['conset_date']);
+                                                                                    } ?>" id="conset_date" name="conset_date" class="form-control" placeholder="Enter date" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <label for="ldct_results" class="form-label">Comments</label>
+                                                        <textarea class="form-control" name="comments" id="comments" rows="4" placeholder="Enter here" required>
+                                                            <?php if ($screening['comments']) {
+                                                                print_r($screening['comments']);
                                                             } ?>
                                                         </textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="mb-2">
-                                                        <label for="rad_score" class="form-label">RAD SCORE</label>
-                                                        <input type="number" value="<?php if ($results) {
-                                                                                        print_r($results['rad_score']);
-                                                                                    } ?>" id="rad_score" name="rad_score" min="0" class="form-control" placeholder="Enter RAD score" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="findings" class="form-label">FINDINGS:</label>
-                                                        <textarea class="form-control" name="findings" id="findings" rows="4" placeholder="Enter findings" required>
-                                                                                            <?php if ($results) {
-                                                                                                print_r($results['findings']);
-                                                                                            } ?>
-                                                                                            </textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3860,7 +2989,7 @@ if ($user->isLoggedIn()) {
                                         <div class="card-footer">
                                             <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
                                             <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                            <input type="submit" name="add_results" value="Submit" class="btn btn-primary">
+                                            <input type="submit" name="add_screening" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
                                 </div>
@@ -3876,9 +3005,6 @@ if ($user->isLoggedIn()) {
             <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 8) { ?>
-            <?php
-            $classification = $override->get3('classification', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
-            ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -3886,26 +3012,12 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <?php if ($classification) { ?>
-                                    <h1>Add New LUNG- RADS CLASSIFICATION</h1>
-                                <?php } else { ?>
-                                    <h1>Update LUNG- RADS CLASSIFICATION</h1>
-                                <?php } ?>
+                                <h1>Region Form</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                            < Back</a>
-                                    </li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                            Go to screening list > </a>
-                                    </li>&nbsp;&nbsp;
-                                    <?php if ($classification) { ?>
-                                        <li class="breadcrumb-item active">Add New LUNG- RADS CLASSIFICATION</li>
-                                    <?php } else { ?>
-                                        <li class="breadcrumb-item active">Update LUNG- RADS CLASSIFICATION</li>
-                                    <?php } ?>
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Region Form</li>
                                 </ol>
                             </div>
                         </div>
@@ -3916,96 +3028,216 @@ if ($user->isLoggedIn()) {
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
+                            <?php $regions = $override->get('regions', 'id', $_GET['region_id']); ?>
                             <!-- right column -->
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">LUNG- RADS CLASSIFICATION</h3>
+                                        <h3 class="card-title">Region</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <hr>
                                             <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="classification_date" class="form-label">Clasification Date</label>
-                                                        <input type="date" value="<?php if ($classification) {
-                                                                                        print_r($classification['classification_date']);
-                                                                                    } ?>" id="classification_date" name="classification_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter classification date" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <input type="checkbox" name="category[]" value="1" <?php if ($classification['category'] == 1) {
-                                                                                                                echo 'checked';
-                                                                                                            } ?>>
-                                                        <label for="ldct_results" class="form-label">Category 1</label><br>
-                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 1) as $cat) { ?>
-                                                            - <label><?= $cat['name'] ?></label> <br>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <input type="checkbox" name="category[]" value="2" <?php if ($classification['category'] == 2) {
-                                                                                                                echo 'checked';
-                                                                                                            } ?>>
-                                                        <label for="ldct_results" class="form-label">Category 2</label><br>
-                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 2) as $cat) { ?>
-                                                            - <label><?= $cat['name'] ?></label> <br>
-                                                        <?php } ?>
+                                                <div class="col-sm-12">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Region</label>
+                                                            <input class="form-control" type="text" name="name" id="name" placeholder="Type region..." onkeyup="fetchData()" value="<?php if ($regions['0']['name']) {
+                                                                                                                                                                                        print_r($regions['0']['name']);
+                                                                                                                                                                                    }  ?>" required />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <input type="checkbox" name="category[]" value="3" <?php if ($classification['category'] == 3) {
-                                                                                                                echo 'checked';
-                                                                                                            } ?>>
-                                                        <label for="ldct_results" class="form-label">Category 3</label><br>
-                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 3) as $cat) { ?>
-                                                            - <label><?= $cat['name'] ?></label> <br>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <input type="checkbox" name="category[]" value="4" <?php if ($classification['category'] == 4) {
-                                                                                                                echo 'checked';
-                                                                                                            } ?>>
-                                                        <label for="ldct_results" class="form-label">Category 4A</label><br>
-                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 4) as $cat) { ?>
-                                                            - <label><?= $cat['name'] ?></label> <br>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <input type="checkbox" name="category[]" value="5" <?php if ($classification['category'] == 5) {
-                                                                                                                echo 'checked';
-                                                                                                            } ?>>
-                                                        <label for="ldct_results" class="form-label">Category 4B</label><br>
-                                                        <?php foreach ($override->getNews('lung_rads', 'status', 1, 'category', 5) as $cat) { ?>
-                                                            - <label><?= $cat['name'] ?></label> <br>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                            <input type="submit" name="add_classification" value="Submit" class="btn btn-primary">
+                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <input type="hidden" name="region_id" value="<?= $regions['0']['id'] ?>">
+                                            <input type="submit" name="add_region" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (left) -->
+
+                            <div class="col-6">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6">
+                                                    <div class="card-header">
+                                                        List of Regions
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <?php
+                                    $pagNum = 0;
+                                    $pagNum = $override->getCount('regions', 'status', 1);
+                                    $pages = ceil($pagNum / $numRec);
+                                    if (!$_GET['page'] || $_GET['page'] == 1) {
+                                        $page = 0;
+                                    } else {
+                                        $page = ($_GET['page'] * $numRec) - $numRec;
+                                    }
+                                    $regions = $override->getWithLimit('regions', 'status', 1, $page, $numRec);
+                                    ?>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Region Name</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($regions as $value) {
+                                                    $regions = $override->get('regions', 'id', $value['region_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $x; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $value['name']; ?>
+                                                        </td>
+
+                                                        <?php if ($value['status'] == 1) { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-success">
+                                                                    <i class="ri-edit-box-line">
+                                                                    </i>Active
+                                                                </a>
+                                                            </td>
+                                                        <?php  } else { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-success">
+                                                                    <i class="ri-edit-box-line">
+                                                                    </i>Not Active
+                                                                </a>
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td>
+                                                            <a href="add.php?id=24&region_id=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                            <?php if ($user->data()->power == 1) { ?>
+                                                                <a href="#delete<?= $staff['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+                                                                <a href="#restore<?= $staff['id'] ?>" role="button" class="btn btn-secondary" data-toggle="modal">Restore</a>
+                                                            <?php } ?>
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade" id="delete<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Delete User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: red">
+                                                                            <p>Are you sure you want to delete this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="delete_staff" value="Delete" class="btn btn-danger">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="restore<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Restore User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: green">
+                                                                            <p>Are you sure you want to restore this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="restore_staff" value="Restore" class="btn btn-success">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Region Name</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer clearfix">
+                                        <ul class="pagination pagination-sm m-0 float-right">
+                                            <li class="page-item">
+                                                <a class="page-link" href="add.php?id=24&page=<?php if (($_GET['page'] - 1) > 0) {
+                                                                                                    echo $_GET['page'] - 1;
+                                                                                                } else {
+                                                                                                    echo 1;
+                                                                                                } ?>">&laquo;
+                                                </a>
+                                            </li>
+                                            <?php for ($i = 1; $i <= $pages; $i++) { ?>
+                                                <li class="page-item">
+                                                    <a class="page-link <?php if ($i == $_GET['page']) {
+                                                                            echo 'active';
+                                                                        } ?>" href="add.php?id=24&page=<?= $i ?>"><?= $i ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            <li class="page-item">
+                                                <a class="page-link" href="add.php?id=24&page=<?php if (($_GET['page'] + 1) <= $pages) {
+                                                                                                    echo $_GET['page'] + 1;
+                                                                                                } else {
+                                                                                                    echo $i - 1;
+                                                                                                } ?>">&raquo;
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <!-- /.card -->
                             </div>
@@ -4017,11 +3249,8 @@ if ($user->isLoggedIn()) {
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-
         <?php } elseif ($_GET['id'] == 9) { ?>
-            <?php
-            $economic = $override->get3('economic', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
-            ?>
+
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -4029,26 +3258,12 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <?php if ($history) { ?>
-                                    <h1>Add New CRF3</h1>
-                                <?php } else { ?>
-                                    <h1>Update CRF3</h1>
-                                <?php } ?>
+                                <h1>District Form</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                            < Back</a>
-                                    </li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                            Go to screening list > </a>
-                                    </li>&nbsp;&nbsp;
-                                    <?php if ($history) { ?>
-                                        <li class="breadcrumb-item active">Add New CRF3</li>
-                                    <?php } else { ?>
-                                        <li class="breadcrumb-item active">Update CRF3</li>
-                                    <?php } ?>
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">District Form</li>
                                 </ol>
                             </div>
                         </div>
@@ -4059,293 +3274,246 @@ if ($user->isLoggedIn()) {
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <!-- right column -->
-                            <div class="col-md-12">
+                            <?php
+                            $regions = $override->get('regions', 'id', $_GET['region_id']);
+                            $districts = $override->get('districts', 'id', $_GET['district_id']);
+                            ?>
+                            <!-- right left -->
+                            <div class="col-md-6">
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">CRF3: Taarifa za kiuchumi (Wakati wa screening)</h3>
+                                        <h3 class="card-title">District</h3>
                                     </div>
                                     <!-- /.card-header -->
-                                    <form id="economic" enctype="multipart/form-data" method="post" autocomplete="off">
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
+                                            <hr>
                                             <div class="row">
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="economic_date" class="form-label">Tarehe</label>
-                                                        <input type="date" value="<?php if ($economic['economic_date']) {
-                                                                                        print_r($economic['economic_date']);
-                                                                                    } ?>" max="<?= date('Y-m-d'); ?>" id="economic_date" name="economic_date" class="form-control" placeholder="Enter economic date" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label>Chanzo kikuu cha kipato cha mkuu wa kaya?</label>
-                                                    <!-- radio -->
+                                                <div class="col-sm-6">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household1" value="1" <?php if ($economic['income_household'] == 1) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Msharaha kwa mwezi</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household2" value="2" <?php if ($economic['income_household'] == 2) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Posho kwa siku</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household3" value="3" <?php if ($economic['income_household'] == 3) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Pato kutokana na mauzo ya biashara</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household4" value="4" <?php if ($economic['income_household'] == 4) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Pato kutokana na mauzo ya mazao au mifugo</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household5" value="5" <?php if ($economic['income_household'] == 5) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Hana kipato</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household6" value="6" <?php if ($economic['income_household'] == 6) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Mstaafu</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_household" id="income_household96" value="96" <?php if ($economic['income_household'] == 96) {
-                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                        } ?>>
-                                                                <label class="form-check-label">Nyingine, Taja</label>
-                                                            </div>
-                                                            <textarea class="form-control" name="income_household_other" id="income_household_other" rows="2" placeholder="Type other here...">
-                                                                <?php if ($economic['income_household_other']) {
-                                                                    print_r($economic['income_household_other']);
-                                                                }  ?>
-                                                            </textarea>
+                                                            <label>Region</label>
+                                                            <select id="region_id" name="region_id" class="form-control" required <?php if ($_GET['region_id']) {
+                                                                                                                                        echo 'disabled';
+                                                                                                                                    } ?>>
+                                                                <option value="<?= $regions[0]['id'] ?>"><?php if ($regions[0]['name']) {
+                                                                                                                print_r($regions[0]['name']);
+                                                                                                            } else {
+                                                                                                                echo 'Select region';
+                                                                                                            } ?>
+                                                                </option>
+                                                                <?php foreach ($override->get('regions', 'status', 1) as $region) { ?>
+                                                                    <option value="<?= $region['id'] ?>"><?= $region['name'] ?></option>
+                                                                <?php } ?>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-4">
-                                                    <label>Chanzo kikuu cha mapato cha mgonjwa?</label>
-                                                    <!-- radio -->
+                                                <div class="col-sm-6">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient1" value="1" <?php if ($economic['income_patient'] == 1) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Msharaha kwa mwezi</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient2" value="2" <?php if ($economic['income_patient'] == 2) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Posho kwa siku</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient3" value="3" <?php if ($economic['income_patient'] == 3) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Pato kutokana na mauzo ya biashara</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient4" value="4" <?php if ($economic['income_patient'] == 4) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Pato kutokana na mauzo ya mazao au mifugo</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient5" value="5" <?php if ($economic['income_patient'] == 5) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Hana kipato</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient6" value="6" <?php if ($economic['income_patient'] == 6) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Mstaafu</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="income_patient" id="income_patient96" value="96" <?php if ($economic['income_patient'] == 96) {
-                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Nyingine, Taja</label>
-                                                            </div>
-                                                            <textarea class="form-control" name="income_patient_other" id="income_patient_other" rows="2" placeholder="Type other here...">
-                                                            <?php if ($economic['income_patient_other']) {
-                                                                print_r($economic['income_patient_other']);
-                                                            }  ?>
-                                                            </textarea>
+                                                            <label>District Name</label>
+                                                            <input class="form-control" type="text" name="name" id="name" placeholder="Type district..." onkeyup="fetchData()" value="<?php if ($districts['0']['name']) {
+                                                                                                                                                                                            print_r($districts['0']['name']);
+                                                                                                                                                                                        }  ?>" required />
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="monthly_earn" class="form-label">Je, unaingiza shilingi ngapi kwa mwezi kutoka kwenye vyanzo vyako vyote vya fedha? <br> ( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['monthly_earn']) {
-                                                                                        print_r($economic['monthly_earn']);
-                                                                                    } ?>" min="0" max="100000000" id="monthly_earn" name="monthly_earn" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="member_earn" class="form-label">Kwa mwezi, ni kiasi gani wanakaya wenzako wanaingiza kutoka kwenye vyanzo vyote vya fedha? (kwa ujumla)?<br> ( TSHS ) </label>
-                                                        <input type="text" value="<?php if ($economic['member_earn']) {
-                                                                                        print_r($economic['member_earn']);
-                                                                                    } ?>" min="0" max="100000000" id="member_earn" name="member_earn" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="transport" class="form-label">Ulilipa kiasi gani kwa ajili ya usafiri ulipoenda hospitali kwa ajili ya kufanyiwa uchunguzi wa saratani ya mapafu? <br> ( TSHS ) </label>
-                                                        <input type="text" value="<?php if ($economic['transport']) {
-                                                                                        print_r($economic['transport']);
-                                                                                    } ?>" min="0" max="100000000" id="transport" name="transport" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="support_earn" class="form-label">Kama ulisindikizwa, alilipa fedha kiasi gani kwa ajili ya usafiri? <br>( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['support_earn']) {
-                                                                                        print_r($economic['support_earn']);
-                                                                                    } ?>" min="0" max="100000000" id="support_earn" name="support_earn" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="food_drinks" class="form-label">Ulilipa fedha kiasi gani kwa ajili ya chakula na vinywaji? <br>( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['food_drinks']) {
-                                                                                        print_r($economic['food_drinks']);
-                                                                                    } ?>" min="0" max="100000000" id="food_drinks" name="food_drinks" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="other_cost" class="form-label">Je, kuna gharama yoyote ambayo ulilipa tofauti na hizo ulizotaja hapo, kama ndio, ni shilingi ngapi? ( TSHS ) </label>
-                                                        <input type="text" value="<?php if ($economic['other_cost']) {
-                                                                                        print_r($economic['other_cost']);
-                                                                                    } ?>" min="0" max="100000000" id="other_cost" name="other_cost" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Je, kwa mwezi, unapoteza muda kiasi gani unapotembelea kliniki?</h3>
-                                                </div>
-                                            </div>
-
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="days" class="form-label">Siku</label>
-                                                        <input type="text" value="<?php if ($economic['days']) {
-                                                                                        print_r($economic['days']);
-                                                                                    } ?>" min="0" max="100" id="days" name="days" class="form-control" placeholder="Enter days" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-3">
-                                                        <label for="hours" class="form-label">Masaa</label>
-                                                        <input type="text" value="<?php if ($economic['hours']) {
-                                                                                        print_r($economic['hours']);
-                                                                                    } ?>" min="0" max="100" id="hours" name="hours" class="form-control" placeholder="Enter hours" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title"> Je, ulilipa gharama kiasi gani kwa huduma zifuatazo?
-                                                    </h3>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <div class="mb-3">
-                                                        <label for="registration" class="form-label">Usajili <br> ( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['registration']) {
-                                                                                        print_r($economic['registration']);
-                                                                                    } ?>" min="0" max="100000000" id="registration" name="registration" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="mb-3">
-                                                        <label for="consultation" class="form-label">Kumuona daktari (Consultation) ( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['consultation']) {
-                                                                                        print_r($economic['consultation']);
-                                                                                    } ?>" min="0" max="100000000" id="consultation" name="consultation" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-2">
-                                                    <div class="mb-3">
-                                                        <label for="diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['diagnostic']) {
-                                                                                        print_r($economic['diagnostic']);
-                                                                                    } ?>" min="0" max="100000000" id="diagnostic" name="diagnostic" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="mb-3">
-                                                        <label for="medications" class="form-label">Dawa (Medications) <br>( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['medications']) {
-                                                                                        print_r($economic['medications']);
-                                                                                    } ?>" min="0" max="100000000" id="medications" name="medications" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="other_medical_cost" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
-                                                        <input type="text" value="<?php if ($economic['other_medical_cost']) {
-                                                                                        print_r($economic['other_medical_cost']);
-                                                                                    } ?>" min="0" max="100000000" id="other_medical_cost" name="other_medical_cost" class="form-control" placeholder="Enter TSHS" pattern="^\d{1,3}(,\d{3})*(\.\d+)?$" title="Please enter numbers only" required />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                            <input type="submit" name="add_economic" value="Submit" class="btn btn-primary">
+                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <input type="submit" name="add_district" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (left) -->
+
+                            <div class="col-6">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6">
+                                                    <div class="card-header">
+                                                        List of Districts
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <?php
+                                    $pagNum = 0;
+                                    $pagNum = $override->getCount('districts', 'status', 1);
+                                    $pages = ceil($pagNum / $numRec);
+                                    if (!$_GET['page'] || $_GET['page'] == 1) {
+                                        $page = 0;
+                                    } else {
+                                        $page = ($_GET['page'] * $numRec) - $numRec;
+                                    }
+
+                                    $districts = $override->getWithLimit('districts', 'status', 1, $page, $numRec);
+                                    ?>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Region Name</th>
+                                                    <th>District Name</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($districts as $value) {
+                                                    $regions = $override->get('regions', 'id', $value['region_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $x; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $regions['name']; ?>
+                                                        </td>
+
+                                                        <td class="table-user">
+                                                            <?= $value['name']; ?>
+                                                        </td>
+
+                                                        <?php if ($value['status'] == 1) { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-success">
+                                                                    <i class="ri-edit-box-line">
+                                                                    </i>Active
+                                                                </a>
+                                                            </td>
+                                                        <?php  } else { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-success">
+                                                                    <i class="ri-edit-box-line">
+                                                                    </i>Not Active
+                                                                </a>
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td>
+                                                            <a href="add.php?id=25&region_id=<?= $value['region_id'] ?>&district_id=<?= $value['id'] ?>" class="btn btn-info">Update</a>
+                                                            <?php if ($user->data()->power == 1) { ?>
+                                                                <a href="#delete<?= $staff['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+                                                                <a href="#restore<?= $staff['id'] ?>" role="button" class="btn btn-secondary" data-toggle="modal">Restore</a>
+                                                            <?php } ?>
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade" id="delete<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Delete User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: red">
+                                                                            <p>Are you sure you want to delete this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="delete_staff" value="Delete" class="btn btn-danger">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="restore<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Restore User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: green">
+                                                                            <p>Are you sure you want to restore this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="restore_staff" value="Restore" class="btn btn-success">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Region Name</th>
+                                                    <th>District Name</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer clearfix">
+                                        <ul class="pagination pagination-sm m-0 float-right">
+                                            <li class="page-item">
+                                                <a class="page-link" href="add.php?id=25&page=<?php if (($_GET['page'] - 1) > 0) {
+                                                                                                    echo $_GET['page'] - 1;
+                                                                                                } else {
+                                                                                                    echo 1;
+                                                                                                } ?>">&laquo;
+                                                </a>
+                                            </li>
+                                            <?php for ($i = 1; $i <= $pages; $i++) { ?>
+                                                <li class="page-item">
+                                                    <a class="page-link <?php if ($i == $_GET['page']) {
+                                                                            echo 'active';
+                                                                        } ?>" href="add.php?id=25&page=<?= $i ?>"><?= $i ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            <li class="page-item">
+                                                <a class="page-link" href="add.php?id=25&page=<?php if (($_GET['page'] + 1) <= $pages) {
+                                                                                                    echo $_GET['page'] + 1;
+                                                                                                } else {
+                                                                                                    echo $i - 1;
+                                                                                                } ?>">&raquo;
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <!-- /.card -->
                             </div>
@@ -4358,9 +3526,6 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 10) { ?>
-            <?php
-            $outcome = $override->get3('outcome', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
-            ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -4368,26 +3533,12 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <?php if ($outcome) { ?>
-                                    <h1>Add New outcome results</h1>
-                                <?php } else { ?>
-                                    <h1>Update outcome results</h1>
-                                <?php } ?>
+                                <h1>Wards Form</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
-                                            < Back</a>
-                                    </li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="index1.php">Home</a></li>&nbsp;&nbsp;
-                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status']; ?>">
-                                            Go to screening list > </a>
-                                    </li>&nbsp;&nbsp;
-                                    <?php if ($results) { ?>
-                                        <li class="breadcrumb-item active">Add New outcome results</li>
-                                    <?php } else { ?>
-                                        <li class="breadcrumb-item active">Update outcome results</li>
-                                    <?php } ?>
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Wards Form</li>
                                 </ol>
                             </div>
                         </div>
@@ -4398,98 +3549,271 @@ if ($user->isLoggedIn()) {
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <!-- right column -->
-                            <div class="col-md-12">
+                            <?php
+                            $regions = $override->get('regions', 'id', $_GET['region_id']);
+                            $districts = $override->getNews('districts', 'region_id', $_GET['region_id'], 'id', $_GET['district_id']);
+                            $wards = $override->get('wards', 'id', $_GET['ward_id']);
+                            ?>
+                            <!-- right left -->
+                            <div class="col-md-6">
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">CRF 3: FOLLOW UP ( PATIENT OUTCOME AFTER SCREENING )</h3>
+                                        <h3 class="card-title">Ward</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
+                                            <hr>
                                             <div class="row">
-                                                <div class="col-2">
-                                                    <div class="mb-2">
-                                                        <label for="visit_date" class="form-label">Entry Date</label>
-                                                        <input type="date" value="<?php if ($outcome) {
-                                                                                        print_r($outcome['visit_date']);
-                                                                                    } ?>" id="visit_date" name="visit_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter visit date" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <div class="row-form clearfix">
-                                                            <!-- select -->
-                                                            <div class="form-group">
-                                                                <label>Patient Diagnosis if was scored Lung- RAD 4B</label>
-                                                                <textarea class="form-control" name="diagnosis" rows="3" placeholder="Type diagnosis here...">
-                                                                        <?php if ($outcome['diagnosis']) {
-                                                                            print_r($outcome['diagnosis']);
-                                                                        }  ?>
-                                                                </textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <label>Outcome</label>
-                                                    <!-- radio -->
+                                                <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome1" value="1" <?php if ($outcome['outcome'] == 1) {
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Await another screening</label>
-                                                            </div>
-
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome2" value="2" <?php if ($outcome['outcome'] == 2) {
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">On treatment</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome3" value="3" <?php if ($outcome['outcome'] == 3) {
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Recovered</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome4" value="4" <?php if ($outcome['outcome'] == 4) {
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Died</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="outcome" id="outcome5" value="5" <?php if ($outcome['outcome'] == 5) {
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                    } ?>>
-                                                                <label class="form-check-label">Unknown/Loss to follow up</label>
-                                                            </div>
+                                                            <label>Region</label>
+                                                            <select id="regions_id" name="region_id" class="form-control" required <?php if ($_GET['region_id']) {
+                                                                                                                                        echo 'disabled';
+                                                                                                                                    } ?>>
+                                                                <option value="<?= $regions[0]['id'] ?>"><?php if ($regions[0]['name']) {
+                                                                                                                print_r($regions[0]['name']);
+                                                                                                            } else {
+                                                                                                                echo 'Select region';
+                                                                                                            } ?>
+                                                                </option>
+                                                                <?php foreach ($override->get('regions', 'status', 1) as $region) { ?>
+                                                                    <option value="<?= $region['id'] ?>"><?= $region['name'] ?></option>
+                                                                <?php } ?>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2" id="outcome_date">
-                                                    <div class="mb-2">
-                                                        <label for="died" id="died" class="form-label">Date of Death</label>
-                                                        <label for="ltf" id="ltf" class="form-label">Date Last known to be alive</label>
-                                                        <input type="date" value="<?php if ($outcome) {
-                                                                                        print_r($outcome['outcome_date']);
-                                                                                    } ?>" name="outcome_date" class="form-control" max="<?= date('Y-m-d') ?>" placeholder="Enter outcome date" />
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>District</label>
+                                                            <select id="districts_id" name="district_id" class="form-control" required <?php if ($_GET['district_id']) {
+                                                                                                                                            echo 'disabled';
+                                                                                                                                        } ?>>
+                                                                <option value="<?= $districts[0]['id'] ?>"><?php if ($districts[0]['name']) {
+                                                                                                                print_r($districts[0]['name']);
+                                                                                                            } else {
+                                                                                                                echo 'Select District';
+                                                                                                            } ?>
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Ward Name</label>
+                                                            <input class="form-control" type="text" name="name" id="name" placeholder="Type ward..." onkeyup="fetchData()" value="<?php if ($wards['0']['name']) {
+                                                                                                                                                                                        print_r($wards['0']['name']);
+                                                                                                                                                                                    }  ?>" required />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
-                                            <input type="submit" name="add_outcome" value="Submit" class="btn btn-primary">
+                                            <a href='index1.php' class="btn btn-default">Back</a>
+                                            <input type="submit" name="add_ward" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (left) -->
+
+                            <div class="col-6">
+                                <div class="card">
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6">
+                                                    <div class="card-header">
+                                                        List of Wards
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                < Back</a>
+                                                        </li>
+                                                        &nbsp;
+                                                        <li class="breadcrumb-item">
+                                                            <a href="index1.php">
+                                                                Go Home > </a>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <?php
+                                    $pagNum = 0;
+                                    $pagNum = $override->getCount('wards', 'status', 1);
+                                    $pages = ceil($pagNum / $numRec);
+                                    if (!$_GET['page'] || $_GET['page'] == 1) {
+                                        $page = 0;
+                                    } else {
+                                        $page = ($_GET['page'] * $numRec) - $numRec;
+                                    }
+
+                                    $ward = $override->getWithLimit('wards', 'status', 1, $page, $numRec);
+                                    ?>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="search-results" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Region Name</th>
+                                                    <th>District Name</th>
+                                                    <th>Ward Name</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $x = 1;
+                                                foreach ($ward as $value) {
+                                                    $regions = $override->get('regions', 'id', $value['region_id'])[0];
+                                                    $districts = $override->get('districts', 'id', $value['district_id'])[0];
+                                                ?>
+                                                    <tr>
+                                                        <td class="table-user">
+                                                            <?= $x; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $regions['name']; ?>
+                                                        </td>
+
+                                                        <td class="table-user">
+                                                            <?= $districts['name']; ?>
+                                                        </td>
+                                                        <td class="table-user">
+                                                            <?= $value['name']; ?>
+                                                        </td>
+
+                                                        <?php if ($value['status'] == 1) { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-success">
+                                                                    <i class="ri-edit-box-line">
+                                                                    </i>Active
+                                                                </a>
+                                                            </td>
+                                                        <?php  } else { ?>
+                                                            <td class="text-center">
+                                                                <a href="#" class="btn btn-success">
+                                                                    <i class="ri-edit-box-line">
+                                                                    </i>Not Active
+                                                                </a>
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td>
+                                                            <a href="add.php?id=26&region_id=<?= $value['region_id'] ?>&district_id=<?= $value['district_id'] ?>&ward_id=<?= $value['id'] ?>" class="btn btn-info">Update</a> <br><br>
+                                                            <?php if ($user->data()->power == 1) { ?>
+                                                                <a href="#delete<?= $staff['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+                                                                <a href="#restore<?= $staff['id'] ?>" role="button" class="btn btn-secondary" data-toggle="modal">Restore</a>
+                                                            <?php } ?>
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade" id="delete<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Delete User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: red">
+                                                                            <p>Are you sure you want to delete this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="delete_staff" value="Delete" class="btn btn-danger">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="restore<?= $staff['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Restore User</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: green">
+                                                                            <p>Are you sure you want to restore this user</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $staff['id'] ?>">
+                                                                        <input type="submit" name="restore_staff" value="Restore" class="btn btn-success">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                <?php $x++;
+                                                } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Region Name</th>
+                                                    <th>District Name</th>
+                                                    <th>Ward Name</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer clearfix">
+                                        <ul class="pagination pagination-sm m-0 float-right">
+                                            <li class="page-item">
+                                                <a class="page-link" href="add.php?id=26&page=<?php if (($_GET['page'] - 1) > 0) {
+                                                                                                    echo $_GET['page'] - 1;
+                                                                                                } else {
+                                                                                                    echo 1;
+                                                                                                } ?>">&laquo;
+                                                </a>
+                                            </li>
+                                            <?php for ($i = 1; $i <= $pages; $i++) { ?>
+                                                <li class="page-item">
+                                                    <a class="page-link <?php if ($i == $_GET['page']) {
+                                                                            echo 'active';
+                                                                        } ?>" href="add.php?id=26&page=<?= $i ?>"><?= $i ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            <li class="page-item">
+                                                <a class="page-link" href="add.php?id=26&page=<?php if (($_GET['page'] + 1) <= $pages) {
+                                                                                                    echo $_GET['page'] + 1;
+                                                                                                } else {
+                                                                                                    echo $i - 1;
+                                                                                                } ?>">&raquo;
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <!-- /.card -->
                             </div>
@@ -4501,9 +3825,7 @@ if ($user->isLoggedIn()) {
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-
         <?php } elseif ($_GET['id'] == 11) { ?>
-
         <?php } elseif ($_GET['id'] == 12) { ?>
 
         <?php } elseif ($_GET['id'] == 13) { ?>
@@ -4581,51 +3903,24 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/clients/insurance.js"></script>
     <script src="myjs/add/clients/insurance_name.js"></script>
     <script src="myjs/add/clients/relation_patient.js"></script>
-    <script src="myjs/add/clients/validate_hidden_with_values.js"></script>
+    <!-- <script src="myjs/add/clients/validate_hidden_with_values.js"></script>
     <script src="myjs/add/clients/validate_required_attribute.js"></script>
-    <script src="myjs/add/clients/validate_required_radio_checkboxes.js"></script>
-
-
-
-    <!-- KAP Js -->
-    <script src="myjs/add/kap/dalili_saratani.js"></script>
-    <script src="myjs/add/kap/kundi.js"></script>
-    <script src="myjs/add/kap/matibabu.js"></script>
-    <script src="myjs/add/kap/matibabu_saratani.js"></script>
-    <script src="myjs/add/kap/saratani_hatari.js"></script>
-    <script src="myjs/add/kap/saratani_inatibika.js"></script>
-    <script src="myjs/add/kap/saratani_vipimo.js"></script>
-    <script src="myjs/add/kap/uchunguzi_faida.js"></script>
-    <script src="myjs/add/kap/uchunguzi_hatari.js"></script>
-    <script src="myjs/add/kap/uchunguzi_maana.js"></script>
-    <script src="myjs/add/kap/ushawishi.js"></script>
-    <script src="myjs/add/kap/vitu_hatarishi.js"></script>
-    <script src="myjs/add/kap/wapi_matibabu.js"></script>
-
-
-
+    <script src="myjs/add/clients/validate_required_radio_checkboxes.js"></script> -->
 
 
 
     <!-- HISTORY Js -->
-    <script src="myjs/add/history/currently_smoking.js"></script>
-    <script src="myjs/add/history/ever_smoked.js"></script>
-    <script src="myjs/add/history/type_smoked.js"></script>
-
-    <!-- economics Js -->
-    <script src="myjs/add/economics/household.js"></script>
-    <script src="myjs/add/economics/patient.js"></script>
-
-    <!-- economics Js -->
-    <script src="myjs/add/outcome/outcome.js"></script>
-
-    <!-- economics radio requireds Js -->
-    <script src="myjs/add/economics/format_required.js/format_radio.js"></script>
+    <script src="myjs/add/history/art_regimen.js"></script>
+    <script src="myjs/add/history/tb.js"></script>
+    <script src="myjs/add/history/first_line.js"></script>
+    <script src="myjs/add/history/second_line.js"></script>
+    <script src="myjs/add/history/third_line.js"></script>
+    <script src="myjs/add/history"></script>
 
 
 
     <!-- economics format numbers Js -->
-    <script src="myjs/add/economics/format_thousands/consultation.js"></script>
+    <!-- <script src="myjs/add/economics/format_thousands/consultation.js"></script>
     <script src="myjs/add/economics/format_thousands/days.js"></script>
     <script src="myjs/add/economics/format_thousands/diagnostic.js"></script>
     <script src="myjs/add/economics/format_thousands/food_drinks.js"></script>
@@ -4638,7 +3933,7 @@ if ($user->isLoggedIn()) {
     <script src="myjs/add/economics/format_thousands/registration.js"></script>
     <script src="myjs/add/economics/format_thousands/registration.js"></script>
     <script src="myjs/add/economics/format_thousands/support_earn.js"></script>
-    <script src="myjs/add/economics/format_thousands/transport.js"></script>
+    <script src="myjs/add/economics/format_thousands/transport.js"></script> -->
 
 
 
@@ -4725,6 +4020,51 @@ if ($user->isLoggedIn()) {
             $("input[data-bootstrap-switch]").each(function() {
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
             })
+
+            $('#regions_id').change(function() {
+                var region_id = $(this).val();
+                $.ajax({
+                    url: "process.php?content=region_id",
+                    method: "GET",
+                    data: {
+                        region_id: region_id
+                    },
+                    dataType: "text",
+                    success: function(data) {
+                        $('#districts_id').html(data);
+                    }
+                });
+            });
+
+            $('#region').change(function() {
+                var region = $(this).val();
+                $.ajax({
+                    url: "process.php?content=region_id",
+                    method: "GET",
+                    data: {
+                        region_id: region
+                    },
+                    dataType: "text",
+                    success: function(data) {
+                        $('#district').html(data);
+                    }
+                });
+            });
+
+            $('#district').change(function() {
+                var district_id = $(this).val();
+                $.ajax({
+                    url: "process.php?content=district_id",
+                    method: "GET",
+                    data: {
+                        district_id: district_id
+                    },
+                    dataType: "text",
+                    success: function(data) {
+                        $('#ward').html(data);
+                    }
+                });
+            });
 
         })
 
