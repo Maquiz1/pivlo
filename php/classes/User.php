@@ -288,6 +288,28 @@ class User
                     'update_id' => $staff_id,
                     'site_id' => $site_id,
                 ));
+
+
+                $this->createRecord('visit', array(
+                    'table_id' => $table,
+                    'facility_id' => $facility_id,
+                    'sequence' => 2,
+                    'pid' => $study_id,
+                    'study_id' => $study_id,
+                    'visit_code' => 'M1',
+                    'visit_name' => 'Month 2',
+                    'expected_date' => $screening_date,
+                    'visit_date' => '',
+                    'visit_status' => 0,
+                    'respondent' => $respondent,
+                    'status' => 1,
+                    'patient_id' => $client_id,
+                    'create_on' => date('Y-m-d H:i:s'),
+                    'staff_id' => $staff_id,
+                    'update_on' => date('Y-m-d H:i:s'),
+                    'update_id' => $staff_id,
+                    'site_id' => $site_id,
+                ));
             }
         } else {
             if ($visit_id) {
