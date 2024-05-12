@@ -202,7 +202,7 @@ if ($user->isLoggedIn()) {
                         $successMessage = 'Site Successful Added';
                     }
 
-                    $user->visit_delete1($_GET['site_id'], Input::get('visit_date'), $_GET['site_id'], $user->data()->id, $_GET['site_id'], $eligible, $sequence, $visit_code, $visit_name);
+                    // $user->visit_delete1($_GET['site_id'], Input::get('visit_date'), $_GET['site_id'], $user->data()->id, $_GET['site_id'], $eligible, $sequence, $visit_code, $visit_name);
 
                 } catch (Exception $e) {
                     die($e->getMessage());
