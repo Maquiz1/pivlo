@@ -2764,7 +2764,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="visit_date" class="form-label">Date of Visit</label>
                                                         <input type="date" value="<?php if ($facility['visit_date']) {
                                                                                         print_r($facility['visit_date']);
-                                                                                    } ?>" id="visit_date" name="visit_date" class="form-control" placeholder="Enter date" required />
+                                                                                    } ?>" id="visit_date" name="visit_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -2857,7 +2857,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="date_completed" class="form-label">Date form completed</label>
                                                         <input type="date" value="<?php if ($facility['date_completed']) {
                                                                                         print_r($facility['date_completed']);
-                                                                                    } ?>" id="date_completed" name="date_completed" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                                                    } ?>" id="date_completed" name="date_completed" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
                                             </div>

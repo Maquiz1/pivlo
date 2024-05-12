@@ -35,6 +35,16 @@ if ($user->isLoggedIn()) {
                 'status' => 0,
             ), Input::get('id'));
             $successMessage = 'User Restored Successful';
+        } elseif (Input::get('delete_facility')) {
+            $user->updateRecord('sites', array(
+                'status' => 0,
+            ), Input::get('id'));
+            $successMessage = 'Site Deleted Successful';
+        } elseif (Input::get('restore_facility')) {
+            $user->updateRecord('sites', array(
+                'status' => 1,
+            ), Input::get('id'));
+            $successMessage = 'Facility Restored Successful';
         } elseif (Input::get('restore_staff')) {
             $user->updateRecord('user', array(
                 'status' => 1,
@@ -2295,7 +2305,11 @@ if ($user->isLoggedIn()) {
                             <div class="col-sm-6">
                                 <h1>
                                     <?php
-                                    $sites = $override->getDataAsc('sites', 'status', 1, 'id');
+                                    if ($user->data()->power == 1) {
+                                        $sites = $override->getDataAsc0('sites', 'id');
+                                    } else {
+                                        $sites = $override->getDataAsc('sites', 'status', 1, 'id');
+                                    }
                                     ?>
                                     Sites
                                 </h1>
@@ -2409,6 +2423,7 @@ if ($user->isLoggedIn()) {
                                                     $district = $override->getNews('districts', 'status', 1, 'id', $value['district'])[0];
                                                     $arm = $override->getNews('facility_arm', 'status', 1, 'id', $value['arm'])[0];
                                                     $level = $override->getNews('facility_level', 'status', 1, 'id', $value['level'])[0];
+                                                    $facility = $override->getNews('facility', 'sequence', 0, 'facility_id', $value['id'])[0];
                                                 ?>
                                                     <tr>
                                                         <td>
@@ -2427,14 +2442,81 @@ if ($user->isLoggedIn()) {
                                                             <?= $level['name']; ?>
                                                         </td>
                                                         <td class="table-user text-center">
-                                                            <a href="#" class="btn btn-success">Active</a>
+                                                            <?php if ($value['status']) { ?>
+                                                                <a href="#" class="btn btn-success">Active</a>
+                                                            <?php } else { ?>
+                                                                <a href="#" class="btn btn-warning">Not Active</a>
+                                                            <?php } ?>
+
                                                         </td>
                                                         <td class="table-user text-center">
-                                                            <a href="add.php?id=3&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-primary">Edit Site ( Facility )</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <?php if ($facility['status']) { ?>
+                                                                <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-info">Update Visit Records</a>
 
-                                                            <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-info">View Schedules</a>
+                                                            <?php } else { ?>
+                                                                <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-warning">Add Visit Records</a>
+
+
+                                                            <?php } ?>
+                                                            <?php if ($user->data()->power == 1) { ?>
+                                                                <a href="add.php?id=3&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-primary">Edit Site ( Facility )</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                                <a href="#deleteSite<?= $value['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">
+                                                                    Delete
+                                                                </a>
+
+                                                                <a href="#restoreSite<?= $value['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
+                                                                    Restore
+                                                                </a>
+                                                            <?php } ?>
                                                         </td>
                                                     </tr>
+                                                    <div class="modal fade" id="deleteSite<?= $value['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Delete Facility</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: red">
+                                                                            <p>Are you sure you want to delete this Facility ?</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $value['id'] ?>">
+                                                                        <input type="submit" name="delete_facility" value="Delete" class="btn btn-danger">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="modal fade" id="restoreSite<?= $value['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4>Restore Facility</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <strong style="font-weight: bold;color: yellow">
+                                                                            <p>Are you sure you want to Restore this Facility ?</p>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input type="hidden" name="id" value="<?= $value['id'] ?>">
+                                                                        <input type="submit" name="restore_facility" value="Restore" class="btn btn-warning">
+                                                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal -->
                                                 <?php $x++;
                                                 } ?>
                                             </tbody>
@@ -2471,12 +2553,12 @@ if ($user->isLoggedIn()) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Participant Schedules</h1>
+                                <h1>Facility Schedules</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Participant Schedules</li>
+                                    <li class="breadcrumb-item active">Facility Schedules</li>
                                 </ol>
                             </div>
                         </div>
@@ -2526,7 +2608,7 @@ if ($user->isLoggedIn()) {
                                             </div>
                                             <div class="col-sm-6">
                                                 <ol class="breadcrumb float-sm-right">
-                                                    <li class="breadcrumb-item"><a href="info.php?id=3&status=<?= $_GET['status'] ?>">
+                                                    <li class="breadcrumb-item"><a href="info.php?id=11">
                                                             < Back</a>
                                                     </li>
                                                     <li class="breadcrumb-item">
@@ -2594,10 +2676,10 @@ if ($user->isLoggedIn()) {
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($visit['sequence'] >= 0) { ?>
                                                                     <?php if ($override->getNews('facility', 'site_id', $_GET['site_id'], 'sequence', $i)) { ?>
-                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility </a>&nbsp;&nbsp; <br><br>
+                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility Records </a>&nbsp;&nbsp; <br><br>
 
                                                                     <?php } else { ?>
-                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility </a>&nbsp;&nbsp; <br><br>
+                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility Records</a>&nbsp;&nbsp; <br><br>
                                                                     <?php } ?>
                                                                 <?php } ?>
 

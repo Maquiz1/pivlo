@@ -341,6 +341,12 @@ class OverideData
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function getDataAsc0($table, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table ORDER BY $name ASC");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
     public function getDataAsc($table, $where, $id, $name)
     {

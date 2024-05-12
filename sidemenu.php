@@ -214,7 +214,7 @@ if ($user->isLoggedIn()) {
                         <i class="nav-icon fas fa-copy"></i>
                         <span class="badge badge-info right"><?= $registered; ?></span>
                         <p>
-                            Clients <i class="fas fa-angle-left right"></i>
+                            Patients <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -223,7 +223,7 @@ if ($user->isLoggedIn()) {
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Add
-                                    <span class="right badge badge-danger">New Client</span>
+                                    <span class="right badge badge-danger">New Patient</span>
                                 </p>
                             </a>
                         </li>
@@ -231,7 +231,7 @@ if ($user->isLoggedIn()) {
                             <a href="info.php?id=3&status=7" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <span class="badge badge-info right"><?= $registered; ?></span>
-                                <p>Tota Clients</p>
+                                <p>Tota Patients</p>
                             </a>
                         </li>
                     </ul>
