@@ -268,7 +268,7 @@ class User
                     'facility_id' => $facility_id,
                 ), $visit_id[0]['id']);
             } else {
-                $this->createRecord('visit', array(                    
+                $this->createRecord('visit', array(
                     'table_id' => $table,
                     'facility_id' => $facility_id,
                     'sequence' => $sequence,
@@ -289,6 +289,8 @@ class User
                     'site_id' => $site_id,
                 ));
 
+                $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($screening_date)));
+
 
                 $this->createRecord('visit', array(
                     'table_id' => $table,
@@ -296,9 +298,32 @@ class User
                     'sequence' => 2,
                     'pid' => $study_id,
                     'study_id' => $study_id,
-                    'visit_code' => 'M1',
+                    'visit_code' => 'M2',
                     'visit_name' => 'Month 2',
-                    'expected_date' => $screening_date,
+                    'expected_date' => $expected_date,
+                    'visit_date' => '',
+                    'visit_status' => 0,
+                    'respondent' => $respondent,
+                    'status' => 1,
+                    'patient_id' => $client_id,
+                    'create_on' => date('Y-m-d H:i:s'),
+                    'staff_id' => $staff_id,
+                    'update_on' => date('Y-m-d H:i:s'),
+                    'update_id' => $staff_id,
+                    'site_id' => $site_id,
+                ));
+
+                $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($expected_date)));
+
+                $this->createRecord('visit', array(
+                    'table_id' => $table,
+                    'facility_id' => $facility_id,
+                    'sequence' => 3,
+                    'pid' => $study_id,
+                    'study_id' => $study_id,
+                    'visit_code' => 'M3',
+                    'visit_name' => 'Month 3',
+                    'expected_date' => $expected_date,
                     'visit_date' => '',
                     'visit_status' => 0,
                     'respondent' => $respondent,
