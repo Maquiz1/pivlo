@@ -291,7 +291,11 @@ class User
             }
         } else {
             if ($visit_id) {
-                $this->deleteRecord('visit', 'id', $visit_id[0]['id']);
+                foreach ($this->_override->get('visit', 'patient_id', $client_id) as $visit) {
+                    if ($visit['sequence']) {
+                        $this->deleteRecord('visit', 'id', $visit['id']);
+                    }
+                }
             }
         }
     }
