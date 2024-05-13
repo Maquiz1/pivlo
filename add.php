@@ -473,6 +473,7 @@ if ($user->isLoggedIn()) {
                         'tested_reason' => Input::get('tested_reason'),
                         'opportunistic' => Input::get('opportunistic'),
                         'diagnosis_date' => Input::get('diagnosis_date'),
+                        'ipt' => Input::get('ipt'),
                         'patient_condition' => Input::get('patient_condition'),
                         'trained_pivlo' => Input::get('trained_pivlo'),
                         'initiate_test_hcw' => Input::get('initiate_test_hcw'),
@@ -526,6 +527,7 @@ if ($user->isLoggedIn()) {
                         'tested_reason' => Input::get('tested_reason'),
                         'opportunistic' => Input::get('opportunistic'),
                         'diagnosis_date' => Input::get('diagnosis_date'),
+                        'ipt' => Input::get('ipt'),
                         'patient_condition' => Input::get('patient_condition'),
                         'trained_pivlo' => Input::get('trained_pivlo'),
                         'initiate_test_hcw' => Input::get('initiate_test_hcw'),
@@ -2477,7 +2479,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="initiations" id="initiations<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['initiations'] == $value['id']) {
                                                                                                                                                                                                             echo 'checked';
-                                                                                                                                                                                                        } ?>>
+                                                                                                                                                                                                        } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2494,7 +2496,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="reminders" id="reminders<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['reminders'] == $value['id']) {
                                                                                                                                                                                                         echo 'checked';
-                                                                                                                                                                                                    } ?>>
+                                                                                                                                                                                                    } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2516,7 +2518,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="decision_making" id="decision_making<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['decision_making'] == $value['id']) {
                                                                                                                                                                                                                     echo 'checked';
-                                                                                                                                                                                                                } ?>>
+                                                                                                                                                                                                                } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2547,7 +2549,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="trained_pivlo" id="trained_pivlo<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['trained_pivlo'] == $value['id']) {
                                                                                                                                                                                                                 echo 'checked';
-                                                                                                                                                                                                            } ?>>
+                                                                                                                                                                                                            } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2582,7 +2584,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="initiate_test_hcw" id="initiate_test_hcw<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['initiate_test_hcw'] == $value['id']) {
                                                                                                                                                                                                                         echo 'checked';
-                                                                                                                                                                                                                    } ?>>
+                                                                                                                                                                                                                    } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2599,7 +2601,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="tested_this_month" id="tested_this_month<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['tested_this_month'] == $value['id']) {
                                                                                                                                                                                                                         echo 'checked';
-                                                                                                                                                                                                                    } ?>>
+                                                                                                                                                                                                                    } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2669,7 +2671,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="recent_tb_results" id="recent_tb_results<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['recent_tb_results'] == $value['id']) {
                                                                                                                                                                                                                         echo 'checked';
-                                                                                                                                                                                                                    } ?>>
+                                                                                                                                                                                                                    } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2693,7 +2695,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="opportunistic" id="opportunistic<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['opportunistic'] == $value['id']) {
                                                                                                                                                                                                                 echo 'checked';
-                                                                                                                                                                                                            } ?>>
+                                                                                                                                                                                                            } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2752,7 +2754,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="art_regimen" id="art_regimen<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['art_regimen'] == $value['id']) {
                                                                                                                                                                                                             echo 'checked';
-                                                                                                                                                                                                        } ?>>
+                                                                                                                                                                                                        } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2899,7 +2901,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="chronic_condition" id="chronic_condition<?= $value['id']; ?>" value="1" <?php if ($individual['chronic_condition'] == $value['id']) {
                                                                                                                                                                                                     echo 'checked';
-                                                                                                                                                                                                } ?>>
+                                                                                                                                                                                                } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2916,7 +2918,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="patient_condition" id="patient_condition<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['patient_condition'] == $value['id']) {
                                                                                                                                                                                                                         echo 'checked';
-                                                                                                                                                                                                                    } ?>>
+                                                                                                                                                                                                                    } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2939,7 +2941,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="reasons" id="reasons<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['reasons'] == $value['id']) {
                                                                                                                                                                                                     echo 'checked';
-                                                                                                                                                                                                } ?>>
+                                                                                                                                                                                                } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -2956,7 +2958,7 @@ if ($user->isLoggedIn()) {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="next_appointment" id="next_appointment_schedule<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['next_appointment'] == $value['id']) {
                                                                                                                                                                                                                                 echo 'checked';
-                                                                                                                                                                                                                            } ?>>
+                                                                                                                                                                                                                            } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
