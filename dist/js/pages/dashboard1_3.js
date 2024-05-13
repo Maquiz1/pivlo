@@ -81,7 +81,7 @@ $(function () {
         labels: monthname,
         datasets: [
           {
-            label: "Amana RRH",
+            label: "Sinza Hospital",
             // backgroundColor: "rgba(60,141,188,0.9)",
             backgroundColor: "pink",
             borderColor: "rgba(60,141,188,0.8)",
@@ -93,7 +93,7 @@ $(function () {
             data: amana,
           },
           {
-            label: "Mwananyamala RRH",
+            label: "Mbezi Health Center",
             // backgroundColor: "rgba(210, 214, 222, 1)",
             backgroundColor: "blue",
             borderColor: "rgba(210, 214, 222, 1)",
@@ -105,7 +105,7 @@ $(function () {
             data: mwananyamala,
           },
           {
-            label: "Temeke RRH",
+            label: "Goba Dispensary",
             // backgroundColor: "rgba(210, 214, 222, 1)",
             backgroundColor: "green",
             borderColor: "rgba(210, 214, 222, 1)",
@@ -117,7 +117,7 @@ $(function () {
             data: temeke,
           },
           {
-            label: "Mbagala Rangi Tatu Hospital",
+            label: "Kigamboni District Hospital",
             // backgroundColor: "rgba(210, 214, 222, 1)",
             backgroundColor: "yellow",
             borderColor: "rgba(210, 214, 222, 1)",
@@ -129,9 +129,21 @@ $(function () {
             data: mbagala,
           },
           {
-            label: "Magomeni Hospital",
+            label: "Kigamboni Health Center",
             // backgroundColor: "rgba(210, 214, 222, 1)",
             backgroundColor: "orange",
+            borderColor: "rgba(210, 214, 222, 1)",
+            pointRadius: false,
+            pointColor: "rgba(210, 214, 222, 1)",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: magomeni,
+          },
+          {
+            label: "Mji Mwema Dispensary",
+            // backgroundColor: "rgba(210, 214, 222, 1)",
+            backgroundColor: "purple",
             borderColor: "rgba(210, 214, 222, 1)",
             pointRadius: false,
             pointColor: "rgba(210, 214, 222, 1)",
