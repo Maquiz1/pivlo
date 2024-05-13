@@ -569,11 +569,11 @@ if ($user->isLoggedIn()) {
   <!-- <script src="dist/js/demo.js"></script> -->
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <!-- <script src="dist/js/pages/dashboard.js"></script> -->
-  <script src="dist/js/pages/dashboard1_1.js"></script>
+  <!-- <script src="dist/js/pages/dashboard1_1.js"></script>
   <script src="dist/js/pages/dashboard1_2.js"></script>
   <script src="dist/js/pages/dashboard1_3.js"></script>
   <script src="dist/js/pages/dashboard1_4.js"></script>
-  <script src="dist/js/pages/dashboard1_5.js"></script>
+  <script src="dist/js/pages/dashboard1_5.js"></script> -->
 
 
 
