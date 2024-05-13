@@ -17,7 +17,7 @@ foreach ($result as $value) {
     $count = $value['count'];
 
     if (!isset($data[$monthname])) {
-        $data[$monthname] = array('1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0);
+        $data[$monthname] = array('1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0, '6' => 0);
     }
 
     $data[$monthname][$site_id] = $count;
