@@ -655,6 +655,96 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
+        } elseif (Input::get('add_social_economic')) {
+            $validate = $validate->check($_POST, array(
+                'visit_date' => array(
+                    'required' => true,
+                ),
+                'own_house' => array(
+                    'required' => true,
+                ),
+                'living' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+                $social_economic = $override->get3('social_economic', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', $_GET['sequence']);
+
+                if ($social_economic) {
+                    $user->updateRecord('social_economic', array(
+                        'visit_date' => Input::get('visit_date'),
+                        'distance_km' => Input::get('distance_km'),
+                        'distance_hours' => Input::get('distance_hours'),
+                        'distance_minutes' => Input::get('distance_minutes'),
+                        'transport' => Input::get('transport'),
+                        'facility_change' => Input::get('facility_change'),
+                        'reasons_facility' => Input::get('reasons_facility'),
+                        'accompany' => Input::get('accompany'),
+                        'relation' => Input::get('relation'),
+                        'occupation' => Input::get('occupation'),
+                        'pay_money' => Input::get('pay_money'),
+                        'pay_travel' => Input::get('pay_travel'),
+                        'pay_food' => Input::get('pay_food'),
+                        'pay_vl' => Input::get('pay_vl'),
+                        'pay_other' => Input::get('pay_other'),
+                        'pay_usajili' => Input::get('pay_usajili'),
+                        'pay_doctor' => Input::get('pay_doctor'),
+                        'pay_diagnostic' => Input::get('pay_diagnostic'),
+                        'pay_medications' => Input::get('pay_medications'),
+                        'pay_medical' => Input::get('pay_medical'),
+                        'cost_complete' => Input::get('cost_complete'),
+                        'date_completed' => Input::get('date_completed'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), $social_economic[0]['id']);
+
+                    $successMessage = 'Social Economic Data  Successful Updated';
+                } else {
+                    $user->createRecord('costing', array(
+                        'vid' => $_GET['vid'],
+                        'sequence' => $_GET['sequence'],
+                        'visit_code' => $_GET['visit_code'],
+                        'pid' => $clients['study_id'],
+                        'study_id' => $clients['study_id'],
+                        'visit_date' => Input::get('visit_date'),
+                        'household_head' => Input::get('household_head'),
+                        'income_source' => Input::get('income_source'),
+                        'total_income' => Input::get('total_income'),
+                        'transport' => Input::get('transport'),
+                        'facility_change' => Input::get('facility_change'),
+                        'reasons_facility' => Input::get('reasons_facility'),
+                        'accompany' => Input::get('accompany'),
+                        'relation' => Input::get('relation'),
+                        'occupation' => Input::get('occupation'),
+                        'pay_money' => Input::get('pay_money'),
+                        'pay_travel' => Input::get('pay_travel'),
+                        'pay_food' => Input::get('pay_food'),
+                        'pay_vl' => Input::get('pay_vl'),
+                        'pay_other' => Input::get('pay_other'),
+                        'pay_usajili' => Input::get('pay_usajili'),
+                        'pay_doctor' => Input::get('pay_doctor'),
+                        'pay_diagnostic' => Input::get('pay_diagnostic'),
+                        'pay_medications' => Input::get('pay_medications'),
+                        'pay_medical' => Input::get('pay_medical'),
+                        'cost_complete' => Input::get('cost_complete'),
+                        'date_completed' => Input::get('date_completed'),
+                        'status' => 1,
+                        'patient_id' => $clients['id'],
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $clients['site_id'],
+                    ));
+
+                    $successMessage = 'Social Economic Data  Successful Added';
+                }
+
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
+            } else {
+                $pageError = $validate->errors();
+            }
         } elseif (Input::get('add_visit')) {
             $validate = $validate->check($_POST, array(
                 'visit_date' => array(
@@ -4477,8 +4567,8 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-sm-3" id="social_economic">
-                                                    <label for="social_economic" class="form-label">Electricity/ Solar <br><br> (Umeme/ Sola)</label>
+                                                <div class="col-sm-3" id="electricity">
+                                                    <label for="electricity" class="form-label">Electricity/ Solar <br><br> (Umeme/ Sola)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
@@ -4759,24 +4849,6 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3" id="mobile_phone">
-                                                    <label for="mobile_phone" class="form-label">Simu ya mkononi
-                                                    </label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="mobile_phone" id="mobile_phone<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($social_economic['mobile_phone'] == $value['id']) {
-                                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                                        } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                                 <div class="col-sm-3" id="sofa">
                                                     <label for="sofa" class="form-label">Sofa
                                                     </label>
@@ -4853,17 +4925,17 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3" id="bank_bank">
-                                                    <label for="bank_bank" class="form-label">Does any member of this household have a bank account?
+                                                <div class="col-sm-3" id="bank_acount">
+                                                    <label for="bank_acount" class="form-label">Does any member of this household have a bank account?
                                                     </label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="bank_bank" id="bank_bank<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($social_economic['bank_bank'] == $value['id']) {
-                                                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                                                    } ?>>
+                                                                    <input class="form-check-input" type="radio" name="bank_acount" id="bank_acount<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($social_economic['bank_acount'] == $value['id']) {
+                                                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                                                        } ?>>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -5077,8 +5149,8 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Remarks / Comments:</label>
-                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($costing['comments']) {
-                                                                                                                                                            print_r($costing['comments']);
+                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($social_economic['comments']) {
+                                                                                                                                                            print_r($social_economic['comments']);
                                                                                                                                                         }  ?>
                                                                 </textarea>
                                                         </div>
@@ -5102,9 +5174,9 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <?php foreach ($override->get('form_completness', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="cost_complete" id="cost_complete<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['cost_complete'] == $value['id']) {
-                                                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                                                            } ?> required>
+                                                                    <input class="form-check-input" type="radio" name="economic_complete" id="economic_complete<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($social_economic['economic_complete'] == $value['id']) {
+                                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                                    } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -5114,8 +5186,8 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-2">
                                                         <label for="date_completed" class="form-label">Date form completed</label>
-                                                        <input type="date" value="<?php if ($costing['date_completed']) {
-                                                                                        print_r($costing['date_completed']);
+                                                        <input type="date" value="<?php if ($social_economic['date_completed']) {
+                                                                                        print_r($social_economic['date_completed']);
                                                                                     } ?>" id="date_completed" name="date_completed" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
