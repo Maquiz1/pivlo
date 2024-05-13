@@ -565,6 +565,96 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
+        } elseif (Input::get('add_costing')) {
+            $validate = $validate->check($_POST, array(
+                'visit_date' => array(
+                    'required' => true,
+                ),
+                'transport' => array(
+                    'required' => true,
+                ),
+                'facility_change' => array(
+                    'required' => true,
+                ),
+            ));
+            if ($validate->passed()) {
+                $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
+                $costing = $override->getNews('costing', 'status', 1, 'patient_id', $_GET['cid']);
+
+                if ($costing) {
+                    $user->updateRecord('costing', array(
+                        'visit_date' => Input::get('visit_date'),
+                        'distance_km' => Input::get('distance_km'),
+                        'distance_hours' => Input::get('distance_hours'),
+                        'distance_minutes' => Input::get('distance_minutes'),
+                        'transport' => Input::get('transport'),
+                        'facility_change' => Input::get('facility_change'),
+                        'reasons_facility' => Input::get('reasons_facility'),
+                        'accompany' => Input::get('accompany'),
+                        'relation' => Input::get('relation'),
+                        'occupation' => Input::get('occupation'),
+                        'pay_money' => Input::get('pay_money'),
+                        'pay_travel' => Input::get('pay_travel'),
+                        'pay_food' => Input::get('pay_food'),
+                        'pay_vl' => Input::get('pay_vl'),
+                        'pay_other' => Input::get('pay_other'),
+                        'pay_usajili' => Input::get('pay_usajili'),
+                        'pay_doctor' => Input::get('pay_doctor'),
+                        'pay_diagnostic' => Input::get('pay_diagnostic'),
+                        'pay_medications' => Input::get('pay_medications'),
+                        'pay_medical' => Input::get('pay_medical'),
+                        'cost_complete' => Input::get('cost_complete'),
+                        'date_completed' => Input::get('date_completed'),
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                    ), $costing[0]['id']);
+
+                    $successMessage = 'Costing Data  Successful Updated';
+                } else {
+                    $user->createRecord('costing', array(
+                        'vid' => $_GET['vid'],
+                        'sequence' => $_GET['sequence'],
+                        'visit_code' => $_GET['visit_code'],
+                        'pid' => $clients['study_id'],
+                        'study_id' => $clients['study_id'],
+                        'visit_date' => Input::get('visit_date'),
+                        'distance_km' => Input::get('distance_km'),
+                        'distance_hours' => Input::get('distance_hours'),
+                        'distance_minutes' => Input::get('distance_minutes'),
+                        'transport' => Input::get('transport'),
+                        'facility_change' => Input::get('facility_change'),
+                        'reasons_facility' => Input::get('reasons_facility'),
+                        'accompany' => Input::get('accompany'),
+                        'relation' => Input::get('relation'),
+                        'occupation' => Input::get('occupation'),
+                        'pay_money' => Input::get('pay_money'),
+                        'pay_travel' => Input::get('pay_travel'),
+                        'pay_food' => Input::get('pay_food'),
+                        'pay_vl' => Input::get('pay_vl'),
+                        'pay_other' => Input::get('pay_other'),
+                        'pay_usajili' => Input::get('pay_usajili'),
+                        'pay_doctor' => Input::get('pay_doctor'),
+                        'pay_diagnostic' => Input::get('pay_diagnostic'),
+                        'pay_medications' => Input::get('pay_medications'),
+                        'pay_medical' => Input::get('pay_medical'),
+                        'cost_complete' => Input::get('cost_complete'),                        
+                        'date_completed' => Input::get('date_completed'),
+                        'status' => 1,
+                        'patient_id' => $clients['id'],
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $clients['site_id'],
+                    ));
+
+                    $successMessage = 'Costing Data  Successful Added';
+                }
+
+                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
+            } else {
+                $pageError = $validate->errors();
+            }
         } elseif (Input::get('add_visit')) {
             $validate = $validate->check($_POST, array(
                 'visit_date' => array(
@@ -4149,8 +4239,8 @@ if ($user->isLoggedIn()) {
                                                         <!-- select -->
                                                         <div class="form-group">
                                                             <label>Remarks / Comments:</label>
-                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($individual['comments']) {
-                                                                                                                                                            print_r($individual['comments']);
+                                                            <textarea class="form-control" name="comments" rows="3" placeholder="Type comments here..."><?php if ($costing['comments']) {
+                                                                                                                                                            print_r($costing['comments']);
                                                                                                                                                         }  ?>
                                                                 </textarea>
                                                         </div>
@@ -4174,7 +4264,7 @@ if ($user->isLoggedIn()) {
                                                         <div class="form-group">
                                                             <?php foreach ($override->get('form_completness', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="cost_complete" id="cost_complete<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['cost_complete'] == $value['id']) {
+                                                                    <input class="form-check-input" type="radio" name="cost_complete" id="cost_complete<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['cost_complete'] == $value['id']) {
                                                                                                                                                                                                                 echo 'checked';
                                                                                                                                                                                                             } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
@@ -4186,8 +4276,8 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-6">
                                                     <div class="mb-2">
                                                         <label for="date_completed" class="form-label">Date form completed</label>
-                                                        <input type="date" value="<?php if ($individual['date_completed']) {
-                                                                                        print_r($individual['date_completed']);
+                                                        <input type="date" value="<?php if ($costing['date_completed']) {
+                                                                                        print_r($costing['date_completed']);
                                                                                     } ?>" id="date_completed" name="date_completed" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
@@ -4197,7 +4287,7 @@ if ($user->isLoggedIn()) {
                                         <!-- /.card-body -->
                                         <div class="card-footer">
                                             <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&study_id=<?= $_GET['study_id']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
-                                            <input type="submit" name="add_individual" value="Submit" class="btn btn-primary">
+                                            <input type="submit" name="add_costing" value="Submit" class="btn btn-primary">
                                         </div>
                                     </form>
                                 </div>
