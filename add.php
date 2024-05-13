@@ -3872,7 +3872,7 @@ if ($user->isLoggedIn()) {
                                 <!-- general form elements disabled -->
                                 <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">Most Recents Viroal Load Results</h3>
+                                        <h3 class="card-title">Section 7: Patient Costing Form</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
@@ -3888,7 +3888,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="distance_km" class="form-label">How far does the participant live from the study site? </label>
                                                         <input type="number" value="<?php if ($costing['distance_km']) {
@@ -3899,7 +3899,7 @@ if ($user->isLoggedIn()) {
                                                 </div>
 
 
-                                                <div class="col-2">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="distance_hours" class="form-label">On average, how long did it take you to travel? </label>
                                                         <input type="number" value="<?php if ($costing['distance_hours']) {
@@ -3909,7 +3909,7 @@ if ($user->isLoggedIn()) {
                                                     <span>(Record single journey in Hours) </span>
                                                 </div>
 
-                                                <div class="col-2">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="distance_minutes" class="form-label">On average, how long did it take you to travel? </label>
                                                         <input type="number" value="<?php if ($costing['distance_km']) {
@@ -3918,9 +3918,14 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                     <span>(Record single journey in minutes) </span>
                                                 </div>
+                                            </div>
 
-                                                <div class="col-sm-3" id="trained_pivlo">
-                                                    <label for="trained_pivlo" class="form-label">How did the participant get to this appointment?</label>
+                                            <hr>
+
+                                            <div class="row">
+
+                                                <div class="col-sm-3" id="transport">
+                                                    <label for="transport" class="form-label">How did the participant get to this appointment?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
@@ -3935,11 +3940,6 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="row">
 
                                                 <div class="col-sm-3" id="facility_change">
                                                     <label for="new_vl_date" class="form-label">Has the participant ever changed the health facility where they get ART from? <br><br>(Je, mshiriki amewahi kubadilisha kituo cha afya anakopata ART kutoka?)</label>
@@ -3991,7 +3991,10 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
 
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-sm-3" id="relation">
                                                     <label for="new_vl_date" class="form-label">What is their relation to you? <br><br> (Wana uhusiano gani na wewe?)</label>
                                                     <!-- radio -->
@@ -4008,10 +4011,6 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
 
                                                 <div class="col-sm-3" id="occupation">
                                                     <label for="new_vl_date" class="form-label">What is their occupation? <br><br> (Je, kazi yao ni nini ? )</label>
@@ -4056,6 +4055,11 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
+
+                                            </div>
+
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="pay_food" class="form-label">On average, how much did you or your companion have to pay in total for food during your visit?<br><br> (Kwa wastani, wewe au mwenzako mlipaswa kulipa kiasi gani kwa jumla kwa ajili ya chakula wakati wa hudhurio lenu?)</label>
@@ -4064,16 +4068,12 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="pay_food" name="pay_food" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="row">
                                                 <div class="col-3">
                                                     <div class="mb-3">
-                                                        <label for="pay_vl_testing" class="form-label">How much did you or your companion have to pay for your VL testing?<br><br> (Je, wewe au mwenzako mlilipa kiasi gani kwa ajili ya majaribio yako ya VL?)</label>
-                                                        <input type="number" value="<?php if ($costing['pay_vl_testing']) {
-                                                                                        print_r($costing['pay_vl_testing']);
-                                                                                    } ?>" id="pay_vl_testing" name="pay_vl_testing" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                        <label for="pay_vl" class="form-label">How much did you or your companion have to pay for your VL testing?<br><br> (Je, wewe au mwenzako mlilipa kiasi gani kwa ajili ya majaribio yako ya VL?)</label>
+                                                        <input type="number" value="<?php if ($costing['pay_vl']) {
+                                                                                        print_r($costing['pay_vl']);
+                                                                                    } ?>" id="pay_vl" name="pay_vl" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
                                                     </div>
                                                 </div>
 
@@ -4094,6 +4094,11 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="pay_usajili" name="pay_usajili" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
                                                     </div>
                                                 </div>
+
+                                            </div>
+
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="pay_doctor" class="form-label">Kumuona daktari (Consultation) ( TSHS )</label>
@@ -4102,12 +4107,8 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="pay_doctor" name="pay_doctor" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <hr>
-                                            <div class="row">
-
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="pay_diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
                                                         <input type="number" value="<?php if ($costing['pay_diagnostic']) {
@@ -4116,7 +4117,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="pay_medications" class="form-label">Dawa (Medications) ( TSHS )</label>
                                                         <input type="number" value="<?php if ($costing['pay_medications']) {
@@ -4124,7 +4125,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="pay_medications" name="pay_medications" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="pay_medical" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
                                                         <input type="number" value="<?php if ($costing['pay_medical']) {
@@ -4132,7 +4133,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="pay_medical" name="pay_medical" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
 
                                             <hr>
 
@@ -4166,16 +4167,16 @@ if ($user->isLoggedIn()) {
                                             <hr>
 
                                             <div class="row">
-                                                <div class="col-sm-6" id="individual_complete">
+                                                <div class="col-sm-6" id="cost_complete">
                                                     <label>Complete?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <?php foreach ($override->get('form_completness', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="individual_complete" id="recent_tb_results<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['individual_complete'] == $value['id']) {
-                                                                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                                                                    } ?> required>
+                                                                    <input class="form-check-input" type="radio" name="cost_complete" id="cost_complete<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['cost_complete'] == $value['id']) {
+                                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                                            } ?> required>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
