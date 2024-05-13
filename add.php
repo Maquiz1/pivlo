@@ -325,14 +325,62 @@ if ($user->isLoggedIn()) {
                             'update_id' => $user->data()->id,
                         ), $_GET['cid']);
 
+                        $visit = $override->get3('visit', 'status', 1, 'patient_id', $clients[0]['id'], 'sequence', -1);
+
+                        if ($visit) {
+                            $user->updateRecord('visit', array(
+                                'sequence' => -1,
+                                'respondent' => Input::get('respondent'),
+                                'study_id' => $clients[0]['study_id'],
+                                'pid' => $clients[0]['study_id'],
+                                'visit_code' => 'M-1',
+                                'visit_name' => 'Month -1',
+                                'expected_date' => Input::get('date_registered'),
+                                'visit_date' => '',
+                                'visit_status' => 0,
+                                'comments' => '',
+                                'status' => 1,
+                                'facility_id' => 0,
+                                'table_id' => 0,
+                                'patient_id' => $clients[0]['id'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $site_id,
+                            ), $visit[0]['id']);
+                        } else {
+                            $user->createRecord('visit', array(
+                                'sequence' => -1,
+                                'respondent' => Input::get('respondent'),
+                                'study_id' => $std_id['study_id'],
+                                'pid' => $std_id['study_id'],
+                                'visit_code' => 'M-1',
+                                'visit_name' => 'Month -1',
+                                'expected_date' => Input::get('date_registered'),
+                                'visit_date' => '',
+                                'visit_status' => 0,
+                                'comments' => '',
+                                'status' => 1,
+                                'facility_id' => 0,
+                                'table_id' => 0,
+                                'patient_id' => $last_row['id'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $site_id,
+                            ));
+                        }
+
                         $successMessage = 'Client Updated Successful';
                     } else {
 
                         $std_id = $override->getNews('study_id', 'site_id', $site_id, 'status', 0)[0];
 
                         $user->createRecord('clients', array(
-                            'sequence' => 0,
-                            'visit_code' => 'M00',
+                            'sequence' => -1,
+                            'visit_code' => 'M-1',
                             'date_registered' => Input::get('date_registered'),
                             'study_id' => $std_id['study_id'],
                             'firstname' => Input::get('firstname'),
@@ -387,15 +435,19 @@ if ($user->isLoggedIn()) {
                         ), $std_id['id']);
 
                         $user->createRecord('visit', array(
-                            'sequence' => 0,
+                            'sequence' => -1,
+                            'respondent' => Input::get('respondent'),
                             'study_id' => $std_id['study_id'],
                             'pid' => $std_id['study_id'],
-                            'visit_code' => 'M00',
-                            'visit_name' => 'Month 0',
+                            'visit_code' => 'M-1',
+                            'visit_name' => 'Month -1',
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => '',
                             'visit_status' => 0,
+                            'comments' => '',
                             'status' => 1,
+                            'facility_id' => 0,
+                            'table_id' => 0,
                             'patient_id' => $last_row['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
