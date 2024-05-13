@@ -61,6 +61,8 @@ $(function () {
       const temeke = monthname.map((monthname) => data[monthname]["3"]);
       const mbagala = monthname.map((monthname) => data[monthname]["4"]);
       const magomeni = monthname.map((monthname) => data[monthname]["5"]);
+            const mjimwema = monthname.map((monthname) => data[monthname]["6"]);
+
 
 
         var ticksStyle = {
