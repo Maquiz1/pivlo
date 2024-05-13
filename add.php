@@ -553,14 +553,6 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Individual  Successful Added';
                 }
 
-
-                $user->updateRecord('clients', array(
-                    'enrolled' => $enrolled,
-                ), $clients['id']);
-
-                $user->visit_delete1($clients['id'], Input::get('next_date'), $clients['study_id'], $user->data()->id, $clients['site_id'], $enrolled, $sequence, $visit_code, $visit_name);
-
-
                 Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
@@ -674,26 +666,44 @@ if ($user->isLoggedIn()) {
                 if ($social_economic) {
                     $user->updateRecord('social_economic', array(
                         'visit_date' => Input::get('visit_date'),
-                        'distance_km' => Input::get('distance_km'),
-                        'distance_hours' => Input::get('distance_hours'),
-                        'distance_minutes' => Input::get('distance_minutes'),
-                        'transport' => Input::get('transport'),
-                        'facility_change' => Input::get('facility_change'),
-                        'reasons_facility' => Input::get('reasons_facility'),
-                        'accompany' => Input::get('accompany'),
-                        'relation' => Input::get('relation'),
-                        'occupation' => Input::get('occupation'),
-                        'pay_money' => Input::get('pay_money'),
-                        'pay_travel' => Input::get('pay_travel'),
-                        'pay_food' => Input::get('pay_food'),
-                        'pay_vl' => Input::get('pay_vl'),
-                        'pay_other' => Input::get('pay_other'),
-                        'pay_usajili' => Input::get('pay_usajili'),
-                        'pay_doctor' => Input::get('pay_doctor'),
-                        'pay_diagnostic' => Input::get('pay_diagnostic'),
-                        'pay_medications' => Input::get('pay_medications'),
-                        'pay_medical' => Input::get('pay_medical'),
-                        'cost_complete' => Input::get('cost_complete'),
+                        'household_head' => Input::get('household_head'),
+                        'income_source' => Input::get('income_source'),
+                        'total_income' => Input::get('total_income'),
+                        'household_income' => Input::get('household_income'),
+                        'parents_status' => Input::get('parents_status'),
+                        'living' => Input::get('living'),
+                        'own_house' => Input::get('own_house'),
+                        'electricity' => Input::get('electricity'),
+                        'piped_water' => Input::get('piped_water'),
+                        'cement_floor' => Input::get('cement_floor'),
+                        'borehole' => Input::get('borehole'),
+                        'dirt_floor' => Input::get('dirt_floor'),
+                        'mud_walls' => Input::get('mud_walls'),
+                        'brick_walls' => Input::get('brick_walls'),
+                        'grass_thatched_roof' => Input::get('grass_thatched_roof'),
+                        'iron_tiled_roof' => Input::get('iron_tiled_roof'),
+                        'tv' => Input::get('tv'),
+                        'radio' => Input::get('radio'),
+                        'mobile_phone' => Input::get('mobile_phone'),
+                        'motor_bike' => Input::get('motor_bike'),
+                        'bicycle' => Input::get('bicycle'),
+                        'refrigerator' => Input::get('refrigerator'),
+                        'sofa' => Input::get('sofa'),
+                        'clock' => Input::get('clock'),
+                        'fan' => Input::get('fan'),
+                        'vcr_dvd' => Input::get('vcr_dvd'),
+                        'bank_acount' => Input::get('bank_acount'),
+                        'no_food' => Input::get('no_food'),
+                        'hungry' => Input::get('hungry'),
+                        'no_eating' => Input::get('no_eating'),
+                        'floor' => Input::get('floor'),
+                        'wall' => Input::get('wall'),
+                        'energy' => Input::get('energy'),
+                        'land' => Input::get('land'),
+                        'livestock' => Input::get('livestock'),
+                        'water_source' => Input::get('water_source'),
+                        'toilet' => Input::get('toilet'),
+                        'economic_complete' => Input::get('economic_complete'),
                         'date_completed' => Input::get('date_completed'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
@@ -701,7 +711,7 @@ if ($user->isLoggedIn()) {
 
                     $successMessage = 'Social Economic Data  Successful Updated';
                 } else {
-                    $user->createRecord('costing', array(
+                    $user->createRecord('social_economic', array(
                         'vid' => $_GET['vid'],
                         'sequence' => $_GET['sequence'],
                         'visit_code' => $_GET['visit_code'],
@@ -711,23 +721,41 @@ if ($user->isLoggedIn()) {
                         'household_head' => Input::get('household_head'),
                         'income_source' => Input::get('income_source'),
                         'total_income' => Input::get('total_income'),
-                        'transport' => Input::get('transport'),
-                        'facility_change' => Input::get('facility_change'),
-                        'reasons_facility' => Input::get('reasons_facility'),
-                        'accompany' => Input::get('accompany'),
-                        'relation' => Input::get('relation'),
-                        'occupation' => Input::get('occupation'),
-                        'pay_money' => Input::get('pay_money'),
-                        'pay_travel' => Input::get('pay_travel'),
-                        'pay_food' => Input::get('pay_food'),
-                        'pay_vl' => Input::get('pay_vl'),
-                        'pay_other' => Input::get('pay_other'),
-                        'pay_usajili' => Input::get('pay_usajili'),
-                        'pay_doctor' => Input::get('pay_doctor'),
-                        'pay_diagnostic' => Input::get('pay_diagnostic'),
-                        'pay_medications' => Input::get('pay_medications'),
-                        'pay_medical' => Input::get('pay_medical'),
-                        'cost_complete' => Input::get('cost_complete'),
+                        'household_income' => Input::get('household_income'),
+                        'parents_status' => Input::get('parents_status'),
+                        'living' => Input::get('living'),
+                        'own_house' => Input::get('own_house'),
+                        'electricity' => Input::get('electricity'),
+                        'piped_water' => Input::get('piped_water'),
+                        'cement_floor' => Input::get('cement_floor'),
+                        'borehole' => Input::get('borehole'),
+                        'dirt_floor' => Input::get('dirt_floor'),
+                        'mud_walls' => Input::get('mud_walls'),
+                        'brick_walls' => Input::get('brick_walls'),
+                        'grass_thatched_roof' => Input::get('grass_thatched_roof'),
+                        'iron_tiled_roof' => Input::get('iron_tiled_roof'),
+                        'tv' => Input::get('tv'),
+                        'radio' => Input::get('radio'),
+                        'mobile_phone' => Input::get('mobile_phone'),
+                        'motor_bike' => Input::get('motor_bike'),
+                        'bicycle' => Input::get('bicycle'),
+                        'refrigerator' => Input::get('refrigerator'),
+                        'sofa' => Input::get('sofa'),
+                        'clock' => Input::get('clock'),
+                        'fan' => Input::get('fan'),
+                        'vcr_dvd' => Input::get('vcr_dvd'),
+                        'bank_acount' => Input::get('bank_acount'),
+                        'no_food' => Input::get('no_food'),
+                        'hungry' => Input::get('hungry'),
+                        'no_eating' => Input::get('no_eating'),
+                        'floor' => Input::get('floor'),
+                        'wall' => Input::get('wall'),
+                        'energy' => Input::get('energy'),
+                        'land' => Input::get('land'),
+                        'livestock' => Input::get('livestock'),
+                        'water_source' => Input::get('water_source'),
+                        'toilet' => Input::get('toilet'),
+                        'economic_complete' => Input::get('economic_complete'),
                         'date_completed' => Input::get('date_completed'),
                         'status' => 1,
                         'patient_id' => $clients['id'],
@@ -2857,7 +2885,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="date_completed" class="form-label">Date form completed</label>
                                                         <input type="date" value="<?php if ($individual['date_completed']) {
                                                                                         print_r($individual['date_completed']);
-                                                                                    } ?>" id="date_completed" name="date_completed" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                                                    } ?>" id="date_completed" name="date_completed" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
                                             </div>
