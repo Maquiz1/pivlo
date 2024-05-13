@@ -150,7 +150,7 @@ $(function () {
             pointStrokeColor: "#c1c7d1",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: magomeni,
+            data: mjimwema,
           },
         ],
       };

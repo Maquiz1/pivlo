@@ -61,11 +61,12 @@ $(function () {
       const temeke = monthname.map((monthname) => data[monthname]["3"]);
       const mbagala = monthname.map((monthname) => data[monthname]["4"]);
       const magomeni = monthname.map((monthname) => data[monthname]["5"]);
+      const mjimwema = monthname.map((monthname) => data[monthname]["6"]);
 
-        var ticksStyle = {
-          fontColor: "#495057",
-          fontStyle: "bold",
-        };
+      var ticksStyle = {
+        fontColor: "#495057",
+        fontStyle: "bold",
+      };
 
       /* Chart.js Charts */
       // registration
@@ -149,7 +150,7 @@ $(function () {
             pointStrokeColor: "#c1c7d1",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: magomeni,
+            data: mjimwema,
           },
         ],
       };
