@@ -3888,361 +3888,86 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
-                                                        <label for="previous_vl_date" class="form-label">Date of previous VL test</label>
-                                                        <input type="date" value="<?php if ($costing['previous_vl_date']) {
-                                                                                        print_r($costing['previous_vl_date']);
-                                                                                    } ?>" id="previous_vl_date" name="previous_vl_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                        <label for="distance_km" class="form-label">How far does the participant live from the study site? </label>
+                                                        <input type="number" value="<?php if ($costing['distance_km']) {
+                                                                                        print_r($costing['distance_km']);
+                                                                                    } ?>" id="distance_km" name="distance_km" min="0" max="1000" class="form-control" placeholder="Enter Number" required />
                                                     </div>
+                                                    <span>(Provide Estimates in Kilometres)</span>
                                                 </div>
 
 
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
-                                                        <label for="recent_vl_results" class="form-label">Most recent VL test results before this month.</label>
-                                                        <input type="number" value="<?php if ($individual['recent_vl_results']) {
-                                                                                        print_r($individual['recent_vl_results']);
-                                                                                    } ?>" id="recent_vl_results" name="recent_vl_results" min="0" class="form-control" placeholder="Enter here" required />
+                                                        <label for="distance_hours" class="form-label">On average, how long did it take you to travel? </label>
+                                                        <input type="number" value="<?php if ($costing['distance_hours']) {
+                                                                                        print_r($costing['distance_hours']);
+                                                                                    } ?>" id="distance_hours" name="distance_hours" min="0" max="1000" class="form-control" placeholder="Enter Number" required />
                                                     </div>
-                                                    <span>copies/ul</span>
+                                                    <span>(Record single journey in Hours) </span>
+                                                </div>
+
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="distance_minutes" class="form-label">On average, how long did it take you to travel? </label>
+                                                        <input type="number" value="<?php if ($costing['distance_km']) {
+                                                                                        print_r($costing['distance_km']);
+                                                                                    } ?>" id="distance_minutes" name="distance_minutes" min="0" max="1000" class="form-control" placeholder="Enter Number" required />
+                                                    </div>
+                                                    <span>(Record single journey in minutes) </span>
                                                 </div>
 
                                                 <div class="col-sm-3" id="trained_pivlo">
-                                                    <label for="trained_pivlo" class="form-label">Was the patient trained for PIVLO before test?</label>
+                                                    <label for="trained_pivlo" class="form-label">How did the participant get to this appointment?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
+                                                            <?php foreach ($override->get('transportations', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="trained_pivlo" id="trained_pivlo<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['trained_pivlo'] == $value['id']) {
-                                                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                                                            } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">New Viroal Load Results</h3>
-                                                </div>
-                                            </div>
-
-
-                                            <hr>
-
-                                            <div class="row">
-
-                                                <div class="col-sm-3" id="initiate_test_hcw">
-                                                    <label for="trained_pivlo" class="form-label">Did he/she initiate the test to the HCW?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="initiate_test_hcw" id="initiate_test_hcw<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['initiate_test_hcw'] == $value['id']) {
-                                                                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                                                                    } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-3" id="tested_this_month">
-                                                    <label for="tested_this_month" class="form-label">Did the patient got tested this month?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="tested_this_month" id="tested_this_month<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['tested_this_month'] == $value['id']) {
-                                                                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                                                                    } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="new_vl_date" class="form-label">New VL test date</label>
-                                                        <input type="date" value="<?php if ($individual['new_vl_date']) {
-                                                                                        print_r($individual['new_vl_date']);
-                                                                                    } ?>" id="new_vl_date" name="new_vl_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="new_vl_results" class="form-label">New VL test Results</label>
-                                                        <input type="number" value="<?php if ($individual['new_vl_results']) {
-                                                                                        print_r($individual['new_vl_results']);
-                                                                                    } ?>" id="new_vl_results" name="new_vl_results" min="0" class="form-control" placeholder="Enter here" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">CD4 and TB Results</h3>
-                                                </div>
-                                            </div>
-
-
-                                            <hr>
-                                            <div class="row">
-
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="recent_cd4" class="form-label">Most recent CD4 count</label>
-                                                        <input type="number" value="<?php if ($individual['recent_cd4']) {
-                                                                                        print_r($individual['recent_cd4']);
-                                                                                    } ?>" id="recent_cd4" name="recent_cd4" min="0" class="form-control" placeholder="Enter date" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="cd4_date" class="form-label">CD4 count test date</label>
-                                                        <input type="date" value="<?php if ($individual['cd4_date']) {
-                                                                                        print_r($individual['cd4_date']);
-                                                                                    } ?>" id="cd4_date" name="cd4_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-4">
-                                                    <label for="recent_tb_results" class="form-label">Recent TB screening results</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('tb_results', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="recent_tb_results" id="recent_tb_results<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['recent_tb_results'] == $value['id']) {
-                                                                                                                                                                                                                        echo 'checked';
-                                                                                                                                                                                                                    } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                            <label for="recent_tb_date_label" id="recent_tb_date_label" class="form-label">Tb test date</label>
-                                                            <input type="date" value="<?php if ($individual['recent_tb_date']) {
-                                                                                            print_r($individual['cd4_date']);
-                                                                                        } ?>" id="recent_tb_date" name="recent_tb_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" />
-                                                            <div class="text-danger" id="recent_tb_date_error"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">ART Services</h3>
-                                                </div>
-                                            </div>
-
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="date_art_treatment" class="form-label">3.1 When did you begin taking ART-Treatment?</label>
-                                                        <input type="date" value="<?php if ($individual['date_art_treatment']) {
-                                                                                        print_r($individual['date_art_treatment']);
-                                                                                    } ?>" id="date_art_treatment" name="date_art_treatment" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date art treatment" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-4">
-                                                    <label>Which antiretroviral therapy regimen is the patient currently on?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('art_regimes', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="art_regimen" id="art_regimen<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['art_regimen'] == $value['id']) {
-                                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                                        } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                            <label for="art_regimen_other" id="art_regimen_other_label" class="form-label">Other ART Regime</label>
-                                                            <input type="text" value="<?php if ($individual['art_regimen_other']) {
-                                                                                            print_r($individual['art_regimen_other']);
-                                                                                        } ?>" id="art_regimen_other" name="art_regimen_other" class="form-control" placeholder="Enter here" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4" id="first_line">
-                                                    <label>First Line</label>
-                                                    <!-- checkbox -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->getNews('art_regimes_specific', 'status', 1, 'regime_line', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="first_line" id="first_line<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['first_line'] == $value['id']) {
+                                                                    <input class="form-check-input" type="radio" name="transport" id="transport<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['transport'] == $value['id']) {
                                                                                                                                                                                                         echo 'checked';
                                                                                                                                                                                                     } ?>>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
-                                                            <label for="other_first_line" id="other_first_line_label" class="form-label">Other First Line Regime</label>
-                                                            <input type="text" value="<?php if ($individual['other_first_line']) {
-                                                                                            print_r($individual['other_first_line']);
-                                                                                        } ?>" id="other_first_line" name="other_first_line" class="form-control" placeholder="Enter here" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4" id="second_line">
-                                                    <label>Second Line</label>
-                                                    <!-- checkbox -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->getNews('art_regimes_specific', 'status', 1, 'regime_line', 2) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="second_line" id="second_line<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['second_line'] == $value['id']) {
-                                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                                        } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                            <label for="other_second_line" id="other_second_line_label" class="form-label">Other Second Line Regime</label>
-                                                            <input type="text" value="<?php if ($individual['other_second_line']) {
-                                                                                            print_r($individual['other_second_line']);
-                                                                                        } ?>" id="other_second_line" name="other_second_line" class="form-control" placeholder="Enter here" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-4" id="third_line">
-                                                <label>Third line</label>
-                                                <!-- checkbox -->
-                                                <div class="row-form clearfix">
-                                                    <div class="form-group">
-                                                        <?php foreach ($override->getNews('art_regimes_specific', 'status', 1, 'regime_line', 3) as $value) { ?>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="third_line" id="third_line<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['third_line'] == $value['id']) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                } ?>>
-                                                                <label class="form-check-label"><?= $value['name']; ?></label>
-                                                            </div>
-                                                        <?php } ?>
-                                                        <label for="other_third_line" id="other_third_line_label" class="form-label">Other Second Line Regime</label>
-                                                        <input type="text" value="<?php if ($individual['other_third_line']) {
-                                                                                        print_r($individual['other_third_line']);
-                                                                                    } ?>" id="other_third_line" name="other_third_line" class="form-control" placeholder="Enter here" />
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <hr>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Section 3: Examination</h3>
-                                                </div>
-                                            </div>
                                             <hr>
 
                                             <div class="row">
 
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="weight" class="form-label">Weight (kg)</label>
-                                                        <input type="number" value="<?php if ($individual['weight']) {
-                                                                                        print_r($individual['weight']);
-                                                                                    } ?>" id="weight" name="weight" min="0" class="form-control" placeholder="Enter here" required />
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="height" class="form-label">Height (cm)</label>
-                                                        <input type="number" value="<?php if ($individual['height']) {
-                                                                                        print_r($individual['height']);
-                                                                                    } ?>" id="height" name="height" min="0" class="form-control" placeholder="Enter here" required />
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="systolic" class="form-label">Systolic blood pressure (mmHg)</label>
-                                                        <input type="number" value="<?php if ($individual['systolic']) {
-                                                                                        print_r($individual['systolic']);
-                                                                                    } ?>" id="systolic" name="systolic" min="0" class="form-control" placeholder="Enter here" required />
-                                                    </div>
-                                                    <span>Blood pressure reading</span>
-                                                </div>
-
-
-                                                <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="diastolic" class="form-label">Diastolic blood pressure (mmHg)</label>
-                                                        <input type="number" value="<?php if ($individual['diastolic']) {
-                                                                                        print_r($individual['diastolic']);
-                                                                                    } ?>" id="diastolic" name="diastolic" min="0" class="form-control" placeholder="Enter here" required />
-                                                    </div>
-                                                    <span>Blood pressure reading</span>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Next Visit And Chronic Diseases</h3>
-                                                </div>
-                                            </div>
-
-
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3" id="chronic_condition">
-                                                    <label for="chronic_condition" class="form-label">Do the patient has other chronic condition? (Like Diabetes, High BP, renal etc)</label>
+                                                <div class="col-sm-3" id="facility_change">
+                                                    <label for="new_vl_date" class="form-label">Has the participant ever changed the health facility where they get ART from? <br><br>(Je, mshiriki amewahi kubadilisha kituo cha afya anakopata ART kutoka?)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="chronic_condition" id="chronic_condition<?= $value['id']; ?>" value="1" <?php if ($individual['chronic_condition'] == $value['id']) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                } ?>>
+                                                                    <input class="form-check-input" type="radio" name="facility_change" id="facility_change<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['facility_change'] == $value['id']) {
+                                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                                } ?>>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
-                                                            <label>Mention it:</label>
-                                                            <textarea class="form-control" name="other_chronic" rows="3" placeholder="Type other here...">
-                                                                <?php if ($kap['other_chronic']) {
-                                                                    print_r($kap['other_chronic']);
-                                                                }  ?>
-                                                            </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3" id="matibabu_saratani">
-                                                    <label>What was the reason for this visit?</label>
+                                                <div class="col-sm-3" id="reasons_facility">
+                                                    <label for="tested_this_month" class="form-label">If Yes, what was the reason for changing?<br><br> (Kama Ndiyo, ni nini sababu ya kubadilisha?)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <?php foreach ($override->get('reasons', 'status', 1) as $value) { ?>
+                                                            <?php foreach ($override->get('reasons_facility', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="reasons" id="reasons<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['reasons'] == $value['id']) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                } ?>>
+                                                                    <input class="form-check-input" type="radio" name="reasons_facility" id="reasons_facility<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['reasons_facility'] == $value['id']) {
+                                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                                } ?>>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -4250,16 +3975,71 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-3" id="next_appointment">
-                                                    <label for="next_appointment_schedule" class="form-label">Has the patient been scheduled for their next VL test appointment?</label>
+                                                <div class="col-sm-3" id="accompany">
+                                                    <label for="new_vl_date" class="form-label">Did anyone accompany you today on your visit? <br><br> (Je, kuna mtu yeyote aliyefuatana nawe leo kwenye ziara yako?)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="next_appointment" id="next_appointment_schedule<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($individual['next_appointment'] == $value['id']) {
-                                                                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                                                                            } ?>>
+                                                                    <input class="form-check-input" type="radio" name="accompany" id="accompany<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['accompany'] == $value['id']) {
+                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3" id="relation">
+                                                    <label for="new_vl_date" class="form-label">What is their relation to you? <br><br> (Wana uhusiano gani na wewe?)</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('relation', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="relation" id="relation<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['relation'] == $value['id']) {
+                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row">
+
+                                                <div class="col-sm-3" id="occupation">
+                                                    <label for="new_vl_date" class="form-label">What is their occupation? <br><br> (Je, kazi yao ni nini ? )</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('occupation', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="occupation" id="occupation<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['occupation'] == $value['id']) {
+                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                    } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3" id="pay_money">
+                                                    <label for="new_vl_date" class="form-label">Did you or the person who accompanied you (companion) pay money in relation to this visit? <br><br> (Je, wewe au mtu aliyeandamana nawe (mwenzi) mlilipa pesa kuhusiana na hudhurio hili)</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="pay_money" id="pay_money<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($costing['pay_money'] == $value['id']) {
+                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                    } ?>>
                                                                     <label class="form-check-label"><?= $value['name']; ?></label>
                                                                 </div>
                                                             <?php } ?>
@@ -4268,14 +4048,91 @@ if ($user->isLoggedIn()) {
                                                 </div>
 
                                                 <div class="col-3">
-                                                    <div class="mb-2">
-                                                        <label for="next_date" class="form-label">Next appointment date</label>
-                                                        <input type="date" value="<?php if ($individual['next_date']) {
-                                                                                        print_r($individual['next_date']);
-                                                                                    } ?>" id="next_date" name="next_date" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                    <div class="mb-3">
+                                                        <label for="pay_travel" class="form-label">On average, how much did you or your companion have to pay in total for travel for your visit? <br><br> (Kwa wastani, wewe au mwenzako mlipaswa kulipa kiasi gani kwa jumla kwa ajili ya safari ya hudhurio lenu?)</label>
+                                                        <input type="number" value="<?php if ($costing['pay_travel']) {
+                                                                                        print_r($costing['pay_travel']);
+                                                                                    } ?>" id="pay_travel" name="pay_travel" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <div class="mb-3">
+                                                        <label for="pay_food" class="form-label">On average, how much did you or your companion have to pay in total for food during your visit?<br><br> (Kwa wastani, wewe au mwenzako mlipaswa kulipa kiasi gani kwa jumla kwa ajili ya chakula wakati wa hudhurio lenu?)</label>
+                                                        <input type="number" value="<?php if ($costing['pay_food']) {
+                                                                                        print_r($costing['pay_food']);
+                                                                                    } ?>" id="pay_food" name="pay_food" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div class="mb-3">
+                                                        <label for="pay_vl_testing" class="form-label">How much did you or your companion have to pay for your VL testing?<br><br> (Je, wewe au mwenzako mlilipa kiasi gani kwa ajili ya majaribio yako ya VL?)</label>
+                                                        <input type="number" value="<?php if ($costing['pay_vl_testing']) {
+                                                                                        print_r($costing['pay_vl_testing']);
+                                                                                    } ?>" id="pay_vl_testing" name="pay_vl_testing" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <div class="mb-3">
+                                                        <label for="pay_other" class="form-label">Je, kuna gharama yoyote ambayo ulilipa tofauti na hizo ulizotaja hapo, kama ndio, ni shilingi ngapi? ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($costing['pay_other']) {
+                                                                                        print_r($costing['pay_other']);
+                                                                                    } ?>" id="pay_other" name="pay_other" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <div class="mb-3">
+                                                        <label for="pay_usajili" class="form-label">Usajili ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($costing['pay_usajili']) {
+                                                                                        print_r($costing['pay_usajili']);
+                                                                                    } ?>" id="pay_usajili" name="pay_usajili" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-3">
+                                                        <label for="pay_doctor" class="form-label">Kumuona daktari (Consultation) ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($costing['pay_doctor']) {
+                                                                                        print_r($costing['pay_doctor']);
+                                                                                    } ?>" id="pay_doctor" name="pay_doctor" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row">
+
+                                                <div class="col-4">
+                                                    <div class="mb-3">
+                                                        <label for="pay_diagnostic" class="form-label">Vipimo (Diagnostic tests) ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($costing['pay_diagnostic']) {
+                                                                                        print_r($costing['pay_diagnostic']);
+                                                                                    } ?>" id="pay_diagnostic" name="pay_diagnostic" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="mb-3">
+                                                        <label for="pay_medications" class="form-label">Dawa (Medications) ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($costing['pay_medications']) {
+                                                                                        print_r($costing['pay_medications']);
+                                                                                    } ?>" id="pay_medications" name="pay_medications" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="mb-3">
+                                                        <label for="pay_medical" class="form-label">Gharama zingine za ziada kwa ajili ya matibabu (Any other direct medical costs) ( TSHS )</label>
+                                                        <input type="number" value="<?php if ($costing['pay_medical']) {
+                                                                                        print_r($costing['pay_medical']);
+                                                                                    } ?>" id="pay_medical" name="pay_medical" min="0" max="100000000" class="form-control" placeholder="Enter amount in TSHS" required />
+                                                    </div>
+                                                </div>
+                                            </div>                                            
 
                                             <hr>
 
