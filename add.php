@@ -211,7 +211,6 @@ if ($user->isLoggedIn()) {
                 $pageError = $validate->errors();
             }
         } elseif (Input::get('add_client')) {
-            if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
                 $validate = $validate->check($_POST, array(
                     'date_registered' => array(
                         'required' => true,
@@ -228,47 +227,13 @@ if ($user->isLoggedIn()) {
                     'sex' => array(
                         'required' => true,
                     ),
-                    // 'hospital_id' => array(
-                    //     'required' => true,
-                    //     // 'unique' => 'clients'
-                    // ),
                     'site' => array(
                         'required' => true,
                     ),
                 ));
-            } else {
-                $validate = $validate->check($_POST, array(
-                    'date_registered' => array(
-                        'required' => true,
-                    ),
-                    'firstname' => array(
-                        'required' => true,
-                    ),
-                    'middlename' => array(
-                        'required' => true,
-                    ),
-                    'lastname' => array(
-                        'required' => true,
-                    ),
-                    'sex' => array(
-                        'required' => true,
-                    ),
-                    // 'hospital_id' => array(
-                    //     'required' => true,
-                    //     // 'unique' => 'clients'
-                    // ),
-                ));
-            }
             if ($validate->passed()) {
                 // $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
-                    $site_id = $user->data()->site_id;
-                    if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                        $site_id = Input::get('site');
-                    }
-
-
-
                     $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid']);
 
                     $age = $user->dateDiffYears(Input::get('date_registered'), Input::get('dob'));
@@ -277,10 +242,6 @@ if ($user->isLoggedIn()) {
                     $eligible = 0;
                     $enrolled = 0;
                     $end_study = 0;
-                    if ($age >= 18) {
-                        // $screened = 1;
-                        // $eligible = 1;
-                    }
 
                     if ($clients) {
                         $user->updateRecord('clients', array(
@@ -347,7 +308,7 @@ if ($user->isLoggedIn()) {
                                 'staff_id' => $user->data()->id,
                                 'update_on' => date('Y-m-d H:i:s'),
                                 'update_id' => $user->data()->id,
-                                'site_id' => $site_id,
+                                'site_id' => Input::get('site'),
                             ), $visit[0]['id']);
                         } else {
                             $user->createRecord('visit', array(
@@ -369,7 +330,7 @@ if ($user->isLoggedIn()) {
                                 'staff_id' => $user->data()->id,
                                 'update_on' => date('Y-m-d H:i:s'),
                                 'update_id' => $user->data()->id,
-                                'site_id' => $site_id,
+                                'site_id' => Input::get('site'),
                             ));
                         }
 
@@ -424,7 +385,7 @@ if ($user->isLoggedIn()) {
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                            'site_id' => $site_id,
+                            'site_id' => Input::get('site'),
                         ));
 
                         $last_row = $override->lastRow('clients', 'id')[0];
@@ -453,7 +414,7 @@ if ($user->isLoggedIn()) {
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                            'site_id' => $site_id,
+                            'site_id' => Input::get('site'),
                         ));
 
                         $successMessage = 'Client  Added Successful';
