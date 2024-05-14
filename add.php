@@ -934,7 +934,7 @@ if ($user->isLoggedIn()) {
                     'screened' => 1,
                 ), $clients['id']);
 
-                $user->visit_delete1($clients['id'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $clients['site_id'], $eligible, $sequence, $visit_code, $visit_name, $clients['respondent'], 0, $clients['site_id']);
+                $user->visit_delete1($clients['id'], Input::get('screening_date'), $clients['study_id'], $user->data()->id, $clients['site_id'], $eligible, 0, $visit_code, $visit_name, $clients['respondent'], 0, $clients['site_id']);
 
 
 

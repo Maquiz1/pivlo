@@ -271,7 +271,7 @@ class User
                 $this->createRecord('visit', array(
                     'table_id' => $table,
                     'facility_id' => $facility_id,
-                    'sequence' => $sequence,
+                    'sequence' => 1,
                     'pid' => $study_id,
                     'study_id' => $study_id,
                     'visit_code' => $visit_code,
