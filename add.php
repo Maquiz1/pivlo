@@ -228,10 +228,10 @@ if ($user->isLoggedIn()) {
                     'sex' => array(
                         'required' => true,
                     ),
-                    'hospital_id' => array(
-                        'required' => true,
-                        // 'unique' => 'clients'
-                    ),
+                    // 'hospital_id' => array(
+                    //     'required' => true,
+                    //     // 'unique' => 'clients'
+                    // ),
                     'site' => array(
                         'required' => true,
                     ),
@@ -253,10 +253,10 @@ if ($user->isLoggedIn()) {
                     'sex' => array(
                         'required' => true,
                     ),
-                    'hospital_id' => array(
-                        'required' => true,
-                        // 'unique' => 'clients'
-                    ),
+                    // 'hospital_id' => array(
+                    //     'required' => true,
+                    //     // 'unique' => 'clients'
+                    // ),
                 ));
             }
             if ($validate->passed()) {
@@ -277,9 +277,9 @@ if ($user->isLoggedIn()) {
                     $eligible = 0;
                     $enrolled = 0;
                     $end_study = 0;
-                    if ($age >= 1) {
-                        $screened = 1;
-                        $eligible = 1;
+                    if ($age >= 18) {
+                        // $screened = 1;
+                        // $eligible = 1;
                     }
 
                     if ($clients) {
