@@ -211,26 +211,26 @@ if ($user->isLoggedIn()) {
                 $pageError = $validate->errors();
             }
         } elseif (Input::get('add_client')) {
-                $validate = $validate->check($_POST, array(
-                    'date_registered' => array(
-                        'required' => true,
-                    ),
-                    'firstname' => array(
-                        'required' => true,
-                    ),
-                    'middlename' => array(
-                        'required' => true,
-                    ),
-                    'lastname' => array(
-                        'required' => true,
-                    ),
-                    'sex' => array(
-                        'required' => true,
-                    ),
-                    'site' => array(
-                        'required' => true,
-                    ),
-                ));
+            $validate = $validate->check($_POST, array(
+                'date_registered' => array(
+                    'required' => true,
+                ),
+                'firstname' => array(
+                    'required' => true,
+                ),
+                'middlename' => array(
+                    'required' => true,
+                ),
+                'lastname' => array(
+                    'required' => true,
+                ),
+                'sex' => array(
+                    'required' => true,
+                ),
+                'site' => array(
+                    'required' => true,
+                ),
+            ));
             if ($validate->passed()) {
                 // $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
@@ -290,12 +290,12 @@ if ($user->isLoggedIn()) {
 
                         if ($visit) {
                             $user->updateRecord('visit', array(
-                                'sequence' => 0,
+                                'sequence' => -1,
+                                'visit_code' => 'RV',
+                                'visit_name' => 'Registration Visit',
                                 'respondent' => Input::get('respondent'),
                                 'study_id' => $clients[0]['study_id'],
                                 'pid' => $clients[0]['study_id'],
-                                'visit_code' => 'M0',
-                                'visit_name' => 'Month 0',
                                 'expected_date' => Input::get('date_registered'),
                                 'visit_date' => '',
                                 'visit_status' => 0,
@@ -312,12 +312,12 @@ if ($user->isLoggedIn()) {
                             ), $visit[0]['id']);
                         } else {
                             $user->createRecord('visit', array(
-                                'sequence' => 0,
+                                'sequence' => -1,
+                                'visit_code' => 'RV',
+                                'visit_name' => 'Registration Visit',
                                 'respondent' => Input::get('respondent'),
                                 'study_id' => $clients[0]['study_id'],
                                 'pid' => $clients[0]['study_id'],
-                                'visit_code' => 'M0',
-                                'visit_name' => 'Month 0',
                                 'expected_date' => Input::get('date_registered'),
                                 'visit_date' => '',
                                 'visit_status' => 0,
@@ -340,8 +340,8 @@ if ($user->isLoggedIn()) {
                         $std_id = $override->getNews('study_id', 'site_id', $site_id, 'status', 0)[0];
 
                         $user->createRecord('clients', array(
-                            'sequence' => 0,
-                            'visit_code' => 'M0',
+                            'sequence' => -1,
+                            'visit_code' => 'RV',
                             'date_registered' => Input::get('date_registered'),
                             'study_id' => $std_id['study_id'],
                             'firstname' => Input::get('firstname'),
@@ -396,12 +396,12 @@ if ($user->isLoggedIn()) {
                         ), $std_id['id']);
 
                         $user->createRecord('visit', array(
-                            'sequence' => 0,
+                            'sequence' => -1,
+                            'visit_code' => 'RV',
+                            'visit_name' => 'Registration Visit',
                             'respondent' => Input::get('respondent'),
                             'study_id' => $std_id['study_id'],
                             'pid' => $std_id['study_id'],
-                            'visit_code' => 'M0',
-                            'visit_name' => 'Month 0',
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => '',
                             'visit_status' => 0,
