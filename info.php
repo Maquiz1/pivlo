@@ -1083,10 +1083,11 @@ if ($user->isLoggedIn()) {
                                                 $x = 1;
                                                 $i = 0;
                                                 foreach ($override->get('visit', 'patient_id', $_GET['cid']) as $visit) {
-                                                    $clients = $override->get('clients', 'id', $_GET['cid'])[0];
+                                                    $clients = $override->getNews('clients', 'status', 1, 'id',  $_GET['cid'])[0];
+                                                    $screening = $override->getNews('screening', 'status', 1, 'patient_id', $_GET['cid'])[0];
+                                                    $enrollment = $override->getNews('enrollment', 'status', 1, 'patient_id', $_GET['cid'])[0];
                                                     $site = $override->get('sites', 'id', $visit['site_id'])[0];
                                                     $kap = $override->get('kap', 'patient_id', $_GET['cid']);
-                                                    $screening = $override->get('screening', 'patient_id', $_GET['cid']);
                                                 ?>
                                                     <tr>
                                                         <td> <?= $visit['visit_name'] ?></td>
@@ -1123,6 +1124,18 @@ if ($user->isLoggedIn()) {
 
                                                                         <?php } else { ?>
                                                                             <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Screening ( Inclusion & Exclusion Criteria ) Data</a>&nbsp;&nbsp; <br><br>
+                                                                        <?php } ?>
+                                                                    <?php } ?>
+                                                                <?php } ?>
+                                                            <?php } ?>
+
+                                                            <?php if ($visit['visit_status'] == 1) { ?>
+                                                                <?php if ($screening['eligible'] == 1) { ?>
+                                                                    <?php if ($visit['sequence'] == 0) { ?>
+                                                                        <?php if ($override->getNews('enrollment', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
+                                                                            <a href="#editEnrollment<?= $visit['id'] ?>" role="button" class="btn btn-info" data-toggle="modal">Update Enrollment Data </a>&nbsp;&nbsp; <br><br>
+                                                                        <?php } else { ?>
+                                                                            <a href="#editEnrollment<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Update Enrollment Data </a>&nbsp;&nbsp; <br><br>
                                                                         <?php } ?>
                                                                     <?php } ?>
                                                                 <?php } ?>

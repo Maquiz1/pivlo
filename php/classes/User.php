@@ -256,6 +256,18 @@ class User
 
     function visit_delete1($client_id, $screening_date, $study_id, $staff_id, $site_id, $eligible, $sequence, $visit_code, $visit_name, $respondent, $table, $facility_id)
     {
+
+        // $sequence = 1;
+        // $visit_code = '';
+        // $visit_name = '';
+        // $eligible = 0;
+        // if (Input::get('conset') == 1) {
+        //     $eligible = 1;
+        //     $sequence = 1;
+        //     $visit_code = 'M' . $sequence;
+        //     $visit_name = 'Month ' . $sequence;
+        // }
+
         $visit_id = $this->_override->getNews('visit', 'patient_id', $client_id, 'sequence', $sequence);
         if ($eligible) {
             if ($visit_id) {

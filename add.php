@@ -844,15 +844,9 @@ if ($user->isLoggedIn()) {
                 $clients = $override->getNews('clients', 'status', 1, 'id', $_GET['cid'])[0];
 
                 $screening = $override->get3('screening', 'status', 1, 'patient_id', $_GET['cid'], 'sequence', 0);
-                $sequence = 1;
-                $visit_code = '';
-                $visit_name = '';
                 $eligible = 0;
                 if (Input::get('conset') == 1) {
                     $eligible = 1;
-                    $sequence = 1;
-                    $visit_code = 'M' . $sequence;
-                    $visit_name = 'Month ' . $sequence;
                 }
 
                 if ($screening) {
@@ -913,7 +907,7 @@ if ($user->isLoggedIn()) {
                 if ($enrollment) {
                     $user->updateRecord('enrollment', array(
                         'sequence' => 0,
-                        'visit_code' => 'M0',
+                        'visit_code' => 'SV',
                         'screening_id' => $screening['id'],
                         'enrollment_date' => Input::get('enrollment_date'),
                         'comments' => Input::get('comments'),
@@ -922,10 +916,11 @@ if ($user->isLoggedIn()) {
                     ), $enrollment[0]['id']);
 
                     $successMessage = 'Enrollment  Successful Updated';
+                    
                 } else {
                     $user->createRecord('enrollment', array(
                         'sequence' => 0,
-                        'visit_code' => 'M0',
+                        'visit_code' => 'SV',
                         'screening_id' => $screening['id'],
                         'pid' => $clients['study_id'],
                         'study_id' => $clients['study_id'],
@@ -946,7 +941,7 @@ if ($user->isLoggedIn()) {
                     'enrolled' => 1,
                 ), $clients['id']);
 
-                $user->visit_delete1($clients['id'], Input::get('enrollment_date'), $clients['study_id'], $user->data()->id, $clients['site_id'], $eligible, $sequence, $visit_code, $visit_name, $clients['respondent'], 1, $clients['site_id']);
+                $user->visit_delete1($clients['id'], Input::get('enrollment_date'), $clients['study_id'], $user->data()->id, $clients['site_id'], $eligible, 0, $visit_code, $visit_name, $clients['respondent'], 1, $clients['site_id']);
 
                 Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
