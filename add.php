@@ -623,6 +623,10 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Individual  Successful Added';
                 }
 
+                $user->updateRecord('clients', array(
+                    'enrolled' => 1,
+                ), $clients['id']);
+
                 Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
