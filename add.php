@@ -3029,7 +3029,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="next_date" class="form-label">Next appointment date</label>
                                                         <input type="date" value="<?php if ($individual['next_date']) {
                                                                                         print_r($individual['next_date']);
-                                                                                    } ?>" id="next_date" name="next_date" min="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                                                    } ?>" id="next_date" name="next_date" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
                                             </div>
