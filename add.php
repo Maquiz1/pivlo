@@ -930,6 +930,7 @@ if ($user->isLoggedIn()) {
 
                 $user->updateRecord('clients', array(
                     'eligible' => $eligible,
+                    'screened' => 1,
                 ), $clients['id']);
 
 
