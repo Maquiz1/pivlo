@@ -329,12 +329,12 @@ if ($user->isLoggedIn()) {
 
                         if ($visit) {
                             $user->updateRecord('visit', array(
-                                'sequence' => -1,
+                                'sequence' => 0,
                                 'respondent' => Input::get('respondent'),
                                 'study_id' => $clients[0]['study_id'],
                                 'pid' => $clients[0]['study_id'],
-                                'visit_code' => 'M-1',
-                                'visit_name' => 'Month -1',
+                                'visit_code' => 'M0',
+                                'visit_name' => 'Month 0',
                                 'expected_date' => Input::get('date_registered'),
                                 'visit_date' => '',
                                 'visit_status' => 0,
@@ -351,12 +351,12 @@ if ($user->isLoggedIn()) {
                             ), $visit[0]['id']);
                         } else {
                             $user->createRecord('visit', array(
-                                'sequence' => -1,
+                                'sequence' => 0,
                                 'respondent' => Input::get('respondent'),
-                                'study_id' => $std_id['study_id'],
-                                'pid' => $std_id['study_id'],
-                                'visit_code' => 'M-1',
-                                'visit_name' => 'Month -1',
+                                'study_id' => $clients[0]['study_id'],
+                                'pid' => $clients[0]['study_id'],
+                                'visit_code' => 'M0',
+                                'visit_name' => 'Month 0',
                                 'expected_date' => Input::get('date_registered'),
                                 'visit_date' => '',
                                 'visit_status' => 0,
@@ -364,7 +364,7 @@ if ($user->isLoggedIn()) {
                                 'status' => 1,
                                 'facility_id' => 0,
                                 'table_id' => 0,
-                                'patient_id' => $last_row['id'],
+                                'patient_id' => $clients[0]['id'],
                                 'create_on' => date('Y-m-d H:i:s'),
                                 'staff_id' => $user->data()->id,
                                 'update_on' => date('Y-m-d H:i:s'),
@@ -379,8 +379,8 @@ if ($user->isLoggedIn()) {
                         $std_id = $override->getNews('study_id', 'site_id', $site_id, 'status', 0)[0];
 
                         $user->createRecord('clients', array(
-                            'sequence' => -1,
-                            'visit_code' => 'M-1',
+                            'sequence' => 0,
+                            'visit_code' => 'M0',
                             'date_registered' => Input::get('date_registered'),
                             'study_id' => $std_id['study_id'],
                             'firstname' => Input::get('firstname'),
@@ -435,12 +435,12 @@ if ($user->isLoggedIn()) {
                         ), $std_id['id']);
 
                         $user->createRecord('visit', array(
-                            'sequence' => -1,
+                            'sequence' => 0,
                             'respondent' => Input::get('respondent'),
                             'study_id' => $std_id['study_id'],
                             'pid' => $std_id['study_id'],
-                            'visit_code' => 'M-1',
-                            'visit_name' => 'Month -1',
+                            'visit_code' => 'M0',
+                            'visit_name' => 'Month 0',
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => '',
                             'visit_status' => 0,

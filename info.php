@@ -1116,7 +1116,7 @@ if ($user->isLoggedIn()) {
 
                                                         <td>
                                                             <?php if ($visit['visit_status'] == 1) { ?>
-                                                                <?php if ($clients['age'] >= 1) { ?>
+                                                                <?php if ($clients['age'] >= 18) { ?>
                                                                     <?php if ($visit['sequence'] == 0) { ?>
                                                                         <?php if ($override->getNews('screening', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
                                                                             <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Screening ( Inclusion & Exclusion Criteria ) Data </a>&nbsp;&nbsp; <br><br>
