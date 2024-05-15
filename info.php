@@ -1093,7 +1093,7 @@ if ($user->isLoggedIn()) {
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($visit['sequence'] == -2) { ?>
                                                                     <?php if ($clients['age'] >= 18) { ?>
-                                                                        <?php if ($override->getNews('screening', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
+                                                                        <?php if ($override->getNews('screening', 'patient_id', $_GET['cid'], 'sequence', -1)) { ?>
                                                                             <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=-1&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Screening Data </a>&nbsp;&nbsp; <br><br>
 
                                                                         <?php } else { ?>
@@ -1106,10 +1106,10 @@ if ($user->isLoggedIn()) {
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($visit['sequence'] == -1) { ?>
                                                                     <?php if ($screening['eligible'] == 1) { ?>
-                                                                        <?php if ($override->getNews('enrollment', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
+                                                                        <?php if ($override->getNews('enrollment', 'patient_id', $_GET['cid'], 'sequence', 0)) { ?>
                                                                             <a href="#editEnrollment<?= $visit['id'] ?>" role="button" class="btn btn-info" data-toggle="modal">Update Enrollment Data </a>&nbsp;&nbsp; <br><br>
                                                                         <?php } else { ?>
-                                                                            <a href="#editEnrollment<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Update Enrollment Data </a>&nbsp;&nbsp; <br><br>
+                                                                            <a href="#editEnrollment<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">Add Enrollment Data </a>&nbsp;&nbsp; <br><br>
                                                                         <?php } ?>
                                                                     <?php } ?>
                                                                 <?php } ?>
