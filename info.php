@@ -1055,12 +1055,11 @@ if ($user->isLoggedIn()) {
                                                 <?php
                                                 $x = 1;
                                                 $i = 0;
-                                                foreach ($override->get('visit', 'patient_id', $_GET['cid']) as $visit) {
+                                                foreach ($override->getNews('visit', 'status', 1, 'patient_id', $_GET['cid']) as $visit) {
                                                     $clients = $override->getNews('clients', 'status', 1, 'id',  $_GET['cid'])[0];
                                                     $screening = $override->getNews('screening', 'status', 1, 'patient_id', $_GET['cid'])[0];
                                                     $enrollment = $override->getNews('enrollment', 'status', 1, 'patient_id', $_GET['cid'])[0];
                                                     $site = $override->get('sites', 'id', $visit['site_id'])[0];
-                                                    $kap = $override->get('kap', 'patient_id', $_GET['cid']);
                                                 ?>
                                                     <tr>
                                                         <td> <?= $visit['visit_name'] ?></td>
@@ -1075,15 +1074,15 @@ if ($user->isLoggedIn()) {
                                                         <td>
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">
-                                                                    Done <?php if ($clients['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp;Not ELigible for Enrollment</p> <?php } ?>
+                                                                    Done <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp;Not ELigible for Enrollment</p> <?php } ?>
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 2) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
-                                                                    Missed <?php if ($clients['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp; Not ELigible for Enrollment </p><?php } ?>
+                                                                    Missed <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp; Not ELigible for Enrollment </p><?php } ?>
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 0) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
-                                                                    Pending <?php if ($clients['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp; Not ELigible for Enrollment </p><?php } ?>
+                                                                    Pending <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp; Not ELigible for Enrollment </p><?php } ?>
                                                                 </a>
                                                             <?php } ?>
                                                         </td>
@@ -1091,7 +1090,7 @@ if ($user->isLoggedIn()) {
                                                         <td>
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($clients['age'] >= 18) { ?>
-                                                                    <?php if ($visit['sequence'] == 0) { ?>
+                                                                    <?php if ($visit['sequence'] == -2) { ?>
                                                                         <?php if ($override->getNews('screening', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
                                                                             <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Screening ( Inclusion & Exclusion Criteria ) Data </a>&nbsp;&nbsp; <br><br>
 

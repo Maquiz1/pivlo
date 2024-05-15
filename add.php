@@ -862,7 +862,7 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                     ), $screening[0]['id']);
 
-                    $visit = $override->get3('visit', 'status', 1, 'patient_id', $clients[0]['id'], 'sequence', -2);
+                    $visit = $override->get3('visit', 'status', 1, 'patient_id', $clients['id'], 'sequence', -1);
 
                     if ($visit) {
                         $user->updateRecord('visit', array(
@@ -870,21 +870,21 @@ if ($user->isLoggedIn()) {
                             'visit_code' => 'Sv',
                             'visit_name' => 'Screening Visit',
                             'respondent' => Input::get('respondent'),
-                            'study_id' => $clients[0]['study_id'],
-                            'pid' => $clients[0]['study_id'],
+                            'study_id' => $clients['study_id'],
+                            'pid' => $clients['study_id'],
                             'expected_date' => Input::get('date_registered'),
                             'visit_date' => Input::get('date_registered'),
                             'visit_status' => 1,
                             'comments' => Input::get('comments'),
                             'status' => 1,
-                            'facility_id' => Input::get('site'),
-                            'table_id' => $clients[0]['id'],
-                            'patient_id' => $clients[0]['id'],
+                            'facility_id' => $clients['site_id'],
+                            'table_id' => $screening[0]['id'],
+                            'patient_id' => $clients['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                            'site_id' => Input::get('site'),
+                            'site_id' => $clients['site_id'],
                         ), $visit[0]['id']);
                     } else {
                         $user->createRecord('visit', array(
@@ -899,14 +899,14 @@ if ($user->isLoggedIn()) {
                             'visit_status' => 1,
                             'comments' => Input::get('comments'),
                             'status' => 1,
-                            'facility_id' => Input::get('site'),
-                            'table_id' => $clients[0]['id'],
+                            'facility_id' => $clients['site_id'],
+                            'table_id' => $screening[0]['id'],
                             'patient_id' => $clients[0]['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
-                            'site_id' => Input::get('site'),
+                            'site_id' => $clients['site_id'],
                         ));
                     }
 
@@ -944,14 +944,14 @@ if ($user->isLoggedIn()) {
                         'visit_status' => 1,
                         'comments' => Input::get('comments'),
                         'status' => 1,
-                        'facility_id' => Input::get('site'),
-                        'table_id' => $clients[0]['id'],
+                        'facility_id' => $clients['site_id'],
+                        'table_id' => $screening[0]['id'],
                         'patient_id' => $clients[0]['id'],
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                        'site_id' => Input::get('site'),
+                        'site_id' => $clients['site_id'],
                     ));
 
                     $successMessage = 'Screening  Successful Added';
