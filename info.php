@@ -269,48 +269,21 @@ if ($user->isLoggedIn()) {
 
     if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
         if ($_GET['site_id'] != null) {
-            $kap = $override->getCount1('kap', 'status', 1, 'site_id', $_GET['site_id']);
-            $histroy = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
-            $kap = $override->getCount1('results', 'status', 1, 'site_id', $_GET['site_id']);
-            $classification = $override->getCount1('classification', 'status', 1, 'site_id', $_GET['site_id']);
-            $outcome = $override->getCount1('outcome', 'status', 1, 'site_id', $_GET['site_id']);
-            $economic = $override->getCount1('economic', 'status', 1, 'site_id', $_GET['site_id']);
-            $visit = $override->getCount1('visit', 'status', 1, 'site_id', $_GET['site_id']);
-
-            $registered = $override->getCount1('clients', 'status', 1, 'site_id', $_GET['site_id']);
-            $screened = $override->getCount1('history', 'status', 1, 'site_id', $_GET['site_id']);
-            $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
-            $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $_GET['site_id']);
-            $end = $override->getCount1('clients', 'status', 0, 'site_id', $_GET['site_id']);
+            $screened = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['site_id']);
+            $eligible = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $_GET['site_id']);
+            $enrolled = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $_GET['site_id']);
+            $end = $override->countData2('clients', 'status', 1, 'end_study', 1, 'site_id', $_GET['site_id']);
         } else {
-            $kap = $override->getCount('kap', 'status', 1);
-            $history = $override->getCount('history', 'status', 1);
-            $kap = $override->getCount('results', 'status', 1);
-            $classification = $override->getCount('classification', 'status', 1);
-            $outcome = $override->getCount('outcome', 'status', 1);
-            $economic = $override->getCount('economic', 'status', 1);
-            $visit = $override->getCount('visit', 'status', 1);
-
-            $registered = $override->getCount('clients', 'status', 1);
-            $screened = $override->getCount('history', 'status', 1);
-            $eligible = $override->getCount('history', 'eligible', 1);
-            $enrolled = $override->getCount('history', 'eligible', 1);
-            $end = $override->getCount('clients', 'status', 0);
+            $screened = $override->countData('clients', 'status', 1, 'screened', 1);
+            $eligible = $override->countData('clients', 'status', 1, 'eligible', 1);
+            $enrolled = $override->countData('clients', 'status', 1, 'enrolled', 1);
+            $end = $override->countData('clients', 'status', 1, 'end_study', 1);
         }
     } else {
-        $kap = $override->getCount1('kap', 'status', 1, 'site_id', $user->data()->site_id);
-        $histroy = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
-        $kap = $override->getCount1('results', 'status', 1, 'site_id', $user->data()->site_id);
-        $classification = $override->getCount1('classification', 'status', 1, 'site_id', $user->data()->site_id);
-        $outcome = $override->getCount1('outcome', 'status', 1, 'site_id', $user->data()->site_id);
-        $economic = $override->getCount1('economic', 'status', 1, 'site_id', $user->data()->site_id);
-        $visit = $override->getCount1('visit', 'status', 1, 'site_id', $user->data()->site_id);
-
-        $registered = $override->getCount1('clients', 'status', 1, 'site_id', $user->data()->site_id);
-        $screened = $override->getCount1('history', 'status', 1, 'site_id', $user->data()->site_id);
-        $eligible = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
-        $enrolled = $override->getCount1('history', 'eligible', 1, 'site_id', $user->data()->site_id);
-        $end = $override->getCount1('clients', 'status', 0, 'site_id', $user->data()->site_id);
+        $screened = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $user->data()->site_id);
+        $eligible = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $user->data()->site_id);
+        $enrolled = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $user->data()->site_id);
+        $end = $override->countData2('clients', 'status', 1, 'end_study', 1, 'site_id', $user->data()->site_id);
     }
 } else {
     Redirect::to('index.php');
@@ -873,20 +846,20 @@ if ($user->isLoggedIn()) {
                                                 $x = 1;
                                                 foreach ($clients as $value) {
                                                     $yes_no = $override->get('yes_no', 'status', 1)[0];
-                                                    $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id']);
-                                                    $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id']);
+                                                    // $kap = $override->getNews('kap', 'status', 1, 'patient_id', $value['id']);
+                                                    // $history = $override->getNews('history', 'status', 1, 'patient_id', $value['id']);
 
-                                                    $results1 = $override->get3('results', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
-                                                    $results2 = $override->get3('results', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+                                                    // $results1 = $override->get3('results', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    // $results2 = $override->get3('results', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
 
-                                                    $classification1 = $override->get3('classification', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
-                                                    $classification2 = $override->get3('classification', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+                                                    // $classification1 = $override->get3('classification', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    // $classification2 = $override->get3('classification', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
 
-                                                    $economic1 = $override->get3('economic', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
-                                                    $economic2 = $override->get3('economic', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+                                                    // $economic1 = $override->get3('economic', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    // $economic2 = $override->get3('economic', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
 
-                                                    $outcome1 = $override->get3('outcome', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
-                                                    $outcome2 = $override->get3('outcome', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
+                                                    // $outcome1 = $override->get3('outcome', 'status', 1, 'patient_id', $value['id'], 'sequence', 1);
+                                                    // $outcome2 = $override->get3('outcome', 'status', 1, 'patient_id', $value['id'], 'sequence', 2);
 
                                                     $sites = $override->getNews('sites', 'status', 1, 'id', $value['site_id'])[0];
                                                 ?>
