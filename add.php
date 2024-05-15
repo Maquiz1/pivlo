@@ -846,45 +846,94 @@ if ($user->isLoggedIn()) {
                     $eligible = 2;
                 }
 
-                if ($screening) {
-                    $user->updateRecord('screening', array(
-                        'sequence' => -1,
-                        'visit_code' => 'Sv',
-                        'visit_name' => 'Screening Visit',
-                        'screening_date' => Input::get('screening_date'),
-                        'conset' => Input::get('conset'),
-                        'conset_date' => Input::get('conset_date'),
-                        'comments' => Input::get('comments'),
-                        'eligible' => $eligible,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                    ), $screening[0]['id']);
+                if (Input::get('screening_date') < $clients[0]['date_registered']) {
+                    $errorMessage = 'Screaning Date Can not be less than Registration date';
+                } else {
 
-                    $visit = $override->get3('visit', 'status', 1, 'patient_id', $clients[0]['id'], 'sequence', -1);
-
-                    if ($visit) {
-                        $user->updateRecord('visit', array(
+                    if ($screening) {
+                        $user->updateRecord('screening', array(
                             'sequence' => -1,
                             'visit_code' => 'Sv',
                             'visit_name' => 'Screening Visit',
-                            'respondent' => $clients[0]['respondent'],
-                            'study_id' => $clients[0]['study_id'],
-                            'pid' => $clients[0]['study_id'],
-                            'expected_date' => Input::get('screening_date'),
-                            'visit_date' => Input::get('screening_date'),
-                            'visit_status' => 1,
+                            'screening_date' => Input::get('screening_date'),
+                            'conset' => Input::get('conset'),
+                            'conset_date' => Input::get('conset_date'),
                             'comments' => Input::get('comments'),
+                            'eligible' => $eligible,
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                        ), $screening[0]['id']);
+
+                        $visit = $override->get3('visit', 'status', 1, 'patient_id', $clients[0]['id'], 'sequence', -1);
+
+                        if ($visit) {
+                            $user->updateRecord('visit', array(
+                                'sequence' => -1,
+                                'visit_code' => 'Sv',
+                                'visit_name' => 'Screening Visit',
+                                'respondent' => $clients[0]['respondent'],
+                                'study_id' => $clients[0]['study_id'],
+                                'pid' => $clients[0]['study_id'],
+                                'expected_date' => Input::get('screening_date'),
+                                'visit_date' => Input::get('screening_date'),
+                                'visit_status' => 1,
+                                'comments' => Input::get('comments'),
+                                'status' => 1,
+                                'facility_id' => $clients[0]['site_id'],
+                                'table_id' => $screening[0]['id'],
+                                'patient_id' => $clients[0]['id'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $clients[0]['site_id'],
+                            ), $visit[0]['id']);
+                        } else {
+                            $user->createRecord('visit', array(
+                                'sequence' => -1,
+                                'visit_code' => 'Sv',
+                                'visit_name' => 'Screening Visit',
+                                'respondent' => $clients[0]['respondent'],
+                                'study_id' => $clients[0]['study_id'],
+                                'pid' => $clients[0]['study_id'],
+                                'expected_date' => Input::get('screening_date'),
+                                'visit_date' => Input::get('screening_date'),
+                                'visit_status' => 1,
+                                'comments' => Input::get('comments'),
+                                'status' => 1,
+                                'facility_id' => $clients[0]['site_id'],
+                                'table_id' => $screening[0]['id'],
+                                'patient_id' => $clients[0]['id'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $clients[0]['site_id'],
+                            ));
+                        }
+
+                        $successMessage = 'Screening  Successful Updated';
+                    } else {
+                        $user->createRecord('screening', array(
+                            'sequence' => -1,
+                            'visit_code' => 'Sv',
+                            'visit_name' => 'Screening Visit',
+                            'pid' => $clients[0]['study_id'],
+                            'study_id' => $clients[0]['study_id'],
+                            'screening_date' => Input::get('screening_date'),
+                            'conset' => Input::get('conset'),
+                            'conset_date' => Input::get('conset_date'),
+                            'comments' => Input::get('comments'),
+                            'eligible' => $eligible,
                             'status' => 1,
-                            'facility_id' => $clients[0]['site_id'],
-                            'table_id' => $screening[0]['id'],
                             'patient_id' => $clients[0]['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
                             'site_id' => $clients[0]['site_id'],
-                        ), $visit[0]['id']);
-                    } else {
+                        ));
+
                         $user->createRecord('visit', array(
                             'sequence' => -1,
                             'visit_code' => 'Sv',
@@ -906,61 +955,17 @@ if ($user->isLoggedIn()) {
                             'update_id' => $user->data()->id,
                             'site_id' => $clients[0]['site_id'],
                         ));
+
+                        $successMessage = 'Screening  Successful Added';
                     }
 
-                    $successMessage = 'Screening  Successful Updated';
-                } else {
-                    $user->createRecord('screening', array(
-                        'sequence' => -1,
-                        'visit_code' => 'Sv',
-                        'visit_name' => 'Screening Visit',
-                        'pid' => $clients[0]['study_id'],
-                        'study_id' => $clients[0]['study_id'],
-                        'screening_date' => Input::get('screening_date'),
-                        'conset' => Input::get('conset'),
-                        'conset_date' => Input::get('conset_date'),
-                        'comments' => Input::get('comments'),
+                    $user->updateRecord('clients', array(
+                        'screened' => 1,
                         'eligible' => $eligible,
-                        'status' => 1,
-                        'patient_id' => $clients[0]['id'],
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $clients[0]['site_id'],
-                    ));
+                    ), $clients[0]['id']);
 
-                    $user->createRecord('visit', array(
-                        'sequence' => -1,
-                        'visit_code' => 'Sv',
-                        'visit_name' => 'Screening Visit',
-                        'respondent' => $clients[0]['respondent'],
-                        'study_id' => $clients[0]['study_id'],
-                        'pid' => $clients[0]['study_id'],
-                        'expected_date' => Input::get('screening_date'),
-                        'visit_date' => Input::get('screening_date'),
-                        'visit_status' => 1,
-                        'comments' => Input::get('comments'),
-                        'status' => 1,
-                        'facility_id' => $clients[0]['site_id'],
-                        'table_id' => $screening[0]['id'],
-                        'patient_id' => $clients[0]['id'],
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $clients[0]['site_id'],
-                    ));
-
-                    $successMessage = 'Screening  Successful Added';
+                    Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
                 }
-
-                $user->updateRecord('clients', array(
-                    'screened' => 1,
-                    'eligible' => $eligible,
-                ), $clients[0]['id']);
-
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }

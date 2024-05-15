@@ -257,45 +257,75 @@ class User
     function visit_delete1($client_id, $enrollment_date, $study_id, $staff_id, $site_id, $respondent, $table)
     {
         $sequence = 1;
-        // $visit_id = $this->_override->getNews('visit', 'patient_id', $client_id, 'sequence', $sequence);
-        // if ($visit_id) {
-        //     foreach ($this->_override->get('visit', 'patient_id', $client_id) as $visit) {
-        //         if ($visit['sequence']) {
-        //             $this->deleteRecord('visit', 'id', $visit['id']);
-        //         }
-        //     }
-        // } else {
-        foreach ($this->_override->get('schedule', 'status', 1) as $schedule) {
+        $visit_id1 = $this->_override->get3('visit',  'status', 1, 'patient_id', $client_id, 'sequence', $sequence);
+        $visit_id = $this->_override->get3GretaerThan1('visit',  'status', 1, 'patient_id', $client_id, 'sequence', $sequence);
+        if ($visit_id) {
+            if ($visit_id1['enrollment_date'] != $enrollment_date) {
+                foreach ($visit_id as $visit) {
+                    $this->deleteRecord('visit', 'id', $visit['id']);
+                }
 
-            $this->createRecord('visit', array(
-                'sequence' => $sequence,
-                // 'schedule' => $schedule['id'],
-                'visit_code' => $schedule['code'],
-                'visit_name' => $schedule['name'],
-                'respondent' => $respondent,
-                'pid' => $study_id,
-                'study_id' => $study_id,
-                'expected_date' => $enrollment_date,
-                'visit_date' => '',
-                'visit_status' => 0,
-                'comments' => Input::get('comments'),
-                'status' => 1,
-                'table_id' => $table,
-                'facility_id' => $site_id,
-                'patient_id' => $client_id,
-                'create_on' => date('Y-m-d H:i:s'),
-                'staff_id' => $staff_id,
-                'update_on' => date('Y-m-d H:i:s'),
-                'update_id' => $staff_id,
-                'site_id' => $site_id,
-            ));
+                foreach ($this->_override->get('schedule', 'status', 1) as $schedule) {
+                    $this->createRecord('visit', array(
+                        'sequence' => $sequence,
+                        // 'schedule' => $schedule['id'],
+                        'visit_code' => $schedule['code'],
+                        'visit_name' => $schedule['name'],
+                        'respondent' => $respondent,
+                        'pid' => $study_id,
+                        'study_id' => $study_id,
+                        'expected_date' => $enrollment_date,
+                        'visit_date' => '',
+                        'visit_status' => 0,
+                        'comments' => '',
+                        'status' => 1,
+                        'table_id' => $table,
+                        'facility_id' => $site_id,
+                        'patient_id' => $client_id,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $staff_id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $staff_id,
+                        'site_id' => $site_id,
+                    ));
 
-            $enrollment_date = date('Y-m-d', strtotime('+1 month', strtotime($enrollment_date)));
+                    $enrollment_date = date('Y-m-d', strtotime('+1 month', strtotime($enrollment_date)));
 
 
-            $sequence++;
+                    $sequence++;
+                }
+            }
+        } else {
+            foreach ($this->_override->get('schedule', 'status', 1) as $schedule) {
+                $this->createRecord('visit', array(
+                    'sequence' => $sequence,
+                    // 'schedule' => $schedule['id'],
+                    'visit_code' => $schedule['code'],
+                    'visit_name' => $schedule['name'],
+                    'respondent' => $respondent,
+                    'pid' => $study_id,
+                    'study_id' => $study_id,
+                    'expected_date' => $enrollment_date,
+                    'visit_date' => '',
+                    'visit_status' => 0,
+                    'comments' => '',
+                    'status' => 1,
+                    'table_id' => $table,
+                    'facility_id' => $site_id,
+                    'patient_id' => $client_id,
+                    'create_on' => date('Y-m-d H:i:s'),
+                    'staff_id' => $staff_id,
+                    'update_on' => date('Y-m-d H:i:s'),
+                    'update_id' => $staff_id,
+                    'site_id' => $site_id,
+                ));
+
+                $enrollment_date = date('Y-m-d', strtotime('+1 month', strtotime($enrollment_date)));
+
+
+                $sequence++;
+            }
         }
-        // }
     }
 
 

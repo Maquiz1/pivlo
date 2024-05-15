@@ -85,47 +85,100 @@ if ($user->isLoggedIn()) {
                 $clients = $override->get3('clients', 'status', 1, 'id', Input::get('cid'), 'sequence', -2);
                 $screening = $override->get3('screening', 'status', 1, 'patient_id', Input::get('cid'), 'sequence', -1);
                 $enrollment = $override->get3('enrollment', 'status', 1, 'patient_id', Input::get('cid'), 'sequence', 0);
-                if ($enrollment) {
-                    $user->updateRecord('enrollment', array(
-                        'sequence' => 0,
-                        'visit_code' => 'EV',
-                        'visit_name' => 'Enrolment Visit',
-                        'screening_id' => $screening[0]['id'],
-                        'pid' => $clients[0]['study_id'],
-                        'study_id' => $clients[0]['study_id'],
-                        'enrollment_date' => Input::get('enrollment_date'),
-                        'comments' => Input::get('comments'),
-                        'patient_id' => $clients[0]['id'],
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $clients[0]['site_id'],
-                    ), $enrollment[0]['id']);
 
-                    $visit = $override->get3('visit', 'status', 1, 'patient_id', $clients[0]['id'], 'sequence', 0);
+                if (Input::get('enrollment_date') < $screening['screening_date']) {
+                    $errorMessage = 'Enrollment Date Can not be less than screaning date';
 
-                    if ($visit) {
-                        $user->updateRecord('visit', array(
+                } else {
+                    if ($enrollment) {
+                        $user->updateRecord('enrollment', array(
                             'sequence' => 0,
                             'visit_code' => 'EV',
                             'visit_name' => 'Enrolment Visit',
-                            'respondent' => $clients[0]['respondent'],
-                            'study_id' => $clients[0]['study_id'],
+                            'screening_id' => $screening[0]['id'],
                             'pid' => $clients[0]['study_id'],
-                            'expected_date' => Input::get('enrollment_date'),
-                            'visit_date' => Input::get('enrollment_date'),
-                            'visit_status' => 1,
+                            'study_id' => $clients[0]['study_id'],
+                            'enrollment_date' => Input::get('enrollment_date'),
+                            'comments' => Input::get('comments'),
+                            'patient_id' => $clients[0]['id'],
+                            'update_on' => date('Y-m-d H:i:s'),
+                            'update_id' => $user->data()->id,
+                            'site_id' => $clients[0]['site_id'],
+                        ), $enrollment[0]['id']);
+
+                        $visit = $override->get3('visit', 'status', 1, 'patient_id', $clients[0]['id'], 'sequence', 0);
+
+                        if ($visit) {
+                            $user->updateRecord('visit', array(
+                                'sequence' => 0,
+                                'visit_code' => 'EV',
+                                'visit_name' => 'Enrolment Visit',
+                                'respondent' => $clients[0]['respondent'],
+                                'study_id' => $clients[0]['study_id'],
+                                'pid' => $clients[0]['study_id'],
+                                'expected_date' => Input::get('enrollment_date'),
+                                'visit_date' => Input::get('enrollment_date'),
+                                'visit_status' => 1,
+                                'comments' => Input::get('comments'),
+                                'status' => 1,
+                                'facility_id' => $clients[0]['site_id'],
+                                'table_id' => $enrollment[0]['id'],
+                                'patient_id' => $clients[0]['id'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $clients[0]['site_id'],
+                            ), $visit[0]['id']);
+                        } else {
+                            $user->createRecord('visit', array(
+                                'sequence' => 0,
+                                'visit_code' => 'EV',
+                                'visit_name' => 'Enrolment Visit',
+                                'respondent' => $clients[0]['respondent'],
+                                'study_id' => $clients[0]['study_id'],
+                                'pid' => $clients[0]['study_id'],
+                                'expected_date' => Input::get('enrollment_date'),
+                                'visit_date' => Input::get('enrollment_date'),
+                                'visit_status' => 1,
+                                'comments' => Input::get('comments'),
+                                'status' => 1,
+                                'facility_id' => $clients[0]['site_id'],
+                                'table_id' => $enrollment[0]['id'],
+                                'patient_id' => $clients[0]['id'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'update_id' => $user->data()->id,
+                                'site_id' => $clients[0]['site_id'],
+                            ));
+                        }
+
+                        $user->visit_delete1($clients[0]['id'], Input::get('enrollment_date'), $clients[0]['study_id'], $user->data()->id, $clients[0]['site_id'], $clients[0]['respondent'], $enrollment[0]['id']);
+
+
+                        $successMessage = 'Enrollment  Successful Updated';
+                    } else {
+                        $user->createRecord('enrollment', array(
+                            'sequence' => 0,
+                            'visit_code' => 'EV',
+                            'visit_name' => 'Enrolment Visit',
+                            'screening_id' => $screening[0]['id'],
+                            'pid' => $clients[0]['study_id'],
+                            'study_id' => $clients[0]['study_id'],
+                            'enrollment_date' => Input::get('enrollment_date'),
                             'comments' => Input::get('comments'),
                             'status' => 1,
-                            'facility_id' => $clients[0]['site_id'],
-                            'table_id' => $enrollment[0]['id'],
                             'patient_id' => $clients[0]['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
                             'update_on' => date('Y-m-d H:i:s'),
                             'update_id' => $user->data()->id,
                             'site_id' => $clients[0]['site_id'],
-                        ), $visit[0]['id']);
-                    } else {
+                        ));
+
+                        $last_row = $override->lastRow('enrollment', 'id')[0];
+
                         $user->createRecord('visit', array(
                             'sequence' => 0,
                             'visit_code' => 'EV',
@@ -139,7 +192,7 @@ if ($user->isLoggedIn()) {
                             'comments' => Input::get('comments'),
                             'status' => 1,
                             'facility_id' => $clients[0]['site_id'],
-                            'table_id' => $enrollment[0]['id'],
+                            'table_id' => $last_row['id'],
                             'patient_id' => $clients[0]['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
@@ -147,67 +200,20 @@ if ($user->isLoggedIn()) {
                             'update_id' => $user->data()->id,
                             'site_id' => $clients[0]['site_id'],
                         ));
+
+                        $user->visit_delete1($clients[0]['id'], Input::get('enrollment_date'), $clients[0]['study_id'], $user->data()->id, $clients[0]['site_id'], $clients[0]['respondent'], $last_row['id']);
+
+
+                        $successMessage = 'Enrollment  Successful Added';
                     }
 
-                    $user->visit_delete1($clients[0]['id'], Input::get('enrollment_date'), $clients[0]['study_id'], $user->data()->id, $clients[0]['site_id'], $clients[0]['respondent'], $enrollment[0]['id']);
+                    $user->updateRecord('clients', array(
+                        'enrolled' => 1,
+                    ), $clients[0]['id']);
 
 
-                    $successMessage = 'Enrollment  Successful Updated';
-                } else {
-                    $user->createRecord('enrollment', array(
-                        'sequence' => 0,
-                        'visit_code' => 'EV',
-                        'visit_name' => 'Enrolment Visit',
-                        'screening_id' => $screening[0]['id'],
-                        'pid' => $clients[0]['study_id'],
-                        'study_id' => $clients[0]['study_id'],
-                        'enrollment_date' => Input::get('enrollment_date'),
-                        'comments' => Input::get('comments'),
-                        'status' => 1,
-                        'patient_id' => $clients[0]['id'],
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $clients[0]['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('enrollment', 'id')[0];
-
-                    $user->createRecord('visit', array(
-                        'sequence' => 0,
-                        'visit_code' => 'EV',
-                        'visit_name' => 'Enrolment Visit',
-                        'respondent' => $clients[0]['respondent'],
-                        'study_id' => $clients[0]['study_id'],
-                        'pid' => $clients[0]['study_id'],
-                        'expected_date' => Input::get('enrollment_date'),
-                        'visit_date' => Input::get('enrollment_date'),
-                        'visit_status' => 1,
-                        'comments' => Input::get('comments'),
-                        'status' => 1,
-                        'facility_id' => $clients[0]['site_id'],
-                        'table_id' => $last_row['id'],
-                        'patient_id' => $clients[0]['id'],
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $clients[0]['site_id'],
-                    ));
-
-                    $user->visit_delete1($clients[0]['id'], Input::get('enrollment_date'), $clients[0]['study_id'], $user->data()->id, $clients[0]['site_id'], $clients[0]['respondent'], $last_row['id']);
-
-
-                    $successMessage = 'Enrollment  Successful Added';
+                    Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
                 }
-
-                $user->updateRecord('clients', array(
-                    'enrolled' => 1,
-                ), $clients[0]['id']);
-
-
-                Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -1193,7 +1199,6 @@ if ($user->isLoggedIn()) {
                                             <tbody>
                                                 <?php
                                                 $x = 1;
-                                                $i = 0;
                                                 foreach ($override->getNews('visit', 'status', 1, 'patient_id', $_GET['cid']) as $visit) {
                                                     $clients = $override->getNews('clients', 'status', 1, 'id',  $_GET['cid'])[0];
                                                     $screening = $override->getNews('screening', 'status', 1, 'patient_id', $_GET['cid'])[0];
@@ -1254,7 +1259,7 @@ if ($user->isLoggedIn()) {
 
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($visit['sequence'] >= 1) { ?>
-                                                                    <?php if ($screening['eligible'] == 1) { ?>
+                                                                    <?php if ($screening['eligible'] == 1) { $i=1;?>
                                                                         <?php if ($override->getNews('individual', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
                                                                             <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update VL (follow up and enrollment) Data</a>&nbsp;&nbsp; <br><br>
 
