@@ -917,10 +917,12 @@ if ($user->isLoggedIn()) {
                                                             <?php } ?>
                                                             <br>
                                                             <?php if ($value['respondent'] == 2) { ?>
-                                                                <?php if ($kap && $history && $results1 && $results2 && $classification1 && $classification2 && $economic1 && $economic2 && $outcome1 && $outcome2) { ?>
-                                                                    <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-success"> <i class="ri-edit-box-line"></i>Update Study CRF's</a>&nbsp;&nbsp;<br>
-                                                                <?php   } else { ?>
-                                                                    <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add Study CRF's</a>&nbsp;&nbsp;<br>
+                                                                <?php if ($value['age'] >= 18) { ?>
+                                                                    <?php if ($kap && $history && $results1 && $results2 && $classification1 && $classification2 && $economic1 && $economic2 && $outcome1 && $outcome2) { ?>
+                                                                        <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-success"> <i class="ri-edit-box-line"></i>Update Study CRF's</a>&nbsp;&nbsp;<br>
+                                                                    <?php   } else { ?>
+                                                                        <a href="info.php?id=4&cid=<?= $value['id'] ?>&status=<?= $_GET['status'] ?>" class="btn btn-warning"> <i class="ri-edit-box-line"></i>Add Study CRF's</a>&nbsp;&nbsp;<br>
+                                                                    <?php   } ?>
                                                                 <?php   } ?>
                                                             <?php   } ?>
                                                             <br>
@@ -1074,15 +1076,15 @@ if ($user->isLoggedIn()) {
                                                         <td>
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-success" data-toggle="modal">
-                                                                    Done <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp;Not ELigible for Enrollment</p> <?php } ?>
+                                                                    Done <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } elseif ($screening['eligible'] == 2) {  ?><p style="color:red" ;>&nbsp;&nbsp; & Not ELigible for Enrollment </p><?php } else { ?>& <p style="color:yellow" ;>&nbsp;&nbsp;Pending For Screening</p> <?php } ?>
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 2) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
-                                                                    Missed <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp; Not ELigible for Enrollment </p><?php } ?>
+                                                                    Missed <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } elseif ($screening['eligible'] == 2) {  ?><p style="color:red" ;>&nbsp;&nbsp; & Not ELigible for Enrollment </p><?php } else { ?>& <p style="color:yellow" ;>&nbsp;&nbsp;Pending For Screening</p> <?php } ?>
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 0) { ?>
                                                                 <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
-                                                                    Pending <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } else { ?>& <p style="color:#FF0000" ;>&nbsp;&nbsp; Not ELigible for Enrollment </p><?php } ?>
+                                                                    Pending <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } elseif ($screening['eligible'] == 2) {  ?><p style="color:red" ;>&nbsp;&nbsp; & Not ELigible for Enrollment </p><?php } else { ?>& <p style="color:yellow" ;>&nbsp;&nbsp;Pending For Screening</p> <?php } ?>
                                                                 </a>
                                                             <?php } ?>
                                                         </td>
@@ -1092,10 +1094,10 @@ if ($user->isLoggedIn()) {
                                                                 <?php if ($clients['age'] >= 18) { ?>
                                                                     <?php if ($visit['sequence'] == -2) { ?>
                                                                         <?php if ($override->getNews('screening', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
-                                                                            <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Screening ( Inclusion & Exclusion Criteria ) Data </a>&nbsp;&nbsp; <br><br>
+                                                                            <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=-1&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update Screening Data </a>&nbsp;&nbsp; <br><br>
 
                                                                         <?php } else { ?>
-                                                                            <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Screening ( Inclusion & Exclusion Criteria ) Data</a>&nbsp;&nbsp; <br><br>
+                                                                            <a href="add.php?id=7&cid=<?= $_GET['cid'] ?>&sequence=-1&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-warning"> Add Screening Data</a>&nbsp;&nbsp; <br><br>
                                                                         <?php } ?>
                                                                     <?php } ?>
                                                                 <?php } ?>
