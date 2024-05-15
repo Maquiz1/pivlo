@@ -254,109 +254,48 @@ class User
     }
 
 
-    function visit_delete1($client_id, $screening_date, $study_id, $staff_id, $site_id, $eligible, $sequence, $visit_code, $visit_name, $respondent, $table, $facility_id)
+    function visit_delete1($client_id, $enrollment_date, $study_id, $staff_id, $site_id, $respondent, $table)
     {
+        $sequence = 1;
+        // $visit_id = $this->_override->getNews('visit', 'patient_id', $client_id, 'sequence', $sequence);
+        // if ($visit_id) {
+        //     foreach ($this->_override->get('visit', 'patient_id', $client_id) as $visit) {
+        //         if ($visit['sequence']) {
+        //             $this->deleteRecord('visit', 'id', $visit['id']);
+        //         }
+        //     }
+        // } else {
+        foreach ($this->_override->get('schedule', 'status', 1) as $schedule) {
 
-        // $sequence = 1;
-        // $visit_code = '';
-        // $visit_name = '';
-        // $eligible = 0;
-        // if (Input::get('conset') == 1) {
-        //     $eligible = 1;
-        //     $sequence = 1;
-        //     $visit_code = 'M' . $sequence;
-        //     $visit_name = 'Month ' . $sequence;
-        // }
+            $this->createRecord('visit', array(
+                'sequence' => $sequence,
+                // 'schedule' => $schedule['id'],
+                'visit_code' => $schedule['code'],
+                'visit_name' => $schedule['name'],
+                'respondent' => $respondent,
+                'pid' => $study_id,
+                'study_id' => $study_id,
+                'expected_date' => $enrollment_date,
+                'visit_date' => '',
+                'visit_status' => 0,
+                'comments' => Input::get('comments'),
+                'status' => 1,
+                'table_id' => $table,
+                'facility_id' => $site_id,
+                'patient_id' => $client_id,
+                'create_on' => date('Y-m-d H:i:s'),
+                'staff_id' => $staff_id,
+                'update_on' => date('Y-m-d H:i:s'),
+                'update_id' => $staff_id,
+                'site_id' => $site_id,
+            ));
 
-        $visit_id = $this->_override->getNews('visit', 'patient_id', $client_id, 'sequence', $sequence);
-        if ($eligible) {
-            if ($visit_id) {
-                $this->updateRecord('visit', array(
-                    'expected_date' => $screening_date,
-                    'update_on' => date('Y-m-d H:i:s'),
-                    'update_id' => $staff_id,
-                    'respondent' => $respondent,
-                    'table_id' => $table,
-                    'facility_id' => $facility_id,
-                ), $visit_id[0]['id']);
-            } else {
-                $this->createRecord('visit', array(
-                    'table_id' => $table,
-                    'facility_id' => $facility_id,
-                    'sequence' => 1,
-                    'pid' => $study_id,
-                    'study_id' => $study_id,
-                    'visit_code' => $visit_code,
-                    'visit_name' => $visit_name,
-                    'expected_date' => $screening_date,
-                    'visit_date' => '',
-                    'visit_status' => 0,
-                    'respondent' => $respondent,
-                    'status' => 1,
-                    'patient_id' => $client_id,
-                    'create_on' => date('Y-m-d H:i:s'),
-                    'staff_id' => $staff_id,
-                    'update_on' => date('Y-m-d H:i:s'),
-                    'update_id' => $staff_id,
-                    'site_id' => $site_id,
-                ));
-
-                $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($screening_date)));
+            $enrollment_date = date('Y-m-d', strtotime('+1 month', strtotime($enrollment_date)));
 
 
-                $this->createRecord('visit', array(
-                    'table_id' => $table,
-                    'facility_id' => $facility_id,
-                    'sequence' => 2,
-                    'pid' => $study_id,
-                    'study_id' => $study_id,
-                    'visit_code' => 'M2',
-                    'visit_name' => 'Month 2',
-                    'expected_date' => $expected_date,
-                    'visit_date' => '',
-                    'visit_status' => 0,
-                    'respondent' => $respondent,
-                    'status' => 1,
-                    'patient_id' => $client_id,
-                    'create_on' => date('Y-m-d H:i:s'),
-                    'staff_id' => $staff_id,
-                    'update_on' => date('Y-m-d H:i:s'),
-                    'update_id' => $staff_id,
-                    'site_id' => $site_id,
-                ));
-
-                $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($expected_date)));
-
-                $this->createRecord('visit', array(
-                    'table_id' => $table,
-                    'facility_id' => $facility_id,
-                    'sequence' => 3,
-                    'pid' => $study_id,
-                    'study_id' => $study_id,
-                    'visit_code' => 'M3',
-                    'visit_name' => 'Month 3',
-                    'expected_date' => $expected_date,
-                    'visit_date' => '',
-                    'visit_status' => 0,
-                    'respondent' => $respondent,
-                    'status' => 1,
-                    'patient_id' => $client_id,
-                    'create_on' => date('Y-m-d H:i:s'),
-                    'staff_id' => $staff_id,
-                    'update_on' => date('Y-m-d H:i:s'),
-                    'update_id' => $staff_id,
-                    'site_id' => $site_id,
-                ));
-            }
-        } else {
-            if ($visit_id) {
-                foreach ($this->_override->get('visit', 'patient_id', $client_id) as $visit) {
-                    if ($visit['sequence']) {
-                        $this->deleteRecord('visit', 'id', $visit['id']);
-                    }
-                }
-            }
+            $sequence++;
         }
+        // }
     }
 
 

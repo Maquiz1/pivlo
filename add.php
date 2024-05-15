@@ -842,7 +842,7 @@ if ($user->isLoggedIn()) {
                 $eligible = 0;
                 if (Input::get('conset') == 1) {
                     $eligible = 1;
-                }else{
+                } else {
                     $eligible = 2;
                 }
 
@@ -1040,7 +1040,6 @@ if ($user->isLoggedIn()) {
                     }
 
                     $successMessage = 'Enrollment  Successful Updated';
-
                 } else {
                     $user->createRecord('enrollment', array(
                         'sequence' => 0,
@@ -5613,6 +5612,128 @@ if ($user->isLoggedIn()) {
             </div>
             <!-- /.content-wrapper -->
         <?php } elseif ($_GET['id'] == 13) { ?>
+
+            <?php
+            $screening = $override->get3('screening', 'status', 1, 'sequence', $_GET['sequence'], 'patient_id', $_GET['cid'])[0];
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <?php if ($screening) { ?>
+                                    <h1>Add New Screening</h1>
+                                <?php } else { ?>
+                                    <h1>Update Screening</h1>
+                                <?php } ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>">
+                                            < Back</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item">
+                                        <a href="index1.php">Home</a>
+                                    </li>&nbsp;&nbsp;
+                                    <li class="breadcrumb-item">
+                                        <a href="info.php?id=3&status=<?= $_GET['status']; ?>">
+                                            Go to screening list > </a>
+                                    </li>&nbsp;&nbsp;
+                                    <?php if ($results) { ?>
+                                        <li class="breadcrumb-item active">Add New Screening</li>
+                                    <?php } else { ?>
+                                        <li class="breadcrumb-item active">Update Screening</li>
+                                    <?php } ?>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- right column -->
+                            <div class="col-md-12">
+                                <!-- general form elements disabled -->
+                                <div class="card card-warning">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Screeing Form</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
+                                        <div class="card-body">
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="test_date" class="form-label">Date of Screening</label>
+                                                        <input type="date" value="<?php if ($screening['screening_date']) {
+                                                                                        print_r($screening['screening_date']);
+                                                                                    } ?>" id="screening_date" name="screening_date" class="form-control" placeholder="Enter date" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="conset" class="form-label">Patient Conset?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="conset" id="conset<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['conset'] == $value['id']) {
+                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                            } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="mb-2">
+                                                        <label for="results_date" class="form-label">Date of Conset</label>
+                                                        <input type="date" value="<?php if ($screening) {
+                                                                                        print_r($screening['conset_date']);
+                                                                                    } ?>" id="conset_date" name="conset_date" class="form-control" placeholder="Enter date" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <label for="ldct_results" class="form-label">Comments</label>
+                                                        <textarea class="form-control" name="comments" id="comments" rows="4" placeholder="Enter here" required>
+                                                            <?php if ($screening['comments']) {
+                                                                print_r($screening['comments']);
+                                                            } ?>
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <a href="info.php?id=4&cid=<?= $_GET['cid']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-default">Back</a>
+                                            <input type="hidden" name="cid" value="<?= $_GET['cid'] ?>">
+                                            <input type="submit" name="add_enrollment" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
 
         <?php } elseif ($_GET['id'] == 14) { ?>
 
