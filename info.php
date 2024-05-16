@@ -1221,7 +1221,7 @@ if ($user->isLoggedIn()) {
                                                                     Done <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } elseif ($screening['eligible'] == 2) {  ?><p style="color:red" ;>&nbsp;&nbsp; & Not ELigible for Enrollment </p><?php } else { ?>& <p style="color:yellow" ;>&nbsp;&nbsp;Pending For Screening</p> <?php } ?>
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 2) { ?>
-                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
+                                                                <a href="#editVisit<?= $visit['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">
                                                                     Missed <?php if ($screening['eligible'] == 1) {  ?> & ELigible for Enrollment <?php } elseif ($screening['eligible'] == 2) {  ?><p style="color:red" ;>&nbsp;&nbsp; & Not ELigible for Enrollment </p><?php } else { ?>& <p style="color:yellow" ;>&nbsp;&nbsp;Pending For Screening</p> <?php } ?>
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 0) { ?>
