@@ -329,6 +329,86 @@ class User
     }
 
 
+    // function visit_schedule($client_id, $enrollment_date, $study_id, $staff_id, $site_id, $respondent, $table)
+    // {
+    //     $sequence = 0;
+    //     $visit_id1 = $this->_override->get3('visit',  'status', 1, 'patient_id', $client_id, 'sequence', $sequence);
+    //     $visit_id = $this->_override->get3GretaerThan1('visit',  'status', 1, 'patient_id', $client_id, 'sequence', $sequence);
+    //     if ($visit_id) {
+    //         if ($visit_id1['enrollment_date'] != $enrollment_date) {
+    //             foreach ($visit_id as $visit) {
+    //                 $this->deleteRecord('visit', 'id', $visit['id']);
+    //             }
+
+    //             foreach ($this->_override->get('schedule', 'status', 1) as $schedule) {
+    //                 $this->createRecord('visit', array(
+    //                     'sequence' => $sequence,
+    //                     // 'schedule' => $schedule['id'],
+    //                     'visit_code' => $schedule['code'],
+    //                     'visit_name' => $schedule['name'],
+    //                     'respondent' => $respondent,
+    //                     'pid' => $study_id,
+    //                     'study_id' => $study_id,
+    //                     'expected_date' => $enrollment_date,
+    //                     'visit_date' => '',
+    //                     'visit_status' => 0,
+    //                     'comments' => '',
+    //                     'status' => 1,
+    //                     'table_id' => $table,
+    //                     'facility_id' => $site_id,
+    //                     'patient_id' => $client_id,
+    //                     'create_on' => date('Y-m-d H:i:s'),
+    //                     'staff_id' => $staff_id,
+    //                     'update_on' => date('Y-m-d H:i:s'),
+    //                     'update_id' => $staff_id,
+    //                     'site_id' => $site_id,
+    //                 ));
+
+    //                 $enrollment_date = date('Y-m-d', strtotime('+1 month', strtotime($enrollment_date)));
+
+
+    //                 $sequence++;
+    //             }
+    //         }
+    //     } else {
+    //         foreach ($this->_override->get('schedule', 'status', 1) as $schedule) {
+    //             $this->createRecord('facility', array(
+    //                 'sequence' => $_GET['sequence'],
+    //                 'vid' => $_GET['vid'],
+    //                 'expected_date' => $expected_date,
+    //                 'visit_date' => Input::get('visit_date'),
+    //                 'visit_code' => $_GET['visit_code'],
+    //                 'facility_id' => Input::get('facility_id'),
+    //                 'facility_arm' => Input::get('facility_arm'),
+    //                 'facility_level' => Input::get('facility_level'),
+    //                 'facility_type' => Input::get('facility_type'),
+    //                 'appointments' => Input::get('appointments'),
+    //                 'month_name' => Input::get('month_name'),
+    //                 'patients_tested' => Input::get('patients_tested'),
+    //                 'vl_results_available' => Input::get('vl_results_available'),
+    //                 'comments' => Input::get('comments'),
+    //                 'respondent' => $_GET['respondent'],
+    //                 'facility_completed' => Input::get('facility_completed'),
+    //                 'date_completed' => Input::get('date_completed'),
+    //                 'status' => 1,
+    //                 'visit_status' => 0,
+    //                 'create_on' => date('Y-m-d H:i:s'),
+    //                 'staff_id' => $user->data()->id,
+    //                 'update_on' => date('Y-m-d H:i:s'),
+    //                 'update_id' => $user->data()->id,
+    //                 'site_id' => $_GET['site_id'],
+    //             ));
+    //             $successMessage = 'Facility  Successful Added';
+
+    //             $enrollment_date = date('Y-m-d', strtotime('+1 month', strtotime($enrollment_date)));
+
+
+    //             $sequence++;
+    //         }
+    //     }
+    // }
+
+
     function visit_delete11($client_id, $screening_date, $study_id, $staff_id, $site_id, $eligible)
     {
         $visit_id = $this->_override->getNews('visit', 'patient_id', $client_id, 'sequence', 1);

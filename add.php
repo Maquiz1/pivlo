@@ -1151,37 +1151,27 @@ if ($user->isLoggedIn()) {
                 $sites = $override->getNews('sites', 'status', 1, 'id', $_GET['site_id'])[0];
 
                 $facility = $override->get3('facility', 'status', 1, 'site_id', $_GET['site_id'], 'sequence', $_GET['sequence']);
-                $first_line = 0;
-                $second_line = 0;
-                $third_line = 0;
                 $sequence = '';
                 $visit_code = '';
                 $visit_name = '';
 
-                // if (Input::get('first_line')) {
-                //     $first_line = Input::get('first_line');
-                // }
-
-                // if (Input::get('second_line')) {
-                //     $second_line = Input::get('second_line');
-                // }
-
-                // if (Input::get('third_line')) {
-                //     $third_line = Input::get('third_line');
-                // }
-
-                // $expected_date = date('Y-m-d', strtotime('+1 month', strtotime(Input::get('visit_date'))));
+                $expected_date = date('Y-m-d', strtotime('+1 month', strtotime(Input::get('visit_date'))));
 
                 // $last_visit = $override->getlastRow1('visit', 'patient_id', $clients['id'], 'sequence', $_GET['sequence'], 'id')[0];
 
                 $sequence = intval($_GET['sequence']) + 1;
+                
                 if ($sequence) {
                     $visit_code = 'M' . $sequence;
                     $visit_name = 'Month ' . $sequence;
                 }
+
+
+
                 if ($facility) {
                     $user->updateRecord('facility', array(
                         'facility_id' => Input::get('facility_id'),
+                        'expected_date' => $expected_date,
                         'visit_date' => Input::get('visit_date'),
                         'facility_arm' => Input::get('facility_arm'),
                         'facility_level' => Input::get('facility_level'),
@@ -1193,6 +1183,7 @@ if ($user->isLoggedIn()) {
                         'comments' => Input::get('comments'),
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => Input::get('facility_completed'),
+                        'visit_status' => Input::get('visit_status'),
                         'date_completed' => Input::get('date_completed'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
@@ -1203,9 +1194,10 @@ if ($user->isLoggedIn()) {
                     $user->createRecord('facility', array(
                         'sequence' => $_GET['sequence'],
                         'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'visit_date' => Input::get('visit_date'),
                         'visit_code' => $_GET['visit_code'],
                         'facility_id' => Input::get('facility_id'),
-                        'visit_date' => Input::get('visit_date'),
                         'facility_arm' => Input::get('facility_arm'),
                         'facility_level' => Input::get('facility_level'),
                         'facility_type' => Input::get('facility_type'),
@@ -1218,6 +1210,7 @@ if ($user->isLoggedIn()) {
                         'facility_completed' => Input::get('facility_completed'),
                         'date_completed' => Input::get('date_completed'),
                         'status' => 1,
+                        'visit_status' => 0,
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
                         'update_on' => date('Y-m-d H:i:s'),
@@ -1227,7 +1220,7 @@ if ($user->isLoggedIn()) {
                     $successMessage = 'Facility  Successful Added';
                 }
 
-                // $user->visit_delete1($_GET['site_id'], Input::get('visit_date'), $_GET['site_id'], $user->data()->id, $_GET['site_id'], $eligible, $sequence, $visit_code, $visit_name);
+                // $user->visit_schedule($_GET['site_id'], Input::get('visit_date'), $_GET['site_id'], $user->data()->id, $_GET['site_id'], $eligible, $sequence, $visit_code, $visit_name);
 
 
                 // Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);

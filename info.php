@@ -88,7 +88,6 @@ if ($user->isLoggedIn()) {
 
                 if (Input::get('enrollment_date') < $screening['screening_date']) {
                     $errorMessage = 'Enrollment Date Can not be less than screaning date';
-
                 } else {
                     if ($enrollment) {
                         $user->updateRecord('enrollment', array(
@@ -1259,7 +1258,8 @@ if ($user->isLoggedIn()) {
 
                                                             <?php if ($visit['visit_status'] == 1) { ?>
                                                                 <?php if ($visit['sequence'] >= 1) { ?>
-                                                                    <?php if ($screening['eligible'] == 1) { $i=1;?>
+                                                                    <?php if ($screening['eligible'] == 1) {
+                                                                        $i = 1; ?>
                                                                         <?php if ($override->getNews('individual', 'patient_id', $_GET['cid'], 'sequence', $i)) { ?>
                                                                             <a href="add.php?id=5&cid=<?= $_GET['cid'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&study_id=<?= $visit['study_id'] ?>&status=<?= $_GET['status'] ?>" role=" button" class="btn btn-info"> Update VL (follow up and enrollment) Data</a>&nbsp;&nbsp; <br><br>
 
@@ -2633,10 +2633,10 @@ if ($user->isLoggedIn()) {
                                                         </td>
                                                         <td class="table-user text-center">
                                                             <?php if ($facility['status']) { ?>
-                                                                <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-info">Update Visit Records</a>
+                                                                <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-info">View Schedule</a>
 
                                                             <?php } else { ?>
-                                                                <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-warning">Add Visit Records</a>
+                                                                <a href="add.php?id=6&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&sequence=0&visit_code=M0&vid=3&respondent=<?= $value['respondent'] ?>" class="btn btn-warning">Add Schedule</a>
 
 
                                                             <?php } ?>
@@ -2822,14 +2822,12 @@ if ($user->isLoggedIn()) {
                                                 <?php
                                                 $x = 1;
                                                 $i = 0;
-                                                foreach ($override->get('visit', 'site_id', $_GET['site_id']) as $visit) {
+                                                foreach ($override->get('facility', 'site_id', $_GET['site_id']) as $visit) {
                                                     $clients = $override->get('clients', 'id', $_GET['cid'])[0];
                                                     $site = $override->get('sites', 'id', $visit['site_id'])[0];
-                                                    $kap = $override->get('kap', 'patient_id', $_GET['cid']);
-                                                    $screening = $override->get('screening', 'patient_id', $_GET['cid']);
                                                 ?>
                                                     <tr>
-                                                        <td> <?= $visit['visit_name'] ?></td>
+                                                        <td> <?= $visit['visit_code'] ?></td>
                                                         <td> <?= $visit['expected_date'] ?></td>
                                                         <td> <?= $visit['visit_date'] ?> </td>
 
@@ -2855,14 +2853,12 @@ if ($user->isLoggedIn()) {
                                                         </td>
 
                                                         <td>
-                                                            <?php if ($visit['visit_status'] == 1) { ?>
-                                                                <?php if ($visit['sequence'] >= 0) { ?>
-                                                                    <?php if ($override->getNews('facility', 'site_id', $_GET['site_id'], 'sequence', $i)) { ?>
-                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility Records </a>&nbsp;&nbsp; <br><br>
+                                                            <?php if ($visit['sequence'] >= 0) { ?>
+                                                                <?php if ($override->getNews('facility', 'site_id', $_GET['site_id'], 'sequence', $i)) { ?>
+                                                                    <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility Records </a>&nbsp;&nbsp; <br><br>
 
-                                                                    <?php } else { ?>
-                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility Records</a>&nbsp;&nbsp; <br><br>
-                                                                    <?php } ?>
+                                                                <?php } else { ?>
+                                                                    <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility Records</a>&nbsp;&nbsp; <br><br>
                                                                 <?php } ?>
 
                                                             <?php } ?>
