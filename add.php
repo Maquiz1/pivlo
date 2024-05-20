@@ -1138,7 +1138,7 @@ if ($user->isLoggedIn()) {
             }
         } elseif (Input::get('add_facility')) {
             $validate = $validate->check($_POST, array(
-                'visit_date' => array(
+                'extraction_date' => array(
                     'required' => true,
                 ),
                 'month_name' => array(
@@ -1150,52 +1150,44 @@ if ($user->isLoggedIn()) {
 
                 $sites = $override->getNews('sites', 'status', 1, 'id', $_GET['site_id'])[0];
 
-                $facility = $override->get3('facility', 'status', 1, 'site_id', $_GET['site_id'], 'sequence', $_GET['sequence']);
+                $facility0 = $override->get3('facility', 'status', 1, 'site_id', $_GET['site_id'], 'sequence', $_GET['sequence']);
                 $sequence = '';
                 $visit_code = '';
                 $visit_name = '';
 
-                $expected_date = date('Y-m-d', strtotime('+1 month', strtotime(Input::get('visit_date'))));
 
                 // $last_visit = $override->getlastRow1('visit', 'patient_id', $clients['id'], 'sequence', $_GET['sequence'], 'id')[0];
 
-                $sequence = intval($_GET['sequence']) + 1;
-                
-                if ($sequence) {
-                    $visit_code = 'M' . $sequence;
-                    $visit_name = 'Month ' . $sequence;
-                }
+                // $sequence = intval($_GET['sequence']) + 1;
 
+                // if ($sequence) {
+                //     $visit_code = 'M' . $sequence;
+                //     $visit_name = 'Month ' . $sequence;
+                // }
 
-
-                if ($facility) {
+                if ($facility0) {
                     $user->updateRecord('facility', array(
-                        'facility_id' => Input::get('facility_id'),
-                        'expected_date' => $expected_date,
-                        'visit_date' => Input::get('visit_date'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
+                        'extraction_date' => Input::get('extraction_date'),
                         'appointments' => Input::get('appointments'),
                         'month_name' => Input::get('month_name'),
                         'patients_tested' => Input::get('patients_tested'),
                         'vl_results_available' => Input::get('vl_results_available'),
                         'comments' => Input::get('comments'),
-                        'respondent' => $_GET['respondent'],
                         'facility_completed' => Input::get('facility_completed'),
-                        'visit_status' => Input::get('visit_status'),
                         'date_completed' => Input::get('date_completed'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                    ), $facility[0]['id']);
+                    ), $facility0[0]['id']);
 
                     $successMessage = 'Facility  Successful Updated';
                 } else {
+
                     $user->createRecord('facility', array(
                         'sequence' => $_GET['sequence'],
                         'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'visit_date' => Input::get('visit_date'),
+                        'visit_date' => Input::get('extraction_date'),
+                        'expected_date' => Input::get('extraction_date'),
+                        'extraction_date' => Input::get('extraction_date'),
                         'visit_code' => $_GET['visit_code'],
                         'facility_id' => Input::get('facility_id'),
                         'facility_arm' => Input::get('facility_arm'),
@@ -1210,6 +1202,38 @@ if ($user->isLoggedIn()) {
                         'facility_completed' => Input::get('facility_completed'),
                         'date_completed' => Input::get('date_completed'),
                         'status' => 1,
+                        'visit_status' => 1,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 1,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M1',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
                         'visit_status' => 0,
                         'create_on' => date('Y-m-d H:i:s'),
                         'staff_id' => $user->data()->id,
@@ -1217,6 +1241,348 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                         'site_id' => $_GET['site_id'],
                     ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 2,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M2',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 3,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M3',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 4,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M4',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 5,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M5',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 6,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M6',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 7,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M7',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 8,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M8',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 9,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M9',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 10,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M10',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 11,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M11',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
+                    $last_row = $override->lastRow('facility', 'id')[0];
+
+                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
+
+                    $user->createRecord('facility', array(
+                        'sequence' => 12,
+                        'vid' => $_GET['vid'],
+                        'expected_date' => $expected_date,
+                        'extraction_date' => '',
+                        'visit_code' => 'M12',
+                        'facility_id' => Input::get('facility_id'),
+                        'facility_arm' => Input::get('facility_arm'),
+                        'facility_level' => Input::get('facility_level'),
+                        'facility_type' => Input::get('facility_type'),
+                        'appointments' => 0,
+                        'month_name' => 0,
+                        'patients_tested' => 0,
+                        'vl_results_available' => 0,
+                        'comments' => '',
+                        'respondent' => $_GET['respondent'],
+                        'facility_completed' => 0,
+                        'date_completed' => '',
+                        'status' => 1,
+                        'visit_status' => 0,
+                        'create_on' => date('Y-m-d H:i:s'),
+                        'staff_id' => $user->data()->id,
+                        'update_on' => date('Y-m-d H:i:s'),
+                        'update_id' => $user->data()->id,
+                        'site_id' => $_GET['site_id'],
+                    ));
+
                     $successMessage = 'Facility  Successful Added';
                 }
 
@@ -3381,10 +3747,10 @@ if ($user->isLoggedIn()) {
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mb-2">
-                                                        <label for="visit_date" class="form-label">Date of Visit</label>
-                                                        <input type="date" value="<?php if ($facility['visit_date']) {
-                                                                                        print_r($facility['visit_date']);
-                                                                                    } ?>" id="visit_date" name="visit_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                        <label for="extraction_date" class="form-label">Date of Extraction</label>
+                                                        <input type="date" value="<?php if ($facility['extraction_date']) {
+                                                                                        print_r($facility['extraction_date']);
+                                                                                    } ?>" id="extraction_date" name="extraction_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">

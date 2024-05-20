@@ -74,6 +74,29 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
+        } elseif (Input::get('add_facility_visit')) {
+            $validate = $validate->check($_POST, array(
+                'visit_date' => array(
+                    'required' => true,
+                ),
+                'visit_status' => array(
+                    'required' => true,
+                ),
+            ));
+
+            if ($validate->passed()) {
+                $user->updateRecord('facility', array(
+                    'visit_date' => Input::get('visit_date'),
+                    'comments' => Input::get('comments'),
+                    'visit_status' => Input::get('visit_status'),
+                    'update_on' => date('Y-m-d H:i:s'),
+                    'update_id' => $user->data()->id,
+                ), Input::get('id'));
+
+                $successMessage = 'Visit Updates  Successful';
+            } else {
+                $pageError = $validate->errors();
+            }
         } elseif (Input::get('add_enrollment')) {
             $validate = $validate->check($_POST, array(
                 'enrollment_date' => array(
@@ -2853,14 +2876,16 @@ if ($user->isLoggedIn()) {
                                                         </td>
 
                                                         <td>
-                                                            <?php if ($visit['sequence'] >= 0) { ?>
-                                                                <?php if ($override->getNews('facility', 'site_id', $_GET['site_id'], 'sequence', $i)) { ?>
-                                                                    <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility Records </a>&nbsp;&nbsp; <br><br>
+                                                            <?php if ($visit['visit_status'] == 1) { ?>
+                                                                <?php if ($visit['sequence'] >= 0) { ?>
+                                                                    <?php if ($override->get3('facility', 'site_id', $_GET['site_id'], 'extraction_date', '', 'sequence', $i)) { ?>
+                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility Records</a>&nbsp;&nbsp; <br><br>
 
-                                                                <?php } else { ?>
-                                                                    <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility Records</a>&nbsp;&nbsp; <br><br>
+                                                                    <?php } else { ?>
+                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility Records </a>&nbsp;&nbsp; <br><br>
+
+                                                                    <?php } ?>
                                                                 <?php } ?>
-
                                                             <?php } ?>
                                                         </td>
                                                     </tr>
@@ -2927,7 +2952,7 @@ if ($user->isLoggedIn()) {
                                                                     <div class="modal-footer justify-content-between">
                                                                         <input type="hidden" name="id" value="<?= $visit['id'] ?>">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                        <input type="submit" name="add_visit" class="btn btn-primary" value="Save changes">
+                                                                        <input type="submit" name="add_facility_visit" class="btn btn-primary" value="Save changes">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.modal-content -->

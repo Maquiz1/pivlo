@@ -329,7 +329,7 @@ class User
     }
 
 
-    // function visit_schedule($client_id, $enrollment_date, $study_id, $staff_id, $site_id, $respondent, $table)
+    // function visit_schedule($visit_date, $study_id, $staff_id, $site_id, $respondent, $table)
     // {
     //     $sequence = 0;
     //     $visit_id1 = $this->_override->get3('visit',  'status', 1, 'patient_id', $client_id, 'sequence', $sequence);
@@ -374,7 +374,7 @@ class User
     //         foreach ($this->_override->get('schedule', 'status', 1) as $schedule) {
     //             $this->createRecord('facility', array(
     //                 'sequence' => $_GET['sequence'],
-    //                 'vid' => $_GET['vid'],
+    //                 'vid' => 1,
     //                 'expected_date' => $expected_date,
     //                 'visit_date' => Input::get('visit_date'),
     //                 'visit_code' => $_GET['visit_code'],
