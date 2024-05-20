@@ -1172,6 +1172,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => Input::get('month_name'),
                         'patients_tested' => Input::get('patients_tested'),
                         'vl_results_available' => Input::get('vl_results_available'),
+                        'ltf' => Input::get('ltf'),
+                        'transferred_out' => Input::get('transferred_out'),
+                        'admitted' => Input::get('admitted'),
+                        'death' => Input::get('death'),
+                        'inability_transport' => Input::get('inability_transport'),
+                        'lack_accompany' => Input::get('lack_accompany'),
+                        'incompatibility_time' => Input::get('incompatibility_time'),
+                        'tosa' => Input::get('tosa'),
+                        'mourning' => Input::get('mourning'),
+                        'forgot' => Input::get('forgot'),
+                        'unknown' => Input::get('unknown'),
+                        'others' => Input::get('others'),
                         'comments' => Input::get('comments'),
                         'facility_completed' => Input::get('facility_completed'),
                         'date_completed' => Input::get('date_completed'),
@@ -1197,6 +1209,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => Input::get('month_name'),
                         'patients_tested' => Input::get('patients_tested'),
                         'vl_results_available' => Input::get('vl_results_available'),
+                        'ltf' => Input::get('ltf'),
+                        'transferred_out' => Input::get('transferred_out'),
+                        'admitted' => Input::get('admitted'),
+                        'death' => Input::get('death'),
+                        'inability_transport' => Input::get('inability_transport'),
+                        'lack_accompany' => Input::get('lack_accompany'),
+                        'incompatibility_time' => Input::get('incompatibility_time'),
+                        'tosa' => Input::get('tosa'),
+                        'mourning' => Input::get('mourning'),
+                        'forgot' => Input::get('forgot'),
+                        'unknown' => Input::get('unknown'),
+                        'others' => Input::get('others'),
                         'comments' => Input::get('comments'),
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => Input::get('facility_completed'),
@@ -1229,6 +1253,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1260,6 +1296,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1291,6 +1339,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1322,6 +1382,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1353,6 +1425,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1384,6 +1468,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1415,6 +1511,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1446,6 +1554,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1477,6 +1597,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1508,6 +1640,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1539,6 +1683,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -1570,6 +1726,18 @@ if ($user->isLoggedIn()) {
                         'month_name' => 0,
                         'patients_tested' => 0,
                         'vl_results_available' => 0,
+                        'ltf' => 0,
+                        'transferred_out' => 0,
+                        'admitted' => 0,
+                        'death' => 0,
+                        'inability_transport' => 0,
+                        'lack_accompany' => 0,
+                        'incompatibility_time' => 0,
+                        'tosa' => 0,
+                        'mourning' => 0,
+                        'forgot' => 0,
+                        'unknown' => 0,
+                        'others' => 0,
                         'comments' => '',
                         'respondent' => $_GET['respondent'],
                         'facility_completed' => 0,
@@ -3796,6 +3964,117 @@ if ($user->isLoggedIn()) {
                                                         <input type="number" value="<?php if ($facility['vl_results_available']) {
                                                                                         print_r($facility['vl_results_available']);
                                                                                     } ?>" id="vl_results_available" name="vl_results_available" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Reason for those who were not tested.</h3>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="ltf" class="form-label">Loss to Follow Up </label>
+                                                        <input type="number" value="<?php if ($facility['ltf']) {
+                                                                                        print_r($facility['ltf']);
+                                                                                    } ?>" id="ltf" name="ltf" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="transferred_out" class="form-label">TRANSFERRED OUT </label>
+                                                        <input type="number" value="<?php if ($facility['transferred_out']) {
+                                                                                        print_r($facility['transferred_out']);
+                                                                                    } ?>" id="transferred_out" name="transferred_out" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="admitted" class="form-label">ADMITTED ELSE WHERE </label>
+                                                        <input type="number" value="<?php if ($facility['admitted']) {
+                                                                                        print_r($facility['admitted']);
+                                                                                    } ?>" id="admitted" name="admitted" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="death" class="form-label">DEATH </label>
+                                                        <input type="number" value="<?php if ($facility['death']) {
+                                                                                        print_r($facility['death']);
+                                                                                    } ?>" id="death" name="death" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="inability_transport" class="form-label">INABILITY TO PAY TRANSPORT COST</label>
+                                                        <input type="number" value="<?php if ($facility['inability_transport']) {
+                                                                                        print_r($facility['inability_transport']);
+                                                                                    } ?>" id="inability_transport" name="inability_transport" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="lack_accompany" class="form-label">LACK OF ACCOMPANY PERSON</label>
+                                                        <input type="number" value="<?php if ($facility['lack_accompany']) {
+                                                                                        print_r($facility['lack_accompany']);
+                                                                                    } ?>" id="lack_accompany" name="lack_accompany" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="incompatibility_time" class="form-label">INCOMPATIBILITY OF TESTING TIME </label>
+                                                        <input type="number" value="<?php if ($facility['incompatibility_time']) {
+                                                                                        print_r($facility['incompatibility_time']);
+                                                                                    } ?>" id="incompatibility_time" name="incompatibility_time" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="tosa" class="form-label">TRAVELLED OUSTSIDE STUDY AREA</label>
+                                                        <input type="number" value="<?php if ($facility['tosa']) {
+                                                                                        print_r($facility['tosa']);
+                                                                                    } ?>" id="tosa" name="tosa" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="mourning" class="form-label">MOURNING</label>
+                                                        <input type="number" value="<?php if ($facility['mourning']) {
+                                                                                        print_r($facility['mourning']);
+                                                                                    } ?>" id="mourning" name="mourning" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="forgot" class="form-label">FORGOT</label>
+                                                        <input type="number" value="<?php if ($facility['forgot']) {
+                                                                                        print_r($facility['forgot']);
+                                                                                    } ?>" id="forgot" name="forgot" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="unknown" class="form-label">UNKNOWN</label>
+                                                        <input type="number" value="<?php if ($facility['unknown']) {
+                                                                                        print_r($facility['unknown']);
+                                                                                    } ?>" id="unknown" name="unknown" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="others" class="form-label">OTHERS</label>
+                                                        <input type="number" value="<?php if ($facility['others']) {
+                                                                                        print_r($facility['others']);
+                                                                                    } ?>" id="others" name="others" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
                                             </div>
