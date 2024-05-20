@@ -331,7 +331,7 @@ if ($user->isLoggedIn()) {
                         $successMessage = 'Client Updated Successful';
                     } else {
 
-                        $std_id = $override->getNews('study_id', 'site_id', $site_id, 'status', 0)[0];
+                        $std_id = $override->getNews('study_id', 'site_id', Input::get('site'), 'status', 0)[0];
 
                         $user->createRecord('clients', array(
                             'sequence' => -2,
@@ -2999,7 +2999,7 @@ if ($user->isLoggedIn()) {
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-3">
                                                         <label for="date_art_treatment" class="form-label">ART current regime</label>
                                                         <input type="date" value="<?php if ($individual['date_art_treatment']) {
@@ -3007,16 +3007,16 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="date_art_treatment" name="date_art_treatment" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date art treatment" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-3">
-                                                        <label for="date_art_treatment" class="form-label">3.1 When did you begin taking current ART-Treatment?</label>
+                                                        <label for="date_art_treatment" class="form-label">When did you begin taking current ART-Treatment?</label>
                                                         <input type="date" value="<?php if ($individual['date_art_treatment']) {
                                                                                         print_r($individual['date_art_treatment']);
                                                                                     } ?>" id="date_art_treatment" name="date_art_treatment" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date art treatment" required />
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <label>Which antiretroviral therapy regimen is the patient currently on?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -3037,7 +3037,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4" id="first_line">
+                                                <div class="col-3" id="first_line">
                                                     <label>First Line</label>
                                                     <!-- checkbox -->
                                                     <div class="row-form clearfix">
@@ -3058,7 +3058,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4" id="second_line">
+                                                <div class="col-3" id="second_line">
                                                     <label>Second Line</label>
                                                     <!-- checkbox -->
                                                     <div class="row-form clearfix">
@@ -3079,7 +3079,7 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-4" id="third_line">
+                                            <div class="col-3" id="third_line">
                                                 <label>Third line</label>
                                                 <!-- checkbox -->
                                                 <div class="row-form clearfix">
