@@ -2983,27 +2983,7 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <label>Who is the head of your household?</label>
-                                                            <select id="head_household" name="head_household" class="form-control" required>
-                                                                <option value="<?= $household['id'] ?>"><?php if ($clients) {
-                                                                                                            print_r($household['name']);
-                                                                                                        } else {
-                                                                                                            echo 'Select household head';
-                                                                                                        } ?>
-                                                                </option>
-                                                                <?php foreach ($override->get('household', 'status', 1) as $value) { ?>
-                                                                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
+                                            <div class="row">                                              
                                                 <div class="col-sm-4">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
@@ -3021,7 +3001,6 @@ if ($user->isLoggedIn()) {
                                                             </select>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="row-form clearfix">
@@ -3043,7 +3022,6 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                             </div>
-
 
                                             <div class="card card-warning">
                                                 <div class="card-header">
@@ -3141,7 +3119,6 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 <?php } ?>
-
 
                                                 <div class="col-md-6">
                                                     <div class="card card-warning">

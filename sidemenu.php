@@ -204,7 +204,7 @@ if ($user->isLoggedIn()) {
                             <a href="info.php?id=3&status=7" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <span class="badge badge-info right"><?= $registered; ?></span>
-                                <p>Tota Patients</p>
+                                <p>Total Patients</p>
                             </a>
                         </li>
                     </ul>
