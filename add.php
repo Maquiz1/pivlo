@@ -4255,7 +4255,7 @@ if ($user->isLoggedIn()) {
                                         <div class="card-body">
                                             <hr>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="test_date" class="form-label">Date of Screening</label>
                                                         <input type="date" value="<?php if ($screening['screening_date']) {
@@ -4263,34 +4263,8 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="screening_date" name="screening_date" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label for="conset" class="form-label">Patient Conset?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="conset" id="conset<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['conset'] == $value['id']) {
-                                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                                            } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="results_date" class="form-label">Date of Conset</label>
-                                                        <input type="date" value="<?php if ($screening['conset_date']) {
-                                                                                        print_r($screening['conset_date']);
-                                                                                    } ?>" id="conset_date" name="conset_date" class="form-control" placeholder="Enter date" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-4">
+
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="hiv_date" class="form-label">Date Tested HIV</label>
                                                         <input type="date" value="<?php if ($screening['hiv_date']) {
@@ -4298,7 +4272,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="hiv_date" name="hiv_date" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <label for="date_status" class="form-label">Is estimated or the exact date</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -4314,34 +4288,8 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <label for="receive_art" class="form-label">Receiving ART services?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="receive_art" id="receive_art<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['receive_art'] == $value['id']) {
-                                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                                        } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="mb-3">
-                                                        <label for="start_art" class="form-label">When did you begin taking ART-Treatment for The first time?</label>
-                                                        <input type="date" value="<?php if ($screening['start_art']) {
-                                                                                        print_r($screening['start_art']);
-                                                                                    } ?>" id="start_art" name="start_art" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date art treatment" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
+
+                                                <div class="col-sm-3">
                                                     <label for="stay" class="form-label">Expected to stay at study area for more than 12 months?</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -4357,6 +4305,60 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label for="conset" class="form-label">Patient Conset?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="conset" id="conset<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['conset'] == $value['id']) {
+                                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                                            } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="results_date" class="form-label">Date of Conset</label>
+                                                        <input type="date" value="<?php if ($screening['conset_date']) {
+                                                                                        print_r($screening['conset_date']);
+                                                                                    } ?>" id="conset_date" name="conset_date" class="form-control" placeholder="Enter date" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <label for="receive_art" class="form-label">Receiving ART services?</label>
+                                                    <!-- radio -->
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="receive_art" id="receive_art<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['receive_art'] == $value['id']) {
+                                                                                                                                                                                                            echo 'checked';
+                                                                                                                                                                                                        } ?>>
+                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-3">
+                                                        <label for="start_art" class="form-label">When did you begin taking ART-Treatment for The first time?</label>
+                                                        <input type="date" value="<?php if ($screening['start_art']) {
+                                                                                        print_r($screening['start_art']);
+                                                                                    } ?>" id="start_art" name="start_art" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date art treatment" required />
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <hr>
@@ -4384,22 +4386,24 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <label for="pregnant" class="form-label">Pregnant Woman?</label>
-                                                    <!-- radio -->
-                                                    <div class="row-form clearfix">
-                                                        <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="pregnant" id="pregnant<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['pregnant'] == $value['id']) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                } ?>>
-                                                                    <label class="form-check-label"><?= $value['name']; ?></label>
-                                                                </div>
-                                                            <?php } ?>
+                                                <?php if ($override->get3('clients', 'status', 1, 'sex',2, 'id', $_GET['cid'])) { ?>
+                                                    <div class="col-sm-6">
+                                                        <label for="pregnant" class="form-label">Pregnant Woman?</label>
+                                                        <!-- radio -->
+                                                        <div class="row-form clearfix">
+                                                            <div class="form-group">
+                                                                <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="pregnant" id="pregnant<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['pregnant'] == $value['id']) {
+                                                                                                                                                                                                        echo 'checked';
+                                                                                                                                                                                                    } ?>>
+                                                                        <label class="form-check-label"><?= $value['name']; ?></label>
+                                                                    </div>
+                                                                <?php } ?>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                <?php } ?>
                                             </div>
                                             <hr>
 
