@@ -4092,7 +4092,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="mourning" name="mourning" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="forgot" class="form-label">FORGOT</label>
                                                         <input type="number" value="<?php if ($facility['forgot']) {
@@ -4100,7 +4100,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="forgot" name="forgot" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="unknown" class="form-label">UNKNOWN</label>
                                                         <input type="number" value="<?php if ($facility['unknown']) {
@@ -4109,6 +4109,14 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="extra_pills" class="form-label">PATIENT STILL HAVE ARV PILLS AT HOME</label>
+                                                        <input type="number" value="<?php if ($facility['extra_pills']) {
+                                                                                        print_r($facility['extra_pills']);
+                                                                                    } ?>" id="extra_pills" name="extra_pills" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="others" class="form-label">OTHERS</label>
                                                         <input type="number" value="<?php if ($facility['others']) {
