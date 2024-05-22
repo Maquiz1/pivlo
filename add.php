@@ -4340,7 +4340,7 @@ if ($user->isLoggedIn()) {
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
-                                                            <?php foreach ($override->get('yes_no', 'status', 1) as $value) { ?>
+                                                            <?php foreach ($override->get('yes_no_na', 'status', 1) as $value) { ?>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="pregnant" id="pregnant<?= $value['id']; ?>" value="<?= $value['id']; ?>" <?php if ($screening['pregnant'] == $value['id']) {
                                                                                                                                                                                                     echo 'checked';
