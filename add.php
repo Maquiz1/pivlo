@@ -970,6 +970,8 @@ if ($user->isLoggedIn()) {
                             'site_id' => $clients[0]['site_id'],
                         ));
 
+                        $last_row = $override->lastRow('screening', 'id')[0];
+
                         $user->createRecord('visit', array(
                             'sequence' => -1,
                             'visit_code' => 'Sv',
@@ -983,7 +985,7 @@ if ($user->isLoggedIn()) {
                             'comments' => Input::get('comments'),
                             'status' => 1,
                             'facility_id' => $clients[0]['site_id'],
-                            'table_id' => $screening[0]['id'],
+                            'table_id' => $last_row['id'],
                             'patient_id' => $clients[0]['id'],
                             'create_on' => date('Y-m-d H:i:s'),
                             'staff_id' => $user->data()->id,
