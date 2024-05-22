@@ -4325,7 +4325,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-3" id="conset_date1">
                                                     <div class="mb-2">
                                                         <label for="results_date" class="form-label">Date of Conset</label>
                                                         <input type="date" value="<?php if ($screening['conset_date']) {
@@ -4350,7 +4350,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-3" id="start_art1">
                                                     <div class="mb-3">
                                                         <label for="start_art" class="form-label">When did you begin taking ART-Treatment for The first time?</label>
                                                         <input type="date" value="<?php if ($screening['start_art']) {
@@ -6665,6 +6665,10 @@ if ($user->isLoggedIn()) {
     <!-- <script src="myjs/add/clients/validate_hidden_with_values.js"></script>
     <script src="myjs/add/clients/validate_required_attribute.js"></script>
     <script src="myjs/add/clients/validate_required_radio_checkboxes.js"></script> -->
+
+    <!-- SCREENING Js -->
+    <script src="myjs/add/screening/conset.js"></script>
+    <script src="myjs/add/screening/art.js"></script>
 
 
 
