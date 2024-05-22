@@ -870,6 +870,10 @@ if ($user->isLoggedIn()) {
 
                 if (Input::get('screening_date') < $clients[0]['date_registered']) {
                     $errorMessage = 'Screaning Date Can not be less than Registration date';
+                } elseif (Input::get('conset') == 2 && !empty(trim(Input::get('conset_date')))) {
+                    $errorMessage = 'Please Remove Screening date before Submit again';
+                } elseif (Input::get('receive_art') == 2 && !empty(trim(Input::get('start_art')))) {
+                    $errorMessage = 'Please Remove ART start date before Submit again';
                 } else {
 
                     if ($screening) {
