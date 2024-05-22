@@ -1171,7 +1171,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => Input::get('appointments'),
                         'month_name' => Input::get('month_name'),
                         'patients_tested' => Input::get('patients_tested'),
-                        'vl_results_available' => Input::get('vl_results_available'),
+                        'results_soft_copy' => Input::get('results_soft_copy'),
+                        'results_hard_copy' => Input::get('results_hard_copy'),
                         'ltf' => Input::get('ltf'),
                         'transferred_out' => Input::get('transferred_out'),
                         'admitted' => Input::get('admitted'),
@@ -1208,7 +1209,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => Input::get('appointments'),
                         'month_name' => Input::get('month_name'),
                         'patients_tested' => Input::get('patients_tested'),
-                        'vl_results_available' => Input::get('vl_results_available'),
+                        'results_soft_copy' => Input::get('results_soft_copy'),
+                        'results_hard_copy' => Input::get('results_hard_copy'),
                         'ltf' => Input::get('ltf'),
                         'transferred_out' => Input::get('transferred_out'),
                         'admitted' => Input::get('admitted'),
@@ -1252,7 +1254,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1295,7 +1298,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1338,7 +1342,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1381,7 +1386,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1424,7 +1430,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1467,7 +1474,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1510,7 +1518,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1553,7 +1562,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1596,7 +1606,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1639,7 +1650,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1682,7 +1694,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -1725,7 +1738,8 @@ if ($user->isLoggedIn()) {
                         'appointments' => 0,
                         'month_name' => 0,
                         'patients_tested' => 0,
-                        'vl_results_available' => 0,
+                        'results_soft_copy' => 0,
+                        'results_hard_copy' => 0,
                         'ltf' => 0,
                         'transferred_out' => 0,
                         'admitted' => 0,
@@ -3940,7 +3954,7 @@ if ($user->isLoggedIn()) {
                                             </div>
                                             <hr>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="appointments" class="form-label">Total number of test appointment in a
                                                             month.</label>
@@ -3949,7 +3963,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="appointments" name="appointments" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-2">
                                                         <label for="patients_tested" class="form-label">Total patients got tested this month</label>
                                                         <input type="number" value="<?php if ($facility['patients_tested']) {
@@ -3957,14 +3971,25 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="patients_tested" name="patients_tested" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-2">
-                                                        <label for="vl_results_available" class="form-label">Total VL test results made available for
+                                                        <label for="results_soft_copy" class="form-label">Total VL test results made available for
                                                             this month</label>
-                                                        <input type="number" value="<?php if ($facility['vl_results_available']) {
-                                                                                        print_r($facility['vl_results_available']);
-                                                                                    } ?>" id="vl_results_available" name="vl_results_available" min="0" class="form-control" placeholder="Enter here" required />
+                                                        <input type="number" value="<?php if ($facility['results_soft_copy']) {
+                                                                                        print_r($facility['results_soft_copy']);
+                                                                                    } ?>" id="results_soft_copy" name="results_soft_copy" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
+                                                    <span>From Soft Copy ( Excel )</span>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="results_hard_copy" class="form-label">Total VL test results made available for
+                                                            this month</label>
+                                                        <input type="number" value="<?php if ($facility['results_hard_copy']) {
+                                                                                        print_r($facility['results_hard_copy']);
+                                                                                    } ?>" id="results_hard_copy" name="results_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                    <span>From Hard Copy</span>
                                                 </div>
                                             </div>
                                             <hr>
