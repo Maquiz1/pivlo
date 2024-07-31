@@ -179,7 +179,7 @@ if ($user->isLoggedIn()) {
           <!-- Small boxes (Stat box) -->
           <div class="row">
             <?php
-            if ($user->data()->accessLevel == 1) {
+            if ($user->data()->accessLevel == 1 || $user->data()->accessLevel == 2 || $user->data()->accessLevel == 3) {
             ?>
               <div class="col-lg-4 col-4">
                 <!-- small box -->
@@ -198,7 +198,7 @@ if ($user->isLoggedIn()) {
             <?php } ?>
             <!-- ./col -->
             <?php
-            if ($user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+            if ($user->data()->accessLevel == 1 || $user->data()->accessLevel == 2 || $user->data()->accessLevel == 3) {
             ?>
               <div class="col-lg-4 col-4">
                 <!-- small box -->
@@ -206,7 +206,7 @@ if ($user->isLoggedIn()) {
                   <div class="inner">
                     <h3><?= $intervention ?><sup style="font-size: 20px"></sup></h3>
 
-                    <p>Intervention</p>
+                    <p>Intervention ( Ubungo )</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -218,7 +218,7 @@ if ($user->isLoggedIn()) {
             <?php } ?>
 
             <?php
-            if ($user->data()->accessLevel == 1 || $user->data()->accessLevel == 3) {
+            if ($user->data()->accessLevel == 1 || $user->data()->accessLevel == 2 || $user->data()->accessLevel == 3) {
             ?>
               <div class="col-lg-4 col-4">
                 <!-- small box -->
@@ -226,7 +226,7 @@ if ($user->isLoggedIn()) {
                   <div class="inner">
                     <h3><?= $control ?></h3>
 
-                    <p>Control</p>
+                    <p>Control ( Kigamboni )</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
