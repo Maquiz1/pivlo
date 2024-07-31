@@ -182,7 +182,7 @@ if ($user->isLoggedIn()) {
                         </ul>
                     </li>
                 <?php } ?>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <span class="badge badge-info right"><?= $registered; ?></span>
@@ -208,7 +208,7 @@ if ($user->isLoggedIn()) {
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
@@ -229,15 +229,17 @@ if ($user->isLoggedIn()) {
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="info.php?id=11" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right"></span>
+                                    <p>List of Facilities</p>
+                                </a>
+                            </li>
                         <?php } ?>
 
-                        <li class="nav-item">
-                            <a href="info.php?id=11" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <span class="badge badge-info right"></span>
-                                <p>List of Facilities</p>
-                            </a>
-                        </li>
+
                     </ul>
                 </li>
                 <?php

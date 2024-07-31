@@ -74,18 +74,28 @@ if ($user->isLoggedIn()) {
             } else {
                 $pageError = $validate->errors();
             }
-        } elseif (Input::get('add_facility_visit')) {
+        } elseif (Input::get('start_site')) {
             $validate = $validate->check($_POST, array(
                 'visit_date' => array(
-                    'required' => true,
-                ),
-                'visit_status' => array(
                     'required' => true,
                 ),
             ));
 
             if ($validate->passed()) {
-                $user->updateRecord('facility', array(
+                $user->visit_start(Input::get('site_id'), Input::get('visit_date'), Input::get('comments'), $user->data()->id);
+                $successMessage = 'Site Started Successful';
+            } else {
+                $pageError = $validate->errors();
+            }
+        } elseif (Input::get('add_facility_visit')) {
+            $validate = $validate->check($_POST, array(
+                'visit_date' => array(
+                    'required' => true,
+                ),
+            ));
+
+            if ($validate->passed()) {
+                $user->updateRecord('visit', array(
                     'visit_date' => Input::get('visit_date'),
                     'comments' => Input::get('comments'),
                     'visit_status' => Input::get('visit_status'),
@@ -265,7 +275,7 @@ if ($user->isLoggedIn()) {
             if ($validate->passed()) {
                 try {
                     if (Input::get('name')) {
-                        if (Input::get('name') == 'user' || Input::get('name') == 'study_id' || Input::get('name') == 'sites' || Input::get('name') == 'position' || Input::get('name') == 'household' || Input::get('name') == 'insurance' || Input::get('name') == 'district' || Input::get('name') == 'education' || Input::get('name') == 'lung_rads' || Input::get('name') == 'occupation' || Input::get('name') == 'payments' || Input::get('name') == 'relation') {
+                        if (Input::get('name') == 'user' || Input::get('name') == 'study_id' || Input::get('name') == 'position' || Input::get('name') == 'household' || Input::get('name') == 'insurance' || Input::get('name') == 'district' || Input::get('name') == 'education' || Input::get('name') == 'lung_rads' || Input::get('name') == 'occupation' || Input::get('name') == 'payments' || Input::get('name') == 'relation') {
                             $errorMessage = 'Table ' . '"' . Input::get('name') . '"' . '  can not be Cleared';
                         } else {
                             $clearData = $override->clearDataTable(Input::get('name'));
@@ -2510,10 +2520,10 @@ if ($user->isLoggedIn()) {
                             <div class="col-sm-6">
                                 <h1>
                                     <?php
-                                    if ($user->data()->power == 1) {
-                                        $sites = $override->getDataAsc0('sites', 'id');
+                                    if ($_GET['arm']) {
+                                        $sites = $override->getNews('sites', 'status', 1, 'arm', $_GET['arm']);
                                     } else {
-                                        $sites = $override->getDataAsc('sites', 'status', 1, 'id');
+                                        $sites = $override->get('sites', 'status', 1);
                                     }
                                     ?>
                                     Sites
@@ -2659,12 +2669,16 @@ if ($user->isLoggedIn()) {
                                                                 <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-info">View Schedule</a>
 
                                                             <?php } else { ?>
-                                                                <a href="add.php?id=6&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&sequence=0&visit_code=M0&vid=3&respondent=<?= $value['respondent'] ?>" class="btn btn-warning">Add Schedule</a>
+                                                                <a href="info.php?id=12&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&sequence=0&visit_code=M0&vid=3&respondent=<?= $value['respondent'] ?>" class="btn btn-warning">Add Schedule</a>
 
 
                                                             <?php } ?>
                                                             <?php if ($user->data()->power == 1) { ?>
                                                                 <a href="add.php?id=3&site_id=<?= $value['id'] ?>&region_id=<?= $value['region'] ?>&district_id=<?= $value['district'] ?>&ward_id=<?= $value['ward'] ?>&respondent=<?= $value['respondent'] ?>" class="btn btn-primary">Edit Site ( Facility )</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                                <a href="#startSite<?= $value['id'] ?>" role="button" class="btn btn-default" data-toggle="modal">
+                                                                    Start
+                                                                </a>
 
                                                                 <a href="#deleteSite<?= $value['id'] ?>" role="button" class="btn btn-danger" data-toggle="modal">
                                                                     Delete
@@ -2676,6 +2690,129 @@ if ($user->isLoggedIn()) {
                                                             <?php } ?>
                                                         </td>
                                                     </tr>
+                                                    <div class="modal fade" id="startSite<?= $value['id'] ?>">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Start Site</h4>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row-form clearfix">
+                                                                                    <!-- select -->
+                                                                                    <div class="form-group">
+                                                                                        <label>Start Date</label>
+                                                                                        <input value="<?php if ($value['visit_date']) {
+                                                                                                            echo $value['visit_date'];
+                                                                                                        } ?>" class="form-control" max="<?= date('Y-m-d'); ?>" type="date" name="visit_date" id="visit_date" required />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row-form clearfix">
+                                                                                    <!-- select -->
+                                                                                    <div class="form-group">
+                                                                                        <label>Notes / Remarks /Comments</label>
+                                                                                        <textarea class="form-control" name="comments" rows="3">
+                                                                                            <?php if ($value['comments']) {
+                                                                                                echo $value['comments'];
+                                                                                            } ?>
+                                                                                        </textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="dr"><span></span></div>
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-between">
+                                                                        <input type="hidden" name="site_id" value="<?= $value['id'] ?>">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                        <input type="submit" name="start_site" class="btn btn-primary" value="Save changes">
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.modal-content -->
+                                                            </form>
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="modal fade" id="addVisit<?= $visit['id'] ?>">
+                                                        <div class="modal-dialog">
+                                                            <form method="post">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Update Facility Schedule</h4>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row-form clearfix">
+                                                                                    <!-- select -->
+                                                                                    <div class="form-group">
+                                                                                        <label>Start Date</label>
+                                                                                        <input value="<?php if ($visit['visit_date']) {
+                                                                                                            echo $visit['visit_date'];
+                                                                                                        } ?>" class="form-control" max="<?= date('Y-m-d'); ?>" type="date" name="visit_date" id="visit_date" required />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <div class="mb-2">
+                                                                                    <label for="income_household" class="form-label">Visit Status</label>
+                                                                                    <select class="form-control" id="visit_status" name="visit_status" style="width: 100%;" required>
+                                                                                        <option value="<?= $visit['visit_status'] ?>"><?php if ($visit['visit_status']) {
+                                                                                                                                            if ($visit['visit_status'] == 1) {
+                                                                                                                                                echo 'Attended';
+                                                                                                                                            } elseif ($visit['visit_status'] == 2) {
+                                                                                                                                                echo 'Missed';
+                                                                                                                                            }
+                                                                                                                                        } else {
+                                                                                                                                            echo 'Select';
+                                                                                                                                        } ?>
+                                                                                        </option>
+                                                                                        <option value="1">Attended</option>
+                                                                                        <option value="2">Missed</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row-form clearfix">
+                                                                                    <!-- select -->
+                                                                                    <div class="form-group">
+                                                                                        <label>Notes / Remarks /Comments</label>
+                                                                                        <textarea class="form-control" name="comments" rows="3">
+                                                                                            <?php if ($visit['comments']) {
+                                                                                                echo $visit['comments'];
+                                                                                            } ?>
+                                                                                        </textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="dr"><span></span></div>
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-between">
+                                                                        <input type="hidden" name="id" value="<?= $visit['id'] ?>">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                        <input type="submit" name="add_facility_schedule" class="btn btn-primary" value="Save changes">
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.modal-content -->
+                                                            </form>
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
                                                     <div class="modal fade" id="deleteSite<?= $value['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <form method="post">
@@ -2844,8 +2981,8 @@ if ($user->isLoggedIn()) {
                                             <tbody>
                                                 <?php
                                                 $x = 1;
-                                                $i = 0;
-                                                foreach ($override->get('facility', 'site_id', $_GET['site_id']) as $visit) {
+                                                $i = 1;
+                                                foreach ($override->getNews('visit', 'status', 1, 'site_id', $_GET['site_id']) as $visit) {
                                                     $clients = $override->get('clients', 'id', $_GET['cid'])[0];
                                                     $site = $override->get('sites', 'id', $visit['site_id'])[0];
                                                 ?>
@@ -2866,7 +3003,7 @@ if ($user->isLoggedIn()) {
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 2) { ?>
                                                                 <a href="#addVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
-                                                                    Missed
+                                                                    Missing
                                                                 </a>
                                                             <?php } elseif ($visit['visit_status'] == 0) { ?>
                                                                 <a href="#addVisit<?= $visit['id'] ?>" role="button" class="btn btn-warning" data-toggle="modal">
@@ -2877,14 +3014,11 @@ if ($user->isLoggedIn()) {
 
                                                         <td>
                                                             <?php if ($visit['visit_status'] == 1) { ?>
-                                                                <?php if ($visit['sequence'] >= 0) { ?>
-                                                                    <?php if ($override->get3('facility', 'site_id', $_GET['site_id'], 'extraction_date', '', 'sequence', $i)) { ?>
-                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility Records</a>&nbsp;&nbsp; <br><br>
+                                                                <?php if ($override->get3('facility', 'site_id', $_GET['site_id'], 'status', 1, 'sequence', $i)) { ?>
+                                                                    <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility Records </a>
+                                                                <?php } else { ?>
+                                                                    <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-warning"> Add Facility Records</a>
 
-                                                                    <?php } else { ?>
-                                                                        <a href="add.php?id=6&site_id=<?= $_GET['site_id'] ?>&sequence=<?= $visit['sequence'] ?>&visit_code=<?= $visit['visit_code'] ?>&vid=<?= $visit['id'] ?>&status=<?= $_GET['status'] ?>&respondent=<?= $_GET['respondent'] ?>" role=" button" class="btn btn-info"> Update Facility Records </a>&nbsp;&nbsp; <br><br>
-
-                                                                    <?php } ?>
                                                                 <?php } ?>
                                                             <?php } ?>
                                                         </td>
@@ -2919,9 +3053,9 @@ if ($user->isLoggedIn()) {
                                                                                     <select class="form-control" id="visit_status" name="visit_status" style="width: 100%;" required>
                                                                                         <option value="<?= $visit['visit_status'] ?>"><?php if ($visit['visit_status']) {
                                                                                                                                             if ($visit['visit_status'] == 1) {
-                                                                                                                                                echo 'Attended';
+                                                                                                                                                echo 'Done';
                                                                                                                                             } elseif ($visit['visit_status'] == 2) {
-                                                                                                                                                echo 'Missed';
+                                                                                                                                                echo 'Missing';
                                                                                                                                             }
                                                                                                                                         } else {
                                                                                                                                             echo 'Select';
@@ -2929,6 +3063,7 @@ if ($user->isLoggedIn()) {
                                                                                         </option>
                                                                                         <option value="1">Attended</option>
                                                                                         <option value="2">Missed</option>
+                                                                                        <option value="0">Pending</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
@@ -3060,8 +3195,8 @@ if ($user->isLoggedIn()) {
                                                         <select name="name" id="name" class="form-control" required>
                                                             <option value="">Select Table</option>
                                                             <?php foreach ($AllTables as $tables) {
-                                                                if ($tables['Tables_in_lungcancer'] == 'clients' || $tables['Tables_in_lungcancer'] == 'kap' || $tables['Tables_in_lungcancer'] == 'history' || $tables['Tables_in_lungcancer'] == 'results' || $tables['Tables_in_lungcancer'] == 'classification' || $tables['Tables_in_lungcancer'] == 'outcome' || $tables['Tables_in_lungcancer'] == 'economic' || $tables['Tables_in_lungcancer'] == 'visit') { ?> ?>
-                                                                    <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
+                                                                if ($tables['Tables_in_pivlo'] == 'clients' || $tables['Tables_in_pivlo'] == 'facility' || $tables['Tables_in_pivlo'] == 'sites' || $tables['Tables_in_pivlo'] == 'visit') { ?> ?>
+                                                                    <option value="<?= $tables['Tables_in_pivlo'] ?>"><?= $tables['Tables_in_pivlo'] ?></option>
                                                             <?php }
                                                             } ?>
                                                         </select>
@@ -3132,8 +3267,8 @@ if ($user->isLoggedIn()) {
                                                         <select name="name" id="name" class="form-control" required>
                                                             <option value="">Select Table</option>
                                                             <?php foreach ($AllTables as $tables) {
-                                                                if ($tables['Tables_in_lungcancer'] == 'study_id') { ?>
-                                                                    <option value="<?= $tables['Tables_in_lungcancer'] ?>"><?= $tables['Tables_in_lungcancer'] ?></option>
+                                                                if ($tables['Tables_in_pivlo'] == 'study_id') { ?>
+                                                                    <option value="<?= $tables['Tables_in_pivlo'] ?>"><?= $tables['Tables_in_pivlo'] ?></option>
                                                             <?php }
                                                             } ?>
                                                         </select>

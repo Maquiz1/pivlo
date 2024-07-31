@@ -29,17 +29,29 @@ if ($user->isLoggedIn()) {
 
   if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
     if ($_GET['site_id'] != null) {
+      $total = $override->getCount('sites', 'status', 1);
+      $intervention = $override->countData('sites', 'status', 1, 'arm', 1);
+      $control = $override->countData('sites', 'status', 1, 'arm', 2);
+
       $screened = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $_GET['site_id']);
       $eligible = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $_GET['site_id']);
       $enrolled = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $_GET['site_id']);
       $end = $override->countData2('clients', 'status', 1, 'end_study', 1, 'site_id', $_GET['site_id']);
     } else {
+      $total = $override->getCount('sites', 'status', 1);
+      $intervention = $override->countData('sites', 'status', 1, 'arm', 1);
+      $control = $override->countData('sites', 'status', 1, 'arm', 2);
+
       $screened = $override->countData('clients', 'status', 1, 'screened', 1);
       $eligible = $override->countData('clients', 'status', 1, 'eligible', 1);
       $enrolled = $override->countData('clients', 'status', 1, 'enrolled', 1);
       $end = $override->countData('clients', 'status', 1, 'end_study', 1);
     }
   } else {
+    $total = $override->getCount('sites', 'status', 1);
+    $intervention = $override->countData('sites', 'status', 1, 'arm', 1);
+    $control = $override->countData('sites', 'status', 1, 'arm', 2);
+
     $screened = $override->countData2('clients', 'status', 1, 'screened', 1, 'site_id', $user->data()->site_id);
     $eligible = $override->countData2('clients', 'status', 1, 'eligible', 1, 'site_id', $user->data()->site_id);
     $enrolled = $override->countData2('clients', 'status', 1, 'enrolled', 1, 'site_id', $user->data()->site_id);
@@ -166,66 +178,65 @@ if ($user->isLoggedIn()) {
         <div class="container-fluid">
           <!-- Small boxes (Stat box) -->
           <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h3><?= $screened ?></h3>
+            <?php
+            if ($user->data()->accessLevel == 1) {
+            ?>
+              <div class="col-lg-4 col-4">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3><?= $total ?></h3>
 
-                  <p>Screened</p>
+                    <p>Total Sites</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-bag"></i>
+                  </div>
+                  <a href="info.php?id=11&arm=0" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon">
-                  <i class="ion ion-bag"></i>
-                </div>
-                <a href="info.php?id=3&status=1" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
+            <?php } ?>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3><?= $eligible ?><sup style="font-size: 20px"></sup></h3>
+            <?php
+            if ($user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
+            ?>
+              <div class="col-lg-4 col-4">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h3><?= $intervention ?><sup style="font-size: 20px"></sup></h3>
 
-                  <p>Eligible</p>
+                    <p>Intervention</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                  </div>
+                  <a href="info.php?id=11&arm=1" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon">
-                  <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="info.php?id=3&status=2" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3><?= $enrolled ?></h3>
+              <!-- ./col -->
+            <?php } ?>
 
-                  <p>Enrolled</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
-                </div>
-                <a href="info.php?id=3&status=3" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-danger">
-                <div class="inner">
-                  <h3><?= $end ?></h3>
+            <?php
+            if ($user->data()->accessLevel == 1 || $user->data()->accessLevel == 3) {
+            ?>
+              <div class="col-lg-4 col-4">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3><?= $control ?></h3>
 
-                  <p>End of study</p>
+                    <p>Control</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                  </div>
+                  <a href="info.php?id=11&arm=2" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="info.php?id=3&status=4" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
-            <!-- ./col -->
+              <!-- ./col -->
+            <?php } ?>
+
           </div>
           <!-- /.row -->
 

@@ -83,9 +83,6 @@ if ($user->isLoggedIn()) {
                         break;
                 }
                 try {
-
-                    // $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id']);
-
                     if ($staff) {
                         $user->updateRecord('user', array(
                             'firstname' => Input::get('firstname'),
@@ -97,10 +94,9 @@ if ($user->isLoggedIn()) {
                             'email_address' => Input::get('email_address'),
                             'sex' => Input::get('sex'),
                             'position' => Input::get('position'),
-                            'accessLevel' => $accessLevel,
+                            'accessLevel' => Input::get('accessLevel'),
                             'power' => Input::get('power'),
-                            'password' => Hash::make($password, $salt),
-                            'salt' => $salt,
+                            'arm' => Input::get('arm'),
                             'site_id' => Input::get('site_id'),
                         ), $_GET['staff_id']);
 
@@ -116,7 +112,7 @@ if ($user->isLoggedIn()) {
                             'email_address' => Input::get('email_address'),
                             'sex' => Input::get('sex'),
                             'position' => Input::get('position'),
-                            'accessLevel' => $accessLevel,
+                            'accessLevel' => Input::get('accessLevel'),
                             'power' => Input::get('power'),
                             'password' => Hash::make($password, $salt),
                             'salt' => $salt,
@@ -124,6 +120,7 @@ if ($user->isLoggedIn()) {
                             'last_login' => '',
                             'status' => 1,
                             'user_id' => $user->data()->id,
+                            'arm' => Input::get('arm'),
                             'site_id' => Input::get('site_id'),
                             'count' => 0,
                             'pswd' => 0,
@@ -203,7 +200,7 @@ if ($user->isLoggedIn()) {
                     }
 
                     // $user->visit_delete1($_GET['site_id'], Input::get('visit_date'), $_GET['site_id'], $user->data()->id, $_GET['site_id'], $eligible, $sequence, $visit_code, $visit_name);
-
+                    Redirect::to('info.php?id=11');
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -267,7 +264,7 @@ if ($user->isLoggedIn()) {
                             'street' => Input::get('street'),
                             'location' => Input::get('location'),
                             'house_number' => Input::get('house_number'),
-                            'head_household' => Input::get('head_household'),
+                            'head_household' => 0,
                             'education' => Input::get('education'),
                             'occupation' => Input::get('occupation'),
                             'health_insurance' => Input::get('health_insurance'),
@@ -362,7 +359,7 @@ if ($user->isLoggedIn()) {
                             'street' => Input::get('street'),
                             'location' => Input::get('location'),
                             'house_number' => Input::get('house_number'),
-                            'head_household' => Input::get('head_household'),
+                            'head_household' => 0,
                             'education' => Input::get('education'),
                             'occupation' => Input::get('occupation'),
                             'health_insurance' => Input::get('health_insurance'),
@@ -1154,24 +1151,8 @@ if ($user->isLoggedIn()) {
 
             if ($validate->passed()) {
 
-                $sites = $override->getNews('sites', 'status', 1, 'id', $_GET['site_id'])[0];
-
-                $facility0 = $override->get3('facility', 'status', 1, 'site_id', $_GET['site_id'], 'sequence', $_GET['sequence']);
-                $sequence = '';
-                $visit_code = '';
-                $visit_name = '';
-
-
-                // $last_visit = $override->getlastRow1('visit', 'patient_id', $clients['id'], 'sequence', $_GET['sequence'], 'id')[0];
-
-                // $sequence = intval($_GET['sequence']) + 1;
-
-                // if ($sequence) {
-                //     $visit_code = 'M' . $sequence;
-                //     $visit_name = 'Month ' . $sequence;
-                // }
-
-                if ($facility0) {
+                $facility = $override->get3('facility', 'status', 1, 'site_id', $_GET['site_id'], 'visit_code', $_GET['visit_code']);
+                if ($facility) {
                     $user->updateRecord('facility', array(
                         'extraction_date' => Input::get('extraction_date'),
                         'appointments' => Input::get('appointments'),
@@ -1179,6 +1160,11 @@ if ($user->isLoggedIn()) {
                         'patients_tested' => Input::get('patients_tested'),
                         'results_soft_copy' => Input::get('results_soft_copy'),
                         'results_hard_copy' => Input::get('results_hard_copy'),
+                        'invalid' => Input::get('invalid'),
+                        'not_known' => Input::get('not_known'),
+                        'delay' => Input::get('delay'),
+                        'no_reasons' => Input::get('no_reasons'),
+                        'other_reasons' => Input::get('other_reasons'),
                         'ltf' => Input::get('ltf'),
                         'transferred_out' => Input::get('transferred_out'),
                         'admitted' => Input::get('admitted'),
@@ -1197,7 +1183,7 @@ if ($user->isLoggedIn()) {
                         'date_completed' => Input::get('date_completed'),
                         'update_on' => date('Y-m-d H:i:s'),
                         'update_id' => $user->data()->id,
-                    ), $facility0[0]['id']);
+                    ), $facility[0]['id']);
 
                     $successMessage = 'Facility  Successful Updated';
                 } else {
@@ -1218,6 +1204,11 @@ if ($user->isLoggedIn()) {
                         'patients_tested' => Input::get('patients_tested'),
                         'results_soft_copy' => Input::get('results_soft_copy'),
                         'results_hard_copy' => Input::get('results_hard_copy'),
+                        'invalid' => Input::get('invalid'),
+                        'not_known' => Input::get('not_known'),
+                        'delay' => Input::get('delay'),
+                        'no_reasons' => Input::get('no_reasons'),
+                        'other_reasons' => Input::get('other_reasons'),
                         'ltf' => Input::get('ltf'),
                         'transferred_out' => Input::get('transferred_out'),
                         'admitted' => Input::get('admitted'),
@@ -1232,7 +1223,7 @@ if ($user->isLoggedIn()) {
                         'extra_pills' => Input::get('extra_pills'),
                         'others' => Input::get('others'),
                         'comments' => Input::get('comments'),
-                        'respondent' => $_GET['respondent'],
+                        'respondent' => 2,
                         'facility_completed' => Input::get('facility_completed'),
                         'date_completed' => Input::get('date_completed'),
                         'status' => 1,
@@ -1243,555 +1234,8 @@ if ($user->isLoggedIn()) {
                         'update_id' => $user->data()->id,
                         'site_id' => $_GET['site_id'],
                     ));
-
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 1,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M1',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 2,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M2',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 3,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M3',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 4,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M4',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 5,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M5',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 6,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M6',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 7,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M7',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 8,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M8',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 9,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M9',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 10,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M10',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 11,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M11',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $last_row = $override->lastRow('facility', 'id')[0];
-
-                    $expected_date = date('Y-m-d', strtotime('+1 month', strtotime($last_row['expected_date'])));
-
-                    $user->createRecord('facility', array(
-                        'sequence' => 12,
-                        'vid' => $_GET['vid'],
-                        'expected_date' => $expected_date,
-                        'extraction_date' => '',
-                        'visit_code' => 'M12',
-                        'facility_id' => Input::get('facility_id'),
-                        'facility_arm' => Input::get('facility_arm'),
-                        'facility_level' => Input::get('facility_level'),
-                        'facility_type' => Input::get('facility_type'),
-                        'appointments' => 0,
-                        'month_name' => 0,
-                        'patients_tested' => 0,
-                        'results_soft_copy' => 0,
-                        'results_hard_copy' => 0,
-                        'ltf' => 0,
-                        'transferred_out' => 0,
-                        'admitted' => 0,
-                        'death' => 0,
-                        'inability_transport' => 0,
-                        'lack_accompany' => 0,
-                        'incompatibility_time' => 0,
-                        'tosa' => 0,
-                        'mourning' => 0,
-                        'forgot' => 0,
-                        'unknown' => 0,
-                        'extra_pills' => 0,
-                        'others' => 0,
-                        'comments' => '',
-                        'respondent' => $_GET['respondent'],
-                        'facility_completed' => 0,
-                        'date_completed' => '',
-                        'status' => 1,
-                        'visit_status' => 0,
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'update_on' => date('Y-m-d H:i:s'),
-                        'update_id' => $user->data()->id,
-                        'site_id' => $_GET['site_id'],
-                    ));
-
-                    $successMessage = 'Facility  Successful Added';
                 }
-
-                // $user->visit_schedule($_GET['site_id'], Input::get('visit_date'), $_GET['site_id'], $user->data()->id, $_GET['site_id'], $eligible, $sequence, $visit_code, $visit_name);
-
-
-                // Redirect::to('info.php?id=4&cid=' . $_GET['cid'] . '&sequence=' . $_GET['sequence'] . '&visit_code=' . $_GET['visit_code'] . '&study_id=' . $_GET['study_id'] . '&status=' . $_GET['status']);
+                Redirect::to('info.php?id=12&site_id=' . $_GET['site_id']);
             } else {
                 $pageError = $validate->errors();
             }
@@ -2120,6 +1564,7 @@ if ($user->isLoggedIn()) {
                         <div class="row">
                             <?php
                             $staff = $override->getNews('user', 'status', 1, 'id', $_GET['staff_id'])[0];
+                            $arm = $override->get('facility_arm', 'id', $staff['arm'])[0];
                             $site = $override->get('sites', 'id', $staff['site_id'])[0];
                             $position = $override->get('position', 'id', $staff['position'])[0];
                             ?>
@@ -2248,6 +1693,24 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="row-form clearfix">
+                                                        <div class="form-group">
+                                                            <label>Arm</label>
+                                                            <select class="form-control" name="arm" style="width: 100%;" required>
+                                                                <option value="<?= $arm['id'] ?>"><?php if ($staff['arm']) {
+                                                                                                        print_r($arm['name']);
+                                                                                                    } else {
+                                                                                                        echo 'Select';
+                                                                                                    } ?>
+                                                                </option>
+                                                                <?php foreach ($override->getData('facility_arm') as $site) { ?>
+                                                                    <option value="<?= $site['id'] ?>"><?= $site['name'] ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-sm-3">
                                                     <div class="row-form clearfix">
@@ -2267,7 +1730,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Position</label>
@@ -2285,7 +1748,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Access Level</label>
@@ -2295,7 +1758,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Power</label>
@@ -2718,7 +2181,6 @@ if ($user->isLoggedIn()) {
                                             <hr>
 
                                             <div class="row">
-
                                                 <div class="col-sm-3">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
@@ -2983,8 +2445,8 @@ if ($user->isLoggedIn()) {
                                                 </div>
                                             </div>
 
-                                            <div class="row">                                              
-                                                <div class="col-sm-4">
+                                            <div class="row">
+                                                <div class="col-sm-6">
                                                     <div class="row-form clearfix">
                                                         <div class="form-group">
                                                             <label>Level of educations</label>
@@ -3002,7 +2464,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-6">
                                                     <div class="row-form clearfix">
                                                         <!-- select -->
                                                         <div class="form-group">
@@ -3108,9 +2570,7 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php
-                                                if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) {
-                                                ?>
+                                                <?php if ($user->data()->power == 1 || $user->data()->accessLevel == 1 || $user->data()->accessLevel == 2) { ?>
                                                     <div class="col-md-3">
                                                         <div class="card card-warning">
                                                             <div class="card-header">
@@ -3419,7 +2879,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="new_vl_date" class="form-label">New VL test date</label>
                                                         <input type="date" value="<?php if ($individual['new_vl_date']) {
                                                                                         print_r($individual['new_vl_date']);
-                                                                                    } ?>" id="new_vl_date" name="new_vl_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
+                                                                                    } ?>" id="new_vl_date" name="new_vl_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" />
                                                     </div>
                                                 </div>
 
@@ -3428,7 +2888,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="new_vl_results" class="form-label">New VL test Results</label>
                                                         <input type="number" value="<?php if ($individual['new_vl_results']) {
                                                                                         print_r($individual['new_vl_results']);
-                                                                                    } ?>" id="new_vl_results" name="new_vl_results" min="0" class="form-control" placeholder="Enter here" required />
+                                                                                    } ?>" id="new_vl_results" name="new_vl_results" min="0" class="form-control" placeholder="Enter here" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -3786,7 +3246,7 @@ if ($user->isLoggedIn()) {
                                                         <label for="next_date" class="form-label">Next appointment date</label>
                                                         <input type="date" value="<?php if ($individual['next_date']) {
                                                                                         print_r($individual['next_date']);
-                                                                                    } ?>" id="next_date" name="next_date" class="form-control" placeholder="Enter date" required />
+                                                                                    } ?>" id="next_date" name="next_date" class="form-control" placeholder="Enter date" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -3924,7 +3384,7 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-4">
                                                     <div class="mb-2">
                                                         <label for="extraction_date" class="form-label">Date of Extraction</label>
                                                         <input type="date" value="<?php if ($facility['extraction_date']) {
@@ -3932,7 +3392,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="extraction_date" name="extraction_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-4">
                                                     <label for="month_name" class="form-label">Month (Name)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -3948,47 +3408,121 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-3">
+
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <label for="appointments" class="form-label">Total number of test appointment in a
                                                             month.</label>
                                                         <input type="number" value="<?php if ($facility['appointments']) {
                                                                                         print_r($facility['appointments']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="appointments" name="appointments" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+
+                                            </div>
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <label for="patients_tested" class="form-label">Total patients got tested this month</label>
                                                         <input type="number" value="<?php if ($facility['patients_tested']) {
                                                                                         print_r($facility['patients_tested']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="patients_tested" name="patients_tested" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <label for="results_soft_copy" class="form-label">Total VL test results made available for
                                                             this month</label>
                                                         <input type="number" value="<?php if ($facility['results_soft_copy']) {
                                                                                         print_r($facility['results_soft_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="results_soft_copy" name="results_soft_copy" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                     <span>From Soft Copy ( Excel )</span>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="mb-2">
                                                         <label for="results_hard_copy" class="form-label">Total VL test results made available for
                                                             this month</label>
                                                         <input type="number" value="<?php if ($facility['results_hard_copy']) {
                                                                                         print_r($facility['results_hard_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="results_hard_copy" name="results_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                     <span>From Hard Copy</span>
                                                 </div>
                                             </div>
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Reason for the results not available ( Not Returned )</h3>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="invalid" class="form-label">Invalid </label>
+                                                        <input type="number" value="<?php if ($facility['invalid']) {
+                                                                                        print_r($facility['invalid']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="invalid" name="invalid" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="not_known" class="form-label">Unknown </label>
+                                                        <input type="number" value="<?php if ($facility['not_known']) {
+                                                                                        print_r($facility['not_known']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="not_known" name="not_known" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="delay" class="form-label">Delay </label>
+                                                        <input type="number" value="<?php if ($facility['delay']) {
+                                                                                        print_r($facility['delay']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="delay" name="delay" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="no_reasons" class="form-label">No Reasons </label>
+                                                        <input type="number" value="<?php if ($facility['no_reasons']) {
+                                                                                        print_r($facility['no_reasons']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="no_reasons" name="no_reasons" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="other_reasons" class="form-label">Other Reasons </label>
+                                                        <input type="number" value="<?php if ($facility['other_reasons']) {
+                                                                                        print_r($facility['other_reasons']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="other_reasons" name="other_reasons" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <hr>
                                             <div class="card card-warning">
                                                 <div class="card-header">
@@ -4002,6 +3536,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="ltf" class="form-label">Loss to Follow Up </label>
                                                         <input type="number" value="<?php if ($facility['ltf']) {
                                                                                         print_r($facility['ltf']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="ltf" name="ltf" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4010,6 +3546,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="transferred_out" class="form-label">TRANSFERRED OUT </label>
                                                         <input type="number" value="<?php if ($facility['transferred_out']) {
                                                                                         print_r($facility['transferred_out']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="transferred_out" name="transferred_out" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4018,6 +3556,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="admitted" class="form-label">ADMITTED ELSE WHERE </label>
                                                         <input type="number" value="<?php if ($facility['admitted']) {
                                                                                         print_r($facility['admitted']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="admitted" name="admitted" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4026,6 +3566,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="death" class="form-label">DEATH </label>
                                                         <input type="number" value="<?php if ($facility['death']) {
                                                                                         print_r($facility['death']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="death" name="death" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4037,6 +3579,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="inability_transport" class="form-label">INABILITY TO PAY TRANSPORT COST</label>
                                                         <input type="number" value="<?php if ($facility['inability_transport']) {
                                                                                         print_r($facility['inability_transport']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="inability_transport" name="inability_transport" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4045,6 +3589,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="lack_accompany" class="form-label">LACK OF ACCOMPANY PERSON</label>
                                                         <input type="number" value="<?php if ($facility['lack_accompany']) {
                                                                                         print_r($facility['lack_accompany']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="lack_accompany" name="lack_accompany" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4053,6 +3599,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="incompatibility_time" class="form-label">INCOMPATIBILITY OF TESTING TIME </label>
                                                         <input type="number" value="<?php if ($facility['incompatibility_time']) {
                                                                                         print_r($facility['incompatibility_time']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="incompatibility_time" name="incompatibility_time" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4061,6 +3609,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="tosa" class="form-label">TRAVELLED OUSTSIDE STUDY AREA</label>
                                                         <input type="number" value="<?php if ($facility['tosa']) {
                                                                                         print_r($facility['tosa']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="tosa" name="tosa" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4072,6 +3622,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="mourning" class="form-label">MOURNING</label>
                                                         <input type="number" value="<?php if ($facility['mourning']) {
                                                                                         print_r($facility['mourning']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="mourning" name="mourning" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4080,6 +3632,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="forgot" class="form-label">FORGOT</label>
                                                         <input type="number" value="<?php if ($facility['forgot']) {
                                                                                         print_r($facility['forgot']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="forgot" name="forgot" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4088,6 +3642,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="unknown" class="form-label">UNKNOWN</label>
                                                         <input type="number" value="<?php if ($facility['unknown']) {
                                                                                         print_r($facility['unknown']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="unknown" name="unknown" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4096,6 +3652,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="extra_pills" class="form-label">PATIENT STILL HAVE ARV PILLS AT HOME</label>
                                                         <input type="number" value="<?php if ($facility['extra_pills']) {
                                                                                         print_r($facility['extra_pills']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="extra_pills" name="extra_pills" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
@@ -4104,6 +3662,8 @@ if ($user->isLoggedIn()) {
                                                         <label for="others" class="form-label">OTHERS</label>
                                                         <input type="number" value="<?php if ($facility['others']) {
                                                                                         print_r($facility['others']);
+                                                                                    } else {
+                                                                                        echo 0;
                                                                                     } ?>" id="others" name="others" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
