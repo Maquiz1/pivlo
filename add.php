@@ -3465,7 +3465,7 @@ if ($user->isLoggedIn()) {
 
                                             <div class="card card-warning">
                                                 <div class="card-header">
-                                                    <h3 class="card-title">Reason for the results not available ( Not Returned )</h3>
+                                                    <h3 class="card-title">If soft copy results and hard copy results are not matched( give reasons ) </h3>
                                                 </div>
                                             </div>
                                             <hr>
