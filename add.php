@@ -1156,15 +1156,24 @@ if ($user->isLoggedIn()) {
                     $user->updateRecord('facility', array(
                         'extraction_date' => Input::get('extraction_date'),
                         'appointments' => Input::get('appointments'),
+                        'men_appointments' => Input::get('men_appointments'),
+                        'women_appointments' => Input::get('women_appointments'),
                         'month_name' => Input::get('month_name'),
                         'patients_tested' => Input::get('patients_tested'),
+                        'men_tested' => Input::get('men_tested'),
+                        'women_tested' => Input::get('women_tested'),
                         'results_soft_copy' => Input::get('results_soft_copy'),
-                        'results_hard_copy' => Input::get('results_hard_copy'),
                         'invalid' => Input::get('invalid'),
                         'not_known' => Input::get('not_known'),
                         'delay' => Input::get('delay'),
                         'no_reasons' => Input::get('no_reasons'),
                         'other_reasons' => Input::get('other_reasons'),
+                        'results_hard_copy' => Input::get('results_hard_copy'),
+                        'invalid_hard_copy' => Input::get('invalid_hard_copy'),
+                        'not_known_hard_copy' => Input::get('not_known_hard_copy'),
+                        'delay_hard_copy' => Input::get('delay_hard_copy'),
+                        'no_reasons_hard_copy' => Input::get('no_reasons_hard_copy'),
+                        'other_reasons_hard_copy' => Input::get('other_reasons_hard_copy'),
                         'ltf' => Input::get('ltf'),
                         'transferred_out' => Input::get('transferred_out'),
                         'admitted' => Input::get('admitted'),
@@ -1200,15 +1209,24 @@ if ($user->isLoggedIn()) {
                         'facility_level' => Input::get('facility_level'),
                         'facility_type' => Input::get('facility_type'),
                         'appointments' => Input::get('appointments'),
+                        'men_appointments' => Input::get('men_appointments'),
+                        'women_appointments' => Input::get('women_appointments'),
                         'month_name' => Input::get('month_name'),
                         'patients_tested' => Input::get('patients_tested'),
+                        'men_tested' => Input::get('men_tested'),
+                        'women_tested' => Input::get('women_tested'),
                         'results_soft_copy' => Input::get('results_soft_copy'),
-                        'results_hard_copy' => Input::get('results_hard_copy'),
                         'invalid' => Input::get('invalid'),
                         'not_known' => Input::get('not_known'),
                         'delay' => Input::get('delay'),
                         'no_reasons' => Input::get('no_reasons'),
                         'other_reasons' => Input::get('other_reasons'),
+                        'results_hard_copy' => Input::get('results_hard_copy'),
+                        'invalid_hard_copy' => Input::get('invalid_hard_copy'),
+                        'not_known_hard_copy' => Input::get('not_known_hard_copy'),
+                        'delay_hard_copy' => Input::get('delay_hard_copy'),
+                        'no_reasons_hard_copy' => Input::get('no_reasons_hard_copy'),
+                        'other_reasons_hard_copy' => Input::get('other_reasons_hard_copy'),
                         'ltf' => Input::get('ltf'),
                         'transferred_out' => Input::get('transferred_out'),
                         'admitted' => Input::get('admitted'),
@@ -3442,14 +3460,18 @@ if ($user->isLoggedIn()) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <hr>
 
-
-
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">If soft copy results and Total VL test results are not matched give reasons ( SOFT COPY )( EXCELL ) </h3>
+                                                </div>
                                             </div>
                                             <hr>
 
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="results_soft_copy" class="form-label">Total VL test results made available for
                                                             this month</label>
@@ -3459,31 +3481,7 @@ if ($user->isLoggedIn()) {
                                                                                         echo 0;
                                                                                     } ?>" id="results_soft_copy" name="results_soft_copy" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
-                                                    <span>From Soft Copy ( Excel )</span>
                                                 </div>
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="results_hard_copy" class="form-label">Total VL test results made available for
-                                                            this month</label>
-                                                        <input type="number" value="<?php if ($facility['results_hard_copy']) {
-                                                                                        print_r($facility['results_hard_copy']);
-                                                                                    } else {
-                                                                                        echo 0;
-                                                                                    } ?>" id="results_hard_copy" name="results_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
-                                                    </div>
-                                                    <span>From Hard Copy</span>
-                                                </div>
-                                            </div>
-                                            <hr>
-
-                                            <div class="card card-warning">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">If soft copy results and hard copy results are not matched( give reasons ) </h3>
-                                                </div>
-                                            </div>
-                                            <hr>
-
-                                            <div class="row">
                                                 <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="invalid" class="form-label">Invalid </label>
@@ -3514,7 +3512,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="delay" name="delay" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="no_reasons" class="form-label">No Reasons </label>
                                                         <input type="number" value="<?php if ($facility['no_reasons']) {
@@ -3524,7 +3522,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="no_reasons" name="no_reasons" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <div class="mb-2">
                                                         <label for="other_reasons" class="form-label">Other Reasons </label>
                                                         <input type="number" value="<?php if ($facility['other_reasons']) {
@@ -3532,6 +3530,80 @@ if ($user->isLoggedIn()) {
                                                                                     } else {
                                                                                         echo 0;
                                                                                     } ?>" id="other_reasons" name="other_reasons" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="card card-warning">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">If Hard copy results and Total VL test results are not matched give reasons ( HARD COPY) </h3>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="results_soft_copy" class="form-label">Total VL test results made available for
+                                                            this month</label>
+                                                        <input type="number" value="<?php if ($facility['results_hard_copy']) {
+                                                                                        print_r($facility['results_hard_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="results_hard_copy" name="results_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="invalid_hard_copy" class="form-label">Invalid </label>
+                                                        <input type="number" value="<?php if ($facility['invalid_hard_copy']) {
+                                                                                        print_r($facility['invalid_hard_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="invalid_hard_copy" name="invalid_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="not_known_hard_copy" class="form-label">Unknown </label>
+                                                        <input type="number" value="<?php if ($facility['not_known_hard_copy']) {
+                                                                                        print_r($facility['not_known_hard_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="not_known_hard_copy" name="not_known_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="delay_hard_copy" class="form-label">Delay </label>
+                                                        <input type="number" value="<?php if ($facility['delay_hard_copy']) {
+                                                                                        print_r($facility['delay_hard_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="delay_hard_copy" name="delay_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="no_reasons_hard_copy" class="form-label">No Reasons </label>
+                                                        <input type="number" value="<?php if ($facility['no_reasons_hard_copy']) {
+                                                                                        print_r($facility['no_reasons_hard_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="no_reasons_hard_copy" name="no_reasons_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="mb-2">
+                                                        <label for="other_reasons_hard_copy" class="form-label">Other Reasons </label>
+                                                        <input type="number" value="<?php if ($facility['other_reasons_hard_copy']) {
+                                                                                        print_r($facility['other_reasons_hard_copy']);
+                                                                                    } else {
+                                                                                        echo 0;
+                                                                                    } ?>" id="other_reasons_hard_copy" name="other_reasons_hard_copy" min="0" class="form-control" placeholder="Enter here" required />
                                                     </div>
                                                 </div>
                                             </div>
