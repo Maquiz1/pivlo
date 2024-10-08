@@ -3384,7 +3384,7 @@ if ($user->isLoggedIn()) {
                                     <form id="validation" enctype="multipart/form-data" method="post" autocomplete="off">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="mb-2">
                                                         <label for="extraction_date" class="form-label">Date of Extraction</label>
                                                         <input type="date" value="<?php if ($facility['extraction_date']) {
@@ -3392,7 +3392,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="extraction_date" name="extraction_date" max="<?= date('Y-m-d') ?>" class="form-control" placeholder="Enter date" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <label for="month_name" class="form-label">Month (Name)</label>
                                                     <!-- radio -->
                                                     <div class="row-form clearfix">
@@ -3409,33 +3409,46 @@ if ($user->isLoggedIn()) {
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="mb-2">
-                                                        <label for="appointments" class="form-label">Total number of test appointment in a
-                                                            month.</label>
-                                                        <input type="number" value="<?php if ($facility['appointments']) {
-                                                                                        print_r($facility['appointments']);
-                                                                                    } else {
-                                                                                        echo 0;
-                                                                                    } ?>" id="appointments" name="appointments" min="0" class="form-control" placeholder="Enter here" required />
+                                                        <label for="appointments" class="form-label">Total number of test appointments in a month.</label>
+                                                        <input type="number" value="<?php echo $facility['appointments'] ?? 0; ?>" id="appointments" name="appointments" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <div class="me-2">
+                                                            <label for="men" class="form-label">Men.</label>
+                                                            <input type="number" value="<?php echo $facility['men_appointments'] ?? 0; ?>" id="men" name="men_appointments" min="0" class="form-control" placeholder="Enter here" required />
+                                                        </div>
+                                                        <div>
+                                                            <label for="women" class="form-label">Women.</label>
+                                                            <input type="number" value="<?php echo $facility['women_appointments'] ?? 0; ?>" id="women" name="women_appointments" min="0" class="form-control" placeholder="Enter here" required />
+                                                        </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-3">
+                                                    <div class="mb-2">
+                                                        <label for="patients_tested" class="form-label">Total patients got tested this month</label>
+                                                        <input type="number" value="<?php echo $facility['patients_tested'] ?? 0; ?>" id="patients_tested" name="patients_tested" min="0" class="form-control" placeholder="Enter here" required />
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <div class="me-2">
+                                                            <label for="men_tested" class="form-label">Men.</label>
+                                                            <input type="number" value="<?php echo $facility['men_tested'] ?? 0; ?>" id="men_tested" name="men_tested" min="0" class="form-control" placeholder="Enter here" required />
+                                                        </div>
+                                                        <div>
+                                                            <label for="women_tested" class="form-label">Women.</label>
+                                                            <input type="number" value="<?php echo $facility['women_tested'] ?? 0; ?>" id="women_tested" name="women_tested" min="0" class="form-control" placeholder="Enter here" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
 
                                             </div>
                                             <hr>
 
                                             <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-2">
-                                                        <label for="patients_tested" class="form-label">Total patients got tested this month</label>
-                                                        <input type="number" value="<?php if ($facility['patients_tested']) {
-                                                                                        print_r($facility['patients_tested']);
-                                                                                    } else {
-                                                                                        echo 0;
-                                                                                    } ?>" id="patients_tested" name="patients_tested" min="0" class="form-control" placeholder="Enter here" required />
-                                                    </div>
-                                                </div>
-
                                                 <div class="col-4">
                                                     <div class="mb-2">
                                                         <label for="results_soft_copy" class="form-label">Total VL test results made available for
